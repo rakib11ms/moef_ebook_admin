@@ -1,19 +1,131 @@
-.login-background-wrapper{
-    height: 100vh;
-    width: 100vw;
-    padding: 1rem;
-    
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
+.login-background-wrapper {
+  height: 100vh;
+  width: 100vw;
+  padding: 1rem;
 }
-.login-background-wrapper>img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-
-}
-
-.hello{
-    width:100px
+.login-background-wrapper > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
+.hello {
+  width: 100px;
+}
+.login-input-divs {
+  background-color: black;
+  opacity: 0.6;
 
+  border-radius: 5px;
+}
+.peopleRepublic {
+  width: 57px;
+  height: 59px;
+  margin-bottom: 20px;
+}
+.poribesh-tags {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 28px;
+  color: #ffffff;
+}
+.login-logo-tags {
+  display: grid;
+  place-items: center;
+  margin-bottom: 3%;
+}
+.login-input-tags {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  text-align: justify;
+  color: #77ffb0;
+  margin-left: -5%;
+}
+.form-control {
+  width: 150%;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+.login-input-tags-div {
+  display: grid;
+  place-items: center;
+  margin-right: 8%;
+}
+.login-submit-button {
+  width: 150%;
+  height: 50px;
+  color: #ffffff;
+  background: #27ae60;
+  border-radius: 9px;
+  opacity: 1ss;
+}
+.change-pass {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height */
+  margin-right: -9%;
+  color: #969696;
+}
+.change-pass-span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  /* identical to box height */
 
+  color: #ffffff;
+}
+.hr-line {
+  color: #ffffff;
+  width: 22%;
+  border: 2px solid white;
+  margin-right: -12%;
+}
+.nobondhon-button {
+  display: grid;
+  place-items: center;
+  width: 180%;
+  margin-left: 6%;
+}
+
+@media only screen and (min-width: 1378px) {
+  .login-input-divs {
+    margin-top: 8%;
+  }
+  .hr-line {
+    margin-right: -10%;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .form-control {
+    width: 120%;
+  }
+  .login-submit-button {
+    width: 120%;
+  }
+  .change-pass {
+    padding-left: -25%;
+    font-size: 12px;
+  }
+  .login-input-divs {
+    background-color: black;
+    opacity: 0.6;
+    margin-top: 20%;
+    border-radius: 5px;
+  }
+  .nobondhon-button {
+    margin-left: -30px;
+  }
+}
