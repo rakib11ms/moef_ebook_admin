@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
+.nav-rightside-div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.serchInput-icon-div {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  border: 1px solid gray;
+  width: 33%;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+.gsearch {
+  border: none;
+  outline: none;
+}
+.icons-nav {
+  padding: 1px;
+  color: #777777;
+}
+.icons-nav-div {
+  border: 0.7px solid rgb(226, 226, 226);
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}

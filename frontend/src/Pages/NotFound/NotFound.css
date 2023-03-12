@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
+
+.menu-button {
+  color: black;
+}
+.top-img-tags {
+  display: grid;
+  place-items: center;
+  margin-bottom: 5%;
+}
+.notfound-republic-img {
+  width: 65px;
+  margin-bottom: 20px;
+  height: 65px;
+}
+.sorry-text {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 72px;
+  /* identical to box height */
+
+  color: #ff4444;
+}
+
+@media only screen and (min-width: 1378px) {
+}
+
+@media only screen and (max-width: 576px) {
+}

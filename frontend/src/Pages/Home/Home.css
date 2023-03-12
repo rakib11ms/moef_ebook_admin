@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
+
+body {
+  overflow-x: hidden;
+}
+.amounts-div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #f8f8f8;
+  margin-right: 5px;
+  /* padding: 7px 15px 7px 1px; */
+  width: 250px;
+  height: 180px;
+}
+.amount-doc-text {
+  font-size: 1.2rem;
+}
+.doc-span {
+  color: #27ae60;
+  font-size: 1.5rem;
+}
+.sob-dekhun {
+  background-color: #27ae60;
+  color: #f8f8f8;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.icons {
+  color: #777777;
+}
+
+.samprotik {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 39px;
+  /* identical to box height, or 177% */
+
+  color: #333333;
+}
+
+.serchInput-icon-div {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  border: 1px solid gray;
+  width: 33%;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+.books-index-search {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+@media only screen and (min-width: 1378px) {
+  .amounts-div {
+    width: 320px;
+    height: 180px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+}
