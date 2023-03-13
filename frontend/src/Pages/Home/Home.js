@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import NavigationBa from "../Shared/NavigationBa/NavigationBa";
 import "./Home.css";
 import docIcon from "../../images/document.png";
@@ -7,10 +9,13 @@ import bookIcon from "../../images/book.png";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import SearchIcon from "@mui/icons-material/Search";
+import HomeSlider from "./HomeSlider";
 
 const Home = () => {
+  const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <section>
@@ -79,7 +84,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container-fluid">
+      <section className="container-fluid mt-5">
         <div className="row">
           <div className="col-xl-6 col-lg-5 col-md-6">
             <h6>যোগ করুন </h6>
@@ -105,6 +110,65 @@ const Home = () => {
                 <input type="search" className="gsearch" />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <hr />
+      <section className="container-fluid">
+        <div>
+          <HomeSlider />
+        </div>
+      </section>
+      <hr />
+
+      <section className="">
+        <div className="row home-input-tags container-fluid">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <h5>বই এর তথ্য যোগ করুন </h5>
+          </div>
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+            <p className="khosra-songrokkhon-p">
+              <span>
+                <ErrorOutlineOutlinedIcon className="me-2" />
+              </span>
+              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
+            </p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row ">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel>বই এর নাম </lebel> <br />
+              <input className="home-input" type="text" />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel> অন্যান্য </lebel> <br />
+              <input className="home-input" type="text" />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel> লেখক এর নাম </lebel> <br />
+              <input className="home-input" type="text" />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel>অন্যান্য </lebel> <br />
+              <input className="home-input" type="text" />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel> প্রকাশ কাল </lebel> <br />
+              <DatePicker
+                className="home-input"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <lebel> অন্যান্য </lebel> <br />
+              <input className="home-input" type="text" />
+            </div>
+          </div>
+          <div className="home-input-button-div">
+            <button className="home-input-button1">খসড়া </button>
+            <button className="home-input-button2">প্রকাশ করুন </button>
           </div>
         </div>
       </section>

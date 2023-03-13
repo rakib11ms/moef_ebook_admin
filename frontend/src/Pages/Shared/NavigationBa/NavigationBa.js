@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TranslateIcon from "@mui/icons-material/Translate";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlined";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import "./NavigationBa.css";
@@ -48,7 +50,22 @@ const NavigationBa = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
+      <List className="bg-warning">
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <List className="bg-warning">
+        <h1>Hello</h1>
+      </List>
+      <List className="bg-warning">
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
@@ -61,20 +78,60 @@ const NavigationBa = () => {
         ))}
       </List>
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      <List className="bg-success">
+        <ul>
+          {navItems.map((item, index) => (
+            <li key={index}>
+              <div onClick={() => toggleNavItem(index)}>
+                {item.isExpanded ? (
+                  <KeyboardArrowDownIcon />
+                ) : (
+                  <ChevronRightIcon />
+                )}{" "}
+                {item.label}
+              </div>
+              {item.isExpanded && (
+                <ul>
+                  {item.children.map((child, childIndex) => (
+                    <li key={childIndex}>{child.label}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
       </List>
     </Box>
   );
+
+  // SideBar Navigation
+  const [navItems, setNavItems] = useState([
+    {
+      label: "Item 1",
+      children: [{ label: "Sub-item 1" }, { label: "Sub-item 2" }],
+      isExpanded: true,
+    },
+    {
+      label: "Item 2",
+      children: [
+        { label: "Sub-item 1" },
+        { label: "Sub-item 2" },
+        { label: "Sub-item 3" },
+      ],
+      isExpanded: false,
+    },
+  ]);
+
+  const toggleNavItem = (index) => {
+    setNavItems((prevState) =>
+      prevState.map((item, i) => {
+        if (i === index) {
+          return { ...item, isExpanded: !item.isExpanded };
+        }
+        return item;
+      })
+    );
+  };
 
   return (
     <div className="mt-3">

@@ -29,6 +29,7 @@ body {
 }
 .icons {
   color: #777777;
+  margin-right: 5px;
 }
 
 .samprotik {
@@ -44,9 +45,10 @@ body {
 
 .serchInput-icon-div {
   display: flex;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   /* justify-content: center; */
   align-items: center;
-  border: 1px solid gray;
+  border: 1px solid rgb(219, 219, 219);
   width: 33%;
   padding: 5px 10px;
   border-radius: 10px;
@@ -56,6 +58,66 @@ body {
   justify-content: space-evenly;
   align-items: center;
 }
+
+/* Slider  */
+.single-slide-div {
+  background-color: #f2f2f2;
+  border: 1px solid rgb(233, 232, 232);
+  display: flex !important;
+  margin: 0 auto;
+  width: 90% !important;
+  /* margin-right: 5px; */
+  height: 80px;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  padding: 1%;
+}
+.single-slide-div:hover {
+  background-color: #27ae60;
+  cursor: pointer;
+  color: #f2f2f2;
+}
+
+.slide-img {
+  /* width: 30px; */
+}
+.khosra-songrokkhon {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.khosra-songrokkhon-p {
+  background-color: #ffe289;
+  padding: 10px 20px;
+  border-radius: 2px;
+}
+.home-input {
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  border: 0.7px solid #dddddd;
+}
+.home-input-button1 {
+  width: 150px;
+  border: none;
+  padding: 10px 20px;
+  background-color: #ffe289;
+}
+.home-input-button2 {
+  width: 150px;
+  border: none;
+  padding: 10px 20px;
+  background-color: #27ae60;
+}
+.home-input-button-div {
+  display: flex;
+  justify-content: center;
+  /* margin-bottom: 5%; */
+}
+
 @media only screen and (min-width: 1378px) {
   .amounts-div {
     width: 320px;
