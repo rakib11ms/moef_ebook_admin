@@ -5,6 +5,9 @@ import Login from "./Pages/Auth/Login";
 import NotFound from "./Pages/NotFound/NotFound";
 import NavigationBa from "./Pages/Shared/NavigationBa/NavigationBa";
 import Home from "./Pages/Home/Home";
+
+import AllUsers from "./Pages/UserManagement/AllUsers/AllUsers";
+import PermissionUser from "./Pages/UserManagement/PermissionUser/PermissionUser";
 function App() {
   return (
     <div className="App">
@@ -13,6 +16,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/all-users" element={<AllUsers />} />
+        <Route path="/permission-users" element={<PermissionUser />} />
 
         {/* <Route path="admin-login" element={<Login />}> </Route> */}
         {/* <Route exact path="admin-login" element={<Login />}>

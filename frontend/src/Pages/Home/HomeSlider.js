@@ -58,7 +58,7 @@ const HomeSlider = () => {
         </div>
         <div className="single-slide-div">
           <img className="img-fluid slide-img" src={onuchhedImg} alt="" />
-          <h6>অনুচ্ছেদ যোগ করু</h6>
+          <h6>অনুচ্ছেদ যোগ করুন</h6>
           <AddIcon />
         </div>
         <div className="single-slide-div">

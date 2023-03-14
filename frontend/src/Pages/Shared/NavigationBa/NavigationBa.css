@@ -3,6 +3,10 @@
   display: flex;
   justify-content: space-evenly;
 }
+.nav-republic-img {
+  width: 40px;
+  margin-right: 10px;
+}
 .serchInput-icon-div {
   display: flex;
   /* justify-content: center; */
@@ -27,4 +31,58 @@
   height: 40px;
   display: grid;
   place-items: center;
+}
+
+/* Sidebar  */
+.sidebar-upper-list {
+  background-color: #ffc000;
+}
+ul.sidebar-upper-ul {
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-top: 30px;
+}
+ul.sidebar-lower-ul {
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-top: 2px;
+}
+
+.sidebar-lower-list {
+  background-color: #27ae60;
+  color: white;
+  padding-bottom: 50px;
+}
+.sidebar-icons-upper {
+  margin-top: 22px;
+}
+.sidebar-icons {
+  margin-top: 4px;
+}
+
+/* Reponsiveness  */
+@media only screen and (min-width: 1378px) {
+  ul.sidebar-upper-ul {
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    padding-top: 40px;
+  }
+  ul.sidebar-lower-ul {
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    padding-top: 29.8px;
+  }
+  .sidebar-icons-upper {
+    margin-top: 34px;
+  }
+  .sidebar-icons {
+    margin-top: 28px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
 }
