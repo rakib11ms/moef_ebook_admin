@@ -22,6 +22,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { Link } from "react-router-dom";
 
 const NavigationBa = () => {
   // MUI Drawer
@@ -53,7 +54,7 @@ const NavigationBa = () => {
     >
       <List className="sidebar-upper-list">
         <div className="d-flex justify-content-between m-3">
-          <div>
+          <div className="">
             <ul className="sidebar-upper-ul">
               আমার এরিয়া
               <li className="pt-2 pb-2">প্রোফাইল</li>
@@ -69,30 +70,34 @@ const NavigationBa = () => {
       </List>
       <List className="sidebar-lower-list">
         <div className="d-flex justify-content-between m-3">
-          <div>
+          <div className="">
             <ul className="sidebar-lower-ul">
               ব্যবহারকারী ব্যবস্থাপনা
-              <li className="pt-2 pb-2">নিবন্ধীত ব্যবহারকারী</li>
-              <li className="pb-2">গেস্ট ব্যবহারকারী</li>
-              <li className="pb-2">ভেরিফকেশনের জন্য আবেদন</li>
-              <li className="pb-2">অনুমতি(পারমিশন) ব্যবস্থাপনা</li>
+              <li className=" side-li-link">
+                <Link to="/all-users">সকল ব্যবহারকারী</Link>
+              </li>
+              <li className=" side-li-link">
+                <Link to="/permission-users">অনুমতি(পারমিশন) ব্যবস্থাপনা</Link>
+              </li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons" />
         </div>
 
         <div className="d-flex justify-content-between m-3">
-          <div>
+          <div className="">
             <ul className="sidebar-lower-ul">
               লাইব্রেরি
-              <li className="pb-2 pt-2">সকল বই</li>
+              <li className="side-li-link">
+                <Link to="/all-books">সকল বই</Link>
+              </li>
               <li className="pb-2">বইয়ের ক্যটালগ</li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons" />
         </div>
         <div className="d-flex justify-content-between m-3">
-          <div>
+          <div className="">
             <ul className="sidebar-lower-ul">
               নিউজ ও নোটিশ
               <li className="pt-2 pb-2">সকল নিউজ ও নোটিশ</li>
@@ -102,7 +107,7 @@ const NavigationBa = () => {
           <RemoveIcon className="sidebar-icons" />
         </div>
         <div className="d-flex justify-content-between m-3">
-          <div>
+          <div className="sidebar-lower-div ">
             <ul className="sidebar-lower-ul">
               কনফারেন্স
               <li className="pt-2 pb-2">কনফারেন্স তৈরি করুন</li>

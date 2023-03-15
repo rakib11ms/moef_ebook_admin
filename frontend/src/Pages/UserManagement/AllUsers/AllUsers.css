@@ -11,19 +11,25 @@
   text-align: justify;
 }
 .tab-search-input-div {
+  position: absolute;
   display: flex;
-  justify-content: end;
+  justify-content: right;
   margin-top: -40px;
   padding-bottom: 15px;
+
+  right: 0;
+  padding-right: 1%;
+  width: 17%;
 }
 .tab-serchInput-icon-div {
-  display: flex;
-  /* justify-content: center; */
+  /* display: flex;
+ 
+  justify-content: end;
   align-items: center;
   border: 1px solid rgb(204, 204, 204);
   width: 20%;
   padding: 5px 10px;
-  border-radius: 10px;
+  border-radius: 10px; */
 }
 .super-admin {
   background-color: #eb5757;
@@ -68,4 +74,18 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+/* Reponsiveness  */
+@media only screen and (min-width: 1378px) {
+  .tab-search-input-div {
+    position: absolute;
+
+    right: 0;
+    padding-right: 1.3%;
+    width: 13%;
+  }
+}
+
+@media only screen and (max-width: 576px) {
 }

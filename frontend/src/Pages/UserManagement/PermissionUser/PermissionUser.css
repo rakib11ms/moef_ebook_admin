@@ -32,3 +32,33 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.permission-card-div {
+  margin-left: 6%;
+  padding: 20px 20px;
+}
+.permmission-card {
+  width: 400px;
+
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  margin: 5px;
+  padding: 2%;
+}
+.permmission-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+/* Reponsiveness  */
+@media only screen and (min-width: 1378px) {
+  .permission-card-div {
+    margin-left: 5%;
+    padding: 20px 20px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .permission-card-div {
+    margin-left: -5px;
+    padding: 20px 20px;
+  }
+}
