@@ -91,7 +91,9 @@ const NavigationBa = () => {
               <li className="side-li-link">
                 <Link to="/all-books">সকল বই</Link>
               </li>
-              <li className="pb-2">বইয়ের ক্যটালগ</li>
+              <li className="side-li-link">
+                <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
+              </li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons" />
@@ -100,8 +102,12 @@ const NavigationBa = () => {
           <div className="">
             <ul className="sidebar-lower-ul">
               নিউজ ও নোটিশ
-              <li className="pt-2 pb-2">সকল নিউজ ও নোটিশ</li>
-              <li className="pb-2">নিউজ ও নোটিশ গঠন করুন</li>
+              <li className="side-li-link">
+                <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
+              </li>
+              <li className="side-li-link">
+                <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
+              </li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons" />

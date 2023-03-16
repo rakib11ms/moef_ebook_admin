@@ -1,0 +1,141 @@
+.all-card-books-div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.all-card-books {
+  display: grid;
+  place-items: center;
+  width: 18%;
+  margin: 6px;
+  /* border: 1px solid gray; */
+}
+.all-card-books:hover {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.all-news-notice-tags-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.all-books-card-p {
+  font-size: 0.7rem;
+}
+.news-notice-search-input-div {
+  display: flex;
+}
+.news-notice-serchInput-icon-div {
+  border: 1px solid #f1f1f1;
+  /* width: 200px;
+  height: 20px; */
+  border-radius: 6px;
+  background-color: #f8f8f8;
+}
+.jog-korun-button-div {
+  border: 1px solid rgb(238, 236, 236);
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 4px;
+}
+.jog-korun-button-div:hover {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.jog-korun-button {
+  border: none;
+  background-color: #ffffff;
+}
+.jog-korun-button-icon {
+  color: #1a8e1c;
+}
+.gsearch {
+  background-color: #f8f8f8;
+}
+.icon-pen {
+  margin-left: 10px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  padding: 4px;
+}
+.all-books-add-card-div {
+  background-color: #f8f8f8;
+  height: 500px;
+}
+.all-books-side-tags {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.download-icon-div {
+  display: flex;
+  justify-content: flex-end;
+}
+.download-icon {
+  /* color: #f1f1f1; */
+  margin-right: 10px;
+}
+.suchi-div {
+  text-align: justify;
+  padding-left: 20px;
+}
+.all-news-notice-edit-div {
+  display: grid;
+  place-items: center;
+  margin-top: 40%;
+}
+
+.all-books-edit {
+  width: 200px;
+  height: 40px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  border: 1px solid rgb(189, 189, 189);
+}
+.all-books-content {
+  width: 200px;
+  height: 50px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  border: none;
+  background-color: #1a8e1c;
+  color: white;
+}
+
+.tr-div:hover {
+  background-color: #c7fede;
+  cursor: pointer;
+}
+.td-notice {
+  font-size: 0.8;
+  /* border: 1px solid gray; */
+}
+/* Reponsiveness  */
+@media only screen and (min-width: 1378px) {
+  .all-card-books-div {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .all-card-books {
+    width: 200px;
+  }
+
+  .all-books-add-card-div {
+    height: 730px;
+  }
+  .all-news-notice-edit-div {
+    display: grid;
+    place-items: center;
+    margin-top: 25%;
+  }
+  .all-books-card-p {
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+}

@@ -7,3 +7,43 @@
   border-radius: 10px;
   margin-left: 20px;
 }
+.catogories-input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid rgb(219, 219, 219);
+
+  outline: none;
+}
+.songrokkhon-button {
+  background-color: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border: none;
+  margin-top: 2%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: justify;
+}
+.categories-input-div {
+  border-right: 1px solid rgb(160, 160, 160);
+}
+.catagories-topics-div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.catagories-topics {
+  margin: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  /* border: 1px solid gray; */
+  width: 200px;
+  /* align-items: center; */
+  text-align: center;
+  padding-top: 2.5%;
+  background-color: #c7fede;
+  cursor: pointer;
+}
+.catagories-topics:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

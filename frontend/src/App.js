@@ -10,6 +10,8 @@ import AllUsers from "./Pages/UserManagement/AllUsers/AllUsers";
 import PermissionUser from "./Pages/UserManagement/PermissionUser/PermissionUser";
 import AllBooks from "./Pages/AllBooks/AllBooks/AllBooks";
 import BooksCatagories from "./Pages/AllBooks/BooksCatagories/BooksCatagories";
+import AllNewsAndNotice from "./Pages/NewsAndNotice/AllNewsAndNotice/AllNewsAndNotice";
+import CreateNewsAndNotice from "./Pages/NewsAndNotice/CreateNewsAndNotice/CreateNewsAndNotice";
 function App() {
   return (
     <div className="App">
@@ -22,6 +24,8 @@ function App() {
         <Route path="/permission-users" element={<PermissionUser />} />
         <Route path="/all-books" element={<AllBooks />} />
         <Route path="/book-categories" element={<BooksCatagories />} />
+        <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
+        <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
 
         {/* <Route path="admin-login" element={<Login />}> </Route> */}
         {/* <Route exact path="admin-login" element={<Login />}>
