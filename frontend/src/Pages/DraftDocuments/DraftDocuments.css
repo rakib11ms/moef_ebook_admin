@@ -1,0 +1,33 @@
+.khosra-tag-div {
+  background-color: #ffe289;
+  padding: 20px 0px 20px 20px;
+}
+.kosra-h6 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+.khosra-icon {
+  margin-right: 10px;
+}
+.all-draft-overlay-card {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.draft-overlay-card {
+  /* border: 1px solid gray; */
+  width: 300px;
+  height: 310px;
+  padding: 20px;
+  text-align: justify;
+  margin: 10px;
+  background-color: #ffe289;
+}
+.draft-icons {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(92, 91, 91);
+}

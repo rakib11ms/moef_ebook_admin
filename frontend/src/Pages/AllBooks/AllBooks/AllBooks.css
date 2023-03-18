@@ -38,7 +38,7 @@
   border-radius: 100%;
   padding: 4px;
 }
-.all-books-add-card-div {
+.all-books-add-card-div1 {
   background-color: #f8f8f8;
   height: 500px;
 }
@@ -91,8 +91,8 @@
   .all-card-books {
     width: 200px;
   }
-  .all-books-add-card-div {
-    height: 730px;
+  .all-books-add-card-div1 {
+    height: 754px;
   }
   .all-books-buttons-ful-div {
     display: grid;

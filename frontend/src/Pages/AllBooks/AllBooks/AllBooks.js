@@ -54,7 +54,7 @@ const AllBooks = () => {
             </div>
           </div>
           <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-            <div className="all-books-add-card-div">
+            <div className="all-books-add-card-div1">
               <div className="all-books-side-tags">
                 পরিবেশ আইন সংকলন ১০১-২০০
                 <span className="icon-pen">

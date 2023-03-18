@@ -1,0 +1,203 @@
+/* Left Section  */
+.my-area-left-div {
+  background-color: #f8f8f8;
+}
+.name-pic-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* place-items: center; */
+}
+.profile-pic {
+  width: 250px;
+  /* height: 300px; */
+  border-radius: 5px;
+}
+.change-pp-button {
+  width: 93%;
+  border: none;
+  margin-top: 10px;
+  background-color: #d9d9d9;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  font-size: 0.9rem;
+}
+.change-pp-button:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.offi-info-div {
+  padding: 0px 14px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.name-info {
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  margin-left: -10px;
+}
+.varify-button-div {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 60%;
+}
+.varify-button {
+  width: 90%;
+  background-color: #27ae60;
+  color: #ffffff;
+  font-weight: 500;
+  border-radius: none;
+  padding: 5px 20px;
+}
+
+/* Right  Section  */
+.area-all-books-div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.area-book-div {
+  width: 80%;
+  margin: 5px;
+  padding: 0px 1px;
+  flex-wrap: wrap;
+  display: grid;
+  place-items: center;
+
+  /* border: 1px solid gray; */
+}
+.area-book-div:hover {
+  background-color: #f8f8f8;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.bookImg-area {
+  width: 100px;
+}
+
+.area-book-div p {
+  text-align: center;
+  font-size: 0.8rem;
+}
+.bookmark-div {
+  width: 100%;
+  /* margin-right: 10px; */
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid gray; */
+  border-radius: 7px;
+  align-items: center;
+  padding: 4px 20px;
+  cursor: pointer;
+  background-color: #f3f3f3;
+}
+.bookmark-img {
+  width: 50px;
+}
+
+.draft-card-div {
+  padding: 10px 20px;
+  background-color: #ffedb9;
+  width: 98% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.draft-card-div p {
+  font-size: 0.9rem;
+  padding-right: 20px;
+}
+.area-draft-icon {
+  color: #5c5c5c;
+  margin: 0px 3px;
+}
+.prokash-card-div {
+  padding: 10px 20px;
+  background-color: #abfdd2;
+  width: 98% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.notification-div {
+  background-color: #fdb7b7;
+  padding: 30px 0px 10px 20px;
+}
+.notification-div p {
+  font-size: 1rem;
+  color: black;
+  font-weight: 600;
+}
+
+/* Responsiveness  */
+
+@media only screen and (min-width: 1378px) {
+  .my-area-left-div {
+    background-color: #f8f8f8;
+  }
+  .name-pic-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* place-items: center; */
+  }
+  .profile-pic {
+    width: 250px;
+    /* height: 300px; */
+    border-radius: 5px;
+  }
+  .change-pp-button {
+    width: 62%;
+    border: none;
+    margin-top: 10px;
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-size: 0.9rem;
+  }
+  .change-pp-button:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .offi-info-div {
+    padding: 0px 15px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .name-info {
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 50px;
+  }
+  .varify-button-div {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20%;
+  }
+  .varify-button {
+    width: 65%;
+    background-color: #27ae60;
+    color: #ffffff;
+    font-weight: 500;
+    border-radius: none;
+    padding: 5px 20px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+}
