@@ -87,10 +87,20 @@ body {
   justify-content: right;
   align-items: center;
 }
+a {
+  text-decoration: none !important;
+}
 .khosra-songrokkhon-p {
   background-color: #ffe289;
+  color: #0f0f0f;
+  border-bottom: none;
+
   padding: 10px 20px;
   border-radius: 2px;
+}
+.khosra-songrokkhon-p:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 .home-input {
   width: 100%;

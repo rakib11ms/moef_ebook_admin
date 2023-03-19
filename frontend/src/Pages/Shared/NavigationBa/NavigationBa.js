@@ -57,12 +57,9 @@ const NavigationBa = () => {
           <div className="">
             <ul className="sidebar-upper-ul">
               আমার এরিয়া
-              <li className="pt-2 pb-2">প্রোফাইল</li>
-              <li className="pb-2">আমার বই</li>
-              <li className="pb-2">বুকমার্কস</li>
-              <li className="pb-2">ড্রাফট</li>
-              <li className="pb-2">প্রকাশিত</li>
-              <li className="pb-2">নোটিফিকেশন</li>
+              <li className=" side-li-link1">
+                <Link to="/my-area">আমরা তথ্য</Link>
+              </li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons-upper" />
@@ -99,7 +96,7 @@ const NavigationBa = () => {
           <RemoveIcon className="sidebar-icons" />
         </div>
         <div className="d-flex justify-content-between m-3">
-          <div className="">
+          <div className="sidebar-lower-div">
             <ul className="sidebar-lower-ul">
               নিউজ ও নোটিশ
               <li className="side-li-link">
@@ -108,16 +105,6 @@ const NavigationBa = () => {
               <li className="side-li-link">
                 <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
               </li>
-            </ul>
-          </div>
-          <RemoveIcon className="sidebar-icons" />
-        </div>
-        <div className="d-flex justify-content-between m-3">
-          <div className="sidebar-lower-div ">
-            <ul className="sidebar-lower-ul">
-              কনফারেন্স
-              <li className="pt-2 pb-2">কনফারেন্স তৈরি করুন</li>
-              <li className="pb-2">লগ দেখুন</li>
             </ul>
           </div>
           <RemoveIcon className="sidebar-icons" />

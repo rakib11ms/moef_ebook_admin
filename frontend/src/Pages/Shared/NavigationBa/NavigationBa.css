@@ -57,6 +57,24 @@ ul.sidebar-lower-ul {
   text-decoration: none;
   color: white;
 }
+.side-li-link1 a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+.side-li-link1 a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+.side-li-link1 a:hover {
+  text-decoration: none;
+
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+.side-li-link1 a:after {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  border-radius: 5px;
+}
 .side-li-link a:hover {
   text-decoration: none;
   color: white;
@@ -71,7 +89,10 @@ ul.sidebar-lower-ul {
 .sidebar-lower-list {
   background-color: #27ae60;
   color: white;
-  padding-bottom: 50px;
+  /* padding-bottom: 20.7% !important; */
+}
+.sidebar-lower-div {
+  padding-bottom: 151px;
 }
 .sidebar-icons-upper {
   margin-top: 22px;
@@ -95,7 +116,7 @@ ul.sidebar-lower-ul {
     padding-top: 15%;
   }
   .sidebar-lower-div {
-    padding-bottom: 22.5%;
+    padding-bottom: 128%;
   }
   .sidebar-icons-upper {
     margin-top: 34px;

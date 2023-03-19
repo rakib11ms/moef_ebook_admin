@@ -13,6 +13,7 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeSlider from "./HomeSlider";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -127,12 +128,15 @@ const Home = () => {
             <h5>বই এর তথ্য যোগ করুন </h5>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-            <p className="khosra-songrokkhon-p">
-              <span>
-                <ErrorOutlineOutlinedIcon className="me-2" />
-              </span>
-              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-            </p>
+            <Link to="/draft-documents">
+              {" "}
+              <p className="khosra-songrokkhon-p">
+                <span>
+                  <ErrorOutlineOutlinedIcon className="me-2" />
+                </span>
+                আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
+              </p>
+            </Link>
           </div>
         </div>
         <div className="container">

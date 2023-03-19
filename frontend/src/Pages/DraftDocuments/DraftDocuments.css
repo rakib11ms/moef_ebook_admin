@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .khosra-tag-div {
   background-color: #ffe289;
   padding: 20px 0px 20px 20px;
@@ -13,21 +16,122 @@
 }
 .all-draft-overlay-card {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   margin-top: 20px;
 }
 .draft-overlay-card {
   /* border: 1px solid gray; */
-  width: 300px;
-  height: 310px;
-  padding: 20px;
-  text-align: justify;
-  margin: 10px;
-  background-color: #ffe289;
+  /* width: 300px; */
+  /* height: 310px; */
 }
 .draft-icons {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   color: rgb(92, 91, 91);
+}
+
+.card-over {
+  position: relative;
+  display: inline-block;
+}
+
+.draft-overlay-card {
+  width: 90%;
+  height: 90%;
+  cursor: pointer;
+  padding: 20px;
+  text-align: justify;
+  margin: 10px;
+  background-color: #ffe289;
+}
+
+.overlay {
+  position: absolute;
+  top: 160px;
+  margin-left: -20px;
+
+  width: 90%;
+  height: 45%;
+  opacity: 0;
+
+  transition: opacity 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-over:hover .overlay {
+  opacity: 1;
+}
+.edit-button {
+  padding: 10px 30px;
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+.edit-button:hover {
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.draft-form-control-div {
+  border: 1px solid rgb(182, 182, 182);
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+.draft-form-control {
+  border: none;
+}
+.draft-form-control-icon {
+  margin-top: 5px;
+  cursor: pointer;
+}
+.draft-form-control2 {
+  border: 1px solid rgb(182, 182, 182);
+  margin-bottom: 20px;
+}
+
+/* Reponsiveness  */
+@media only screen and (min-width: 1378px) {
+  .card-over {
+    position: relative;
+    display: inline-block;
+  }
+
+  .draft-overlay-card {
+    width: 80%;
+    height: 100%;
+    cursor: pointer;
+    padding: 20px;
+    text-align: justify;
+    margin: 5px;
+    background-color: #ffe289;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 160px;
+    margin-left: -20px;
+
+    width: 80%;
+    height: 45%;
+    opacity: 0;
+
+    transition: opacity 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .card-over:hover .overlay {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 576px) {
 }

@@ -17,7 +17,7 @@ const PermissionUser = () => {
             <div className="">
               <div className="tab-serchInput-icon-div">
                 <SearchIcon />
-                <input type="search" className="gsearch" />
+                <input type="search" className="gsearch-permission" />
               </div>
             </div>
           </div>

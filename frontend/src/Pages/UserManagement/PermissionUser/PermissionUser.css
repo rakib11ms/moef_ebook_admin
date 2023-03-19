@@ -12,6 +12,12 @@
   width: 100%;
   padding: 5px 10px;
   border-radius: 10px;
+  background-color: white !important;
+}
+.gsearch-permission {
+  border: none;
+  background-color: white;
+  outline: none;
 }
 .permission-head-buttons {
   display: flex;

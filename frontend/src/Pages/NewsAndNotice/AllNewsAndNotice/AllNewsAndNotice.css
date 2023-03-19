@@ -125,7 +125,7 @@
   }
 
   .all-books-add-card-div {
-    height: 730px;
+    height: 800px !important;
   }
   .all-news-notice-edit-div {
     display: grid;
