@@ -25,7 +25,7 @@ const AllNewsAndNotice = () => {
                 <div className="news-notice-search-input-div ">
                   <div className="news-notice-serchInput-icon-div">
                     <SearchIcon />
-                    <input type="search" className="gsearch" />
+                    <input type="search" className="gsearch-news-notice" />
                   </div>
                   <div className="jog-korun-button-div">
                     <button className="jog-korun-button">যোগ করুন</button>
@@ -34,8 +34,8 @@ const AllNewsAndNotice = () => {
                 </div>
               </div>
               <hr />
-              <div className="container-fluid">
-                <table className="table table-borderless">
+              <div className="container-fluid table-responsive-lg table-responsive-sm">
+                <table className="table table-borderless ">
                   <thead>
                     {/* <tr>
                       <th scope="col">#</th>
@@ -151,8 +151,8 @@ const AllNewsAndNotice = () => {
               </div> */}
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-              <div className="all-books-add-card-div">
-                <div className="all-books-side-tags">
+              <div className="all-notice-news-add-card-div">
+                <div className="all-notice-news-side-tags">
                   অফসি আদশে, তারখিঃ ০৯-০৩-২০২৩ (নতুন)
                   <span className="icon-pen">
                     <CreateIcon />

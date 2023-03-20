@@ -163,14 +163,16 @@ const NavigationBa = () => {
           </div>
           <div className="d-flex align-items-center">
             <img className="nav-republic-img" src={republicImg} alt="" />
-            <h6>পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়</h6>
+            <h6 className="nav-tags">
+              পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়
+            </h6>
           </div>
         </div>
         <div className="col-lg-6 col-md-6 col-sm-12 col-12">
           <div className="nav-rightside-div">
             <div className="serchInput-icon-div">
               <SearchIcon />
-              <input type="search" className="gsearch" />
+              <input type="search" className="gsearch-nav" />
             </div>
 
             <div className="icons-nav-div">

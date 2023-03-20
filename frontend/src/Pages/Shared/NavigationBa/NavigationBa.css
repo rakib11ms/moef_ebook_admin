@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
+body {
+  overflow-x: hidden;
+}
 .nav-rightside-div {
   display: flex;
   justify-content: space-evenly;
@@ -17,7 +20,8 @@
   border-radius: 10px;
   background-color: #f8f8f8;
 }
-.gsearch {
+.gsearch-nav {
+  background-color: #f8f8f8;
   border: none;
   outline: none;
 }
@@ -127,4 +131,30 @@ ul.sidebar-lower-ul {
 }
 
 @media only screen and (max-width: 576px) {
+  .nav-tags {
+    font-size: 0.9rem;
+    display: inline;
+  }
+
+  .icons-nav-div {
+    width: 8%;
+    height: 100%;
+  }
+  .icons-nav {
+    padding: 2px;
+  }
+  .icons-nav-div:hover {
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  }
+  .nav-rightside-div {
+    margin-top: 15px;
+  }
+  .gsearch-nav {
+    width: 80%;
+    outline: none;
+    border: none;
+  }
+  .sidebar-lower-div {
+    padding-bottom: 134%;
+  }
 }

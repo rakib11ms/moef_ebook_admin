@@ -33,6 +33,11 @@
   border-radius: 6px;
   background-color: #f8f8f8;
 }
+.gsearch-news-notice {
+  border: none;
+  outline: none;
+  background-color: #f8f8f8;
+}
 .jog-korun-button-div {
   border: 1px solid rgb(238, 236, 236);
   padding: 5px 20px;
@@ -59,7 +64,7 @@
   border-radius: 100%;
   padding: 4px;
 }
-.all-books-add-card-div {
+.all-notice-news-add-card-div {
   background-color: #f8f8f8;
   height: 500px;
 }
@@ -124,7 +129,7 @@
     width: 200px;
   }
 
-  .all-books-add-card-div {
+  .all-notice-news-add-card-div {
     height: 800px !important;
   }
   .all-news-notice-edit-div {
@@ -138,4 +143,10 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .all-notice-news-add-card-div {
+    margin-bottom: 30%;
+  }
+  .all-news-notice-edit-div {
+    margin-top: 100px !important;
+  }
 }

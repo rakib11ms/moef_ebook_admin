@@ -54,7 +54,7 @@ const CreateNewsAndNotice = () => {
                     এটাচমেন্ট যোগ করুন
                   </button>
                 </div>
-                <div>
+                <div className="draft-prokas-buttons-div">
                   <button className="draft-prokas-button">ড্রাফট করুন</button>
                   <button className="draft-prokas-button">প্রকাশ করুন</button>
                 </div>
@@ -177,7 +177,7 @@ const CreateNewsAndNotice = () => {
               </div> */}
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-              <div className="all-books-add-card-div">
+              <div className="all-news-notice-card-div">
                 <div>
                   <h6 className="all-create-news-side-tags">পাবলিকেশন তথ্য</h6>
                 </div>

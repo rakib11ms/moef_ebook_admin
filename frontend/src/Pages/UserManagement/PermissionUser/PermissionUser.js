@@ -13,7 +13,7 @@ const PermissionUser = () => {
       <section>
         <div className="">
           <div className="permission-top-tag container-fluid">
-            <h5>ব্যবহারকারীর পারমিশন ব্যবস্থাপনা </h5>
+            <h5>ব্যবহারকারীর অনুমতি ব্যবস্থাপনা </h5>
             <div className="">
               <div className="tab-serchInput-icon-div">
                 <SearchIcon />

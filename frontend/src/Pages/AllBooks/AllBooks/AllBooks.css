@@ -24,13 +24,16 @@
   font-size: 0.7rem;
 }
 .books-serchInput-icon-div {
-  border: 1px solid #f1f1f1;
+  border: 1px solid #a09f9f;
   width: 100%;
   border-radius: 6px;
   background-color: #f8f8f8;
+  padding: 3px;
 }
-.gsearch {
+.gsearch-book {
   background-color: #f8f8f8;
+  border: none;
+  outline: none;
 }
 .icon-pen {
   margin-left: 10px;
@@ -105,4 +108,14 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .all-card-books {
+    /* border: 1px solid gray; */
+    width: 100px !important;
+  }
+  .all-books-card-p {
+    font-size: 0.5rem;
+  }
+  .all-books-add-card-div1 {
+    margin-bottom: 30%;
+  }
 }

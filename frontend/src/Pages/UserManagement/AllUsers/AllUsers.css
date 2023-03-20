@@ -88,4 +88,19 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .tab-search-input-div {
+    width: 50%;
+    margin: 10px;
+  }
+  .tab-searchinput-div {
+    width: 70%;
+  }
+  .gsearch-tab {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+  .varify-top-div {
+    margin-top: 40px;
+  }
 }

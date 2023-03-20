@@ -16,9 +16,9 @@ const BooksCatagories = () => {
         <div className="categories-top-div">
           <h5>বইয়ের ক্যাটাগরি/ক্যটেলগ</h5>
 
-          <div className="books-categories-serchInput-icon-div">
+          <div className="categories-serchInput-icon-div">
             <SearchIcon />
-            <input type="search" className="gsearch" />
+            <input type="search" className="gsearch-categories" />
           </div>
         </div>
       </section>

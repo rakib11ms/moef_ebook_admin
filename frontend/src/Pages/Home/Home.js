@@ -24,7 +24,7 @@ const Home = () => {
       </section>
       <section className="container-fluid">
         <div className="row">
-          <div className="col-xl-7 col-lg-8 col-md-7 col-md-12 col-12 d-flex">
+          <div className="col-xl-7 col-lg-8 col-md-7 col-md-12 col-12 d-flex doc-chap-book">
             <div className=" amounts-div">
               <img src={docIcon} alt="" />
               <h4 className="amount-doc-text">
@@ -90,25 +90,29 @@ const Home = () => {
           <div className="col-xl-6 col-lg-5 col-md-6">
             <h6>যোগ করুন </h6>
           </div>
-          <div className="col-xl-6 col-lg-7 col-md-6">
+          <div className="col-xl-6 col-lg-7 col-md-6 col-sm-12 col-12">
             <div className="books-index-search">
-              <h6>
-                {" "}
-                <span>
-                  <LibraryBooksIcon className="icons" />
-                </span>
-                সকল বই দেখুন{" "}
-              </h6>
-              <h6>
-                {" "}
-                <span>
-                  <AutoStoriesIcon className="icons" />
-                </span>
-                ইনডেক্স দেখুন
-              </h6>
-              <div className="serchInput-icon-div">
+              <div className="all-books-index-show">
+                <h6>
+                  {" "}
+                  <span>
+                    <LibraryBooksIcon className="icons" />
+                  </span>
+                  সকল বই দেখুন{" "}
+                </h6>
+              </div>
+              <div className="all-books-index-show">
+                <h6>
+                  {" "}
+                  <span>
+                    <AutoStoriesIcon className="icons" />
+                  </span>
+                  ইনডেক্স দেখুন
+                </h6>
+              </div>
+              <div className="home-serchInput-icon-div">
                 <SearchIcon />
-                <input type="search" className="gsearch" />
+                <input type="search" className="gsearch-home" />
               </div>
             </div>
           </div>

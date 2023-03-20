@@ -72,7 +72,7 @@ const AllUsers = () => {
             <div className="tab-search-input-div">
               <div className="tab-serchInput-icon-div">
                 <SearchIcon />
-                <input type="search" className="gsearch" />
+                <input type="search" className="gsearch-tab" />
               </div>
             </div>
           </Box>
@@ -81,7 +81,7 @@ const AllUsers = () => {
             <div className="varify-top-div">
               <ShortTextIcon />
             </div>
-            <section className="m-0 border-0 bd-example">
+            <section className="m-0 border-0 table-responsive-md table-responsive-sm">
               <table className="table">
                 <thead>
                   <tr>

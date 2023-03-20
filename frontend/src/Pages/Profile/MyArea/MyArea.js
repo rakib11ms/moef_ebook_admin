@@ -91,7 +91,7 @@ const MyArea = () => {
               <div className="area-all-books-div">
                 <div className="area-book-div">
                   <img className="bookImg-area" src={bookImg} alt="" />
-                  <p>পরিবেশ আইন সংকলন ১০১-২০০</p>
+                  <p>পরিবেশ আইন ১০১-২০০</p>
                 </div>
                 <div className="area-book-div">
                   <img className="bookImg-area" src={bookImg} alt="" />

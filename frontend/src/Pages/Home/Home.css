@@ -43,7 +43,7 @@ body {
   color: #333333;
 }
 
-.serchInput-icon-div {
+.home-serchInput-icon-div {
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   /* justify-content: center; */
@@ -51,11 +51,18 @@ body {
   border: 1px solid rgb(219, 219, 219);
   width: 33%;
   padding: 5px 10px;
+  background-color: #f8f8f8;
   border-radius: 10px;
+}
+.gsearch-home {
+  border: none;
+  outline: none;
+  background-color: #f8f8f8;
 }
 .books-index-search {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -136,4 +143,20 @@ a {
 }
 
 @media only screen and (max-width: 576px) {
+  .doc-chap-book {
+    margin-bottom: 17px;
+  }
+  .books-index-search {
+    flex-wrap: wrap !important;
+  }
+  .all-books-index-show {
+    width: 50%;
+    /* border: 1px solid gray; */
+  }
+  .home-serchInput-icon-div {
+    width: 70%;
+  }
+  .gsearch-home {
+    width: 90%;
+  }
 }

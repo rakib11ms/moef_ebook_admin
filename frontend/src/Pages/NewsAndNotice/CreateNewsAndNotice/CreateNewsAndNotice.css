@@ -65,7 +65,7 @@
   border-radius: 100%;
   padding: 4px;
 }
-.all-books-add-card-div {
+.all-news-notice-card-div {
   background-color: #f8f8f8;
   height: 500px;
 }
@@ -167,4 +167,17 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .draft-prokas-buttons-div {
+    margin-bottom: 10px;
+  }
+  .all-news-notice-card-div {
+    height: 550px;
+  }
+  .suchi-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: -20px;
+    padding-bottom: 20%;
+  }
 }

@@ -134,4 +134,27 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .overlay {
+    position: absolute;
+    top: 130px;
+    /* margin-left: -20px; */
+
+    width: 90%;
+    height: 45%;
+    opacity: 0;
+
+    transition: opacity 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .jodit-div {
+    margin-bottom: 40px;
+  }
+  .all-draft-overlay-card {
+    flex-wrap: wrap;
+  }
 }

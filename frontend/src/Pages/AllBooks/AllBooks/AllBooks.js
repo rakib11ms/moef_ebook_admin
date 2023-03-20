@@ -21,7 +21,7 @@ const AllBooks = () => {
               <div className="books-search-input-div">
                 <div className="books-serchInput-icon-div">
                   <SearchIcon />
-                  <input type="search" className="gsearch" />
+                  <input type="search" className="gsearch-book" />
                 </div>
               </div>
             </div>
