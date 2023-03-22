@@ -139,7 +139,7 @@ const DraftDocuments = () => {
       </section>
 
       <section className="container-fluid mt-5">
-        <div className="row">
+        <div className="row draft-lower-section">
           <div className="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-12 jodit-div">
             <h5>এডিটর </h5>
             <JoditEditor
@@ -194,6 +194,14 @@ const DraftDocuments = () => {
               </select>
             </div>
           </div>
+        </div>
+        <div className="draft-buttons-div">
+          <button className="draft-button-khosra">
+            <strong>খসড়া</strong>
+          </button>
+          <button className="draft-button-get-in">
+            <strong>প্রকাশ করুন</strong>
+          </button>
         </div>
       </section>
     </div>

@@ -93,6 +93,30 @@
   margin-bottom: 20px;
 }
 
+.draft-buttons-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  /* margin-top: 50%; */
+}
+.draft-button-khosra {
+  width: 15%;
+  border: none;
+  background-color: #ffe289;
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 3px;
+}
+.draft-button-get-in {
+  width: 15%;
+  border: none;
+  background-color: #27ae60;
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 3px;
+}
+
 /* Reponsiveness  */
 @media only screen and (min-width: 1378px) {
   .card-over {
@@ -130,6 +154,12 @@
 
   .card-over:hover .overlay {
     opacity: 1;
+  }
+  .draft-lower-section {
+    margin-bottom: -50%;
+  }
+  .draft-buttons-div {
+    margin-top: 55%;
   }
 }
 

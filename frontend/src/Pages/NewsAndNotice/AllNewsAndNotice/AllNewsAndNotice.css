@@ -33,6 +33,10 @@
   border-radius: 6px;
   background-color: #f8f8f8;
 }
+.all-notice-news-side-tags {
+  /* position: fixed; */
+  display: flex;
+}
 .gsearch-news-notice {
   border: none;
   outline: none;

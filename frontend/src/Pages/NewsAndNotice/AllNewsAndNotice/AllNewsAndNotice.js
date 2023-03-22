@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import bookLogoImg from "../../../images/book.png";
 import "./AllNewsAndNotice.css";
@@ -11,6 +11,14 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const AllNewsAndNotice = () => {
+  const [selectedText, setSelectedText] = useState("");
+  const [selectedNotice, setSelectedNotice] = useState("");
+  function handleParagraphClick(event) {
+    setSelectedText(event.target.innerText);
+  }
+  function handleNoticeClick(event) {
+    setSelectedNotice(event.target.innerText);
+  }
   return (
     <div>
       <div>
@@ -48,10 +56,12 @@ const AllNewsAndNotice = () => {
                   <tbody>
                     <tr className="tr-div">
                       <th scope="row">১</th>
-                      <td>
-                        <strong>অফসি আদশে, তারখিঃ ০৯-০৩-২০২৩ (নতুন)</strong>
+                      <td onClick={handleParagraphClick}>
+                        <strong>অফসি আদশে, তারিখ ০৯-০৩-২০২৩ (নতুন)</strong>
                       </td>
-                      <td className="td-notice">নোটিশ/ অফিস নোটিশ</td>
+                      <td onClick={handleNoticeClick} className="td-notice">
+                        নোটিশ/ অফিস নোটিশ
+                      </td>
                       <td>
                         <CreateOutlinedIcon />
                       </td>
@@ -61,12 +71,12 @@ const AllNewsAndNotice = () => {
                     </tr>
                     <tr className="tr-div">
                       <th scope="row">২</th>
-                      <td>
+                      <td onClick={handleParagraphClick}>
                         <strong>
-                          র্কমশালার নোটশি, তারখিঃ ১২-০৩-২০২৩ (নতুন)
+                          র্কমশালার নোটিশ, তারিখ ০২-০৩-২০২৩ (নতুন)
                         </strong>
                       </td>
-                      <td>নোটিশ/ কর্মশালা </td>
+                      <td onClick={handleNoticeClick}>নোটিশ/ কর্মশালা </td>
                       <td>
                         <CreateOutlinedIcon />
                       </td>
@@ -76,12 +86,12 @@ const AllNewsAndNotice = () => {
                     </tr>
                     <tr className="tr-div">
                       <th scope="row">৩</th>
-                      <td>
+                      <td onClick={handleParagraphClick}>
                         <strong>
-                          র্কমশালার নোটশি, তারখিঃ ১২-০৩-২০২৩ (নতুন)
+                          র্কমশালার নোটিশ, তারিখ ১৩-০৩-২০২৩ (নতুন)
                         </strong>
                       </td>
-                      <td>নোটিশ/ কর্মশালা </td>
+                      <td onClick={handleNoticeClick}>নোটিশ/ কর্মশালা </td>
                       <td>
                         <CreateOutlinedIcon />
                       </td>
@@ -91,12 +101,12 @@ const AllNewsAndNotice = () => {
                     </tr>
                     <tr className="tr-div">
                       <th scope="row">৪</th>
-                      <td>
+                      <td onClick={handleParagraphClick}>
                         <strong>
-                          র্কমশালার নোটশি, তারখিঃ ১২-০৩-২০২৩ (নতুন)
+                          র্কমশালার নোটিশ, তারিখ ১৪-০৩-২০২৩ (নতুন)
                         </strong>
                       </td>
-                      <td>নোটিশ/ সভা </td>
+                      <td onClick={handleNoticeClick}>নোটিশ/ সভা </td>
                       <td>
                         <CreateOutlinedIcon />
                       </td>
@@ -106,13 +116,13 @@ const AllNewsAndNotice = () => {
                     </tr>
                     <tr className="tr-div">
                       <th scope="row">৫</th>
-                      <td>
+                      <td onClick={handleParagraphClick}>
                         {" "}
                         <strong>
                           র্কমশালার নোটশি, তারখিঃ ১২-০৩-২০২৩ (নতুন)
                         </strong>
                       </td>
-                      <td>নোটিশ/ বিবিধ </td>
+                      <td onClick={handleNoticeClick}>নোটিশ/ বিবিধ </td>
                       <td>
                         <CreateOutlinedIcon />
                       </td>
@@ -153,7 +163,7 @@ const AllNewsAndNotice = () => {
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
               <div className="all-notice-news-add-card-div">
                 <div className="all-notice-news-side-tags">
-                  অফসি আদশে, তারখিঃ ০৯-০৩-২০২৩ (নতুন)
+                  {selectedText && <p>{selectedText}</p>}
                   <span className="icon-pen">
                     <CreateIcon />
                   </span>
@@ -164,9 +174,9 @@ const AllNewsAndNotice = () => {
                 </div>
                 <div className="suchi-div">
                   <p>
-                    <strong>নোটিশ/ অফিস নোটিশ</strong>
+                    <strong>{selectedNotice && <p>{selectedNotice}</p>}</strong>
                   </p>
-                  <p>ক্যাটেগরি/সাব ক্যাটেগরি </p>
+
                   <p>বিষয় বস্তু: </p>
                 </div>
                 <div className="all-books-buttons-ful-div">
@@ -183,6 +193,7 @@ const AllNewsAndNotice = () => {
                   </div> */}
                 </div>
               </div>
+              <div></div>
             </div>
           </div>
         </section>

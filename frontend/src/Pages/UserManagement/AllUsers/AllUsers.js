@@ -308,7 +308,7 @@ const AllUsers = () => {
           <TabPanel value={value} index={2}>
             <div className="varify-top-div">
               <div className="dropdown me-1">
-                <button type="button" className="varify-button ">
+                <button type="button" className="varify-button1 ">
                   Verify now
                 </button>
               </div>
@@ -351,7 +351,7 @@ const AllUsers = () => {
                         <p>ID 3322113</p>
                       </div>
                       <div className="dropdown me-1">
-                        <button type="button" className="varify-button ">
+                        <button type="button" className="varify-button2 ">
                           Verify now
                         </button>
                       </div>
@@ -386,7 +386,7 @@ const AllUsers = () => {
                         <p>ID 3322113</p>
                       </div>
                       <div className="dropdown me-1">
-                        <button type="button" className="varify-button ">
+                        <button type="button" className="varify-button2 ">
                           Verify now
                         </button>
                       </div>
