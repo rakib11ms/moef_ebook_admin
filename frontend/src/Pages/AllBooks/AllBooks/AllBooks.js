@@ -89,6 +89,9 @@ const AllBooks = () => {
           </div>
         </div>
       </section>
+
+      <section></section>
+
       <section>
         <div className="pagination-div">
           <nav aria-label="Page navigation example">
