@@ -30,6 +30,12 @@ const BooksCatagories = () => {
     }
   };
 
+  // const handleAddTodo1 =(index) =>{
+  //   const newTodos1 = [...todos];
+  //   newTodos1.splice(index,1);
+  //   setTodos(newTodos1);
+  // }
+
   const handleDeleteTodo = (index) => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);

@@ -34,6 +34,10 @@
   display: flex;
   justify-content: space-between;
 }
+.offi-info-div p {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
 .name-info {
   text-align: justify;
   display: flex;
@@ -45,12 +49,12 @@
   justify-content: center;
   padding-bottom: 60%;
 }
-.varify-button {
+.area-varify-button {
   width: 90%;
   background-color: #27ae60;
   color: #ffffff;
   font-weight: 500;
-  border-radius: none;
+  border: none;
   padding: 5px 20px;
 }
 
@@ -86,16 +90,20 @@
   font-size: 0.8rem;
 }
 .bookmark-div {
-  width: 100%;
+  width: 250px;
+  height: 70px;
   /* margin-right: 10px; */
   display: flex;
   justify-content: space-between;
   /* border: 1px solid gray; */
   border-radius: 7px;
   align-items: center;
-  padding: 4px 20px;
+  padding: 10px 10px;
   cursor: pointer;
   background-color: #f3f3f3;
+}
+.bookmark-div p {
+  font-size: 0.8rem;
 }
 .bookmark-img {
   width: 50px;

@@ -76,7 +76,7 @@ const MyArea = () => {
                 </div>
               </div>
               <div className="varify-button-div">
-                <button className="varify-button">
+                <button className="area-varify-button">
                   <span>
                     <GppGoodIcon />
                   </span>
@@ -114,7 +114,7 @@ const MyArea = () => {
             <section className="mt-5 container-fluid">
               <h5>আমার বুকমার্কস</h5>
               <div className="row ">
-                <div className="col-xl-6 col-lg-6 col-ms-6 col-sm-12 col-12">
+                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 me-4">
                   <div className="bookmark-div">
                     <div className="d-flex align-items-center">
                       <img className="bookmark-img" src={bookImg} alt="" />
@@ -123,7 +123,7 @@ const MyArea = () => {
                     <BookmarksIcon style={{ color: "#8D8E92" }} />
                   </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 col-ms-6 col-sm-12 col-12">
+                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                   <div className="bookmark-div">
                     <div className="d-flex align-items-center">
                       <img className="bookmark-img" src={bookImg} alt="" />
