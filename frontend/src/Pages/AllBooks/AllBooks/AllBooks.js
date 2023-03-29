@@ -20,7 +20,7 @@ const AllBooks = () => {
               <h5>সকল বই </h5>
               <div className="books-search-input-div">
                 <div className="books-serchInput-icon-div">
-                  <SearchIcon />
+                  <SearchIcon style={{ color: "#777777" }} />
                   <input type="search" className="gsearch-book" />
                 </div>
               </div>

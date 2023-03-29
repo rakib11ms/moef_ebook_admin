@@ -87,7 +87,8 @@
 }
 .suchi-div {
   text-align: justify;
-  padding-left: 20px;
+  margin-left: -15px;
+  /* border: 1px solid gray; */
 }
 .all-news-notice-edit-div {
   display: grid;
@@ -148,10 +149,20 @@
   margin-top: 7px;
   cursor: pointer;
 }
+.prokash-date {
+  display: flex;
+  border: 1px solid rgb(210, 210, 211);
+  cursor: pointer;
+}
 .create-news-calander-input {
   width: 100%;
-  border: 1px solid rgb(196, 196, 196);
+  border: none;
   height: 37px;
+  outline: none;
+}
+.calander-icon {
+  margin-top: 5px;
+  color: #505050;
 }
 .link {
   width: 100%;

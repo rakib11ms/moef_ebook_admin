@@ -7,6 +7,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import AddIcon from "@mui/icons-material/Add";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ReactDatePicker from "react-datepicker";
@@ -229,13 +230,16 @@ const CreateNewsAndNotice = () => {
                       <option value="3">Three</option>
                     </select>
                   </div>
-                  <div>
+                  <div className="mb-4">
                     <lebel> প্রকাশ কাল </lebel> <br />
-                    <ReactDatePicker
-                      className="create-news-calander-input mb-4"
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                    />
+                    <div className="prokash-date">
+                      <ReactDatePicker
+                        className="create-news-calander-input "
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                      />
+                      <CalendarTodayIcon className="calander-icon" />
+                    </div>
                   </div>
                   <div>
                     <lebel> লিংক </lebel> <br />

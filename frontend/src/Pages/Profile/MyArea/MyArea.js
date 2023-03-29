@@ -54,7 +54,9 @@ const MyArea = () => {
         <div className="row ">
           <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
             <div className="my-area-left-div container">
-              <h3 className="d-flex justify-content-center mb-3">আমার এরিয়া</h3>
+              <h3 className="d-flex justify-content-center mb-3 pt-3">
+                আমার এরিয়া
+              </h3>
               <div className="name-pic-div">
                 <img className="profile-pic" src={profilePic} alt="" />
                 <br />

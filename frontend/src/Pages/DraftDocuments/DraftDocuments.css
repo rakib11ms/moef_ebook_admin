@@ -164,6 +164,15 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .khosra-tag-div {
+    width: 109%;
+  }
+  .khosra-tag-div h5 {
+    font-size: 1.2rem;
+  }
+  .kosra-h6 {
+    font-size: 1rem;
+  }
   .overlay {
     position: absolute;
     top: 130px;
@@ -186,5 +195,17 @@
   }
   .all-draft-overlay-card {
     flex-wrap: wrap;
+    margin-right: -6%;
+  }
+
+  .draft-buttons-div {
+    margin-bottom: 10%;
+  }
+  .draft-button-khosra {
+    width: 50%;
+    margin-right: 2%;
+  }
+  .draft-button-get-in {
+    width: 50%;
   }
 }

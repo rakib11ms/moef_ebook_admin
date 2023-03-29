@@ -12,6 +12,8 @@ body {
   /* padding: 7px 15px 7px 1px; */
   width: 250px;
   height: 180px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 .amount-doc-text {
   font-size: 1.2rem;
@@ -123,6 +125,7 @@ a {
   border: none;
   padding: 10px 20px;
   background-color: #ffe289;
+  margin-right: 5px;
 }
 .home-input-button2 {
   width: 150px;

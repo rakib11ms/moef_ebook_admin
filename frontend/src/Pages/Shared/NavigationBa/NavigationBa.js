@@ -6,6 +6,7 @@ import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlin
 import RemoveIcon from "@mui/icons-material/Remove";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import "./NavigationBa.css";
@@ -15,16 +16,46 @@ import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
 import { Link } from "react-router-dom";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const NavigationBa = () => {
+  // Sub menu
+  const [showSubmenu, setShowSubmenu] = useState(false);
+  const [showSubmenu1, setShowSubmenu1] = useState(false);
+  const [showSubmenu2, setShowSubmenu2] = useState(false);
+  const [showSubmenu3, setShowSubmenu3] = useState(false);
+
+  const toggleSubmenu = () => {
+    setShowSubmenu(!showSubmenu);
+  };
+  const handleArrowClick = (e) => {
+    e.stopPropagation();
+    toggleSubmenu();
+  };
+  const toggleSubmenu1 = () => {
+    setShowSubmenu1(!showSubmenu1);
+  };
+  const handleArrowClick1 = (e) => {
+    e.stopPropagation();
+    toggleSubmenu1();
+  };
+  const toggleSubmenu2 = () => {
+    setShowSubmenu2(!showSubmenu2);
+  };
+  const handleArrowClick2 = (e) => {
+    e.stopPropagation();
+    toggleSubmenu2();
+  };
+  const toggleSubmenu3 = () => {
+    setShowSubmenu3(!showSubmenu3);
+  };
+  const handleArrowClick3 = (e) => {
+    e.stopPropagation();
+    toggleSubmenu3();
+  };
+
   // MUI Drawer
   const [state, setState] = React.useState({
     top: false,
@@ -53,16 +84,34 @@ const NavigationBa = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className="sidebar-upper-list">
+        <div className="upper-arrow">
+          <ClearIcon />
+        </div>
         <div className="d-flex justify-content-between m-3">
           <div className="">
             <ul className="sidebar-upper-ul">
               আমার এরিয়া
-              <li className=" side-li-link1">
-                <Link to="/my-area">আমরা তথ্য</Link>
-              </li>
+              {showSubmenu ? (
+                <KeyboardArrowUpIcon onClick={handleArrowClick}>
+                  &#8593;
+                </KeyboardArrowUpIcon>
+              ) : (
+                <KeyboardArrowDownIcon
+                  className="arrow-btn"
+                  onClick={handleArrowClick}
+                >
+                  &#8595;
+                </KeyboardArrowDownIcon>
+              )}
+              {showSubmenu && (
+                <ul>
+                  <li className=" side-li-link1">
+                    <Link to="/my-area">আমরা তথ্য</Link>
+                  </li>
+                </ul>
+              )}
             </ul>
           </div>
-          <RemoveIcon className="sidebar-icons-upper" />
         </div>
       </List>
       <List className="sidebar-lower-list">
@@ -70,44 +119,91 @@ const NavigationBa = () => {
           <div className="">
             <ul className="sidebar-lower-ul">
               ব্যবহারকারী ব্যবস্থাপনা
-              <li className=" side-li-link">
-                <Link to="/all-users">সকল ব্যবহারকারী</Link>
-              </li>
-              <li className=" side-li-link">
-                <Link to="/permission-users">অনুমতি(পারমিশন) ব্যবস্থাপনা</Link>
-              </li>
+              {showSubmenu1 ? (
+                <KeyboardArrowUpIcon onClick={handleArrowClick1}>
+                  &#8593;
+                </KeyboardArrowUpIcon>
+              ) : (
+                <KeyboardArrowDownIcon
+                  className="arrow-btn"
+                  onClick={handleArrowClick1}
+                >
+                  &#8595;
+                </KeyboardArrowDownIcon>
+              )}
+              {showSubmenu1 && (
+                <ul>
+                  <li className=" side-li-link">
+                    <Link to="/all-users">সকল ব্যবহারকারী</Link>
+                  </li>
+                  <li className=" side-li-link">
+                    <Link to="/permission-users">
+                      অনুমতি(পারমিশন) ব্যবস্থাপনা
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </ul>
           </div>
-          <RemoveIcon className="sidebar-icons" />
         </div>
 
         <div className="d-flex justify-content-between m-3">
           <div className="">
             <ul className="sidebar-lower-ul">
               লাইব্রেরি
-              <li className="side-li-link">
-                <Link to="/all-books">সকল বই</Link>
-              </li>
-              <li className="side-li-link">
-                <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
-              </li>
+              {showSubmenu2 ? (
+                <KeyboardArrowUpIcon onClick={handleArrowClick2}>
+                  &#8593;
+                </KeyboardArrowUpIcon>
+              ) : (
+                <KeyboardArrowDownIcon
+                  className="arrow-btn"
+                  onClick={handleArrowClick2}
+                >
+                  &#8595;
+                </KeyboardArrowDownIcon>
+              )}
+              {showSubmenu2 && (
+                <ul>
+                  <li className="side-li-link">
+                    <Link to="/all-books">সকল বই</Link>
+                  </li>
+                  <li className="side-li-link">
+                    <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
+                  </li>
+                </ul>
+              )}
             </ul>
           </div>
-          <RemoveIcon className="sidebar-icons" />
         </div>
         <div className="d-flex justify-content-between m-3">
           <div className="sidebar-lower-div">
             <ul className="sidebar-lower-ul">
               নিউজ ও নোটিশ
-              <li className="side-li-link">
-                <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
-              </li>
-              <li className="side-li-link">
-                <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
-              </li>
+              {showSubmenu3 ? (
+                <KeyboardArrowUpIcon onClick={handleArrowClick3}>
+                  &#8593;
+                </KeyboardArrowUpIcon>
+              ) : (
+                <KeyboardArrowDownIcon
+                  className="arrow-btn"
+                  onClick={handleArrowClick3}
+                >
+                  &#8595;
+                </KeyboardArrowDownIcon>
+              )}
+              {showSubmenu3 && (
+                <ul>
+                  <li className="side-li-link">
+                    <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
+                  </li>
+                  <li className="side-li-link">
+                    <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
+                  </li>
+                </ul>
+              )}
             </ul>
           </div>
-          <RemoveIcon className="sidebar-icons" />
         </div>
       </List>
     </Box>
@@ -154,7 +250,6 @@ const NavigationBa = () => {
                   anchor={anchor}
                   open={state[anchor]}
                   onClose={toggleDrawer(anchor, false)}
-                  onOpen={toggleDrawer(anchor, true)}
                 >
                   {list(anchor)}
                 </SwipeableDrawer>
@@ -171,7 +266,7 @@ const NavigationBa = () => {
         <div className="col-lg-6 col-md-6 col-sm-12 col-12">
           <div className="nav-rightside-div">
             <div className="serchInput-icon-div">
-              <SearchIcon />
+              <SearchIcon style={{ color: "#777777" }} />
               <input type="search" className="gsearch-nav" />
             </div>
 

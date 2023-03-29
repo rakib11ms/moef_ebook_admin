@@ -141,7 +141,9 @@ const DraftDocuments = () => {
       <section className="container-fluid mt-5">
         <div className="row draft-lower-section">
           <div className="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-12 jodit-div">
-            <h5>এডিটর </h5>
+            <h5>
+              <strong>এডিটর</strong>{" "}
+            </h5>
             <JoditEditor
               value={content}
               onChange={setContent}

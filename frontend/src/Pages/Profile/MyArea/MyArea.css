@@ -1,6 +1,7 @@
 /* Left Section  */
 .my-area-left-div {
   background-color: #f8f8f8;
+  margin-top: -5%;
 }
 .name-pic-div {
   display: flex;
