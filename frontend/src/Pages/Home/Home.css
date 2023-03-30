@@ -5,6 +5,7 @@ body {
 }
 .amounts-div {
   display: flex;
+
   align-items: center;
   flex-wrap: wrap;
   background-color: #f8f8f8;
@@ -15,6 +16,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .amount-doc-text {
   font-size: 1.2rem;
 }
@@ -162,5 +164,21 @@ a {
   }
   .gsearch-home {
     width: 90%;
+  }
+  .amounts-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 120px;
+  }
+  .home-img {
+    width: 40%;
+  }
+  .amount-doc-text {
+    font-size: 1rem;
+    padding-top: 10px;
+  }
+  .doc-span {
+    font-size: 1rem;
   }
 }

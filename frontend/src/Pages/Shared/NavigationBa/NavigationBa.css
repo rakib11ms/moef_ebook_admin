@@ -48,6 +48,7 @@ body {
 /* Sidebar  */
 .sidebar-upper-list {
   background-color: #ffc000;
+  height: 150px;
 }
 ul.sidebar-upper-ul {
   font-weight: 500;
@@ -100,10 +101,11 @@ ul.sidebar-lower-ul {
 .sidebar-lower-list {
   background-color: #27ae60;
   color: white;
+  height: 77.4vh;
   /* padding-bottom: 20.7% !important; */
 }
 .sidebar-lower-div {
-  padding-bottom: 151px;
+  /* padding-bottom: 151px; */
 }
 .sidebar-icons-upper {
   margin-top: 22px;
@@ -127,13 +129,16 @@ ul.sidebar-lower-ul {
     padding-top: 15%;
   }
   .sidebar-lower-div {
-    padding-bottom: 128%;
+    /* padding-bottom: 128%; */
   }
   .sidebar-icons-upper {
     margin-top: 34px;
   }
   .sidebar-icons {
     margin-top: 28px;
+  }
+  .sidebar-lower-list {
+    height: 84.6vh;
   }
 }
 
@@ -163,5 +168,8 @@ ul.sidebar-lower-ul {
   }
   .sidebar-lower-div {
     padding-bottom: 134%;
+  }
+  .sidebar-lower-list {
+    height: 82.5vh;
   }
 }

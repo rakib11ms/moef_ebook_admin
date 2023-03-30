@@ -26,7 +26,7 @@ const Home = () => {
         <div className="row">
           <div className="col-xl-7 col-lg-8 col-md-7 col-md-12 col-12 d-flex doc-chap-book">
             <div className=" amounts-div">
-              <img src={docIcon} alt="" />
+              <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
                 ৩০ টি
                 <br />
@@ -34,7 +34,7 @@ const Home = () => {
               </h4>
             </div>
             <div className=" amounts-div">
-              <img src={chapterIcon} alt="" />
+              <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
                 ৩০ টি
                 <br />
@@ -42,7 +42,7 @@ const Home = () => {
               </h4>
             </div>
             <div className=" amounts-div">
-              <img src={bookIcon} alt="" />
+              <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
                 ৩০ টি
                 <br />

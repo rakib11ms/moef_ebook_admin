@@ -89,7 +89,7 @@ const NavigationBa = () => {
         </div>
         <div className="d-flex justify-content-between m-3">
           <div className="">
-            <ul className="sidebar-upper-ul">
+            <ul className="sidebar-upper-ul" onClick={handleArrowClick}>
               আমার এরিয়া
               {showSubmenu ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick}>
@@ -117,7 +117,7 @@ const NavigationBa = () => {
       <List className="sidebar-lower-list">
         <div className="d-flex justify-content-between m-3">
           <div className="">
-            <ul className="sidebar-lower-ul">
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick1}>
               ব্যবহারকারী ব্যবস্থাপনা
               {showSubmenu1 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick1}>
@@ -149,7 +149,7 @@ const NavigationBa = () => {
 
         <div className="d-flex justify-content-between m-3">
           <div className="">
-            <ul className="sidebar-lower-ul">
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick2}>
               লাইব্রেরি
               {showSubmenu2 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick2}>
@@ -178,7 +178,7 @@ const NavigationBa = () => {
         </div>
         <div className="d-flex justify-content-between m-3">
           <div className="sidebar-lower-div">
-            <ul className="sidebar-lower-ul">
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
               নিউজ ও নোটিশ
               {showSubmenu3 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick3}>
