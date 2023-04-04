@@ -232,7 +232,7 @@ const MyArea = () => {
                 </div>
               </div>
             </section>
-            <section className="container-fluid mt-5">
+            <section className="container-fluid mt-5 mb-3">
               <h5>নোটিফিকেশন</h5>
               <div className="notification-div">
                 <p>আপনার জন্য, কোন নোটিফিকেশন নেই</p>

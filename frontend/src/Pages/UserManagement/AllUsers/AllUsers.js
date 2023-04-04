@@ -190,7 +190,7 @@ const AllUsers = () => {
             <div className="varify-top-div">
               <ShortTextIcon />
             </div>
-            <section className="m-0 border-0 bd-example">
+            <section className="m-0 border-0 bd-example table-responsive-md table-responsive-sm">
               <table className="table">
                 <thead>
                   <tr>
@@ -315,7 +315,7 @@ const AllUsers = () => {
               <DeleteIcon className="varify-icon" />
               <ShortTextIcon />
             </div>
-            <section className="m-0 border-0 bd-example varification-div">
+            <section className="m-0 border-0 table-responsive-md table-responsive-sm bd-example varification-div">
               <table className="table">
                 <thead>
                   <tr>
