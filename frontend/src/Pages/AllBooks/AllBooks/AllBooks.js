@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CreateIcon from "@mui/icons-material/Create";
 import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import { Link } from "react-router-dom";
 
 const AllBooks = () => {
   return (
@@ -74,15 +75,20 @@ const AllBooks = () => {
               </div>
               <div className="all-books-buttons-ful-div">
                 <div className="all-books-edit-div">
-                  <button className="all-books-edit">এডিট করুন</button>
+                  <Link to="/book-categories">
+                    <button className="all-books-edit">এডিট করুন</button>
+                  </Link>
                 </div>
                 <div className="all-books-edit-div mt-2">
-                  <button className="all-books-content">
-                    <span>
-                      <AddRoundedIcon />
-                    </span>{" "}
-                    কন্টেন্ট যোগ করুন{" "}
-                  </button>
+                  <Link to="/book-categories">
+                    {" "}
+                    <button className="all-books-content">
+                      <span>
+                        <AddRoundedIcon />
+                      </span>{" "}
+                      কন্টেন্ট যোগ করুন{" "}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

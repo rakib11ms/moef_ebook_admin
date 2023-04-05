@@ -16,7 +16,7 @@ const BooksCatagories = () => {
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
     const subcategoryText = subcategory.trim();
-    if (category !== "") {
+    if (subcategory !== "") {
       const todo = { category };
       if (subcategoryText !== "") {
         todo.subcategory = subcategoryText;

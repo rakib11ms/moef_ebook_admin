@@ -63,9 +63,10 @@
   background-color: #f8f8f8;
 }
 .icon-pen {
-  margin-left: 10px;
+  margin-right: 10px;
   background-color: rgb(255, 255, 255);
   border-radius: 100%;
+  height: 35px;
   padding: 4px;
 }
 .all-notice-news-add-card-div {

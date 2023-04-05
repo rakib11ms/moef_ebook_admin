@@ -9,6 +9,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import AddIcon from "@mui/icons-material/Add";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { Link } from "react-router-dom";
 
 const AllNewsAndNotice = () => {
   const [selectedText, setSelectedText] = useState("");
@@ -181,7 +182,9 @@ const AllNewsAndNotice = () => {
                 </div>
                 <div className="all-books-buttons-ful-div">
                   <div className="all-news-notice-edit-div">
-                    <button className="all-books-edit">এডিট করুন</button>
+                    <Link to="/create-news-notice">
+                      <button className="all-books-edit">এডিট করুন</button>
+                    </Link>
                   </div>
                   {/* <div className="all-books-edit-div mt-2">
                     <button className="all-books-content">
