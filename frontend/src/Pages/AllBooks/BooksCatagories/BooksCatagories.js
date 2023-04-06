@@ -16,17 +16,22 @@ const BooksCatagories = () => {
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
     const subcategoryText = subcategory.trim();
-    if (subcategory !== "") {
-      const todo = { category };
-      if (subcategoryText !== "") {
-        todo.subcategory = subcategoryText;
-      }
+    if (
+      category !== "" &&
+      !todos.some(
+        (todo) =>
+          todo.category === category && todo.subcategory === subcategoryText
+      )
+    ) {
+      const todo = { category, subcategory: subcategoryText };
       setTodos([...todos, todo]);
       setSelectedCategory("");
       setSubcategory("");
       subcategoryRef.current.value = "";
-    } else {
+    } else if (category === "") {
       setSelectedCategory("ক্যাটাগরি পূরণ করুন");
+    } else {
+      setSelectedCategory("এই ক্যাটাগরি এবং সাব-ক্যাটাগরি ইতিমধ্যে যোগকৃত");
     }
   };
 
@@ -46,6 +51,9 @@ const BooksCatagories = () => {
     const todo = todos[index];
     setSelectedCategory(todo.category);
     setSubcategory(todo.subcategory || "");
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
   };
 
   const handleSaveTodo = (index) => {
@@ -88,7 +96,7 @@ const BooksCatagories = () => {
           <h5>বইয়ের ক্যাটাগরি/ক্যটেলগ</h5>
 
           <div className="categories-serchInput-icon-div">
-            <SearchIcon />
+            <SearchIcon style={{ color: "#8d8d8d" }} />
             <input type="search" className="gsearch-categories" />
           </div>
         </div>
