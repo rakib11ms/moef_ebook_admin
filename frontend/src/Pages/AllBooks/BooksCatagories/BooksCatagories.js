@@ -16,22 +16,17 @@ const BooksCatagories = () => {
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
     const subcategoryText = subcategory.trim();
-    if (
-      category !== "" &&
-      !todos.some(
-        (todo) =>
-          todo.category === category && todo.subcategory === subcategoryText
-      )
-    ) {
-      const todo = { category, subcategory: subcategoryText };
+    if (category !== "") {
+      const todo = { category, subcategory };
+      if (subcategoryText !== "") {
+        todo.subcategory = subcategoryText;
+      }
       setTodos([...todos, todo]);
       setSelectedCategory("");
       setSubcategory("");
       subcategoryRef.current.value = "";
-    } else if (category === "") {
-      setSelectedCategory("ক্যাটাগরি পূরণ করুন");
     } else {
-      setSelectedCategory("এই ক্যাটাগরি এবং সাব-ক্যাটাগরি ইতিমধ্যে যোগকৃত");
+      setSelectedCategory("ক্যাটেওগরি পুরণ করুন");
     }
   };
 
@@ -73,9 +68,20 @@ const BooksCatagories = () => {
       setSubcategory("");
       subcategoryRef.current.value = "";
     } else {
-      setSelectedCategory("ক্যাটাগরি পূরণ করুন");
+      setSubcategory("ক্যাটেওগরি পুরণ করুন");
     }
   };
+  // const handleHub =()=>{
+  //   const category =selectedCategory.trim();
+  //   const newTodos =[...todos];
+  //   const todo =newTodos[index];
+  //   todo.category =category;
+  //   if(subcategoryText !==""){
+  //     todo.subcategory = subcategoryText;
+  //   }else{
+  //     setSelectedCategory("ক্যাটেওগরি পুরণ করুন")
+  //   }
+  // }
 
   const categories = [
     "Work",

@@ -257,7 +257,9 @@ const NavigationBa = () => {
             ))}
           </div>
           <div className="d-flex align-items-center">
-            <img className="nav-republic-img" src={republicImg} alt="" />
+            <Link to="/home">
+              <img className="nav-republic-img" src={republicImg} alt="" />
+            </Link>
             <h6 className="nav-tags">
               পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়
             </h6>
@@ -271,16 +273,15 @@ const NavigationBa = () => {
             </div>
 
             <div className="icons-nav-div">
-              <TranslateIcon className="icons-nav" />
+              <Link to="/all-news-notice">
+                {" "}
+                <MarkChatUnreadOutlinedIcon className="icons-nav" />
+              </Link>
             </div>
             <div className="icons-nav-div">
-              <DarkModeIcon className="icons-nav" />
-            </div>
-            <div className="icons-nav-div">
-              <MarkChatUnreadOutlinedIcon className="icons-nav" />
-            </div>
-            <div className="icons-nav-div">
-              <PersonIcon className="icons-nav" />
+              <Link to="/my-area">
+                <PersonIcon className="icons-nav" />
+              </Link>
             </div>
           </div>
         </div>

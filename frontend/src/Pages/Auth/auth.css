@@ -24,12 +24,20 @@
   height: 59px;
   margin-bottom: 20px;
 }
+.environment-tags {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 20px;
+  color: #ffffff;
+}
 .poribesh-tags {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  font-size: 19px;
-  line-height: 28px;
+  font-size: 15px;
+  line-height: 16px;
   color: #ffffff;
 }
 .login-logo-tags {
