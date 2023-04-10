@@ -19,7 +19,7 @@ const BooksCatagories = () => {
     const category = selectedCategory.trim();
     const subcategoryText = subcategory.trim();
     if (category !== "") {
-      const todo = { category };
+      const todo = { category, subcategory };
       if (subcategoryText !== "") {
         todo.subcategory = subcategoryText;
       }
