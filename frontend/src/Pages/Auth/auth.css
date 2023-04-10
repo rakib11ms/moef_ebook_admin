@@ -16,8 +16,8 @@
 .login-input-divs {
   background-color: black;
   opacity: 0.6;
-
-  border-radius: 5px;
+  padding: 3%;
+  border-radius: 10px;
 }
 .peopleRepublic {
   width: 57px;
@@ -110,7 +110,7 @@
 
 @media only screen and (min-width: 1378px) {
   .login-input-divs {
-    margin-top: 8%;
+    margin-top: 6%;
   }
   .hr-line {
     margin-right: -10%;

@@ -170,13 +170,15 @@ const Home = () => {
           <div className="col-xl-6 col-lg-7 col-md-6 col-sm-12 col-12">
             <div className="books-index-search">
               <div className="all-books-index-show">
-                <h6>
-                  {" "}
-                  <span>
-                    <LibraryBooksIcon className="icons" />
-                  </span>
-                  সকল বই দেখুন{" "}
-                </h6>
+                <Link to="/all-books">
+                  <h6>
+                    {" "}
+                    <span>
+                      <LibraryBooksIcon className="icons" />
+                    </span>
+                    সকল বই দেখুন{" "}
+                  </h6>
+                </Link>
               </div>
               <div className="all-books-index-show">
                 <h6>

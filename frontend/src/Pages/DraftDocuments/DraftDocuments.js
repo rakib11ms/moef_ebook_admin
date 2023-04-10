@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import NavigationBa from "../Shared/NavigationBa/NavigationBa";
 import "./DraftDocuments.css";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -9,9 +9,16 @@ import AddIcon from "@mui/icons-material/Add";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 import JoditEditor from "jodit-react";
+import { Link } from "react-router-dom";
 
 const DraftDocuments = () => {
   const [content, setContent] = useState("");
+
+  const sectionRef = useRef(null);
+
+  const handleClick = () => {
+    sectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div>
@@ -31,12 +38,14 @@ const DraftDocuments = () => {
             </div>
           </div>
           <div className="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-6">
-            <h5 className="kosra-h6">
-              <span>
-                <AutoStoriesIcon className="khosra-icon" />
-              </span>
-              সকল বই দেখুন{" "}
-            </h5>
+            <Link to="/all-books">
+              <h5 className="kosra-h6">
+                <span>
+                  <AutoStoriesIcon className="khosra-icon" />
+                </span>
+                সকল বই দেখুন{" "}
+              </h5>
+            </Link>
           </div>
           <div className="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-6">
             <h5 className="kosra-h6">
@@ -49,7 +58,7 @@ const DraftDocuments = () => {
         </div>
       </secton>
       <section className="container-fluid">
-        <div className="all-draft-overlay-card">
+        <div className="all-draft-overlay-card" id="products" ref={sectionRef}>
           <div className="card-over">
             <div className="draft-overlay-card">
               <div className="draft-icons">
@@ -201,7 +210,7 @@ const DraftDocuments = () => {
           <button className="draft-button-khosra">
             <strong>খসড়া</strong>
           </button>
-          <button className="draft-button-get-in">
+          <button onClick={handleClick} className="draft-button-get-in">
             <strong>প্রকাশ করুন</strong>
           </button>
         </div>

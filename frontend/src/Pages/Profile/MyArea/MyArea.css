@@ -11,8 +11,8 @@
   /* place-items: center; */
 }
 .profile-pic {
-  width: 250px;
-  /* height: 300px; */
+  width: 200px;
+  height: 270px;
   border-radius: 5px;
 }
 .change-pp-button {
@@ -164,7 +164,7 @@
     /* place-items: center; */
   }
   .profile-pic {
-    width: 250px;
+    width: 220px;
     /* height: 300px; */
     border-radius: 5px;
   }

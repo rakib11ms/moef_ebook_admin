@@ -12,6 +12,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ReactDatePicker from "react-datepicker";
 import JoditEditor from "jodit-react";
+import { Link } from "react-router-dom";
 
 const CreateNewsAndNotice = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -56,7 +57,9 @@ const CreateNewsAndNotice = () => {
                   </button>
                 </div>
                 <div className="draft-prokas-buttons-div">
-                  <button className="draft-prokas-button">ড্রাফট করুন</button>
+                  <Link to="/draft-documents">
+                    <button className="draft-prokas-button">ড্রাফট করুন</button>
+                  </Link>
                   <button className="draft-prokas-button">প্রকাশ করুন</button>
                 </div>
               </div>

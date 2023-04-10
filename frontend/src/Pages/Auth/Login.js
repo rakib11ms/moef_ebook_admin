@@ -40,7 +40,7 @@ function Login() {
         <div className="">
           <div className="login-background-wrapper" style={loginBg}>
             <div className="login-input-divs container">
-              <div className="p-5">
+              <div className="">
                 <div className="login-logo-tags">
                   <img
                     className="peopleRepublic"

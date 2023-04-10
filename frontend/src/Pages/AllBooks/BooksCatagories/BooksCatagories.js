@@ -11,19 +11,22 @@ const BooksCatagories = () => {
   const [todos, setTodos] = useState([]);
   const [subcategory, setSubcategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryFromSelect, setSelectedCategoryFromSelect] =
+    useState("");
   const subcategoryRef = useRef(null);
 
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
     const subcategoryText = subcategory.trim();
     if (category !== "") {
-      const todo = { category, subcategory };
+      const todo = { category };
       if (subcategoryText !== "") {
         todo.subcategory = subcategoryText;
       }
       setTodos([...todos, todo]);
       setSelectedCategory("");
       setSubcategory("");
+      setSelectedCategoryFromSelect("");
       subcategoryRef.current.value = "";
     } else {
       setSelectedCategory("ক্যাটেওগরি পুরণ করুন");
@@ -42,13 +45,10 @@ const BooksCatagories = () => {
     setTodos(newTodos);
   };
 
-  const handleEditTodo = (index, category, subcategory) => {
+  const handleEditTodo = (index) => {
     const todo = todos[index];
     setSelectedCategory(todo.category);
     setSubcategory(todo.subcategory || "");
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
   };
 
   const handleSaveTodo = (index) => {
@@ -66,6 +66,7 @@ const BooksCatagories = () => {
       setTodos(newTodos);
       setSelectedCategory("");
       setSubcategory("");
+      setSelectedCategoryFromSelect("");
       subcategoryRef.current.value = "";
     } else {
       setSubcategory("ক্যাটেওগরি পুরণ করুন");
@@ -117,8 +118,11 @@ const BooksCatagories = () => {
                 <input
                   className="catogories-input"
                   type="text"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  value={selectedCategoryFromSelect}
+                  onChange={(e) => {
+                    setSelectedCategoryFromSelect(e.target.value);
+                    setSelectedCategory(e.target.value);
+                  }}
                 />
                 <select
                   className="form-select catalogue-selection-button"

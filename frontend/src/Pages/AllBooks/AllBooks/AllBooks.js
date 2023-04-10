@@ -158,7 +158,7 @@ const AllBooks = () => {
                   </Link>
                 </div>
                 <div className="all-books-edit-div mt-2">
-                  <Link to="/book-categories">
+                  <Link to="/draft-documents">
                     {" "}
                     <button className="all-books-content">
                       <span>
