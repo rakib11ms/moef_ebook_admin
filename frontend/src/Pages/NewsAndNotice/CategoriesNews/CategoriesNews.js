@@ -106,6 +106,7 @@ const CategoriesNews = () => {
     } else {
       setShowCategoryError(true);
     }
+    
   };
   return (
     <div>
