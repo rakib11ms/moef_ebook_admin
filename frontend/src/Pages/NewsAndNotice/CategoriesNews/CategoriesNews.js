@@ -11,10 +11,11 @@ const CategoriesNews = () => {
   const [todos, setTodos] = useState([]);
   const [subcategory, setSubcategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedCategoryFromSelect, setSelectedCategoryFromSelect] =
-    useState("");
+
   const subcategoryRef = useRef(null);
   const categoryRef = useRef(null);
+  const [showCategoryError, setShowCategoryError] = useState(false);
+  const [showSubcategoryError, setShowSubcategoryError] = useState(false);
 
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
@@ -28,8 +29,10 @@ const CategoriesNews = () => {
       setSelectedCategory("");
       setSubcategory("");
       subcategoryRef.current.value = "";
+      setShowCategoryError(false); // Reset category error message
+      setShowSubcategoryError(false);
     } else {
-      setSelectedCategory("ক্যাটেওগরি পুরণ করুন");
+      setShowCategoryError(true); // Show category error message
     }
   };
 
@@ -68,7 +71,7 @@ const CategoriesNews = () => {
       setSubcategory("");
       subcategoryRef.current.value = "";
     } else {
-      setSubcategory("ক্যাটেওগরি পুরণ করুন");
+      setSubcategory("");
     }
   };
   // const handleHub =()=>{
@@ -84,6 +87,26 @@ const CategoriesNews = () => {
   // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const category = categoryRef.current.value.trim();
+    const subcategoryText = subcategoryRef.current.value.trim();
+    if (category !== "") {
+      const todo = { category };
+      if (subcategoryText !== "") {
+        todo.subcategory = subcategoryText;
+      }
+      setTodos([...todos, todo]);
+      setSelectedCategory("");
+      setSubcategory("");
+      subcategoryRef.current.value = "";
+      setShowCategoryError(false);
+      setShowSubcategoryError(false);
+    } else {
+      setShowCategoryError(true);
+    }
+  };
   return (
     <div>
       <section>
@@ -110,7 +133,10 @@ const CategoriesNews = () => {
                   className="catogories-input"
                   type="text"
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setShowCategoryError(false);
+                  }}
                   ref={categoryRef}
                 />
                 <select
@@ -128,6 +154,9 @@ const CategoriesNews = () => {
                   <option value="3">ক্যাটাগরি- ৩</option> */}
                 </select>
               </div>
+              {showCategoryError && (
+                <p className="text-danger p-dan-text">ক্যাটেগরি পুরণ করুন</p>
+              )}
             </div>
             <div>
               <lebel>সাব ক্যাটেগরি </lebel> <br />
@@ -135,8 +164,10 @@ const CategoriesNews = () => {
                 className="sub-catogories-input"
                 type="text"
                 ref={subcategoryRef}
-                value={subcategory}
-                onChange={(e) => setSubcategory(e.target.value)}
+                onChange={(e) => {
+                  setSubcategory(e.target.value);
+                  setShowSubcategoryError(false);
+                }}
               />
             </div>
             <button onClick={handleAddTodo} className="songrokkhon-button">

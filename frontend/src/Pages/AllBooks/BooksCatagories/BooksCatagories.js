@@ -11,10 +11,11 @@ const BooksCatagories = () => {
   const [todos, setTodos] = useState([]);
   const [subcategory, setSubcategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedCategoryFromSelect, setSelectedCategoryFromSelect] =
-    useState("");
+
   const subcategoryRef = useRef(null);
   const categoryRef = useRef(null);
+  const [showCategoryError, setShowCategoryError] = useState(false);
+  const [showSubcategoryError, setShowSubcategoryError] = useState(false);
 
   const handleAddTodo = () => {
     const category = selectedCategory.trim();
@@ -28,8 +29,10 @@ const BooksCatagories = () => {
       setSelectedCategory("");
       setSubcategory("");
       subcategoryRef.current.value = "";
+      setShowCategoryError(false); // Reset category error message
+      setShowSubcategoryError(false);
     } else {
-      setSelectedCategory("ক্যাটেওগরি পুরণ করুন");
+      setShowCategoryError(true); // Show category error message
     }
   };
 
@@ -68,7 +71,7 @@ const BooksCatagories = () => {
       setSubcategory("");
       subcategoryRef.current.value = "";
     } else {
-      setSubcategory("ক্যাটেওগরি পুরণ করুন");
+      setSubcategory("");
     }
   };
   // const handleHub =()=>{
@@ -84,6 +87,26 @@ const BooksCatagories = () => {
   // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const category = categoryRef.current.value.trim();
+    const subcategoryText = subcategoryRef.current.value.trim();
+    if (category !== "") {
+      const todo = { category };
+      if (subcategoryText !== "") {
+        todo.subcategory = subcategoryText;
+      }
+      setTodos([...todos, todo]);
+      setSelectedCategory("");
+      setSubcategory("");
+      subcategoryRef.current.value = "";
+      setShowCategoryError(false);
+      setShowSubcategoryError(false);
+    } else {
+      setShowCategoryError(true);
+    }
+  };
 
   return (
     <div>
@@ -102,7 +125,7 @@ const BooksCatagories = () => {
       </section>
       <hr />
       <section className="container-fluid">
-        <div className="row ">
+        <div className="row " onSubmit={handleSubmit}>
           <div className="col-xl-8 col-lg-7 col-md-7 col-sm-12 col-12 categories-input-div">
             <div className="mb-3">
               <lebel>ক্যটেগরি নাম </lebel> <br />
@@ -111,7 +134,10 @@ const BooksCatagories = () => {
                   className="catogories-input"
                   type="text"
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setShowCategoryError(false);
+                  }}
                   ref={categoryRef}
                 />
                 <select
@@ -129,18 +155,28 @@ const BooksCatagories = () => {
                   <option value="3">ক্যাটাগরি- ৩</option> */}
                 </select>
               </div>
+              {showCategoryError && (
+                <p className="text-danger p-dan-text">ক্যাটেগরি পুরণ করুন</p>
+              )}
             </div>
             <div>
-              <lebel>সাব ক্যাটেগরি </lebel> <br />
+              <lebel>সাব-ক্যাটেগরি </lebel> <br />
               <input
                 className="sub-catogories-input"
                 type="text"
                 ref={subcategoryRef}
                 value={subcategory}
-                onChange={(e) => setSubcategory(e.target.value)}
+                onChange={(e) => {
+                  setSubcategory(e.target.value);
+                  setShowSubcategoryError(false);
+                }}
               />
             </div>
-            <button onClick={handleAddTodo} className="songrokkhon-button">
+            <button
+              onClick={handleAddTodo}
+              className="songrokkhon-button"
+              type="submit"
+            >
               সংরক্ষন করুন
             </button>
           </div>
@@ -155,10 +191,10 @@ const BooksCatagories = () => {
                       <div className="catagories-topics">
                         <InterestsIcon />
                         <span>{todo.category}</span>
-
-                        {todo.subcategory && (
-                          <span> এবং {todo.subcategory}</span>
+                        {todo.selectedCategory && (
+                          <span>{todo.selectedCategory}</span>
                         )}
+                        {todo.subcategory && <span> - {todo.subcategory}</span>}
                         <CreateIcon onClick={() => handleEditTodo(index)} />
                         <CloseIcon onClick={() => handleDeleteTodo(index)} />
                         {selectedCategory !== "" && (
