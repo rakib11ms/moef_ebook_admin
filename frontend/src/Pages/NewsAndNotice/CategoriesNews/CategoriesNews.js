@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import SearchIcon from "@mui/icons-material/Search";
-import "./BooksCatagories.css";
+import "./CategoriesNews.css";
 import InterestsIcon from "@mui/icons-material/Interests";
 import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 
-const BooksCatagories = () => {
+const CategoriesNews = () => {
   const [todos, setTodos] = useState([]);
   const [subcategory, setSubcategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -84,7 +84,6 @@ const BooksCatagories = () => {
   // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
-
   return (
     <div>
       <section>
@@ -92,7 +91,7 @@ const BooksCatagories = () => {
       </section>
       <section className="container-fluid">
         <div className="categories-top-div">
-          <h5>বইয়ের ক্যাটাগরি/ক্যটেলগ</h5>
+          <h5>খবরের ক্যাটাগরি/ক্যটেলগ</h5>
 
           <div className="categories-serchInput-icon-div">
             <SearchIcon style={{ color: "#8d8d8d" }} />
@@ -190,4 +189,4 @@ const BooksCatagories = () => {
   );
 };
 
-export default BooksCatagories;
+export default CategoriesNews;

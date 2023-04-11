@@ -23,6 +23,7 @@ import CreateNewsAndNotice from "./Pages/NewsAndNotice/CreateNewsAndNotice/Creat
 import MyArea from "./Pages/Profile/MyArea/MyArea";
 import DraftDocuments from "./Pages/DraftDocuments/DraftDocuments";
 import LoadingSpinner from "./Pages/LoadingSpinner/LoadingSpinner";
+import CategoriesNews from "./Pages/NewsAndNotice/CategoriesNews/CategoriesNews";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/draft-documents" element={<DraftDocuments />} />
           <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
           <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
+          <Route path="/categories-news" element={<CategoriesNews />} />
         </Routes>
       )}
     </div>

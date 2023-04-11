@@ -23,9 +23,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 const NavigationBa = () => {
   // Sub menu
   const [showSubmenu, setShowSubmenu] = useState(false);
-  const [showSubmenu1, setShowSubmenu1] = useState(false);
-  const [showSubmenu2, setShowSubmenu2] = useState(false);
-  const [showSubmenu3, setShowSubmenu3] = useState(false);
+  const [showSubmenu1, setShowSubmenu1] = useState(true);
+  const [showSubmenu2, setShowSubmenu2] = useState(true);
+  const [showSubmenu3, setShowSubmenu3] = useState(true);
+  const [showSubmenu4, setShowSubmenu4] = useState(false);
 
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
@@ -54,6 +55,13 @@ const NavigationBa = () => {
   const handleArrowClick3 = (e) => {
     e.stopPropagation();
     toggleSubmenu3();
+  };
+  const toggleSubmenu4 = () => {
+    setShowSubmenu4(!showSubmenu4);
+  };
+  const handleArrowClick4 = (e) => {
+    e.stopPropagation();
+    toggleSubmenu4();
   };
 
   // MUI Drawer
@@ -115,8 +123,8 @@ const NavigationBa = () => {
         </div>
       </List>
       <List className="sidebar-lower-list">
-        <div className="d-flex justify-content-between m-3">
-          <div className="">
+        <div className="d-flex justify-content-between  sidebar-lower-div">
+          <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick1}>
               ব্যবহারকারী ব্যবস্থাপনা
               {showSubmenu1 ? (
@@ -147,8 +155,8 @@ const NavigationBa = () => {
           </div>
         </div>
 
-        <div className="d-flex justify-content-between m-3">
-          <div className="">
+        <div className="sidebar-lower-div">
+          <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick2}>
               লাইব্রেরি
               {showSubmenu2 ? (
@@ -176,8 +184,8 @@ const NavigationBa = () => {
             </ul>
           </div>
         </div>
-        <div className="d-flex justify-content-between m-3">
-          <div className="sidebar-lower-div">
+        <div className="sidebar-lower-news-div">
+          <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
               নিউজ ও নোটিশ
               {showSubmenu3 ? (
@@ -198,7 +206,43 @@ const NavigationBa = () => {
                     <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
                   </li>
                   <li className="side-li-link">
+                    <Link to="/categories-news">ক্যটেগরি</Link>
+                  </li>
+                  <li className="side-li-link">
                     <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
+                  </li>
+                </ul>
+              )}
+            </ul>
+          </div>
+        </div>
+
+        <div className="sidebar-lower-div-vertual">
+          <div className="sidebar-lower-vertual">
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
+              ভার্চুয়াল মিটিং
+              {showSubmenu4 ? (
+                <KeyboardArrowUpIcon onClick={handleArrowClick4}>
+                  &#8593;
+                </KeyboardArrowUpIcon>
+              ) : (
+                <KeyboardArrowDownIcon
+                  className="arrow-btn"
+                  onClick={handleArrowClick4}
+                >
+                  &#8595;
+                </KeyboardArrowDownIcon>
+              )}
+              {showSubmenu4 && (
+                <ul>
+                  <li className="side-li-link">
+                    <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
+                  </li>
+                  <li className="side-li-link">
+                    <Link to="/">যোগদান করুন</Link>
+                  </li>
+                  <li className="side-li-link">
+                    <Link to="/create-news-notice">লগ দেখুন</Link>
                   </li>
                 </ul>
               )}

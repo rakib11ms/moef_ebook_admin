@@ -51,6 +51,7 @@ body {
 }
 
 /* Sidebar  */
+
 .sidebar-upper-list {
   background-color: #ffc000;
   height: 150px;
@@ -69,12 +70,14 @@ ul.sidebar-lower-ul {
 }
 .side-li-link {
   padding: 7px 0px;
+  font-size: 0.9rem;
 }
 .side-li-link a {
   text-decoration: none;
   color: white;
 }
 .side-li-link1 a {
+  font-size: 0.9rem;
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
@@ -107,10 +110,35 @@ ul.sidebar-lower-ul {
   background-color: #27ae60;
   color: white;
   height: 77.4vh;
+  position: relative;
+  overflow: hidden;
   /* padding-bottom: 20.7% !important; */
 }
+
 .sidebar-lower-div {
   /* padding-bottom: 151px; */
+  /* position: fixed; */
+  height: 100px;
+  margin-top: 10px;
+}
+.sidebar-lower {
+  margin-bottom: 20% !important;
+  display: flex;
+  text-align: justify;
+  /* position: absolute; */
+}
+.sidebar-lower-news-div {
+  height: 130px;
+}
+.sidebar-lower-div-vertual {
+  height: 100px;
+  margin-top: 10px;
+}
+.sidebar-lower-div-vertual {
+  margin-bottom: 20% !important;
+  display: flex;
+  text-align: justify;
+  /* position: absolute; */
 }
 .sidebar-icons-upper {
   margin-top: 22px;
@@ -121,6 +149,9 @@ ul.sidebar-lower-ul {
 
 /* Reponsiveness  */
 @media only screen and (min-width: 1378px) {
+  /* .vertual-meeting-div {
+    margin-top: 100% !important;
+  } */
   ul.sidebar-upper-ul {
     font-weight: 500;
     font-size: 1rem;
@@ -135,6 +166,13 @@ ul.sidebar-lower-ul {
   }
   .sidebar-lower-div {
     /* padding-bottom: 128%; */
+  }
+  .sidebar-lower-div {
+    height: 90px !important;
+  }
+  .sidebar-lower-div-vertual {
+    height: 100px;
+    margin-top: 80%;
   }
   .sidebar-icons-upper {
     margin-top: 34px;
