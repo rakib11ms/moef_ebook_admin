@@ -19,6 +19,15 @@ use Illuminate\Support\Facades\Hash;
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 
+
+// Rakib code start//
+Route::post('/save-news-category-subcategory', [NewsCategoryController::class, 'saveNewsCategorySubCategory']);
+Route::post('/save-news-category', [NewsCategoryController::class, 'saveNewsCategory']);
+
+
+
+// Rakib code end //
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();

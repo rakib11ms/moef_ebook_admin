@@ -12,12 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('news_notice_sub_categories', function (Blueprint $table) {
-            $table->bigIncrements('subCatId');
-            $table->unsignedBigInteger('CategoryId');
-            $table->string('Name');
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('CategoryId')->references('CategoryId')->on('news_notice_category');
-            $table->foreign('created_by')->references('UserID')->on('users');
+            $table->id();
+            
+    $table->string('category_name');
+                       $table->string('sub_category_name');
             $table->timestamps();
         });
     }
