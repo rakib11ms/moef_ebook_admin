@@ -11,6 +11,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('userEmail', 'userPassword');
+        $credentials['userPassword'] = bcrypt($credentials['userPassword']);
+
         //dd($credentials);
         if (Auth::attempt($credentials )) {
             dd($credentials);

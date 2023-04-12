@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::resource('authors', AuthorController::class);
-Route::resource('publishers', PublisherController::class);
+Route::resource('offices', OfficeController::class);
 Route::resource('users', UserController::class);
 
 Route::get('/register', function () {

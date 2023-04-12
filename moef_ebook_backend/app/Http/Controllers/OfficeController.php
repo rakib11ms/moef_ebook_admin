@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Office;
 
-class PublisherController extends Controller
+class OfficeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $offices = Office::all();
+        return response()->json($offices);
     }
 
     /**
@@ -27,7 +29,17 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $office = new Office();
+            $office->OfficeName = $request->input('OfficeName');
+            $office->Address = $request->input('Address');
+            // $office->Created_by = auth()->id();
+            $office->save();
+            
+            return response()->json($office, 201);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
     }
 
     /**
