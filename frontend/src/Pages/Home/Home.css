@@ -238,4 +238,17 @@ a {
   .doc-span {
     font-size: 1rem;
   }
+  .select-category {
+    margin-bottom: 0px;
+  }
+  .select-category2 {
+    margin-bottom: 20px;
+  }
+
+  .home-input-button-div {
+    margin-top: 10px;
+  }
+  .select-Chapter {
+    margin-top: 20px;
+  }
 }
