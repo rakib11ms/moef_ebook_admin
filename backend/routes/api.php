@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\NewsCategoryController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,21 +14,6 @@ use App\Http\Controllers\NewsCategoryController;
 |
 */
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
-
-
-// Rakib code start//
-Route::post('/save-news-category-subcategory', [NewsCategoryController::class, 'saveNewsCategorySubCategory']);
-Route::post('/save-news-category', [NewsCategoryController::class, 'saveNewsCategory']);
-
-
-
-// Rakib code end //
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
-

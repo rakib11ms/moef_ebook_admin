@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,19 +16,3 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::resource('authors', AuthorController::class);
-Route::resource('publishers', PublisherController::class);
-Route::resource('users', UserController::class);
-
-Route::get('/register', function () {
-    return view('Auth.register');
-})->name('register');
-
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
-
-Route::get('/login', function () {
-    return view('Auth.login');
-})->name('login');
-
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
