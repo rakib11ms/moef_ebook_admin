@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+
 class RegisterController extends Controller
 {
     public function register(Request $request)
@@ -18,17 +19,18 @@ class RegisterController extends Controller
                 'OfficeID' => ['required', 'string', 'max:255'],
                 'UserName' => ['required', 'string', 'max:255'],
                 'userPhone' => ['required', 'string', 'max:255'],
-                'userEmail' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'userEmail')],
-                'userPassword' => ['required', 'string', 'min:4', 'confirmed'],
-                'userPassword_confirmation' => ['required', 'string', 'min:4'],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
+                'password' => ['required', 'string', 'min:4', 'confirmed'],
+                'password_confirmation' => ['required', 'string', 'min:4'],
             ]);
 
             $user = User::create([
                 'OfficeID' => $validatedData['OfficeID'],
                 'UserName' => $validatedData['UserName'],
                 'userPhone' => $validatedData['userPhone'],
-                'userEmail' => $validatedData['userEmail'],
-                'userPassword' => Hash::make($validatedData['userPassword']),
+                'email' => $validatedData['email'],
+                'password' => $validatedData['password'],
+                'userRoleName' => 'ADMIN',
             ]);
 
             $token = $user->createToken('auth-token')->plainTextToken;

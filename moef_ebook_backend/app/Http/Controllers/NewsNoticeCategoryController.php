@@ -3,29 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Office;
+use App\Models\NewsNoticeCategory;
 use Session;
 
-class OfficeController extends Controller
+class NewsNoticeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $clientToken = $request->header('User-Token');
-        $sessionToken = Session::get('token');
-        if(!$clientToken) {
-            return response()->json(['message' => 'Token not provided'], 401);
-        } else if(!$sessionToken) {
-            return response()->json(['message' => 'Token not found'], 401);
-        } else {
-            if($clientToken == $sessionToken) {
-                $offices = Office::all();
-                return response()->json($offices);
+        try {
+            $clientToken = $request->header('User-Token');
+            $sessionToken = Session::get('token');
+            if(!$clientToken) {
+                return response()->json(['message' => 'Token not provided'], 401);
+            } else if(!$sessionToken) {
+                return response()->json(['message' => 'Token not found'], 401);
             } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
+                if($clientToken == $sessionToken) {
+                    $newsNoticeCategories = NewsNoticeCategory::all();
+                    return response()->json($newsNoticeCategories);
+                } else {
+                    return response()->json(['message' => 'Invalid Token'], 401);
+                }
             }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went wrong'], 500);
         }
     }
 
@@ -34,7 +38,7 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -51,27 +55,24 @@ class OfficeController extends Controller
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $office = new Office();
-                    $office->OfficeName = $request->input('OfficeName');
-                    $office->Address = $request->input('Address');
-                    $office->Created_by = $request->input('Created_by');
-                    $office->save();
+                    $newsNoticeCategory = new NewsNoticeCategory;
+                    $newsNoticeCategory->Name = $request->input('Name');
+                    $newsNoticeCategory->Created_by = $request->input('created_by');
+                    $newsNoticeCategory->save();
+                    return response()->json(['message' => 'News Notice Category created successfully'], 201);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
             }
-
-            
-            return response()->json($office, 201);
         } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
+            return response()->json(['message' => 'Something went wrong'], 500);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request,string $id)
     {
         try {
             $clientToken = $request->header('User-Token');
@@ -82,8 +83,8 @@ class OfficeController extends Controller
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $office = Office::findOrFail($id);
-                    return response()->json($office);
+                    $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                    return response()->json($newsNoticeCategory);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
@@ -98,7 +99,7 @@ class OfficeController extends Controller
      */
     public function edit(string $id)
     {
-        
+
     }
 
     /**
@@ -109,59 +110,46 @@ class OfficeController extends Controller
         try {
             $clientToken = $request->header('User-Token');
             $sessionToken = Session::get('token');
-    
             if(!$clientToken) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else if(!$sessionToken) {
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $office = Office::findOrFail($id);
-    
-                    if ($request->has('OfficeName')) {
-                        $office->OfficeName = $request->input('OfficeName');
+                    $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                    if($request->input('Name')) {
+                        $newsNoticeCategory->Name = $request->input('Name');
                     }
-                    if ($request->has('Address')) {
-                        $office->Address = $request->input('Address');
-                    }
-    
-                    $office->save();
-        
-                    return response()->json($office, 200);
-                
+                    $newsNoticeCategory->save();
+                    return response()->json(['message' => 'News Notice Category updated successfully'], 201);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
             }
-    
         } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+            return response()->json(['message' => 'Something went wrong'], 500);
+        }   
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request,string $id)
+    public function destroy(Request $request, string $id)
     {
-        try {
-            $clientToken = $request->header('User-Token');
-            $sessionToken = Session::get('token');
-            if(!$clientToken) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else if(!$sessionToken) {
-                return response()->json(['message' => 'Token not found'], 401);
+        $clientToken = $request->header('User-Token');
+        $sessionToken = Session::get('token');
+        if(!$clientToken) {
+            return response()->json(['message' => 'Token not provided'], 401);
+        } else if(!$sessionToken) {
+            return response()->json(['message' => 'Token not found'], 401);
+        } else {
+            if($clientToken == $sessionToken) {
+                $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                $newsNoticeCategory->delete();
+                return response()->json(['message' => 'News Notice Category deleted successfully'], 201);
             } else {
-                if($clientToken == $sessionToken) {
-                    $office = Office::findOrFail($id);
-                    $office->delete();
-                    return response()->json(['message' => 'Office deleted successfully'], 200);
-                } else {
-                    return response()->json(['message' => 'Invalid Token'], 401);
-                }
+                return response()->json(['message' => 'Invalid Token'], 401);
             }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
         }
     }
 }

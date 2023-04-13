@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -15,11 +16,11 @@ class User extends Authenticatable
     protected $primaryKey = 'UserID';
 
     protected $fillable = [
-        'UserID', 'OfficeID', 'UserName', 'userPhone', 'userEmail', 'userPassword',
+        'UserID', 'OfficeID', 'UserName', 'userPhone', 'email', 'password', 'userRoleName'
     ];
 
     protected $hidden = [
-        'userPassword',
+        'password',
     ];
 
     public function getAuthIdentifierName()
@@ -29,12 +30,17 @@ class User extends Authenticatable
 
     public function getAuthIdentifier()
     {
-        return $this->UserID;
+        return request()->get('email');
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 
     public function getAuthPassword()
     {
-        return $this->userPassword;
+        return $this->password;
     }
 
     public function getTokenableId()

@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-
-
+use App\Http\Controllers\NewsNoticeCategoryController;
+use App\Http\Controllers\NewsNoticeSubCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +23,8 @@ Route::get('/', function () {
 
 Route::resource('authors', AuthorController::class);
 Route::resource('offices', OfficeController::class);
-Route::resource('users', UserController::class);
+Route::resource('newsNotice', NewsNoticeCategoryController::class);
+Route::resource('newsNoticeSub', NewsNoticeSubCategoryController::class);
 
 Route::get('/register', function () {
     return view('Auth.register');
@@ -37,3 +37,4 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);

@@ -14,15 +14,12 @@ return new class extends Migration
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->id('UserID');
-                $table->unsignedBigInteger('OfficeID');
-                $table->foreign('OfficeID')->references('OfficeID')->on('offices');
+                $table->string('OfficeID');
                 $table->string('UserName');
-                //user role is a foreign key to the user roles table
-                $table->unsignedBigInteger('userRole');
-                $table->foreign('userRole')->references('RoleID')->on('user_roles');
+                $table->string('userRoleName');
                 $table->string('userPhone');
-                $table->string('userEmail')->unique();
-                $table->string('userPassword');
+                $table->string('email')->unique();
+                $table->string('password');
                 $table->string('userImage');
                 $table->boolean('isVerified')->default(false);
                 $table->timestamps();

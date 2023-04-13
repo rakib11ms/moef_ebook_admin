@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Office extends Model
+class NewsNoticeSubCategory extends Model
 {
     use HasFactory;
-    protected $table = 'offices';
-    protected $primaryKey = 'OfficeID';
-
+    protected $table = 'news_notice_sub_categories';
+    protected $primaryKey = 'subCatId';
     protected $fillable = [
-        'OfficeName', 'Address',
+        'CategoryId', 'Name',
     ];
 }

@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Hash;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/logout', [LogoutController::class, 'logout']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

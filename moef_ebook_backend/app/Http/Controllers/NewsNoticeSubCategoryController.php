@@ -1,16 +1,50 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Models\Author;
+use App\Models\NewsNoticeSubCategory;
 use Session;
 
-class AuthorController extends Controller
+class NewsNoticeSubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
+    {
+        try {
+            $clientToken = $request->header('User-Token');
+            $sessionToken = Session::get('token');
+            if(!$clientToken) {
+                return response()->json(['message' => 'Token not provided'], 401);
+            } else if(!$sessionToken) {
+                return response()->json(['message' => 'Token not found'], 401);
+            } else {
+                if($clientToken == $sessionToken) {
+                    $newsNoticeSubCategories = NewsNoticeSubCategory::all();
+                    return response()->json($newsNoticeSubCategories);
+                } else {
+                    return response()->json(['message' => 'Invalid Token'], 401);
+                }
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $clientToken = $request->header('User-Token');
         $sessionToken = Session::get('token');
@@ -20,8 +54,12 @@ class AuthorController extends Controller
             return response()->json(['message' => 'Token not found'], 401);
         } else {
             if($clientToken == $sessionToken) {
-                $authors = Author::all();
-                return response()->json($authors);
+                $newsNoticeSubCategory = new NewsNoticeSubCategory;
+                $newsNoticeSubCategory->Name = $request->input('Name');
+                $newsNoticeSubCategory->Created_by = $request->input('created_by');
+                $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
+                $newsNoticeSubCategory->save();
+                return response()->json(['message' => 'News Notice Sub Category created successfully'], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
             }
@@ -29,66 +67,21 @@ class AuthorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //response user created successfully
-        return response()->json(['message' => 'Author created successfully'], 201);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        try {
-            $clientToken = $request->header('User-Token');
-            $sessionToken = Session::get('token');
-
-            if(!$clientToken) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else if(!$sessionToken) {
-                return response()->json(['message' => 'Token not found'], 401);
-            } else {
-                if($clientToken == $sessionToken) {
-                    $author = new Author;
-                    $author->Name = $request->input('Name');
-                    $author->bio = $request->input('bio');
-                    $author->website_url = $request->input('website_url');
-                    $author->Created_by = $request->input('Created_by');
-                    
-                    $author->save();
-                    
-                    // Return the author object and a status code of 201
-                    return response()->json($author, 201);
-                } else {
-                    return response()->json(['message' => 'Invalid Token'], 401);
-                }
-            }
-        } catch (\Throwable $th) {
-            //response the error
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
-    {   
+    public function show(Request $request ,string $id)
+    {
         try {
             $clientToken = $request->header('User-Token');
             $sessionToken = Session::get('token');
-            // dd($clientToken);
             if(!$clientToken) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else if(!$sessionToken) {
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $author = Author::findOrFail($id);
-                    return response()->json($author);
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                    return response()->json($newsNoticeSubCategory);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
@@ -103,6 +96,7 @@ class AuthorController extends Controller
      */
     public function edit(string $id)
     {
+        //
     }
 
     /**
@@ -113,62 +107,53 @@ class AuthorController extends Controller
         try {
             $clientToken = $request->header('User-Token');
             $sessionToken = Session::get('token');
-
             if(!$clientToken) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else if(!$sessionToken) {
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $author = Author::findOrFail($id);
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
                     if($request->input('Name')) {
-                        $author->Name = $request->input('Name');
+                        $newsNoticeSubCategory->Name = $request->input('Name');
                     }
-                    if($request->input('bio')) {
-                        $author->bio = $request->input('bio');
+                    if($request->input('CategoryId')) {
+                        $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
                     }
 
-                    if($request->input('website_url')) {
-                        $author->website_url = $request->input('website_url');
-                    }
-                    
-                    $author->save();
-            
-                    return response()->json($author, 200);
+                    $newsNoticeSubCategory->save();
+                    return response()->json(['message' => 'News Notice Sub Category updated successfully'], 200);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
             }
-
         } catch (\Throwable $th) {
-            //response the error
             return response()->json(['message' => $th->getMessage()], 500);
         }
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, string $id)
     {
         try {
             $clientToken = $request->header('User-Token');
             $sessionToken = Session::get('token');
+
             if(!$clientToken) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else if(!$sessionToken) {
                 return response()->json(['message' => 'Token not found'], 401);
             } else {
                 if($clientToken == $sessionToken) {
-                    $author = Author::findOrFail($id);
-                    $author->delete();
-                    return response()->json(['message' => 'Author deleted successfully'], 200);
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                    $newsNoticeSubCategory->delete();
+                    return response()->json(['message' => 'News Notice Sub Category deleted successfully'], 200);
                 } else {
                     return response()->json(['message' => 'Invalid Token'], 401);
                 }
             }
-            
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
         }
