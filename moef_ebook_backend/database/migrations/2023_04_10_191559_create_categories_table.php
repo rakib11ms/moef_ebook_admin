@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('catID');
             $table->string('CategoryName');
             $table->unsignedBigInteger('Created_by');
-            $table->foreign('Created_by')->references('UserID')->on('users')->onDelete('cascade');
+            $table->foreign('Created_by')->references('publisher_id')->on('publishers')->onDelete('cascade');
             $table->timestamps();
 
         });
