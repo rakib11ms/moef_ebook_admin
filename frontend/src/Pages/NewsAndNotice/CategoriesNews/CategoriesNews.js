@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const CategoriesNews = () => {
   const [todos, setTodos] = useState([]);
@@ -90,8 +90,8 @@ const CategoriesNews = () => {
   // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
-  const [categoryInputValue, setCategoryInputValue] = useState('');
-  const [subCategoryInputValue, setSubCategoryInputValue] = useState('');
+  const [categoryInputValue, setCategoryInputValue] = useState("");
+  const [subCategoryInputValue, setSubCategoryInputValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -112,51 +112,42 @@ const CategoriesNews = () => {
     //   setShowCategoryError(true);
     // }
 
-      const data={
-        category_name:categoryInputValue,
-        sub_category_name:subCategoryInputValue
-      }
+    const data = {
+      category_name: categoryInputValue,
+      sub_category_name: subCategoryInputValue,
+    };
 
-      if(subCategoryInputValue!==null && categoryInputValue){
-        axios.post(`/api/save-news-category-subcategory`, data).then(res => {
-          if (res.data.status == 200) {
-              Swal.fire(res.data.message, '', 'success')
-              // localStorage.removeItem("draftData");
-    
-              // navigate('/view-blog-article')
-    
-          }
-          // else if (res.data.status == 400) {
-          //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-          //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
-    
-          // }
-      })
-      }
-      else if(categoryInputValue && subCategoryInputValue==null){
-        axios.post(`/api/save-news-category`, data).then(res => {
-          if (res.data.status == 200) {
-              Swal.fire(res.data.message, '', 'success')
-              // localStorage.removeItem("draftData");
-    
-              // navigate('/view-blog-article')
-    
-          }
-          // else if (res.data.status == 400) {
-          //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-          //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
-    
-          // }
-      })
-      }
+    if (subCategoryInputValue !== null && categoryInputValue) {
+      axios.post(`/api/save-news-category-subcategory`, data).then((res) => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, "", "success");
+          // localStorage.removeItem("draftData");
 
+          // navigate('/view-blog-article')
+        }
+        // else if (res.data.status == 400) {
+        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
 
+        // }
+      });
+    } else if (categoryInputValue && subCategoryInputValue == null) {
+      axios.post(`/api/save-news-category`, data).then((res) => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, "", "success");
+          // localStorage.removeItem("draftData");
 
-}
+          // navigate('/view-blog-article')
+        }
+        // else if (res.data.status == 400) {
+        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+
+        // }
+      });
+    }
+  };
   // };
-
-
-
 
   return (
     <div>
@@ -191,13 +182,12 @@ const CategoriesNews = () => {
                   ref={categoryRef}
                 /> */}
 
-
                 <input
                   className="catogories-input"
                   type="text"
                   value={categoryInputValue}
                   onChange={(e) => {
-                    setCategoryInputValue(e.target.value)
+                    setCategoryInputValue(e.target.value);
                   }}
                 />
 
@@ -231,13 +221,12 @@ const CategoriesNews = () => {
                   setShowSubcategoryError(false);
                 }}
               /> */}
-
               <input
                 className="catogories-input"
                 type="text"
                 value={subCategoryInputValue}
                 onChange={(e) => {
-                  setSubCategoryInputValue(e.target.value)
+                  setSubCategoryInputValue(e.target.value);
                 }}
               />
             </div>
