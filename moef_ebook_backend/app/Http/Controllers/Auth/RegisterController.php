@@ -33,8 +33,9 @@ class RegisterController extends Controller
                 'userRoleName' => 'ADMIN',
             ]);
 
-            $token = $user->createToken('auth-token')->plainTextToken;
-            return response()->json(['token' => $token]);
+            // $token = $user->createToken('auth-token')->plainTextToken;
+            // return response()->json(['token' => $token]);
+            return response()->json(['message' => 'User created successfully'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
         }

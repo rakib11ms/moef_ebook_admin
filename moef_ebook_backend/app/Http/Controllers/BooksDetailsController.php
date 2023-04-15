@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NewsNoticeSubCategory;
+use App\Models\BooksDetails;
 use Illuminate\Http\Request;
 use App\Helpers\helper;
 
-class NewsNoticeSubCategoryController extends Controller
+class BooksDetailsController extends Controller
 {
     public function index(Request $request)
     {
@@ -15,8 +15,8 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$response) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $newsNoticeSubCategories = NewsNoticeSubCategory::all();
-                return response()->json($newsNoticeSubCategories);
+                $booksDetails = BooksDetails::all();
+                return response()->json($booksDetails);
             }
             
         } catch (\Throwable $th) {
@@ -31,12 +31,10 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = new NewsNoticeSubCategory;
-                $newsNoticeSubCategory->Name = $request->input('Name');
-                $newsNoticeSubCategory->Created_by = $request->input('created_by');
-                $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
-                $newsNoticeSubCategory->save();
-                return response()->json(['message' => 'News Notice Sub Category created successfully'], 200);
+                $booksDetails = BooksDetails::create($request->all());
+                
+                $booksDetails->save();
+                return response()->json(['message' => 'Books Details created successfully'], 200);
             }
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
@@ -44,15 +42,15 @@ class NewsNoticeSubCategoryController extends Controller
         
     }
 
-    public function show(Request $request ,string $id)
+    public function show(Request $request,string $id)
     {
         try {
             $isTokenValid = Helper::validateToken($request);
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-                return response()->json($newsNoticeSubCategory);
+                $booksDetails = BooksDetails::find($id);
+                return response()->json($booksDetails);
             }
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
@@ -66,16 +64,28 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-                if($request->has('Name')) {
-                    $newsNoticeSubCategory->Name = $request->input('Name');
+                $booksDetails = BooksDetails::find($id);
+                if($request->has('bookId')) {
+                    $booksDetails->bookId = $request->input('bookId');
                 }
-                if($request->has('CategoryId')) {
-                    $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
+                if($request->has('ChapterId')) {
+                    $booksDetails->ChapterId = $request->input('ChapterId');
+                }
+                if($request->has('ParagrpahId')) {
+                    $booksDetails->ParagrpahId = $request->input('ParagrpahId');
+                }
+                if($request->has('pageNum')) {
+                    $booksDetails->pageNum = $request->input('pageNum');
+                }
+                if($request->has('Details')) {
+                    $booksDetails->Details = $request->input('Details');
+                }
+                if($request->has('created_by')) {
+                    $booksDetails->created_by = $request->input('created_by');
                 }
 
-                $newsNoticeSubCategory->save();
-                return response()->json(['message' => $newsNoticeSubCategory], 200);
+                $booksDetails->save();
+                return response()->json(['message' => $booksDetails], 200);
             }
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
@@ -86,13 +96,15 @@ class NewsNoticeSubCategoryController extends Controller
     {
         try {
             $isTokenValid = Helper::validateToken($request);
-
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-                $newsNoticeSubCategory->delete();
-                return response()->json(['message' => 'News Notice Sub Category deleted successfully'], 200);
+                $booksDetails = BooksDetails::find($id);
+                if(!$booksDetails) {
+                    return response()->json(['message' => 'Books Details not found'], 404);
+                }
+                $booksDetails->delete();
+                return response()->json(['message' => 'Books Details deleted successfully'], 200);
             }
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
