@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+});
+
+
+Route::get('/logouts',function (){
+    try {
+        $dbconnect = DB::connection()->getPDO();
+        $dbname = DB::connection()->getDatabaseName();
+        echo "Connected successfully to the database. Database name is :".$dbname;
+     } catch(Exception $e) {
+        echo "Error in connecting to the database";
+     }
 });
 
