@@ -6,6 +6,9 @@ import InterestsIcon from "@mui/icons-material/Interests";
 import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const CategoriesNews = () => {
   const [todos, setTodos] = useState([]);
@@ -87,27 +90,74 @@ const CategoriesNews = () => {
   // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
+  const [categoryInputValue, setCategoryInputValue] = useState('');
+  const [subCategoryInputValue, setSubCategoryInputValue] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const category = categoryRef.current.value.trim();
-    const subcategoryText = subcategoryRef.current.value.trim();
-    if (category !== "") {
-      const todo = { category };
-      if (subcategoryText !== "") {
-        todo.subcategory = subcategoryText;
+    // const category = categoryRef.current.value.trim();
+    // const subcategoryText = subcategoryRef.current.value.trim();
+    // if (category !== "") {
+    //   const todo = { category };
+    //   if (subcategoryText !== "") {
+    //     todo.subcategory = subcategoryText;
+    //   }
+    //   setTodos([...todos, todo]);
+    //   setSelectedCategory("");
+    //   setSubcategory("");
+    //   subcategoryRef.current.value = "";
+    //   setShowCategoryError(false);
+    //   setShowSubcategoryError(false);
+    // } else {
+    //   setShowCategoryError(true);
+    // }
+
+      const data={
+        category_name:categoryInputValue,
+        sub_category_name:subCategoryInputValue
       }
-      setTodos([...todos, todo]);
-      setSelectedCategory("");
-      setSubcategory("");
-      subcategoryRef.current.value = "";
-      setShowCategoryError(false);
-      setShowSubcategoryError(false);
-    } else {
-      setShowCategoryError(true);
-    }
+
+      if(subCategoryInputValue!==null && categoryInputValue){
+        axios.post(`/api/save-news-category-subcategory`, data).then(res => {
+          if (res.data.status == 200) {
+              Swal.fire(res.data.message, '', 'success')
+              // localStorage.removeItem("draftData");
     
-  };
+              // navigate('/view-blog-article')
+    
+          }
+          // else if (res.data.status == 400) {
+          //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+          //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+    
+          // }
+      })
+      }
+      else if(categoryInputValue && subCategoryInputValue==null){
+        axios.post(`/api/save-news-category`, data).then(res => {
+          if (res.data.status == 200) {
+              Swal.fire(res.data.message, '', 'success')
+              // localStorage.removeItem("draftData");
+    
+              // navigate('/view-blog-article')
+    
+          }
+          // else if (res.data.status == 400) {
+          //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+          //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+    
+          // }
+      })
+      }
+
+
+
+}
+  // };
+
+
+
+
   return (
     <div>
       <section>
@@ -130,7 +180,7 @@ const CategoriesNews = () => {
             <div className="mb-3">
               <lebel>ক্যটেগরি নাম </lebel> <br />
               <div className="categories-div">
-                <input
+                {/* <input
                   className="catogories-input"
                   type="text"
                   value={selectedCategory}
@@ -139,7 +189,18 @@ const CategoriesNews = () => {
                     setShowCategoryError(false);
                   }}
                   ref={categoryRef}
+                /> */}
+
+
+                <input
+                  className="catogories-input"
+                  type="text"
+                  value={categoryInputValue}
+                  onChange={(e) => {
+                    setCategoryInputValue(e.target.value)
+                  }}
                 />
+
                 <select
                   className="form-select catalogue-selection-button"
                   aria-label="Default select example"
@@ -155,13 +216,13 @@ const CategoriesNews = () => {
                   <option value="3">ক্যাটাগরি- ৩</option> */}
                 </select>
               </div>
-              {showCategoryError && (
+              {/* {showCategoryError && (
                 <p className="text-danger p-dan-text">ক্যাটেগরি পুরণ করুন</p>
-              )}
+              )} */}
             </div>
             <div>
               <lebel>সাব ক্যাটেগরি </lebel> <br />
-              <input
+              {/* <input
                 className="sub-catogories-input"
                 type="text"
                 ref={subcategoryRef}
@@ -169,9 +230,18 @@ const CategoriesNews = () => {
                   setSubcategory(e.target.value);
                   setShowSubcategoryError(false);
                 }}
+              /> */}
+
+              <input
+                className="catogories-input"
+                type="text"
+                value={subCategoryInputValue}
+                onChange={(e) => {
+                  setSubCategoryInputValue(e.target.value)
+                }}
               />
             </div>
-            <button onClick={handleAddTodo} className="songrokkhon-button">
+            <button onClick={handleSubmit} className="songrokkhon-button">
               সংরক্ষন করুন
             </button>
           </div>
