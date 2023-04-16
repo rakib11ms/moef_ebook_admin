@@ -1,13 +1,45 @@
 .all-card-books-div {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 .all-card-books {
-  display: grid;
-  place-items: center;
-  width: 18%;
+  /* display: grid;
+  place-items: center; */
+  position: relative;
+  display: inline-block;
+  width: 15% !important;
   margin: 6px;
   /* border: 1px solid gray; */
+}
+.overlay1 {
+  position: absolute;
+  /* top: 0;
+  left: 0; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.all-card-books:hover .overlay {
+  opacity: 1;
+}
+
+.edit-icon,
+.delete-icon {
+  font-size: 20px;
+  color: #fff;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+  color: #313131;
 }
 .all-card-books:hover {
   background-color: #f8f8f8;
@@ -24,11 +56,12 @@
   font-size: 0.7rem;
 }
 .books-serchInput-icon-div {
-  border: 1px solid #e4e4e4;
   width: 100%;
+  display: flex;
   border-radius: 6px;
-  background-color: #f8f8f8;
-  padding: 3px;
+  /* background-color: #f8f8f8; */
+  /* padding: 3px; */
+  cursor: pointer;
 }
 .gsearch-book {
   background-color: #f8f8f8;

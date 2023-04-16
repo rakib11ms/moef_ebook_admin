@@ -41,7 +41,6 @@ const BooksCatagories = () => {
   //   newTodos1.splice(index,1);
   //   setTodos(newTodos1);
   // }
-
   const handleDeleteTodo = (index) => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
@@ -74,17 +73,6 @@ const BooksCatagories = () => {
       setSubcategory("");
     }
   };
-  // const handleHub =()=>{
-  //   const category =selectedCategory.trim();
-  //   const newTodos =[...todos];
-  //   const todo =newTodos[index];
-  //   todo.category =category;
-  //   if(subcategoryText !==""){
-  //     todo.subcategory = subcategoryText;
-  //   }else{
-  //     setSelectedCategory("ক্যাটেওগরি পুরণ করুন")
-  //   }
-  // }
 
   const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
 
