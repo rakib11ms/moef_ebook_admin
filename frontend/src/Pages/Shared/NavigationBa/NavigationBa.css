@@ -54,7 +54,7 @@ body {
 
 .sidebar-upper-list {
   background-color: #ffc000;
-  height: 150px;
+  height: 130px;
 }
 ul.sidebar-upper-ul {
   font-weight: 500;
@@ -109,7 +109,7 @@ ul.sidebar-lower-ul {
 .sidebar-lower-list {
   background-color: #27ae60;
   color: white;
-  height: 77.4vh;
+  height: 80.4vh;
   position: relative;
   overflow: hidden;
   /* padding-bottom: 20.7% !important; */
@@ -168,11 +168,13 @@ ul.sidebar-lower-ul {
     /* padding-bottom: 128%; */
   }
   .sidebar-lower-div {
-    height: 90px !important;
+    height: 160px !important;
+    /* border: 1px solid gray; */
+    margin-top: -7px;
   }
   .sidebar-lower-div-vertual {
     height: 100px;
-    margin-top: 80%;
+    margin-top: 60%;
   }
   .sidebar-icons-upper {
     margin-top: 34px;
@@ -181,7 +183,7 @@ ul.sidebar-lower-ul {
     margin-top: 28px;
   }
   .sidebar-lower-list {
-    height: 84.6vh;
+    height: 86.7vh;
   }
 }
 
@@ -210,9 +212,14 @@ ul.sidebar-lower-ul {
     border: none;
   }
   .sidebar-lower-div {
-    padding-bottom: 134%;
+    padding-bottom: 1%;
   }
   .sidebar-lower-list {
-    height: 82.5vh;
+    height: 85.5vh;
+  }
+
+  .sidebar-lower-div-vertual {
+    height: 100px;
+    margin-top: 80%;
   }
 }

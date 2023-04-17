@@ -1,0 +1,93 @@
+.chapter-text-div {
+  border: 1px solid gray;
+  height: 100%;
+  margin-bottom: 30px;
+}
+.chapter-text-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d9d9d9;
+  padding: 20px;
+}
+.chapter-text-header h5 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.chapter-texts {
+  padding: 40px 20px 40px 20px;
+  font-size: 1rem;
+  text-align: justify;
+}
+.chapter-input-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(248, 248, 248);
+  padding: 14px;
+}
+.TrendingFlatIcon-div {
+  /* width: 100%; */
+  position: static;
+  float: right;
+  padding-right: 3%;
+}
+
+.TrendingFlatIcon {
+  /* right: 0; */
+  cursor: pointer;
+}
+
+/* Book 101-200 */
+.suchipotro-h5 {
+  margin-bottom: 40px;
+}
+.inactive-button1 {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.active-button1 {
+  border-bottom: 2px solid rgb(204, 204, 204);
+
+  color: rgb(14, 13, 13);
+  cursor: pointer;
+
+  text-align: center;
+}
+.chapter-div {
+  text-align: center;
+  /* margin-left: 15%; */
+}
+
+.book-add-input {
+  display: flex;
+  border: 1px solid rgb(182, 180, 180);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  outline: none;
+}
+.book-add-icon {
+  cursor: pointer;
+  margin-top: 10px;
+}
+.book-add-icon:hover {
+  box-shadow: rgba(156, 156, 158, 0.1) 0px 0px 16px;
+}
+.number-input {
+  outline: none;
+  width: 20%;
+  border: 1px solid rgb(228, 228, 228);
+  border-radius: 15%;
+}
+.book-input-button-div {
+  position: absolute;
+  width: 50%;
+  bottom: 0;
+}
+.book-input-button {
+  border: none;
+  background-color: #27ae60;
+  padding: 3% 10%;
+  border-radius: 5px;
+}

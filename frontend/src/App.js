@@ -24,6 +24,8 @@ import MyArea from "./Pages/Profile/MyArea/MyArea";
 import DraftDocuments from "./Pages/DraftDocuments/DraftDocuments";
 import LoadingSpinner from "./Pages/LoadingSpinner/LoadingSpinner";
 import CategoriesNews from "./Pages/NewsAndNotice/CategoriesNews/CategoriesNews";
+import Book101200 from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/Book101200";
+import AddDocument from "./Pages/AllBooks/AddDocument/AddDocument";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,6 +57,8 @@ function App() {
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/permission-users" element={<PermissionUser />} />
           <Route path="/all-books" element={<AllBooks />} />
+          <Route path="/add-document" element={<AddDocument />} />
+          <Route path="/books-101200" element={<Book101200 />} />
           <Route path="/book-categories" element={<BooksCatagories />} />
           <Route path="/draft-documents" element={<DraftDocuments />} />
           <Route path="/all-news-notice" element={<AllNewsAndNotice />} />

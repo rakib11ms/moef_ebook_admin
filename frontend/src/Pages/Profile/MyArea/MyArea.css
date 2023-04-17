@@ -2,6 +2,7 @@
 .my-area-left-div {
   background-color: #f8f8f8;
   margin-top: -5%;
+  height: 140vh !important;
 }
 .name-pic-div {
   display: flex;
@@ -155,6 +156,8 @@
 @media only screen and (min-width: 1378px) {
   .my-area-left-div {
     background-color: #f8f8f8;
+    margin-top: -16px;
+    height: 100vh !important;
   }
   .name-pic-div {
     display: flex;
@@ -218,5 +221,11 @@
   }
   .bookmark-div {
     margin-bottom: 10px;
+  }
+  .my-area-left-div {
+    background-color: #f8f8f8;
+    margin-top: -5%;
+    height: 87vh !important;
+    margin-bottom: 30px;
   }
 }

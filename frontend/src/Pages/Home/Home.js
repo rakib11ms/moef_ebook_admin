@@ -498,481 +498,6 @@ const Home = () => {
         </div> */}
       </section>
 
-      {/* <section className="Collaps-section">
-        <div>
-          <div className="collaps-div1">
-            <div className="d-flex">
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#multiCollapseExample1"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="multiCollapseExample1"
-                >
-                  Toggle first element
-                </a>
-              </p>
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#multiCollapseExample2"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="multiCollapseExample2"
-                >
-                  Toggle first element
-                </a>
-              </p>
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#multiCollapseExample3"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="multiCollapseExample3"
-                >
-                  Toggle first element
-                </a>
-              </p>
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#multiCollapseExample4"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="multiCollapseExample4"
-                >
-                  Toggle first element
-                </a>
-              </p>
-            </div>
-            <div class="">
-              <div class="">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div class="card card-body">
-                    <section className="">
-                      <div className="row home-input-tags container-fluid">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                          <h5>বই এর তথ্য যোগ করুন </h5>
-                        </div>
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                          <Link to="/draft-documents">
-                            {" "}
-                            <p className="khosra-songrokkhon-p">
-                              <span>
-                                <ErrorOutlineOutlinedIcon className="me-2" />
-                              </span>
-                              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="container">
-                        <div className="row ">
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>বই এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ক্যাটেগরি * </lebel> <br />
-                            <div className="d-flex border align-items-center">
-                              <select
-                                class="form-select select-category"
-                                aria-label="Default select example"
-                              >
-                                <option selected></option>
-                                <option value="1">ফিকশণ </option>
-                                <option value="2">প্রবন্ধ</option>
-                                <option value="3">কবিতা</option>
-                                <option value="3">উপন্যাস</option>
-                              </select>
-                              <div>
-                                <Link to="/book-categories">
-                                  {" "}
-                                  <ControlPointOutlinedIcon className="control-icon" />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> লেখক এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>প্রকাশক </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> প্রকাশ কাল </lebel> <br />
-                            <DatePicker
-                              className="home-input"
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
-                            />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ভাষা </lebel> <br />
-                            <select
-                              class="form-select select-category2"
-                              aria-label="Default select example"
-                            >
-                              <option selected></option>
-                              <option value="1">বাংলা</option>
-                              <option value="2">ইংরেজি</option>
-                              <option value="3">হিন্দী</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div>
-                          <input
-                            type="file"
-                            id="fileInput"
-                            onChange={handleFileInputChange}
-                            style={{ display: "none" }}
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="btn btn-warning"
-                          >
-                            <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                          </label>
-                        </div>
-                        <div className="home-input-button-div">
-                          <button className="home-input-button1">খসড়া </button>
-                          <button className="home-input-button2">
-                            প্রকাশ করুন{" "}
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="collaps-div2">
-            <div class="">
-              <div class="">
-                <div class="collapse multi-collapse" id="multiCollapseExample2">
-                  <div class="card card-body">
-                    <section className="">
-                      <div className="row home-input-tags container-fluid">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                          <h5>বই এর তথ্য যোগ করুন </h5>
-                        </div>
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                          <Link to="/draft-documents">
-                            {" "}
-                            <p className="khosra-songrokkhon-p">
-                              <span>
-                                <ErrorOutlineOutlinedIcon className="me-2" />
-                              </span>
-                              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="container">
-                        <div className="row ">
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>বই এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ক্যাটেগরি * </lebel> <br />
-                            <div className="d-flex border align-items-center">
-                              <select
-                                class="form-select select-category"
-                                aria-label="Default select example"
-                              >
-                                <option selected></option>
-                                <option value="1">ফিকশণ </option>
-                                <option value="2">প্রবন্ধ</option>
-                                <option value="3">কবিতা</option>
-                                <option value="3">উপন্যাস</option>
-                              </select>
-                              <div>
-                                <Link to="/book-categories">
-                                  {" "}
-                                  <ControlPointOutlinedIcon className="control-icon" />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> লেখক এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>প্রকাশক </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> প্রকাশ কাল </lebel> <br />
-                            <DatePicker
-                              className="home-input"
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
-                            />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ভাষা </lebel> <br />
-                            <select
-                              class="form-select select-category2"
-                              aria-label="Default select example"
-                            >
-                              <option selected></option>
-                              <option value="1">বাংলা</option>
-                              <option value="2">ইংরেজি</option>
-                              <option value="3">হিন্দী</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div>
-                          <input
-                            type="file"
-                            id="fileInput"
-                            onChange={handleFileInputChange}
-                            style={{ display: "none" }}
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="btn btn-warning"
-                          >
-                            <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                          </label>
-                        </div>
-                        <div className="home-input-button-div">
-                          <button className="home-input-button1">খসড়া </button>
-                          <button className="home-input-button2">
-                            প্রকাশ করুন{" "}
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="collaps-div3">
-            <div class="">
-              <div class="">
-                <div class="collapse multi-collapse" id="multiCollapseExample3">
-                  <div class="card card-body">
-                    <section className="">
-                      <div className="row home-input-tags container-fluid">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                          <h5>বই এর তথ্য যোগ করুন </h5>
-                        </div>
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                          <Link to="/draft-documents">
-                            {" "}
-                            <p className="khosra-songrokkhon-p">
-                              <span>
-                                <ErrorOutlineOutlinedIcon className="me-2" />
-                              </span>
-                              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="container">
-                        <div className="row ">
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>বই এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ক্যাটেগরি * </lebel> <br />
-                            <div className="d-flex border align-items-center">
-                              <select
-                                class="form-select select-category"
-                                aria-label="Default select example"
-                              >
-                                <option selected></option>
-                                <option value="1">ফিকশণ </option>
-                                <option value="2">প্রবন্ধ</option>
-                                <option value="3">কবিতা</option>
-                                <option value="3">উপন্যাস</option>
-                              </select>
-                              <div>
-                                <Link to="/book-categories">
-                                  {" "}
-                                  <ControlPointOutlinedIcon className="control-icon" />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> লেখক এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>প্রকাশক </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> প্রকাশ কাল </lebel> <br />
-                            <DatePicker
-                              className="home-input"
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
-                            />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ভাষা </lebel> <br />
-                            <select
-                              class="form-select select-category2"
-                              aria-label="Default select example"
-                            >
-                              <option selected></option>
-                              <option value="1">বাংলা</option>
-                              <option value="2">ইংরেজি</option>
-                              <option value="3">হিন্দী</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div>
-                          <input
-                            type="file"
-                            id="fileInput"
-                            onChange={handleFileInputChange}
-                            style={{ display: "none" }}
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="btn btn-warning"
-                          >
-                            <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                          </label>
-                        </div>
-                        <div className="home-input-button-div">
-                          <button className="home-input-button1">খসড়া </button>
-                          <button className="home-input-button2">
-                            প্রকাশ করুন{" "}
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="collaps-div4">
-            <div class="">
-              <div class="">
-                <div class="collapse multi-collapse" id="multiCollapseExample4">
-                  <div class="card card-body">
-                    <section className="">
-                      <div className="row home-input-tags container-fluid">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                          <h5>বই এর তথ্য যোগ করুন </h5>
-                        </div>
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                          <Link to="/draft-documents">
-                            {" "}
-                            <p className="khosra-songrokkhon-p">
-                              <span>
-                                <ErrorOutlineOutlinedIcon className="me-2" />
-                              </span>
-                              আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="container">
-                        <div className="row ">
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>বই এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ক্যাটেগরি * </lebel> <br />
-                            <div className="d-flex border align-items-center">
-                              <select
-                                class="form-select select-category"
-                                aria-label="Default select example"
-                              >
-                                <option selected></option>
-                                <option value="1">ফিকশণ </option>
-                                <option value="2">প্রবন্ধ</option>
-                                <option value="3">কবিতা</option>
-                                <option value="3">উপন্যাস</option>
-                              </select>
-                              <div>
-                                <Link to="/book-categories">
-                                  {" "}
-                                  <ControlPointOutlinedIcon className="control-icon" />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> লেখক এর নাম </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel>প্রকাশক </lebel> <br />
-                            <input className="home-input" type="text" />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> প্রকাশ কাল </lebel> <br />
-                            <DatePicker
-                              className="home-input"
-                              selected={startDate}
-                              onChange={(date) => setStartDate(date)}
-                            />
-                          </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <lebel> ভাষা </lebel> <br />
-                            <select
-                              class="form-select select-category2"
-                              aria-label="Default select example"
-                            >
-                              <option selected></option>
-                              <option value="1">বাংলা</option>
-                              <option value="2">ইংরেজি</option>
-                              <option value="3">হিন্দী</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div>
-                          <input
-                            type="file"
-                            id="fileInput"
-                            onChange={handleFileInputChange}
-                            style={{ display: "none" }}
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="btn btn-warning"
-                          >
-                            <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                          </label>
-                        </div>
-                        <div className="home-input-button-div">
-                          <button className="home-input-button1">খসড়া </button>
-                          <button className="home-input-button2">
-                            প্রকাশ করুন{" "}
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       <section className="active-div container-fluid">
         <div className="clickble-div">
           <div
@@ -1084,7 +609,7 @@ const Home = () => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <lebel> ভাষা </lebel> <br />
                         <select
-                          class="form-select select-category2"
+                          className="form-select select-category2"
                           aria-label="Default select example"
                         >
                           <option selected></option>
@@ -1199,7 +724,7 @@ const Home = () => {
                         <lebel>অধ্যায়ের নাম * </lebel> <br />
                         <input className="home-input" type="text" />
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
                         <lebel> বই নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
@@ -1220,7 +745,7 @@ const Home = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
                         <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
@@ -1274,16 +799,16 @@ const Home = () => {
                   </div>
                   <div className="container">
                     <div className="row ">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-7 ">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
                         <div className="row">
-                          <div className="col-xl-8 col-lg-7 col-md-7 col-sm-7 col-6">
+                          <div className="col-xl-8 col-lg-7 col-md-7 col-sm-7 col-8">
                             <lebel>পৃষ্ঠার শর্ট নাম </lebel> <br />
                             <input
                               className="home-input-page-name"
                               type="text"
                             />
                           </div>
-                          <div className="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-5">
+                          <div className="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-4">
                             <lebel>পৃষ্ঠার শর্ট নাম </lebel> <br />
                             <input
                               className="home-input-page-number"
@@ -1313,7 +838,7 @@ const Home = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
                         <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
