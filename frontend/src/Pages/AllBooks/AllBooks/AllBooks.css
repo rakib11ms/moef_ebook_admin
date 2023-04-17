@@ -1,51 +1,78 @@
 .all-card-books-div {
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   position: relative;
 }
-.all-card-books {
-  /* display: grid;
-  place-items: center; */
-  position: relative;
-  display: inline-block;
-  width: 15% !important;
-  margin: 6px;
-  /* border: 1px solid gray; */
+
+.add-doc-div {
+  display: flex;
+  border: 1px solid gray;
+  align-items: center;
+  font-weight: 700;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
-.overlay1 {
+.add-doc-div a {
+  color: black;
+}
+.card {
+  border: 1px solid #ffffff;
+  padding: 10px;
+  width: 14%;
+  height: 5%;
+  position: relative;
+  cursor: pointer;
+  color: #1f1e1e;
+}
+.card:hover {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  color: #1f1e1e;
+}
+
+.header {
   position: absolute;
-  /* top: 0;
-  left: 0; */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
+  /* background-color: #818181; */
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
+.all-books-icons {
+  width: 60%;
+}
 
-.all-card-books:hover .overlay {
+.header:hover {
   opacity: 1;
 }
 
-.edit-icon,
-.delete-icon {
+.icon {
   font-size: 20px;
-  color: #fff;
-  margin-right: 10px;
+  cursor: pointer;
+  margin: -100px 0 0 0;
   cursor: pointer;
 }
 
-.edit-icon:hover,
-.delete-icon:hover {
-  color: #313131;
+.content {
+  margin-top: 40px;
+  display: grid;
+  place-items: center;
 }
-.all-card-books:hover {
+
+/* .all-card-books:hover {
   background-color: #f8f8f8;
   border-radius: 10px;
   cursor: pointer;
-}
+} */
+
 .all-books-tags-input {
   display: flex;
   justify-content: space-between;

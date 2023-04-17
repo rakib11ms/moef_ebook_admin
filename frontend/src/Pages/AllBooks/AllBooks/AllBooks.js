@@ -12,6 +12,18 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { Link } from "react-router-dom";
 
 const AllBooks = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const divName = "My Div";
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <div>
       <section>
@@ -25,11 +37,11 @@ const AllBooks = () => {
                 <h5>লাইব্রেরি </h5>
               </div>
               <div className="books-search-input-div">
-                <div className="books-serchInput-icon-div">
+                <div className="add-doc-div">
                   <AddIcon />
-                  <h6>
-                    <strong>ডকুমেন্ট যোগ করুন</strong>
-                  </h6>
+                  <Link to="/add-document">
+                    <h6>ডকুমেন্ট যোগ করুন</h6>
+                  </Link>
                 </div>
                 {/* <div className="books-serchInput-icon-div">
                   <SearchIcon style={{ color: "#777777" }} />
@@ -38,44 +50,161 @@ const AllBooks = () => {
               </div>
             </div>
             {/* <hr /> */}
-            <p>আমার ফাইল</p>
-            <div className="all-card-books-div">
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">পরিবেশ আইন সংকলন ১০১-২০০</p>
-                <div className="overlay1">
-                  <EditIcon className="edit-icon" />
-                  <DeleteForeverIcon className="delete-icon" />
-                </div>
-              </div>
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">জাতীয় পরিবেশ নীতি ২০১৮</p>
-              </div>
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">পরিবেশ আইন সংকলন ২০০-৩৩৬</p>
-              </div>
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">পরিবেশ আদালত আইন, ২০১০</p>
-              </div>
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">১৯২৭ বন আইন</p>
-              </div>
-              <div className="all-card-books">
-                <img src={bookLogoImg} alt="" />
-                <p className="all-books-card-p">খসড়া বন আইন ২০১৯</p>
-              </div>
-            </div>
             <>
-              <p>আমার সাথে শেয়ারকৃত</p>
+              <p>আমার ফাইল</p>
               <div className="all-card-books-div">
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">পরিবেশ আইন সংকলন ১০১-২০০</p>
-                </div>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+
+                {/*                 
                 <div className="all-card-books">
                   <img src={bookLogoImg} alt="" />
                   <p className="all-books-card-p">জাতীয় পরিবেশ নীতি ২০১৮</p>
@@ -95,10 +224,189 @@ const AllBooks = () => {
                 <div className="all-card-books">
                   <img src={bookLogoImg} alt="" />
                   <p className="all-books-card-p">খসড়া বন আইন ২০১৯</p>
+                </div> */}
+              </div>
+            </>
+
+            <>
+              <p>আমার সাথে শেয়ারকৃত</p>
+              <div className="all-card-books-div">
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+                <Link to="/books-101200" className="card">
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className="header">
+                      {isHovered && (
+                        <>
+                          <EditIcon className="icon" />
+                          <DeleteForeverIcon className="icon" />
+                        </>
+                      )}
+                    </div>
+                    <div className="content">
+                      <img
+                        src={bookLogoImg}
+                        alt=""
+                        className="all-books-icons"
+                      />
+                      <p className="all-books-card-p">
+                        পরিবেশ আইন সংকলন ১০১-২০০
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+
+                {/*                 
+                <div className="all-card-books">
+                  <img src={bookLogoImg} alt="" />
+                  <p className="all-books-card-p">জাতীয় পরিবেশ নীতি ২০১৮</p>
                 </div>
+                <div className="all-card-books">
+                  <img src={bookLogoImg} alt="" />
+                  <p className="all-books-card-p">পরিবেশ আইন সংকলন ২০০-৩৩৬</p>
+                </div>
+                <div className="all-card-books">
+                  <img src={bookLogoImg} alt="" />
+                  <p className="all-books-card-p">পরিবেশ আদালত আইন, ২০১০</p>
+                </div>
+                <div className="all-card-books">
+                  <img src={bookLogoImg} alt="" />
+                  <p className="all-books-card-p">১৯২৭ বন আইন</p>
+                </div>
+                <div className="all-card-books">
+                  <img src={bookLogoImg} alt="" />
+                  <p className="all-books-card-p">খসড়া বন আইন ২০১৯</p>
+                </div> */}
               </div>
             </>
           </div>
+
           {/* <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
             <div className="all-books-add-card-div1">
               {data && (
