@@ -12,6 +12,6 @@ class Author extends Model
     protected $primaryKey = 'Author_ID';
 
     protected $fillable = [
-        'Name', 'bio', 'website_url',
+        'Name', 'bio', 'website_url', 'Created_by'
     ];
 }

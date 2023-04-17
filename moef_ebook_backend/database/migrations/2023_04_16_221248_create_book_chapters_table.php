@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offices', function (Blueprint $table) {
-            $table->bigIncrements('OfficeID');
-            $table->string('OfficeName');
-            $table->string('Address');
-            $table->unsignedBigInteger('Created_by');
-            $table->foreign('Created_by')->references('UserID')->on('users');
+        Schema::create('book_chapters', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('book_chapters');
     }
 };

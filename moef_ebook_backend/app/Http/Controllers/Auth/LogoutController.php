@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Helpers\helper;
+use App\Models\Token;
 
 class LogoutController extends Controller
 {
@@ -15,11 +16,8 @@ class LogoutController extends Controller
         if(!$response) {
             return response()->json(['message' => 'Invalid Token'], 401);
         } else {
-            Auth::guard('web')->logout(); 
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-    
-            return response()->json(['message' => 'Logged out successfully']);
+            $request = Token::where('scantum_token', $request->bearerToken())->delete();
+            return response()->json(['message' => 'User logged out'], 200);
         }
     }
 }

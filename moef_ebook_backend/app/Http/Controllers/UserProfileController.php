@@ -30,17 +30,11 @@ class UserProfileController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $userProfile = new UserProfile();
-                $userProfile->userID = $request->input('userID');
-                $userProfile->bookId = $request->input('bookId');
-                $userProfile->bookmarksID = $request->input('bookmarksID');
-                $userProfile->notificationsId = $request->input('notificationsId');
-                $userProfile->isEmail = $request->input('isEmail');
-                $userProfile->isPhone = $request->input('isPhone');
-                $userProfile->isUserName = $request->input('isUserName');
-                $userProfile->isPicture = $request->input('isPicture');
-                $userProfile->isVerified = $request->input('isVerified');
-                $userProfile->save();
+                try {
+                    $userProfile = UserProfile::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json($userProfile, 201);
             }
         } catch (\Throwable $th) {
@@ -55,7 +49,11 @@ class UserProfileController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $userProfile = UserProfile::findOrFail($id);
+                try {
+                    $userProfile = UserProfile::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'User Profile not found'], 404);
+                }
                 return response()->json($userProfile);
             }
         } catch (\Throwable $th) {
@@ -70,35 +68,17 @@ class UserProfileController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $userProfile = UserProfile::findOrFail($id);
-                if($request->has('userID')) {
-                    $userProfile->userID = $request->input('userID');
+                try {
+                    $userProfile = UserProfile::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'User Profile not found'], 404);
                 }
-                if($request->has('bookId')) {
-                    $userProfile->bookId = $request->input('bookId');
+
+                try {
+                    $userProfile->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
                 }
-                if($request->has('bookmarksID')) {
-                    $userProfile->bookmarksID = $request->input('bookmarksID');
-                }
-                if($request->has('notificationsId')) {
-                    $userProfile->notificationsId = $request->input('notificationsId');
-                }
-                if($request->has('isEmail')) {
-                    $userProfile->isEmail = $request->input('isEmail');
-                }
-                if($request->has('isPhone')) {
-                    $userProfile->isPhone = $request->input('isPhone');
-                }
-                if($request->has('isUserName')) {
-                    $userProfile->isUserName = $request->input('isUserName');
-                }
-                if($request->has('isPicture')) {
-                    $userProfile->isPicture = $request->input('isPicture');
-                }
-                if($request->has('isVerified')) {
-                    $userProfile->isVerified = $request->input('isVerified');
-                }
-                $userProfile->save();
                 return response()->json($userProfile);
             }
         } catch (\Throwable $th) {
@@ -113,8 +93,17 @@ class UserProfileController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $userProfile= UserProfile::findOrFail($id);
-                $userProfile->delete();
+                try {
+                    $userProfile = UserProfile::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'User Profile not found'], 404);
+                }
+
+                try {
+                    $userProfile->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'User Profile not found'], 404);
+                }
                 return response()->json(['message' => 'User Profile Deleted']);
             }
         } catch (\Throwable $th) {

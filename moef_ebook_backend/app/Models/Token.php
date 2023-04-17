@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Office extends Model
+class Token extends Model
 {
     use HasFactory;
-    protected $table = 'offices';
-    protected $primaryKey = 'OfficeID';
-
+    protected $table = 'tokens';
+    protected $primaryKey = 'email';
     protected $fillable = [
-        'OfficeName', 'Address', 'Created_by'
+        'scantum_token',
+        'token_validity'
     ];
 }

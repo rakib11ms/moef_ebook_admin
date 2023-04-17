@@ -26,11 +26,11 @@ class OfficeController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $office = new Office();
-                $office->OfficeName = $request->input('OfficeName');
-                $office->Address = $request->input('Address');
-                $office->Created_by = $request->input('Created_by');
-                $office->save();
+                try {
+                    $office = Office::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid input'], 500);
+                }
                 return response()->json($office, 201);
             }
         } catch (\Throwable $th) {
@@ -64,15 +64,17 @@ class OfficeController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $office = Office::findOrFail($id);
-    
-                if ($request->has('OfficeName')) {
-                    $office->OfficeName = $request->input('OfficeName');
+                try {
+                    $office = Office::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Not found in table'], 500);
                 }
-                if ($request->has('Address')) {
-                    $office->Address = $request->input('Address');
+
+                try {
+                    $office->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid input'], 500);
                 }
-                $office->save();
                 return response()->json($office, 200);
             }
     
