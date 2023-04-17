@@ -31,7 +31,11 @@ class BookReviewController extends Controller
             if(!$response) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $bookReview = BookReview::create($request->all());
+                try {
+                    $bookReview = BookReview::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json($bookReview);
             }
             
@@ -47,9 +51,10 @@ class BookReviewController extends Controller
             if(!$response) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $bookReview = BookReview::find($id);
-                if(!$bookReview) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $bookReview = BookReview::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Book Review not found'], 404);
                 }
                 return response()->json($bookReview);
             }
@@ -66,11 +71,19 @@ class BookReviewController extends Controller
             if(!$response) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $bookReview = BookReview::find($id);
-                if(!$bookReview) {
-                    return response()->json(['message' => 'No Record found'], 404);
+
+                try {
+                    $bookReview = BookReview::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Book Review not found'], 404);
                 }
-                $bookReview->update($request->all());
+                
+                try {
+                    $bookReview->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
+
                 return response()->json($bookReview);
             }
             
@@ -86,11 +99,17 @@ class BookReviewController extends Controller
             if(!$response) {
                 return response()->json(['message' => 'Invalid Token'], 401);
             } else {
-                $bookReview = BookReview::find($id);
-                if(!$bookReview) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $bookReview = BookReview::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Book Review not found'], 404);
                 }
-                $bookReview->delete();
+
+                try {
+                    $bookReview->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Something went wrong'], 404);
+                }
                 return response()->json(['message' => 'Record deleted successfully'], 200);
             }
             

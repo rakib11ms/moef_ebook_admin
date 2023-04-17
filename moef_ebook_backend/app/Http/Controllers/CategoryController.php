@@ -28,7 +28,11 @@ class CategoryController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $category = Category::create($request->all());
+                try {
+                    $category = Category::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json([$category], 201);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
@@ -43,9 +47,10 @@ class CategoryController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $category = Category::find($id);
-                if (!$category) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try { 
+                    $category = Category::find($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => $th->getMessage()], 500);
                 }
                 return response()->json([$category], 200);
             } else {
@@ -61,11 +66,18 @@ class CategoryController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $category = Category::find($id);
-                if (!$category) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $category = Category::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Category not found'], 404);
                 }
-                $category->update($request->all());
+
+                try {
+                    $category->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
+
                 return response()->json([$category], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
@@ -80,11 +92,17 @@ class CategoryController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $category = Category::find($id);
-                if (!$category) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $category = Category::find($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => $th->getMessage()], 500);
                 }
-                $category->delete();
+
+                try {
+                    $category->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Delete all the records associated with this category first'], 409);
+                }
                 return response()->json(['message' => 'Record deleted'], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);

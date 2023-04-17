@@ -33,10 +33,11 @@ class NewsNoticeCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeCategory = new NewsNoticeCategory;
-                $newsNoticeCategory->Name = $request->input('Name');
-                $newsNoticeCategory->Created_by = $request->input('created_by');
-                $newsNoticeCategory->save();
+                try {
+                    $newsNoticeCategory = NewsNoticeCategory::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid input'], 500);
+                }
                 return response()->json($newsNoticeCategory, 201);
             }
         } catch (\Throwable $th) {
@@ -51,7 +52,11 @@ class NewsNoticeCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                try {
+                    $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No NNC Found'], 500);
+                }
                 return response()->json($newsNoticeCategory);
             }
         } catch (\Throwable $th) {
@@ -66,11 +71,16 @@ class NewsNoticeCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
-                if($request->has('Name')) {
-                    $newsNoticeCategory->Name = $request->input('Name');
+                try {
+                    $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No NNC Found'], 500);
                 }
-                $newsNoticeCategory->save();
+                try {
+                    $newsNoticeCategory->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid input'], 500);
+                }
                 return response()->json($newsNoticeCategory, 201);
             }
         } catch (\Throwable $th) {
@@ -85,8 +95,16 @@ class NewsNoticeCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
-                $newsNoticeCategory->delete();
+                try {
+                    $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No NNC Found'], 500);
+                }
+                try {
+                    $newsNoticeCategory->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Something went wrong'], 500);
+                }
                 return response()->json(['message' => 'News Notice Category deleted successfully'], 200);
             }
         } catch (\Throwable $th) {

@@ -11,6 +11,6 @@ class NewsNoticeSubCategory extends Model
     protected $table = 'news_notice_sub_categories';
     protected $primaryKey = 'subCatId';
     protected $fillable = [
-        'CategoryId', 'Name',
+        'CategoryId', 'Name', 'created_by'
     ];
 }

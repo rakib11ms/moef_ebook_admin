@@ -31,9 +31,11 @@ class BooksDetailsController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $booksDetails = BooksDetails::create($request->all());
-                
-                $booksDetails->save();
+                try {
+                    $booksDetails = BooksDetails::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json(['message' => 'Books Details created successfully'], 200);
             }
         } catch (\Throwable $th) {
@@ -49,7 +51,11 @@ class BooksDetailsController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $booksDetails = BooksDetails::find($id);
+                try {
+                    $booksDetails = BooksDetails::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Books Details not found'], 404);
+                }
                 return response()->json($booksDetails);
             }
         } catch (\Throwable $th) {
@@ -64,27 +70,18 @@ class BooksDetailsController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $booksDetails = BooksDetails::find($id);
-                if($request->has('bookId')) {
-                    $booksDetails->bookId = $request->input('bookId');
-                }
-                if($request->has('ChapterId')) {
-                    $booksDetails->ChapterId = $request->input('ChapterId');
-                }
-                if($request->has('ParagrpahId')) {
-                    $booksDetails->ParagrpahId = $request->input('ParagrpahId');
-                }
-                if($request->has('pageNum')) {
-                    $booksDetails->pageNum = $request->input('pageNum');
-                }
-                if($request->has('Details')) {
-                    $booksDetails->Details = $request->input('Details');
-                }
-                if($request->has('created_by')) {
-                    $booksDetails->created_by = $request->input('created_by');
+                try {
+                    $booksDetails = BooksDetails::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Books Details not found'], 404);
                 }
 
-                $booksDetails->save();
+                try {
+                    $booksDetails->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
+
                 return response()->json(['message' => $booksDetails], 200);
             }
         } catch (\Throwable $th) {
@@ -99,11 +96,18 @@ class BooksDetailsController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $booksDetails = BooksDetails::find($id);
-                if(!$booksDetails) {
+                try {
+                    $booksDetails = BooksDetails::findOrFail($id);
+                } catch (\Throwable $th) {
                     return response()->json(['message' => 'Books Details not found'], 404);
                 }
-                $booksDetails->delete();
+
+                try {
+                    $booksDetails->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Books Details not found'], 404);
+                }
+                
                 return response()->json(['message' => 'Books Details deleted successfully'], 200);
             }
         } catch (\Throwable $th) {

@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Office extends Model
+class BookChapter extends Model
 {
     use HasFactory;
-    protected $table = 'offices';
-    protected $primaryKey = 'OfficeID';
-
+    protected $table = 'bookchapters';
+    protected $primaryKey = 'chapterID';
     protected $fillable = [
-        'OfficeName', 'Address', 'Created_by'
+        'ChapterName',
+        'bookId',
     ];
 }

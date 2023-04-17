@@ -31,12 +31,11 @@ class BookParagraphController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $bookParagraph = new BookParagraph;
-                $bookParagraph->paragraphName = $request->input('paragraphName');
-                $bookParagraph->bookId = $request->input('bookId');
-                $bookParagraph->chapterId = $request->input('chapterId');
-                
-                $bookParagraph->save();
+                try {
+                    $bookParagraph = BookParagraph::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json(['message' => $bookParagraph], 201);
             }
         } catch (\Throwable $th) {
@@ -52,9 +51,10 @@ class BookParagraphController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $bookParagraph = BookParagraph::find($id);
-                if(!$bookParagraph) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $bookParagraph = BookParagraph::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Book Paragraph not found'], 404);
                 }
                 return response()->json($bookParagraph);
             }

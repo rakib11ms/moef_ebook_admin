@@ -28,7 +28,11 @@ class PublisherController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $publisher = Publisher::create($request->all());
+                try {
+                    $publisher = Publisher::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
                 return response()->json([$publisher], 201);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
@@ -43,10 +47,12 @@ class PublisherController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $publisher = Publisher::find($id);
-                if (!$publisher) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $publisher = Publisher::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Publisher not found'], 404);
                 }
+
                 return response()->json([$publisher], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
@@ -61,11 +67,18 @@ class PublisherController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $publisher = Publisher::find($id);
-                if (!$publisher) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $publisher = Publisher::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Publisher not found'], 404);
                 }
-                $publisher->update($request->all());
+
+                try {
+                    $publisher->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
+                }
+
                 return response()->json([$publisher], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);
@@ -80,11 +93,18 @@ class PublisherController extends Controller
         try {
             $isTokenValid = helper::validateToken($request);
             if ($isTokenValid) {
-                $publisher = Publisher::find($id);
-                if (!$publisher) {
-                    return response()->json(['message' => 'No Record found'], 404);
+                try {
+                    $publisher = Publisher::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Publisher not found'], 404);
                 }
-                $publisher->delete();
+
+                try {
+                    $publisher->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Cannot delete this record'], 409);
+                }
+                
                 return response()->json(['message' => 'Record deleted'], 200);
             } else {
                 return response()->json(['message' => 'Invalid Token'], 401);

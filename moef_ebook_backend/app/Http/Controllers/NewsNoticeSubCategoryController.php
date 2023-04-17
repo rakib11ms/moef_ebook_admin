@@ -31,11 +31,12 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = new NewsNoticeSubCategory;
-                $newsNoticeSubCategory->Name = $request->input('Name');
-                $newsNoticeSubCategory->Created_by = $request->input('created_by');
-                $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
-                $newsNoticeSubCategory->save();
+                try {
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::create($request->all());
+                    return response()->json($newsNoticeSubCategory);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid Publisher ID or Category ID.'], 500);
+                }
                 return response()->json(['message' => 'News Notice Sub Category created successfully'], 200);
             }
         } catch (\Throwable $th) {
@@ -51,7 +52,11 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                try {
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No News Notice Sub Category Found'], 500);
+                }
                 return response()->json($newsNoticeSubCategory);
             }
         } catch (\Throwable $th) {
@@ -66,15 +71,16 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-                if($request->has('Name')) {
-                    $newsNoticeSubCategory->Name = $request->input('Name');
+                try {
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No News Notice Sub Category Found'], 500);
                 }
-                if($request->has('CategoryId')) {
-                    $newsNoticeSubCategory->CategoryId = $request->input('CategoryId');
+                try {
+                    $newsNoticeSubCategory->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid Publisher ID or Category ID.'], 500);
                 }
-
-                $newsNoticeSubCategory->save();
                 return response()->json(['message' => $newsNoticeSubCategory], 200);
             }
         } catch (\Throwable $th) {
@@ -90,8 +96,16 @@ class NewsNoticeSubCategoryController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-                $newsNoticeSubCategory->delete();
+                try {
+                    $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'No News Notice Sub Category Found'], 500);
+                }
+                try {
+                    $newsNoticeSubCategory->delete();
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Something went wrong'], 500);
+                }
                 return response()->json(['message' => 'News Notice Sub Category deleted successfully'], 200);
             }
         } catch (\Throwable $th) {

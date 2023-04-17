@@ -12,7 +12,7 @@ class AuthorController extends Controller
     public function index(Request $request)
     {
         $isTokenValid = Helper::validateToken($request);
-        if(!$request) {
+        if(!$isTokenValid) {
             return response()->json(['message' => 'Invalid Token'], 401);
         } else {
             $authors = Author::all();
@@ -24,16 +24,15 @@ class AuthorController extends Controller
     {
         try {
             $isTokenValid = Helper::validateToken($request);
+
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $author = new Author;
-                $author->Name = $request->input('Name');
-                $author->bio = $request->input('bio');
-                $author->website_url = $request->input('website_url');
-                $author->Created_by = $request->input('Created_by');
-
-                $author->save();
+                try {
+                    $author = Author::create($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid user id'], 500);
+                }
                 return response()->json($author, 201);
             }
 
@@ -65,8 +64,13 @@ class AuthorController extends Controller
             if(!$isTokenValid) {
                 return response()->json(['message' => 'Token not provided'], 401);
             } else {
-                $author = Author::findOrFail($id);
-                $author -> update($request->all());
+                
+                try {
+                    $author = Author::findOrFail($id);
+                    $author->update($request->all());
+                } catch (\Throwable $th) {
+                    return response()->json(['message' => 'Provide valid user id'], 500);
+                }
                 $author->save();
         
                 return response()->json($author, 200);
