@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap");
 .login-background-wrapper {
-  height: 100vh;
+  height: 140vh;
   width: 100vw;
   padding: 1rem;
 }
@@ -60,7 +60,7 @@
   width: 150%;
   padding: 15px;
   border-radius: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 2%;
 }
 .login-input-tags-div {
   display: grid;
@@ -107,6 +107,8 @@
   width: 180%;
   margin-left: 6%;
 }
+
+/* Sign-Up  */
 
 @media only screen and (min-width: 1378px) {
   .login-input-divs {
