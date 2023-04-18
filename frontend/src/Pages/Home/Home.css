@@ -72,12 +72,23 @@ body {
 }
 
 /* Lower section  */
+.select-category-div {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(216, 216, 216);
+  padding: 1%;
+  border-radius: 5px;
+}
 .select-category {
   height: 46px;
   border: none;
 }
 .select-category2 {
   height: 46px;
+  /* background-color: #0f0f0f; */
+}
+.form-select {
+  width: 100% !important;
 }
 .control-icon {
   color: black;
@@ -153,10 +164,10 @@ a {
 .home-input {
   width: 100%;
   outline: none;
-  padding: 10px;
-  border-radius: 6px;
   margin-bottom: 30px;
-  border: 0.7px solid #dddddd;
+  border: 1px solid rgb(216, 216, 216);
+  padding: 2%;
+  border-radius: 5px;
 }
 .home-input-page-name {
   width: 100%;

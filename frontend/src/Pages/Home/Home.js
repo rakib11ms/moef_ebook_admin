@@ -573,7 +573,7 @@ const Home = () => {
                         <lebel> ক্যাটেগরি * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
-                            class="form-select select-category"
+                            className="form-select select-category"
                             aria-label="Default select example"
                           >
                             <option selected></option>
@@ -663,7 +663,7 @@ const Home = () => {
                   <div className="container">
                     <div className="row ">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel>অধ্যায়ের নাম * </lebel> <br />
+                        <lebel required>অধ্যায়ের নাম * </lebel> <br />
                         <input className="home-input" type="text" />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -704,7 +704,7 @@ const Home = () => {
                 <section className="">
                   <div className="row home-input-tags container-fluid">
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                      <h5>বইয়ের অনচ্ছেদ যোগ করুন </h5>
+                      <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
                     </div>
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
@@ -721,11 +721,11 @@ const Home = () => {
                   <div className="container">
                     <div className="row ">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel>অধ্যায়ের নাম * </lebel> <br />
+                        <lebel>অনুচ্ছেদের নাম * </lebel> <br />
                         <input className="home-input" type="text" />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
-                        <lebel> বই নির্নয় করুন * </lebel> <br />
+                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
                             class="form-select select-category"
@@ -746,7 +746,7 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
-                        <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
+                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
                             class="form-select select-category"
@@ -799,36 +799,18 @@ const Home = () => {
                   </div>
                   <div className="container">
                     <div className="row ">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
-                        <div className="row">
-                          <div className="col-xl-8 col-lg-7 col-md-7 col-sm-7 col-8">
-                            <lebel>পৃষ্ঠার শর্ট নাম </lebel> <br />
-                            <input
-                              className="home-input-page-name"
-                              type="text"
-                            />
-                          </div>
-                          <div className="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-4">
-                            <lebel>পৃষ্ঠার শর্ট নাম </lebel> <br />
-                            <input
-                              className="home-input-page-number"
-                              type="number"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> বই নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  mb-4">
+                        <lebel>বই নির্নয় করুন * </lebel> <br />
+                        <div className="select-category-div">
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>জাতীয় পরিবেশ নীতি ২০১৯ </option>
-                            <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
-                            <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১২</option>
+                            <option selected>পরিবেশ নীতির নির্বাচন করুন</option>
+                            <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
+                            <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
+                            <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
+                            <option value="3">পরিবেশ নীতির সকল সমগ্র৪</option>
                           </select>
                           <div>
                             <Link to="">
@@ -838,14 +820,15 @@ const Home = () => {
                           </div>
                         </div>
                       </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"></div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
                         <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
+                        <div className="select-category-div">
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>পরিবেশ নীতির সকল সমগ্র </option>
+                            <option selected>পরিবেশ নীতির নির্বাচন করুন</option>
                             <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
                             <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
                             <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
@@ -860,17 +843,17 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5">
-                        <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
+                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
+                        <div className="select-category-div">
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>পরিবেশ নীতির সকল সমগ্র </option>
-                            <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
-                            <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৪</option>
+                            <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
+                            <option value="1">অনুচ্ছেদ ১ </option>
+                            <option value="2">অনুচ্ছেদ ২</option>
+                            <option value="3">অনুচ্ছেদ ৩</option>
+                            <option value="3">অনুচ্ছেদ ৪</option>
                           </select>
                           <div>
                             <Link to="">

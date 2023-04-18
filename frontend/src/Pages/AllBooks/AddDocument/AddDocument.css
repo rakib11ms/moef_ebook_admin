@@ -1,3 +1,7 @@
+.documents-text-div {
+  border: 1px solid rgb(238, 238, 238);
+  height: 100%;
+}
 .documents-text-header {
   background-color: #d9d9d9;
   padding: 20px;
@@ -6,6 +10,11 @@
 .doc-prokash-date {
   display: flex;
   border: 1px solid rgb(210, 210, 211);
+  cursor: pointer;
+  padding: 5px;
+  width: 108% !important;
+}
+.edit-icon-button {
   cursor: pointer;
 }
 .doc-suchi-div {
@@ -20,8 +29,49 @@
   cursor: pointer;
 }
 .doc-select-1 {
-  border: 1px solid rgb(236, 236, 236);
+  border: 1px solid rgb(184, 184, 184);
   display: flex;
+  /* padding: 10px; */
+  border-radius: 2px;
+  width: 108% !important;
+}
+.doc-link {
+  width: 108%;
+  border: 1px solid rgb(210, 210, 211);
+  padding: 10px;
+}
+.doc-input-button-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+.doc-input-button {
+  padding: 5% 10%;
+  border: none;
+  background: #27ae60;
+  font-weight: 600;
 }
 .form-select {
+  width: 108% !important;
+  /* border: none; */
+  padding: 10px;
+}
+.TrendingFlatIcon-doc-div {
+  /* position: fixed; */
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  float: right;
+  /* background-color: #333; */
+  /* color: #fff; */
+  text-align: center;
+  line-height: 50px;
+  /* border-radius: 50%; */
+  cursor: pointer;
+}
+.form-check p {
+  text-align: center;
+  font-size: 0.6rem;
 }

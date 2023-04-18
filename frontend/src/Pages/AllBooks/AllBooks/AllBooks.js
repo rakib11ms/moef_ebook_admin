@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import bookLogoImg from "../../../images/book.png";
+import bookLogoImg1 from "../../../images/onuchhed1.png";
 import "./AllBooks.css";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -93,9 +94,9 @@ const AllBooks = () => {
                     </div>
                     <div className="content">
                       <img
-                        src={bookLogoImg}
+                        src={bookLogoImg1}
                         alt=""
-                        className="all-books-icons"
+                        className="all-books-icons1"
                       />
                       <p className="all-books-card-p">
                         পরিবেশ আইন সংকলন ১০১-২০০

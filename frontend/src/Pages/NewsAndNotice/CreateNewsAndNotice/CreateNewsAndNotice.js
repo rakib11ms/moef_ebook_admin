@@ -76,7 +76,7 @@ const CreateNewsAndNotice = () => {
                     <label for="exampleFormControlInput1" class="form-label">
                       ক্যটেগরি
                     </label>
-                    <div className="d-flex doc-select-1 mb-4">
+                    <div className="d-flex categories-select-1 mb-4">
                       <select
                         className="form-select "
                         aria-label="Default select example"

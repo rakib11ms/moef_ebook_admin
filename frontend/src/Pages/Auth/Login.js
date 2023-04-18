@@ -54,47 +54,51 @@ function Login() {
                     পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়
                   </p>
                 </div>
-                <div className="login-input-tags-div">
-                  <p className="login-input-tags">শুরু করতে লগইন করুন</p>
-                  <div onSubmit={handleSubmit}>
-                    <input
-                      onChange={(e) => setEmail(e.target.value)}
-                      type="email"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="আপনার ইউজার আইডি / অফিস আইডি"
-                    />
-                    <input
-                      onChange={(e) => setPassword(e.target.value)}
-                      type="password"
-                      className="form-control mt-4"
-                      id="inputPassword"
-                      placeholder="পাসওয়ার্ড"
-                    ></input>
-                    <Link to="/home">
-                      {" "}
+                <form onSubmit={handleSubmit}>
+                  <div className="login-input-tags-div">
+                    <p className="login-input-tags">শুরু করতে লগইন করুন</p>
+                    <div>
+                      <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        className="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="আপনার ইউজার আইডি / অফিস আইডি"
+                      />
+                      <input
+                        onChange={(e) => setPassword(e.target.value)}
+                        type="password"
+                        className="form-control mt-4"
+                        id="inputPassword"
+                        placeholder="পাসওয়ার্ড"
+                      ></input>
+                      <Link to="/home">
+                        {" "}
+                        <button
+                          type="submit"
+                          className="login-submit-button mb-3"
+                        >
+                          লগইন
+                        </button>
+                      </Link>
+                    </div>
+                    <p className="change-pass">
+                      পাসওয়ার্ড ভুলে গেছেন ?{" "}
+                      <span className="change-pass-span">
+                        এখনই পরিবর্তন করুন
+                      </span>
+                    </p>
+                    <hr className="hr-line" />
+                    <div className="">
                       <button
-                        type="submit"
-                        className="login-submit-button mb-3"
+                        type="button"
+                        className="btn btn-outline-success nobondhon-button"
                       >
-                        লগইন
+                        নিবন্ধন করুন
                       </button>
-                    </Link>
+                    </div>
                   </div>
-                  <p className="change-pass">
-                    পাসওয়ার্ড ভুলে গেছেন ?{" "}
-                    <span className="change-pass-span">এখনই পরিবর্তন করুন</span>
-                  </p>
-                  <hr className="hr-line" />
-                  <div className="">
-                    <button
-                      type="button"
-                      className="btn btn-outline-success nobondhon-button"
-                    >
-                      নিবন্ধন করুন
-                    </button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
