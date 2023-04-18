@@ -13,10 +13,11 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         return response()->json(
-            
+
             $categories, 200)
         ;
     }
+    
 
     public function store(Request $request)
     {
