@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ReactDatePicker from "react-datepicker";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { Link } from "react-router-dom";
 
 const AddDocument = () => {
   // const [activeButton, setActiveButton] = useState(null);
@@ -43,7 +44,7 @@ const AddDocument = () => {
             <h3>লাইব্রেরী / Untitled</h3>
           </div>
           <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6">
-            <EditIcon onClick={toggleDiv} />
+            <EditIcon className="edit-icon-button" />
           </div>
         </div>
       </section>
@@ -711,58 +712,77 @@ const AddDocument = () => {
                   spellcheck={false}
                   language="en"
                 />
+                <div className="TrendingFlatIcon-doc-div">
+                  <TrendingFlatIcon className="TrendingFlatIcon" />
+                </div>
               </div>
             </div>
 
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-              <h5 className="mt-3">তথ্য পরিবর্তন করুন </h5>
-              <div className="book-add-input">
-                <select
-                  className="form-select draft-form-control"
-                  aria-label="Default select example"
-                >
-                  <option selected>পরিবেশ আইন সংকলন ১০১-২০০</option>
-                  <option value="1">জাতীয় পরিবেশ নীতি ২০১৮</option>
-                  <option value="2">পরিবেশ আইন সংকলন ২০০-৩৩৬</option>
-                  <option value="3">পরিবেশ আদালত আইন, ২০১০</option>
-                </select>
-                <AddIcon className="book-add-icon" />
+              <div className="">
+                <h5 className="mt-3">তথ্য পরিবর্তন করুন </h5>
+                <div className="book-add-input">
+                  <select
+                    className="form-select draft-form-control"
+                    aria-label="Default select example"
+                  >
+                    <option selected>পরিবেশ আইন সংকলন ১০১-২০০</option>
+                    <option value="1">জাতীয় পরিবেশ নীতি ২০১৮</option>
+                    <option value="2">পরিবেশ আইন সংকলন ২০০-৩৩৬</option>
+                    <option value="3">পরিবেশ আদালত আইন, ২০১০</option>
+                  </select>
+                  <AddIcon className="book-add-icon" />
+                </div>
+                <div className="book-add-input">
+                  <select
+                    className="form-select draft-form-control"
+                    aria-label="Default select example"
+                  >
+                    <option selected>অধ্যায় - ১</option>
+                    <option value="1">অধ্যায় - ২</option>
+                    <option value="2">অধ্যায় - ৩</option>
+                    <option value="3">অধ্যায় - ৪ </option>
+                  </select>
+                  <AddIcon className="book-add-icon" />
+                </div>
+                <div className="book-add-input">
+                  <select
+                    className="form-select draft-form-control"
+                    aria-label="Default select example"
+                  >
+                    <option selected>অনুচ্ছেদ - ১.১</option>
+                    <option value="1">অনুচ্ছেদ - ১.২</option>
+                    <option value="2">অনুচ্ছেদ - ১.৩</option>
+                    <option value="3">অনুচ্ছেদ - ১.৪</option>
+                  </select>
+                  <AddIcon className="book-add-icon" />
+                </div>
+                <div className="book-add-input">
+                  <select
+                    className="form-select draft-form-control"
+                    aria-label="Default select example"
+                  >
+                    <option selected>আইন বিষয়ক</option>
+                    <option value="1">আইন প্রণালী</option>
+                    <option value="2">আইনের বিশ্বেসত্ব</option>
+                    <option value="3">আইন অধিকার</option>
+                  </select>
+                  <AddIcon className="book-add-icon" />
+                </div>
               </div>
-              <div className="book-add-input">
-                <select
-                  className="form-select draft-form-control"
-                  aria-label="Default select example"
-                >
-                  <option selected>অধ্যায় - ১</option>
-                  <option value="1">অধ্যায় - ২</option>
-                  <option value="2">অধ্যায় - ৩</option>
-                  <option value="3">অধ্যায় - ৪ </option>
-                </select>
-                <AddIcon className="book-add-icon" />
-              </div>
-              <div className="book-add-input">
-                <select
-                  className="form-select draft-form-control"
-                  aria-label="Default select example"
-                >
-                  <option selected>অনুচ্ছেদ - ১.১</option>
-                  <option value="1">অনুচ্ছেদ - ১.২</option>
-                  <option value="2">অনুচ্ছেদ - ১.৩</option>
-                  <option value="3">অনুচ্ছেদ - ১.৪</option>
-                </select>
-                <AddIcon className="book-add-icon" />
-              </div>
-              <div className="book-add-input">
-                <select
-                  className="form-select draft-form-control"
-                  aria-label="Default select example"
-                >
-                  <option selected>আইন বিষয়ক</option>
-                  <option value="1">আইন প্রণালী</option>
-                  <option value="2">আইনের বিশ্বেসত্ব</option>
-                  <option value="3">আইন অধিকার</option>
-                </select>
-                <AddIcon className="book-add-icon" />
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                  onClick={toggleDiv}
+                />
+
+                <p className="doc-redios-text">
+                  {" "}
+                  এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে
+                </p>
               </div>
 
               <div className="container-fluid">
@@ -777,7 +797,7 @@ const AddDocument = () => {
                         >
                           ক্যটেগরি
                         </label>
-                        <div className="d-flex categories-select-1 mb-4">
+                        <div className="d-flex doc-select-1 mb-4">
                           <select
                             className="form-select "
                             aria-label="Default select example"
@@ -787,7 +807,9 @@ const AddDocument = () => {
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                           </select>
-                          <AddIcon className="create-news-notice-icon" />
+                          <Link to="/book-categories">
+                            <AddIcon className="create-news-notice-icon" />
+                          </Link>
                         </div>
                       </div>
                       <div>
@@ -837,18 +859,18 @@ const AddDocument = () => {
                       </div>
                       <div>
                         <lebel> লিংক </lebel> <br />
-                        <input className=" link"></input>
+                        <input className=" doc-link"></input>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* <div className=" book-input-button-div">
-                <button type="submit" className="book-input-button">
-                  আপডেট করুন
+              <div className=" doc-input-button-div">
+                <button type="submit" className="doc-input-button">
+                  সংরক্ষন করুন
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
