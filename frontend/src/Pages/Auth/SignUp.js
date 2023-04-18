@@ -114,10 +114,13 @@ function SignUp() {
                         </button>
                       </Link>
                     </div>
-                    <p className="change-pass mt-5">
-                      আপনার একাউন্ট আছে?
-                      <span className="change-pass-span">লগইন করুন</span>
-                    </p>
+                    <Link to="/">
+                      {" "}
+                      <p className="change-pass mt-2 ms-5">
+                        আপনার একাউন্ট আছে?
+                        <span className="change-pass-span">লগইন করুন</span>
+                      </p>
+                    </Link>
                     <hr className="hr-line" />
                   </div>
                 </form>
