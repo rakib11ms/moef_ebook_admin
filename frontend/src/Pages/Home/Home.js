@@ -541,6 +541,7 @@ const Home = () => {
           </div>
         </div>
         <hr />
+        
 
         <div className="home-inputs-div">
           <div className="home-inputs">
