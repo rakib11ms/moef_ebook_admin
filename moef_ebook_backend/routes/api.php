@@ -28,7 +28,7 @@ use App\Http\Controllers\BookChapterController;
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
-Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
+// Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
     Route::resource('authors', AuthorController::class);
     Route::resource('offices', OfficeController::class);
     Route::resource('newsNotice', NewsNoticeCategoryController::class);
@@ -45,4 +45,4 @@ Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   {
     Route::resource('bookmark', BookmarkController::class);
     Route::resource('bookChapter', BookChapterController::class);
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
-});
+// });
