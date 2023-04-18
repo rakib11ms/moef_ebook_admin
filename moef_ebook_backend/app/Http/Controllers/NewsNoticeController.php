@@ -4,111 +4,49 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsNotice;
 use Illuminate\Http\Request;
-use App\Helpers\helper;
+
 
 class NewsNoticeController extends Controller
 {
     public function index(Request $request)
     {
-        try {
-            $isTokenValid = Helper::validateToken($request);
-            if(!$isTokenValid) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else {
-                $newsNotices = NewsNotice::all();
-                return response()->json($newsNotices);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $newsNotices = NewsNotice::all();
+        return response()->json($newsNotices);
     }
 
     public function store(Request $request)
     {
-        try {
-            $isTokenValid = Helper::validateToken($request);
-            if(!$isTokenValid) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else {
-                try {
-                    $newsNotice = NewsNotice::create($request->all());
-                    return response()->json($newsNotice);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Provide valid input.'], 500);
-                }
-                return response()->json(['message' => 'News Notice created successfully'], 200);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $newsNotice = new NewsNotice();
+        $newsNotice->Title = $request->Title;
+        $newsNotice->Description = $request->Description;
+        $newsNotice->CategoryId = $request->CategoryId;
+        $newsNotice->subCatId = $request->subCatId;
+        $newsNotice->redirect_url = $request->redirect_url;
+        $newsNotice->created_by = auth('sanctum')->user()->UserID;
+        $newsNotice->save();
+        return response()->json($newsNotice, 201);
     }
 
     public function show(Request $request ,string $id)
     {
-        try {
-            $isTokenValid = Helper::validateToken($request);
-            if(!$isTokenValid) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else {
-                try {
-                    $newsNotice = NewsNotice::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'No News Notice Found'], 500);
-                }
-                return response()->json($newsNotice);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $newsNotice = NewsNotice::findOrFail($id);
+        return response()->json($newsNotice);
     }
 
     public function update(Request $request, string $id)
     {
-        try {
-            // dd($request->all());
-            $isTokenValid = Helper::validateToken($request);
-            if(!$isTokenValid) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else {
-                try {
-                    $newsNotice = NewsNotice::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'No News Notice Found'], 500);
-                }
-                try {
-                    $newsNotice->update($request->all());
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Provide valid input.'], 500);
-                }
-
-                return response()->json(['message' => $newsNotice], 200);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $newsNotice = NewsNotice::findOrFail($id);
+        
+        
+        $newsNotice->updated_by = auth('sanctum')->user()->UserID;
+        $newsNotice->update($request->all());
+        return response()->json($newsNotice, 201);
     }
 
     public function destroy(Request $request, string $id)
     {
-        try {
-            $isTokenValid = Helper::validateToken($request);
-            if(!$isTokenValid) {
-                return response()->json(['message' => 'Token not provided'], 401);
-            } else {
-                try {
-                    $newsNotice = NewsNotice::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'No News Notice Found'], 500);
-                }
-                try {
-                    $newsNotice->delete();
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Something went wrong'], 500);
-                }
-                return response()->json(['message' => 'News Notice deleted successfully'], 200);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $newsNotice = NewsNotice::findOrFail($id);
+        $newsNotice->delete();
+        return response()->json(null, 204);
     }
 }
