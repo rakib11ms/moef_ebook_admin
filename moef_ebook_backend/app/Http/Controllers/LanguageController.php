@@ -2,115 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use App\Models\Language;
 use Illuminate\Http\Request;
-use App\Helpers\helper;
+
 
 class LanguageController extends Controller
 {
     public function index(Request $request)    
     {
-        try {
-            $istokenValid = helper::validateToken($request);
-            if ($istokenValid) {
-                $languages = Language::all();
-                return response()->json([$languages], 200);
-            } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $languages = Language::all();
+        return response()->json([$languages], 200);
     }
 
     public function store(Request $request)
     {
-        try {
-            $isTokenValid = helper::validateToken($request);
-            if ($isTokenValid) {
-                try {
-                    $language = Language::create($request->all());
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
-                }
-                return response()->json(['message' => $language], 200);
-            } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);    
+        $validator = Validator::make($request->all(), [
+            'Name' => 'required|unique:languages',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        } else {
+            $language = new Language();
+            $language->Name = $request->Name;
+            $language->save();
+            return response()->json([$language], 201);
         }
     }
 
     public function show(Request $request, string $id)
     {
-        try {
-            $isTokenValid = helper::validateToken($request);
-            if ($isTokenValid) {
-                try {
-                    $language = Language::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Language not found'], 404);
-                }
- 
-                return response()->json(['message' => $language], 200);
-            } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $language = Language::find($id);
+        return response()->json([$language], 200);
     }
 
     public function update(Request $request, string $id)
     {
-        try {
-            $isTokenValid = helper::validateToken($request);
-            if ($isTokenValid) {
-                try {
-                    $language = Language::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Language not found'], 404);
-                }
-                try {
-                    $language->update($request->all());
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Provide correct inputs with right foreign key'], 409);
-                }
-                return response()->json(['message' => $language], 200);
-            } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $language = Language::findOrFail($id);
+        $language->update($request->all());
+        return response()->json([$language], 200);
     }
 
     public function destroy(Request $request, string $id)
     {
-        try {
-            $isTokenValid = helper::validateToken($request);
-            if ($isTokenValid) {
-
-                try {
-                    $language = Language::findOrFail($id);
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Language not found'], 404);
-                }
-
-                try {
-                    $language->delete();
-                } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Language not found'], 404);
-                }
-
-                return response()->json(['message' => 'Language deleted successfully'], 200);
-
-            } else {
-                return response()->json(['message' => 'Invalid Token'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th->getMessage()], 500);
-        }
+        $language = Language::findOrFail($id);
+        $language->delete();
+        return response()->json(['message' => 'Deleted'], 200);
     }
 }

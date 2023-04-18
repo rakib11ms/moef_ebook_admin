@@ -6,29 +6,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/logout', [LogoutController::class, 'logout']);
-
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-});
-
-
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -49,20 +26,23 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\BookChapterController;
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
-Route::resource('authors', AuthorController::class);
-Route::resource('offices', OfficeController::class);
-Route::resource('newsNotice', NewsNoticeCategoryController::class);
-Route::resource('newsNoticeSub', NewsNoticeSubCategoryController::class);
-Route::resource('notice', NewsNoticeController::class);
-Route::resource('profile', UserProfileController::class);
-Route::resource('books', BooksMasterController::class);
-Route::resource('bookDetails', BooksDetailsController::class);
-Route::resource('bookParagraph', BookParagraphController::class);
-Route::resource('bookReview', BookReviewController::class);
-Route::resource('language', LanguageController::class);
-Route::resource('publisher', PublisherController::class);
-Route::resource('category', CategoryController::class);
-Route::resource('bookmark', BookmarkController::class);
-Route::resource('bookChapter', BookChapterController::class);
+Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
+    Route::resource('authors', AuthorController::class);
+    Route::resource('offices', OfficeController::class);
+    Route::resource('newsNotice', NewsNoticeCategoryController::class);
+    Route::resource('newsNoticeSub', NewsNoticeSubCategoryController::class);
+    Route::resource('notice', NewsNoticeController::class);
+    Route::resource('profile', UserProfileController::class);
+    Route::resource('books', BooksMasterController::class);
+    Route::resource('bookDetails', BooksDetailsController::class);
+    Route::resource('bookParagraph', BookParagraphController::class);
+    Route::resource('bookReview', BookReviewController::class);
+    Route::resource('language', LanguageController::class);
+    Route::resource('publisher', PublisherController::class);
+    Route::resource('category', CategoryController::class);
+    Route::resource('bookmark', BookmarkController::class);
+    Route::resource('bookChapter', BookChapterController::class);
+    Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+});
