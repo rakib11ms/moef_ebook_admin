@@ -1,0 +1,27 @@
+.documents-text-header {
+  background-color: #d9d9d9;
+  padding: 20px;
+}
+
+.doc-prokash-date {
+  display: flex;
+  border: 1px solid rgb(210, 210, 211);
+  cursor: pointer;
+}
+.doc-suchi-div {
+  text-align: justify;
+  margin-left: -15px;
+  /* border: 1px solid gray; */
+}
+.doc-add-icon {
+  /* border: 1px solid gray; */
+  color: #77ffb0;
+  margin-top: 7px;
+  cursor: pointer;
+}
+.doc-select-1 {
+  border: 1px solid rgb(236, 236, 236);
+  display: flex;
+}
+.form-select {
+}

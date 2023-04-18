@@ -1,28 +1,51 @@
 import React from "react";
+import "./AddDocument.css";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import JoditEditor from "jodit-react";
+import EditIcon from "@mui/icons-material/Edit";
+import ReactDatePicker from "react-datepicker";
+
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const AddDocument = () => {
-  const [activeButton, setActiveButton] = useState(null);
+  // const [activeButton, setActiveButton] = useState(null);
   const [chapter, setChapter] = useState("");
   const [page, setPage] = useState("");
   const [content, setContent] = useState("");
+  // const [activeButton, setActiveButton] = useState(1);
 
-  const handleButtonClick = (buttonNumber, buttonChapter, buttonPage) => {
-    setActiveButton(buttonNumber);
-    setChapter(buttonChapter);
-    setPage(buttonPage);
+  const [startDate, setStartDate] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDiv = () => {
+    setIsOpen(!isOpen);
   };
+
+  // const handleDocClick = (buttonNumber) => {
+  //   setActiveButton(buttonNumber);
+
+  // const handleButtonClick = (buttonNumber, buttonChapter, buttonPage) => {
+  // setActiveButton(buttonNumber);
+  // setChapter(buttonChapter);
+  // setPage(buttonPage);
+  // };
   return (
     <div>
       <section>
         <NavigationBa />
       </section>
       <section className="container-fluid">
-        <h3>লাইব্রেরী</h3>
+        <div className="row">
+          <div className="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6">
+            <h3>লাইব্রেরী / Untitled</h3>
+          </div>
+          <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6">
+            <EditIcon onClick={toggleDiv} />
+          </div>
+        </div>
       </section>
       <hr />
       <section className="container-fluid">
@@ -679,12 +702,12 @@ const AddDocument = () => {
                   <TrendingFlatIcon className="TrendingFlatIcon" />
                 </div>
               </div> */}
-              <div className="chapter-text-div">
-                <div className="chapter-text-header">{/* header Text */}</div>
+              <div className="documents-text-div">
+                <div className="documents-text-header">{/* header Text */}</div>
                 <JoditEditor
+                  className="doc-jodit"
                   value={content}
                   onChange={setContent}
-                  height={400}
                   spellcheck={false}
                   language="en"
                 />
@@ -741,11 +764,91 @@ const AddDocument = () => {
                 </select>
                 <AddIcon className="book-add-icon" />
               </div>
-              <div className=" book-input-button-div">
+
+              <div className="container-fluid">
+                {" "}
+                {isOpen && (
+                  <div>
+                    <div className="doc-suchi-div">
+                      <div>
+                        <label
+                          for="exampleFormControlInput1"
+                          class="form-label"
+                        >
+                          ক্যটেগরি
+                        </label>
+                        <div className="d-flex categories-select-1 mb-4">
+                          <select
+                            className="form-select "
+                            aria-label="Default select example"
+                          >
+                            <option selected>নোটিশ</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                          <AddIcon className="create-news-notice-icon" />
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          for="exampleFormControlInput1"
+                          class="form-label"
+                        >
+                          সাব ক্যটেগরি
+                        </label>
+                        <select
+                          className="form-select mb-4"
+                          aria-label="Default select example"
+                        >
+                          <option selected>অফিস নোটিশ</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label
+                          for="exampleFormControlInput1"
+                          class="form-label"
+                        >
+                          যারা দেখতে পারবেন
+                        </label>
+                        <select
+                          className="form-select mb-4"
+                          aria-label="Default select example"
+                        >
+                          <option selected>সকলের জন্য</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div className="mb-4">
+                        <lebel> প্রকাশ কাল </lebel> <br />
+                        <div className="doc-prokash-date">
+                          <ReactDatePicker
+                            className="create-news-calander-input "
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                          />
+                          <CalendarTodayIcon className="calander-icon" />
+                        </div>
+                      </div>
+                      <div>
+                        <lebel> লিংক </lebel> <br />
+                        <input className=" link"></input>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* <div className=" book-input-button-div">
                 <button type="submit" className="book-input-button">
                   আপডেট করুন
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
