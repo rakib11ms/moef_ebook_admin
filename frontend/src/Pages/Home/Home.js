@@ -68,7 +68,7 @@ const Home = () => {
   const [content, setContent] = useState("");
 
   // active div
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState(1);
 
   const handleButtonClick = (buttonNumber) => {
     setActiveButton(buttonNumber);
@@ -541,6 +541,7 @@ const Home = () => {
           </div>
         </div>
         <hr />
+        
 
         <div className="home-inputs-div">
           <div className="home-inputs">
@@ -551,7 +552,7 @@ const Home = () => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বই এর তথ্য যোগ করুন </h5>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
                         {" "}
                         <p className="khosra-songrokkhon-p">
@@ -561,7 +562,7 @@ const Home = () => {
                           আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
                         </p>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="container">
                     <div className="row ">
@@ -648,7 +649,7 @@ const Home = () => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বইয়ের অধ্যায় যোগ করুন </h5>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
                         {" "}
                         <p className="khosra-songrokkhon-p">
@@ -658,7 +659,7 @@ const Home = () => {
                           আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
                         </p>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="container">
                     <div className="row ">
@@ -706,7 +707,7 @@ const Home = () => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
                         {" "}
                         <p className="khosra-songrokkhon-p">
@@ -716,7 +717,7 @@ const Home = () => {
                           আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
                         </p>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="container">
                     <div className="row ">
@@ -785,7 +786,7 @@ const Home = () => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>নতুন পৃষ্ঠা যোগ করুন </h5>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
                         {" "}
                         <p className="khosra-songrokkhon-p">
@@ -795,7 +796,7 @@ const Home = () => {
                           আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
                         </p>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="container">
                     <div className="row ">
