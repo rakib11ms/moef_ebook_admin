@@ -541,7 +541,6 @@ const Home = () => {
           </div>
         </div>
         <hr />
-        
 
         <div className="home-inputs-div">
           <div className="home-inputs">
@@ -571,7 +570,7 @@ const Home = () => {
                         <input className="home-input" type="text" />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> ক্যাটেগরি * </lebel> <br />
+                        <lebel> ক্যাটেগরি *</lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
                             className="form-select select-category"
@@ -610,7 +609,7 @@ const Home = () => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <lebel> ভাষা </lebel> <br />
                         <select
-                          className="form-select select-category2"
+                          className=" select-category2"
                           aria-label="Default select example"
                         >
                           <option selected></option>
@@ -674,7 +673,7 @@ const Home = () => {
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>জাতীয় পরিবেশ নীতি ২০১৯ </option>
+                            <option selected>জাতীয় নীতি-মালা যোগ করুন </option>
                             <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
                             <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
                             <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
@@ -726,13 +725,13 @@ const Home = () => {
                         <input className="home-input" type="text" />
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
-                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
+                        <lebel> বই নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>জাতীয় পরিবেশ নীতি ২০১৯ </option>
+                            <option selected>বই যোগ করুন </option>
                             <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
                             <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
                             <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
@@ -747,13 +746,13 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
-                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
+                        <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                         <div className="d-flex border align-items-center">
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>পরিবেশ নীতির সকল সমগ্র </option>
+                            <option selected> অধ্যায় সমগ্র </option>
                             <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
                             <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
                             <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
@@ -807,7 +806,7 @@ const Home = () => {
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>পরিবেশ নীতির নির্বাচন করুন</option>
+                            <option selected>বই নির্বাচন করুন</option>
                             <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
                             <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
                             <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
@@ -829,7 +828,7 @@ const Home = () => {
                             class="form-select select-category"
                             aria-label="Default select example"
                           >
-                            <option selected>পরিবেশ নীতির নির্বাচন করুন</option>
+                            <option selected>অধ্যায় নির্বাচন করুন</option>
                             <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
                             <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
                             <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
