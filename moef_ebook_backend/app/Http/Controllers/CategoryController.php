@@ -12,10 +12,14 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        return response()->json(
+        return response()->json([
 
-            $categories, 200)
-        ;
+            'status' => 200,
+            'categories' => $categories
+        ]);
+
+
+
     }
     
 

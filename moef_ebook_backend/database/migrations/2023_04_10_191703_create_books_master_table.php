@@ -17,20 +17,18 @@ return new class extends Migration
             $table->string('Title');
             $table->string('author');
             $table->text('short_desc');
-            $table->unsignedBigInteger('publisher_id');
             $table->string('BookCoverImage');
-            $table->unsignedBigInteger('language_id');
-            $table->date('publish_date');
-            $table->string('file_url');
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('Author_id');
-            $table->timestamps();
+            $table->date('publish_date')->nullable();
+            $table->string('file_url')->nullable();
+            $table->string('Author_id')->nullable();
         
-            $table->foreign('CatID')->references('catID')->on('categories')->onDelete('cascade');
-            $table->foreign('publisher_id')->references('publisher_id')->on('publishers')->onDelete('cascade');
-            $table->foreign('language_id')->references('Language_id')->on('languages')->onDelete('cascade');
-            $table->foreign('created_by')->references('UserID')->on('users')->onDelete('cascade');
-            $table->foreign('Author_id')->references('Author_ID')->on('authors')->onDelete('cascade');
+            $table->string('CatID')->nullable();
+            $table->string('publisher_id')->nullable();
+            $table->string('language_id')->nullable();
+            $table->string('created_by')->nullable();
+               $table->timestamps();
+
+          
         });
     }
 
