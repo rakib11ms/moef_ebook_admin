@@ -170,9 +170,13 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .all-card-books-div {
+  }
   .all-card-books {
     /* border: 1px solid gray; */
-    width: 100px !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
   }
   .all-books-card-p {
     font-size: 0.5rem;

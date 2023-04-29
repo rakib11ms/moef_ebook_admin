@@ -93,8 +93,9 @@ const CreateNewsAndNotice = () => {
                     <label for="exampleFormControlInput1" class="form-label">
                       সাব ক্যটেগরি
                     </label>
+                    <br />
                     <select
-                      className="form-select mb-4"
+                      className="form-select2 mb-4"
                       aria-label="Default select example"
                     >
                       <option selected>অফিস নোটিশ</option>
@@ -103,12 +104,14 @@ const CreateNewsAndNotice = () => {
                       <option value="3">Three</option>
                     </select>
                   </div>
+
                   <div>
                     <label for="exampleFormControlInput1" class="form-label">
                       যারা দেখতে পারবেন
                     </label>
+                    <br />
                     <select
-                      className="form-select mb-4"
+                      className="form-select2 mb-4"
                       aria-label="Default select example"
                     >
                       <option selected>সকলের জন্য</option>
