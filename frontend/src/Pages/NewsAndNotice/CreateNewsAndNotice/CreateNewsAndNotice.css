@@ -143,6 +143,12 @@
   /* height: 26px; */
   /* border: none; */
 }
+.form-select2 {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgb(202, 202, 202);
+  outline: hidden;
+}
 .create-news-notice-icon {
   /* border: 1px solid gray; */
   color: #77ffb0;

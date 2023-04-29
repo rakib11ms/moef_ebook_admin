@@ -177,7 +177,7 @@ const DraftDocuments = () => {
                 <AddIcon className="draft-form-control-icon" />
               </div>
               <select
-                className="form-select draft-form-control2"
+                className="draft-form-control2"
                 aria-label="Default select example"
               >
                 <option selected>অধ্যায়</option>
@@ -186,7 +186,7 @@ const DraftDocuments = () => {
                 <option value="3">Three</option>
               </select>
               <select
-                className="form-select draft-form-control2"
+                className="draft-form-control2"
                 aria-label="Default select example"
               >
                 <option selected>অনুচ্ছেদ </option>
@@ -195,7 +195,7 @@ const DraftDocuments = () => {
                 <option value="3">Three</option>
               </select>{" "}
               <select
-                className="form-select draft-form-control2"
+                className="draft-form-control2"
                 aria-label="Default select example"
               >
                 <option selected>ক্যাটাগরি </option>

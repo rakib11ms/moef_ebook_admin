@@ -27,7 +27,7 @@ const Book101200 = () => {
       <section className="container-fluid">
         <div className="">
           <div className="row">
-            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-4 col-2">
+            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-4 col-4">
               <>
                 <h5 className="suchipotro-h5">সূচীপত্র</h5>
                 <div>

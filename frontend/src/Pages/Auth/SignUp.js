@@ -38,7 +38,7 @@ function SignUp() {
     <>
       <section className="">
         <div className="">
-          <div className="login-background-wrapper" style={SignUpBg}>
+          <div className="signUp-background-wrapper" style={SignUpBg}>
             <div className="login-input-divs container">
               <div className="">
                 <div className="login-logo-tags">
@@ -113,14 +113,14 @@ function SignUp() {
                           নিবন্ধন করুন
                         </button>
                       </Link>
-                    </div>
-                    <Link to="/">
-                      {" "}
-                      <p className="change-pass mt-2 ms-5">
-                        আপনার একাউন্ট আছে?
-                        <span className="change-pass-span">লগইন করুন</span>
-                      </p>
-                    </Link>
+                    </div>{" "}
+                    <p className="change-pass mt-3">
+                      আপনার একাউন্ট আছে?
+                      <Link to="/">
+                        {" "}
+                        <span className="change-pass-span">লগইন করুন</span>{" "}
+                      </Link>
+                    </p>
                     <hr className="hr-line" />
                   </div>
                 </form>

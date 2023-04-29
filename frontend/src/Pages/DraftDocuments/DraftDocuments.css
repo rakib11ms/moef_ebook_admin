@@ -92,6 +92,8 @@
 .draft-form-control2 {
   border: 1px solid rgb(182, 182, 182);
   margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
 }
 
 .draft-buttons-div {

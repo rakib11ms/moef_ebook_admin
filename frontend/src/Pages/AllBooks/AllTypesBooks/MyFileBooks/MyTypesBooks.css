@@ -81,7 +81,7 @@
   border-radius: 15%;
 }
 .book-input-button-div {
-  position: absolute;
+  /* position: absolute; */
   width: 50%;
   bottom: 0;
 }
@@ -90,4 +90,15 @@
   background-color: #27ae60;
   padding: 3% 10%;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 576px) {
+  .book-input-button-div {
+    /* display: grid; */
+    /* place-items: center; */
+    margin-bottom: 10%;
+  }
+  .chapter-texts {
+    font-size: 0.6rem;
+  }
 }

@@ -20,6 +20,9 @@ body {
 .amount-doc-text {
   font-size: 1.2rem;
 }
+.doc-span1 {
+  color: #0f0f0f !important;
+}
 .doc-span {
   color: #27ae60;
   font-size: 1.5rem;
@@ -86,6 +89,8 @@ body {
 .select-category2 {
   height: 46px;
   /* background-color: #0f0f0f; */
+  width: 100%;
+  border: 1px solid rgb(204, 201, 201);
 }
 .form-select {
   width: 100% !important;
