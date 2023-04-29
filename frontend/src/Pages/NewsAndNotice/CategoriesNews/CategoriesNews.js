@@ -89,7 +89,7 @@ const CategoriesNews = () => {
   //   }
   // }
 
-  const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
+  const categories = ["কবিতা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
   const [categoryInputValue, setCategoryInputValue] = useState("");
   const [subCategoryInputValue, setSubCategoryInputValue] = useState("");
 
