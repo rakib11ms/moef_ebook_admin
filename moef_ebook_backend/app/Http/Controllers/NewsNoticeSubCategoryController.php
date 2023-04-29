@@ -11,7 +11,13 @@ class NewsNoticeSubCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $newsNoticeSubCategories = NewsNoticeSubCategory::all();
+        $newsNoticeSubCategories = NewsNoticeSubCategory::with('categoryName')->get();
+        return response()->json($newsNoticeSubCategories);
+    }
+
+    public function getSubCategoryByCategoryID(Request $request, string $id)
+    {
+        $newsNoticeSubCategories = NewsNoticeSubCategory::where('CategoryId', $id)->get();
         return response()->json($newsNoticeSubCategories);
     }
 
@@ -27,7 +33,8 @@ class NewsNoticeSubCategoryController extends Controller
             $newsNoticeSubCategory = new NewsNoticeSubCategory();
             $newsNoticeSubCategory->Name = $request->Name;
             $newsNoticeSubCategory->CategoryId = $request->CategoryId;
-            $newsNoticeSubCategory->created_by = auth('sanctum')->user()->UserID;
+            // $newsNoticeSubCategory->created_by = auth('sanctum')->user()->UserID;
+            $newsNoticeSubCategory->created_by = $request->created_by;
             $newsNoticeSubCategory->save();
             return response()->json($newsNoticeSubCategory, 201);
         }

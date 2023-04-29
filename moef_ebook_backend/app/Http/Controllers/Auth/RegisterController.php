@@ -47,12 +47,12 @@ class RegisterController extends Controller
         // }
 
 
-            $validator = Validator::make(
+        $validator = Validator::make(
             $request->all(),
             [
 
                 'OfficeID' => 'required|max:191',
-                'userName' => 'required|max:191',
+                'UserName' => 'required|max:191',
                 'email' => 'required|email|max:191|unique:users,email',
                 'userPhone' => 'required|unique:users',
                 'confirm_password' => 'required|same:password|min:6',
@@ -75,20 +75,17 @@ class RegisterController extends Controller
             $user->password= Hash::make($request->password);
 
             $user->confirm_password = Hash::make($request->confirm_password);
-$user->userRoleName='Admin';
+            $user->userRoleName='Admin';
             $user->save();
-     
 
-                $token = $user->createToken($user->email . '_Token')->plainTextToken;
-
-                     return response()->json([
-                    'status' => 200,
-                    'token' => $token,
-                    'user' => $user,
-                    'message' => 'Registration Successfull'
-                ]);
-         
-
+            $token = $user->createToken($user->email . '_Token')->plainTextToken;
+            
+            return response()->json([
+            'status' => 200,
+            'token' => $token,
+            'user' => $user,
+            'message' => 'Registration Successfull'
+            ]);
         }
     }
 }

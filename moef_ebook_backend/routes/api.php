@@ -33,6 +33,7 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
     Route::resource('offices', OfficeController::class);
     Route::resource('newsNotice', NewsNoticeCategoryController::class);
     Route::resource('newsNoticeSub', NewsNoticeSubCategoryController::class);
+    Route::get('get-all-news-notice-sub-cat-By-Category-ID/{id}', [NewsNoticeSubCategoryController::class, 'getSubCategoryByCategoryID']);
     Route::resource('notice', NewsNoticeController::class);
     Route::resource('profile', UserProfileController::class);
     Route::resource('books', BooksMasterController::class);

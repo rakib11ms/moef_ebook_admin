@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->string('email')->unique();
                 $table->string('password');
                 $table->string('confirm_password');
-                $table->string('userImage');
+                $table->string('userImage')->nullable();
                 $table->boolean('isVerified')->default(false);
                 $table->timestamp('last_used_time')->nullable();
             $table->timestamps();
