@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('single_documents', function (Blueprint $table) {
             $table->id();
+            $table->string('document_title')->nullable();
             $table->string('category')->nullable();
             $table->string('sub_category')->nullable();
             $table->string('published_date')->nullable();
-            $table->string('document_contents')->nullable();
+            $table->longText('document_contents')->nullable();
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\BookChapterController;
+use App\Http\Controllers\SingleDocumentController;
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
@@ -45,4 +46,7 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
     Route::resource('bookmark', BookmarkController::class);
     Route::resource('bookChapter', BookChapterController::class);
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+    Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
+    Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);
+    Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
 // });
