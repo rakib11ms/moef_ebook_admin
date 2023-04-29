@@ -11,21 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('users')) {
-            Schema::create('users', function (Blueprint $table) {
-                $table->id('UserID');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
                 $table->string('OfficeID');
                 $table->string('UserName');
                 $table->string('userRoleName');
                 $table->string('userPhone');
                 $table->string('email')->unique();
                 $table->string('password');
+                $table->string('confirm_password');
                 $table->string('userImage');
                 $table->boolean('isVerified')->default(false);
-                $table->timestamps();
                 $table->timestamp('last_used_time')->nullable();
-            });
-        }
+            $table->timestamps();
+        });
     }
 
     /**
