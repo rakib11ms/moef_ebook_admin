@@ -12,6 +12,23 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { Link } from "react-router-dom";
 
 const AddDocument = () => {
+  // Header Text edit
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState("Untitled");
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+    // Save the edited text to your data store
+  };
+
+  const handleInputChange = (event) => {
+    setText(event.target.value);
+  };
+
   // const [activeButton, setActiveButton] = useState(null);
   const [chapter, setChapter] = useState("");
   const [page, setPage] = useState("");
@@ -40,12 +57,28 @@ const AddDocument = () => {
       </section>
       <section className="container-fluid">
         <div className="row">
-          <div className="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6">
-            <h3>লাইব্রেরী / Untitled</h3>
-          </div>
-          <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6">
-            <EditIcon className="edit-icon-button" />
-          </div>
+          {isEditing ? (
+            <div className="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6">
+              <input
+                className="edit-input"
+                type="text"
+                value={text}
+                onChange={handleInputChange}
+              />
+              <br />
+              <button onClick={handleSaveClick} className="edit-save">
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex ">
+              <h3>লাইব্রেরী / {text}</h3>
+              <EditIcon
+                className="edit-icon-button"
+                onClick={handleEditClick}
+              />
+            </div>
+          )}
         </div>
       </section>
       <hr />
@@ -706,11 +739,14 @@ const AddDocument = () => {
               <div className="documents-text-div">
                 <div className="documents-text-header">{/* header Text */}</div>
                 <JoditEditor
-                  className="doc-jodit"
+                  className="jodit-editor"
                   value={content}
                   onChange={setContent}
                   spellcheck={false}
                   language="en"
+                  toolbarAdaptive="false"
+                  height="800"
+                  autofocus="true"
                 />
                 <div className="TrendingFlatIcon-doc-div">
                   <TrendingFlatIcon className="TrendingFlatIcon" />

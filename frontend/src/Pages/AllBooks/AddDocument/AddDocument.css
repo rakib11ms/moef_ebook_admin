@@ -16,6 +16,7 @@
 }
 .edit-icon-button {
   cursor: pointer;
+  margin-left: 20%;
 }
 .doc-suchi-div {
   text-align: justify;
@@ -74,4 +75,26 @@
 .form-check p {
   text-align: center;
   font-size: 0.6rem;
+}
+
+.jodit-editor {
+  padding: 20px;
+  /* background: red !important; */
+}
+.jodit-editor .jodit-workplace {
+  height: 40vh !important;
+}
+.edit-save {
+  padding: 2px 15px;
+  border: none;
+  background-color: #27ae60;
+  color: aliceblue;
+  font-weight: 600;
+  margin-top: 5px;
+}
+.edit-input {
+  padding: 5px 20px;
+  border-radius: 10px;
+  border-color: rgb(224, 224, 224) !important;
+  outline: none;
 }

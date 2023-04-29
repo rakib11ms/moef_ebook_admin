@@ -46,11 +46,14 @@ const CreateNewsAndNotice = () => {
                     <h5>এডিটর</h5>
                   </label>
                   <JoditEditor
+                    className="news-jodit-editor"
                     value={content}
                     onChange={setContent}
-                    height={400}
                     spellcheck={false}
                     language="en"
+                    toolbarAdaptive="false"
+                    height="800"
+                    autofocus="true"
                   />
                   <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন
