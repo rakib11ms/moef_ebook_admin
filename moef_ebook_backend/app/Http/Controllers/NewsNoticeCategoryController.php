@@ -21,7 +21,7 @@ class NewsNoticeCategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'Name' => 'required|unique:news_notice_category|max:255',
+            'Name' => 'required|unique:news_notice_categories|max:255',
         ]);
 
         if($validator->fails()) {
@@ -29,7 +29,8 @@ class NewsNoticeCategoryController extends Controller
         } else {
             $newsNoticeCategory = new NewsNoticeCategory();
             $newsNoticeCategory->Name = $request->Name;
-            $newsNoticeCategory->created_by = auth('sanctum')->user()->UserID;
+            // $newsNoticeCategory->created_by = auth('sanctum')->user()->UserID;
+            $newsNoticeCategory->created_by = $request->created_by;
             $newsNoticeCategory->save();
             return response()->json($newsNoticeCategory, 201);
         }

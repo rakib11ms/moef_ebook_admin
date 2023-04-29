@@ -15,4 +15,8 @@ class NewsNoticeSubCategory extends Model
         'Name',
         'created_by',
     ];
+    public function categoryName() {
+        return $this->belongsTo('App\Models\NewsNoticeCategory','CategoryID');
+    }
+
 }
