@@ -30,6 +30,7 @@ class SingleDocumentController extends Controller
         return response()->json([
             'status' => 200,
             'single_document' => $single_document,
+            'message'=>'Document saved sucessfully'
        
         ]);
 

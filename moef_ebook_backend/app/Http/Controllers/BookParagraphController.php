@@ -11,13 +11,26 @@ class BookParagraphController extends Controller
     public function index(Request $request)
     {
         $bookParagraphs = BookParagraph::all();
-        return response()->json($bookParagraphs);
-    }
+   return response()->json(
+            ['status'=>200,
+            'book_paragraphs'=>$bookParagraphs
+            ]
+        ); 
+
+           }
 
     public function store(Request $request)
     {
-        $bookParagraph = BookParagraph::create($request->all());
-        return response()->json($bookParagraph, 201);
+        $bookParagraph = new bookParagraph();
+        $bookParagraph->ParagraphName=$request->paragraphName;
+        $bookParagraph->bookId=$request->bookId;
+        $bookParagraph->chapterId=$request->chapterId;
+        $bookParagraph->save();
+   return response()->json(
+            ['status'=>200,
+            'bookParagraph'=>'Book Paragraph Created Successfully'
+            ]
+        ); 
     }
 
     public function show(Request $request, $id)

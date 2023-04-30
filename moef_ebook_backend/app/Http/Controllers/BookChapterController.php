@@ -11,7 +11,11 @@ class BookChapterController extends Controller
     public function index(Request $request)
     {
         $bookChapters = BookChapter::all();
-        return response()->json($bookChapters);
+        return response()->json(
+            ['status'=>200,
+            'book_chapters'=>$bookChapters
+            ]
+        );
     }
 
     public function store(Request $request)

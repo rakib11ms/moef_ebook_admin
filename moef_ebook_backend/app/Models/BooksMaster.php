@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BooksMaster extends Model
 {
     use HasFactory;
-    protected $table = 'books_master';
+    protected $table = 'books_masters';
     protected $primaryKey='id';
     protected $fillable = [
         'CatID',
@@ -19,7 +19,7 @@ class BooksMaster extends Model
         'LanguageID',
         'Publish_date',
         'File_url',
-        'Created_by',
+        'created_by',
         'AuthorID',
     ];
 }

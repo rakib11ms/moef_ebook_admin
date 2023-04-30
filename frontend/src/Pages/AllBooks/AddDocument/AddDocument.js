@@ -3,21 +3,31 @@ import "./AddDocument.css";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import JoditEditor from "jodit-react";
 import EditIcon from "@mui/icons-material/Edit";
 import ReactDatePicker from "react-datepicker";
+import axios from "axios";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { Link } from "react-router-dom";
-
+import Swal from "sweetalert2";
 const AddDocument = () => {
   // Header Text edit
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState("Untitled");
 
+  const [bookId,setBookId]=useState('');
+  const [chapterId,setchapterId]=useState('');
+  const [ParagraphId,setParagraphId]=useState('');
+  const [BookCategoryId,setBookCategoryId]=useState('');
+
+  const [documentTitle,setdocumentTitle]=useState('');
+
   const handleEditClick = () => {
     setIsEditing(true);
+    document.getElementById("editInp").focus();
+
   };
 
   const handleSaveClick = () => {
@@ -50,6 +60,79 @@ const AddDocument = () => {
   // setChapter(buttonChapter);
   // setPage(buttonPage);
   // };
+
+  const[allBooks,setAllBooks]=useState([]);
+  const[allChapters,setAllChapters]=useState([]);
+  const[allParagraphs,setAllParagraphs]=useState([]);
+  const[allBookCategories,setAllBookCategories]=useState([]);
+  
+
+  console.log('all books',allBooks)
+  console.log('all chapters',allChapters)
+  console.log('all paragraphs',allParagraphs)
+  console.log('all book catgeories',allBookCategories)
+
+  useEffect(() => {
+    axios.get(`/api/books`).then(res => {
+        if (res.data.status == 200) {
+          setAllBooks(res.data.books);
+            // setLoading(false);
+        }
+    })
+
+
+
+    axios.get(`/api/bookParagraph`).then(res => {
+        if (res.data.status == 200) {
+          setAllParagraphs(res.data.book_paragraphs);
+        }
+    })
+
+    axios.get(`/api/book-category`).then(res => {
+      if (res.data.status == 200) {
+        setAllBookCategories(res.data.bookcategories);
+      }
+  })
+
+  axios.get(`/api/bookChapter`).then(res => {
+    if (res.data.status == 200) {
+      setAllChapters(res.data.book_chapters);
+    }
+})
+
+
+
+}, [])
+const data={
+  category:'uncategorised',
+  sub_category:'uncategorised',
+  document_contents:content,
+  
+}
+
+axios.post(`/api/save-single-document`, data).then(res => {
+  if (res.data.status == 200) {
+      Swal.fire(res.data.message, '', 'success')
+
+      setContent('');
+      setdocumentTitle('')
+
+
+    
+
+      // setImage('');
+      // setPicture('');
+      // document.getElementById('job_post_logo').value = "";
+  }
+  // else if (res.data.status == 400) {
+  //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+  //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+
+  // }
+})
+
+
+
   return (
     <div>
       <section>
@@ -57,7 +140,7 @@ const AddDocument = () => {
       </section>
       <section className="container-fluid">
         <div className="row">
-          {isEditing ? (
+          {/* {isEditing ? (
             <div className="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6">
               <input
                 className="edit-input"
@@ -78,7 +161,21 @@ const AddDocument = () => {
                 onClick={handleEditClick}
               />
             </div>
-          )}
+          )} */}
+
+            <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex">
+              <h3 className="d-flex align-items-center px-0"> লাইব্রেরী /
+              <input type="text" className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 " id="editInp" value={documentTitle} onChange={(e)=>setdocumentTitle(e.target.value)
+              }/>
+              </h3>
+
+              
+
+              <EditIcon
+                className="mt-1 " style={{cursor:"pointer"}}
+                onClick={handleEditClick}
+              />
+            </div>
         </div>
       </section>
       <hr />
@@ -762,10 +859,18 @@ const AddDocument = () => {
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                    <option selected>পরিবেশ আইন সংকলন ১০১-২০০</option>
-                    <option value="1">জাতীয় পরিবেশ নীতি ২০১৮</option>
-                    <option value="2">পরিবেশ আইন সংকলন ২০০-৩৩৬</option>
-                    <option value="3">পরিবেশ আদালত আইন, ২০১০</option>
+                    <option selected disabled>বই নির্বাচন করুন  </option>
+                    {
+                      allBooks.map((item)=>{
+                        return(
+                          <>
+                              <option value={item.Title} >{item.Title}</option>
+
+                          </>
+                        )
+                      })
+                    }
+                   
                   </select>
                   <AddIcon className="book-add-icon" />
                 </div>
@@ -774,10 +879,18 @@ const AddDocument = () => {
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                    <option selected>অধ্যায় - ১</option>
-                    <option value="1">অধ্যায় - ২</option>
-                    <option value="2">অধ্যায় - ৩</option>
-                    <option value="3">অধ্যায় - ৪ </option>
+                    <option selected disabled>অধ্যায় নির্বাচন করুন </option>
+
+                    {
+                      allChapters.map((item)=>{
+                        return(
+                          <>
+                              <option value={item.ChapterName} >{item.ChapterName}</option>
+
+                          </>
+                        )
+                      })
+                    }
                   </select>
                   <AddIcon className="book-add-icon" />
                 </div>
@@ -786,10 +899,17 @@ const AddDocument = () => {
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                    <option selected>অনুচ্ছেদ - ১.১</option>
-                    <option value="1">অনুচ্ছেদ - ১.২</option>
-                    <option value="2">অনুচ্ছেদ - ১.৩</option>
-                    <option value="3">অনুচ্ছেদ - ১.৪</option>
+                  <option selected disabled>অনুচ্ছেদ নির্বাচন করুন  </option>
+                  {
+                      allParagraphs.map((item)=>{
+                        return(
+                          <>
+                              <option value={item.ParagraphName} >{item.ParagraphName}</option>
+
+                          </>
+                        )
+                      })
+                    }
                   </select>
                   <AddIcon className="book-add-icon" />
                 </div>
@@ -798,24 +918,31 @@ const AddDocument = () => {
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                    <option selected>আইন বিষয়ক</option>
-                    <option value="1">আইন প্রণালী</option>
-                    <option value="2">আইনের বিশ্বেসত্ব</option>
-                    <option value="3">আইন অধিকার</option>
+                     <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
+                     {
+                      allBookCategories.map((item)=>{
+                        return(
+                          <>
+                              <option value={item.CatgeoryName} >{item.CatgeoryName}</option>
+
+                          </>
+                        )
+                      })
+                    }
                   </select>
                   <AddIcon className="book-add-icon" />
                 </div>
               </div>
               <div className="form-check">
                 <input
-                  className="form-check-input"
+                  className="form-check-input mt-0"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                   onClick={toggleDiv}
                 />
 
-                <p className="doc-redios-text">
+                <p className="doc-redios-text mt-4 text-danger">
                   {" "}
                   এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে
                 </p>

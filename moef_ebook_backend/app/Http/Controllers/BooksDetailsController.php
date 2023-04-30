@@ -22,7 +22,8 @@ class BooksDetailsController extends Controller
         $booksDetails->ParagrpahId = $request->ParagrpahId;
         $booksDetails->pageNum = $request->pageNum;
         $booksDetails->Details = $request->Details;
-        $booksDetails->created_by = auth('sanctum')->user()->UserID;
+        // $booksDetails->created_by = auth('sanctum')->user()->UserID;
+        $booksDetails->created_by = $request->created_by;
         $booksDetails->save();
         return response()->json($booksDetails, 201);
     }
