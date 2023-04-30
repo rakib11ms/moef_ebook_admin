@@ -45,7 +45,7 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
     Route::resource('bookReview', BookReviewController::class);
     Route::resource('language', LanguageController::class);
     Route::resource('publisher', PublisherController::class);
-    Route::resource('category', CategoryController::class);
+    // Route::resource('category', CategoryController::class);
     Route::resource('book-category', BookCategoryController::class);
     Route::resource('book-sub-category', BookSubCategoryController::class);
     Route::get('get-all-book-sub-cat-By-Category-ID/{id}', [BookSubCategoryController::class, 'getBookSubCategoryByCategoryID']);
