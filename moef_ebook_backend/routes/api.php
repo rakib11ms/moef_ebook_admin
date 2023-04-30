@@ -33,7 +33,7 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
 
 // Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
     Route::resource('authors', AuthorController::class);
-    
+
     Route::resource('offices', OfficeController::class);
     Route::resource('newsNotice', NewsNoticeCategoryController::class);
     Route::resource('newsNoticeSub', NewsNoticeSubCategoryController::class);
