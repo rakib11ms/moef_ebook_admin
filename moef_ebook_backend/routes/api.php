@@ -21,10 +21,12 @@ use App\Http\Controllers\BookParagraphController;
 use App\Http\Controllers\BookReviewController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PublisherController;
-use App\Http\Controllers\CategoryController;
+// use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\BookChapterController;
 use App\Http\Controllers\SingleDocumentController;
+use App\Http\Controllers\BookCategoryController;
+use App\Http\Controllers\BookSubCategoryController;
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
@@ -44,6 +46,9 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
     Route::resource('language', LanguageController::class);
     Route::resource('publisher', PublisherController::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('book-category', BookCategoryController::class);
+    Route::resource('book-sub-category', BookSubCategoryController::class);
+    Route::get('get-all-book-sub-cat-By-Category-ID/{id}', [BookSubCategoryController::class, 'getBookSubCategoryByCategoryID']);
     Route::resource('bookmark', BookmarkController::class);
     Route::resource('bookChapter', BookChapterController::class);
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
