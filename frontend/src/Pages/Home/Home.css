@@ -232,6 +232,12 @@ a {
   .home-serchInput-icon-div {
     width: 70%;
   }
+  .recently {
+    padding: 30px 10px;
+  }
+  .recent-news {
+    padding-bottom: 35px;
+  }
   .clickble-div {
     flex-wrap: wrap;
   }
