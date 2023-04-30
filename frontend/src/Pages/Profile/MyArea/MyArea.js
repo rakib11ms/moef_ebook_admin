@@ -8,6 +8,10 @@ import CreateIcon from "@mui/icons-material/Create";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
+import axios from 'axios';
+
+
 
 const MyArea = () => {
   var settings = {
@@ -44,6 +48,21 @@ const MyArea = () => {
       },
     ],
   };
+
+  
+  const navigate = useNavigate();
+  const handleLogOut = (e) => {
+      e.preventDefault();
+      axios.post('/api/logout').then(res => {
+          if (res.data.status === 200) {
+            localStorage.removeItem('auth_token', res.data.token);
+            localStorage.removeItem('user', JSON.stringify(res.data.user));
+            navigate('/login');
+          }
+      }).catch(err => {
+          console.log(err);
+      })
+  }
 
   return (
     <div>
@@ -84,6 +103,9 @@ const MyArea = () => {
                   </span>
                   প্রোফাইল ভেরিফাইড
                 </button>
+              </div>
+              <div class=" text-white" onClick={handleLogOut}>
+                <button className="area-varify-button">Logout</button>
               </div>
             </div>
           </div>

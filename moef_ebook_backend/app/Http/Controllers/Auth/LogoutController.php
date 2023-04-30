@@ -9,9 +9,11 @@ use App\Http\Controllers\Controller;
 
 class LogoutController extends Controller
 {
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully'], 200);
+        dd('check');
+        dd(auth('sanctum')->user()->id());
+        auth('sanctum')->user()->tokens()->delete();
+        return response()->json(['message' => 'Logged out successfully', 'status' => 200]);
     }
 }
