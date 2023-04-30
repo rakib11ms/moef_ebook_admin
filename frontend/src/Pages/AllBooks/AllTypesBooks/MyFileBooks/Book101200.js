@@ -161,7 +161,7 @@ const Book101200 = () => {
                   <h5>
                     {chapter} / {page}
                   </h5>
-                  <h5>পৃষ্ঠা -০১/০৩</h5>
+                  {/* <h5>পৃষ্ঠা -০১/০৩</h5> */}
                 </div>
                 <div>
                   {activeButton === 1 && (
@@ -1001,10 +1001,10 @@ const Book101200 = () => {
               </div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-              <div className="chapter-input-header">
+              {/* <div className="chapter-input-header">
                 <input type="number" className="number-input" />
                 <h4>GO</h4>
-              </div>
+              </div> */}
               <h5 className="mt-3">তথ্য পরিবর্তন করুন </h5>
               <div className="book-add-input">
                 <select

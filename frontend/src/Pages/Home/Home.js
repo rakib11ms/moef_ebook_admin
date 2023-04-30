@@ -102,7 +102,7 @@ const Home = () => {
       <section className="container-fluid">
         <div className="row">
           <div className="col-xl-7 col-lg-8 col-md-7 col-md-12 col-12 d-flex doc-chap-book">
-            <Link to="/all-news-notice" className=" amounts-div">
+            <Link to="/add-document" className=" amounts-div">
               <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
                 <span className="doc-span1"> ৩৩ টি</span>
