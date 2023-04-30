@@ -21,7 +21,15 @@
 .login-input-divs {
   background-color: black;
   opacity: 0.6;
-  padding: 3%;
+  padding: 2%;
+  margin-top: 1.5%;
+  border-radius: 10px;
+}
+.signup-input-divs {
+  background-color: black;
+  opacity: 0.6;
+  padding: 2%;
+  margin-top: 1%;
   border-radius: 10px;
 }
 .peopleRepublic {
@@ -117,7 +125,15 @@
 
 @media only screen and (min-width: 1378px) {
   .login-input-divs {
-    margin-top: 6%;
+    margin-top: 8%;
+  }
+  .signUp-background-wrapper {
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+  }
+  .signup-input-divs {
+    margin-top: 2%;
   }
   .hr-line {
     margin-right: -10%;
@@ -126,6 +142,9 @@
 @media only screen and (max-width: 576px) {
   .form-control {
     width: 120%;
+  }
+  .login-background-wrapper {
+    height: 100vh;
   }
   .login-submit-button {
     width: 120%;
@@ -137,8 +156,17 @@
   .login-input-divs {
     background-color: black;
     opacity: 0.6;
-    margin-top: 20%;
+    margin-top: 40%;
+    padding: 2%;
     border-radius: 5px;
+  }
+  .signUp-background-wrapper {
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+  }
+  .signup-input-divs {
+    margin-top: 10%;
   }
   .nobondhon-button {
     margin-left: -30px;

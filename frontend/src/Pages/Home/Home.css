@@ -238,6 +238,9 @@ a {
   .recent-news {
     padding-bottom: 35px;
   }
+  .doc-text {
+    font-size: 0.9rem;
+  }
   .clickble-div {
     flex-wrap: wrap;
   }

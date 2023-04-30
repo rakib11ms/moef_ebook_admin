@@ -39,7 +39,7 @@ function SignUp() {
       <section className="">
         <div className="">
           <div className="signUp-background-wrapper" style={SignUpBg}>
-            <div className="login-input-divs container">
+            <div className="signup-input-divs container">
               <div className="">
                 <div className="login-logo-tags">
                   <img
