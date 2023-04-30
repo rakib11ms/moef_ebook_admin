@@ -127,20 +127,20 @@ const Home = () => {
               </h4>
             </Link>
           </div>
-          <div className="col-xl-5 col-lg-4 col-md-5 col-md-12 col-12">
+          <div className="col-xl-5 col-lg-4 col-md-5 col-md-12 col-12 recently">
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h4 className="samprotik">সাম্প্রতিক </h4>
               <h6 className="sob-dekhun">সব দেখুন </h6>
             </div>
-            <div className="row">
-              <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
+            <div className="row ">
+              <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6 ">
                 <p>
                   ২ টি নতুন চ্যাপ্টার যোগ করা হয়েছে যোগ করেছেন আনিসুর রাহমান (
                   উপ সচিব ) ০৪ জানু ২০২৩ , ১২. ৪৪ মিনিট{" "}
                 </p>
               </div>
               <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6">
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between recent-news">
                   <CancelOutlinedIcon className="icons" />
                   <RemoveRedEyeIcon className="icons" />
                 </div>
