@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('news_notices', function (Blueprint $table) {
             $table->id();
             $table->string('Title')->nullable();
-            $table->string('Description')->nullable();
+            $table->longText('Description')->nullable();
             $table->string('Image')->nullable();
             $table->string('CategoryId')->nullable();
             $table->string('subCatId')->nullable();

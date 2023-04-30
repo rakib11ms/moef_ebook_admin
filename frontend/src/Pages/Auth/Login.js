@@ -2,7 +2,9 @@ import backgroundlogin from "../../images/logincover.png";
 import "../Auth/auth.css";
 import peoplesRepublicLogo from "../../images/Government of Bangladesh-logo.png";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
+import Swal from 'sweetalert2';
+import axios from "axios";
 
 const loginBg = {
   background: `url(${backgroundlogin})`,
@@ -12,24 +14,54 @@ const loginBg = {
   overflowX: "hiden",
 };
 
-function Login() {
+function Login({ handleSucessLogin }) {
+
+  const navigate = useNavigate({ handleSucessLogin });
+  const [clickedRender, setClickedRender] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email.trim() === "" || password.trim() === "") {
-      setEmail("Email and password cannot be empty.");
-      return;
-    }
 
-    // Check if email is a valid format using a regular expression
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setPassword("Please enter a valid email address.");
-      return;
-    }
-  };
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    // if (email.trim() === "" || password.trim() === "") {
+    //   setEmail("Email and password cannot be empty.");
+    //   return;
+    // }
+
+    // // Check if email is a valid format using a regular expression
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   setPassword("Please enter a valid email address.");
+    //   return;
+    // }
+    e.preventDefault();
+    setClickedRender(true);
+    const loginInput = {
+      email: email,
+      password: password,
+    };
+    // console.log(loginInput);
+    axios.post("api/login", loginInput).then((res) => {
+      // console.log(res.data);  
+      if(res.data.status === 200){
+        setClickedRender(false);
+        localStorage.setItem('auth_token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        navigate('/home');
+      }
+    }).catch((err) => {
+      console.log(err);
+      setClickedRender(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href="#">Why do I have this issue?</a>'
+      })
+    });
+  }
   // const history = useHistory();
   // import { useHistory } from "react-router-dom";
   // history.push("/home");
@@ -63,6 +95,7 @@ function Login() {
                         type="email"
                         className="form-control"
                         id="exampleFormControlInput1"
+                        name="email"
                         placeholder="আপনার ইউজার আইডি / অফিস আইডি"
                       />
                       <input
@@ -70,9 +103,10 @@ function Login() {
                         type="password"
                         className="form-control mt-4"
                         id="inputPassword"
+                        name="password"
                         placeholder="পাসওয়ার্ড"
                       ></input>
-                      <Link to="/home">
+                      {/* <Link to="/home">
                         {" "}
                         <button
                           type="submit"
@@ -80,7 +114,14 @@ function Login() {
                         >
                           লগইন
                         </button>
-                      </Link>
+                      </Link> */}
+
+                      <button
+                        type="submit"
+                        className="login-submit-button mb-3"
+                      >
+                        লগইন { clickedRender ? <span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span> : '' }
+                      </button>
                     </div>
                     <p className="change-pass">
                       পাসওয়ার্ড ভুলে গেছেন ?{" "}
@@ -110,4 +151,5 @@ function Login() {
     </>
   );
 }
+
 export default Login;

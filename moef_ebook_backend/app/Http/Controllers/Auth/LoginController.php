@@ -22,15 +22,20 @@ class LoginController extends Controller
         );
         $user = User::where('email', $data['email'])->first();
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            return response()->json(['message' => 'Invalid login details'], 401);
+            $response = [
+                'message' => 'Invalid credentials',
+                'status' => 401
+            ];
+            return response($response, 401);
         } else {
             $token = $user->createToken('auth-token')->plainTextToken;
             $response = [
                 'user' => $user,
+                'status' => 200,
                 'token' => $token
             ];
             return response($response, 201);
-        }
+        } 
 
     }
 }

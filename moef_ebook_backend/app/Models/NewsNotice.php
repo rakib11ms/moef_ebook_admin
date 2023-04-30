@@ -21,4 +21,14 @@ class NewsNotice extends Model
         'updated_by',
         'isPublished',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(NewsNoticeCategory::class, 'CategoryId');
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(NewsNoticeSubCategory::class, 'subCatId');
+    }
 }
