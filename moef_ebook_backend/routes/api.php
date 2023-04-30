@@ -57,3 +57,4 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
     Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);
     Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
 // });
+
