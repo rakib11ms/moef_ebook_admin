@@ -74,7 +74,7 @@ const BooksCatagories = () => {
     }
   };
 
-  const categories = ["কবিটা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
+  const categories = ["কবিতা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
