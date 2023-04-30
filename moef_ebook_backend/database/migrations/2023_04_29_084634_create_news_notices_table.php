@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('redirect_url')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
+            
             $table->boolean('isPublished')->default(false);
             $table->timestamps();
         });

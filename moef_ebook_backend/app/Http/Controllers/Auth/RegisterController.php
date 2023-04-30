@@ -76,6 +76,7 @@ class RegisterController extends Controller
 
             $user->confirm_password = Hash::make($request->confirm_password);
             $user->userRoleName='Admin';
+            $user->userImage='Admin';
             $user->save();
 
             $token = $user->createToken($user->email . '_Token')->plainTextToken;

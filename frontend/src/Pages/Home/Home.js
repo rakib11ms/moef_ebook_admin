@@ -185,8 +185,14 @@ const Home = () => {
                   {" "}
                   <span>
                     <AutoStoriesIcon className="icons" />
+                    <Link to="/add-document">
+                    ডকুমেন্ট যোগ করুন 
+
+                    </Link>
                   </span>
-                  ইনডেক্স দেখুন
+                  {/* <span className="mx-2">
+                    +
+                  </span> */}
                 </h6>
               </div>
               <div className="home-serchInput-icon-div">

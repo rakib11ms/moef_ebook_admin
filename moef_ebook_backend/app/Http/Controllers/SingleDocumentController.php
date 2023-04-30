@@ -19,10 +19,16 @@ class SingleDocumentController extends Controller
     public function saveSingleDocument(Request $request){
         $single_document=new SingleDocument();
         $single_document->category=$request->category;
+        $single_document->document_title=$request->document_title;
         $single_document->sub_category=$request->sub_category;
         $single_document->published_date=$request->published_date;
         $single_document->document_contents=$request->document_contents;
         $single_document->save();
+          return response()->json([
+            'status' => 200,
+            'message'=>'Document saved sucessfully'
+       
+        ]);
 
     }
     public function getSingleDocument($id){
@@ -30,7 +36,7 @@ class SingleDocumentController extends Controller
         return response()->json([
             'status' => 200,
             'single_document' => $single_document,
-            'message'=>'Document saved sucessfully'
+            // 'message'=>'Document saved sucessfully'
        
         ]);
 
