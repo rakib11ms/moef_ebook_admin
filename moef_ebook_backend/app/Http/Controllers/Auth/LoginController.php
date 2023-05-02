@@ -43,7 +43,7 @@ class LoginController extends Controller
                 'status' => 200,
                 'token' => $token
             ];
-            return response($response, 201);
+            return response($response, 200);
         } 
 
     }
