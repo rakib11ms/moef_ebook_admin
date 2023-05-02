@@ -23,7 +23,7 @@ class LoginController extends Controller
         $user = User::where('email', $data['email'])->first();
         if (!$user || !Hash::check($data['password'], $user->password)) {
             $response = [
-                'message' => 'Invalid credentials',
+                'message' => 'Invalid credentialsjhj',
                 'status' => 401
             ];
             return response($response, 401);

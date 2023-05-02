@@ -57,7 +57,7 @@ const MyArea = () => {
           if (res.data.status === 200) {
             localStorage.removeItem('auth_token', res.data.token);
             localStorage.removeItem('user', JSON.stringify(res.data.user));
-            navigate('/login');
+            navigate('/');
           }
       }).catch(err => {
           console.log(err);
