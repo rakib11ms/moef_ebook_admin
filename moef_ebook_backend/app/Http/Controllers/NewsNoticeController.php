@@ -10,7 +10,7 @@ class NewsNoticeController extends Controller
 {
     public function index(Request $request)
     {
-        $newsNotices = NewsNotice::all();
+        $newsNotices = NewsNotice::with('category')->with('subCategory')->get();
         return response()->json($newsNotices);
     }
 
@@ -22,7 +22,8 @@ class NewsNoticeController extends Controller
         $newsNotice->CategoryId = $request->CategoryId;
         $newsNotice->subCatId = $request->subCatId;
         $newsNotice->redirect_url = $request->redirect_url;
-        $newsNotice->created_by = auth('sanctum')->user()->UserID;
+        // $newsNotice->created_by = auth('sanctum')->user()->UserID;
+        $newsNotice->created_by = $request->created_by;
         $newsNotice->save();
         return response()->json($newsNotice, 201);
     }

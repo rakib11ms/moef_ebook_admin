@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('LanguageID')->nullable();
             $table->string('Publish_date')->nullable();
             $table->string('File_url')->nullable();
-            $table->string('Created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->string('AuthorID')->nullable();
             $table->timestamps();
         });

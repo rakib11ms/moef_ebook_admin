@@ -11,7 +11,12 @@ class BooksMasterController extends Controller
     public function index(Request $request)
     {
         $booksMasters = BooksMaster::all();
-        return response()->json($booksMasters);
+        return response()->json(
+                ['status'=>200,
+                    'books'=>$booksMasters
+            ]
+
+        );
     }
 
     public function store(Request $request)
@@ -19,15 +24,14 @@ class BooksMasterController extends Controller
         $booksMaster = new BooksMaster();
         $booksMaster->CatID = $request->CatID;
         $booksMaster->Title = $request->Title;
-        $booksMaster->author = $request->author;
         $booksMaster->short_desc = $request->short_desc;
-        $booksMaster->publisher_id = $request->publisher_id;
+        $booksMaster->publisherId = $request->publisher_id;
         $booksMaster->BookCoverImage = $request->BookCoverImage;
-        $booksMaster->language_id = $request->language_id;
+        $booksMaster->languageId = $request->language_id;
         $booksMaster->publish_date = $request->publish_date;
         $booksMaster->file_url = $request->file_url;
-        $booksMaster->created_by = auth('sanctum')->user()->UserID;
-        $booksMaster->Author_id = $request->Author_id;
+        $booksMaster->created_by = $request->created_by;
+        $booksMaster->AuthorId = $request->Author_id;
         $booksMaster->save();
         return response()->json($booksMaster, 201);
     }
