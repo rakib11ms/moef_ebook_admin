@@ -44,7 +44,7 @@ function Login({ handleSucessLogin }) {
     };
     // console.log(loginInput);
     axios.post("api/login", loginInput).then((res) => {
-      // console.log(res.data);  
+      console.log(res.data);  
       if(res.data.status === 200){
         setClickedRender(false);
         localStorage.setItem('auth_token', res.data.token);
@@ -58,7 +58,6 @@ function Login({ handleSucessLogin }) {
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-        footer: '<a href="#">Why do I have this issue?</a>'
       })
     });
   }
