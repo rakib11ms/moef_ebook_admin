@@ -11,7 +11,11 @@ class NewsNoticeController extends Controller
     public function index(Request $request)
     {
         $newsNotices = NewsNotice::with('category')->with('subCategory')->get();
-        return response()->json($newsNotices);
+        return response()->json(
+            ['status'=>200,
+            'news_notices'=>$newsNotices
+        ]
+        );
     }
 
     public function store(Request $request)
