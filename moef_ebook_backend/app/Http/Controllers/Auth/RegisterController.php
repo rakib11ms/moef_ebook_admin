@@ -51,8 +51,10 @@ class RegisterController extends Controller
             $request->all(),
             [
 
-                'OfficeID' => 'required|max:191',
+                'OfficeID' => 'max:191',
                 'UserName' => 'required|max:191',
+                'password' => 'required|min:6',
+                'userID' => 'required|unique:users',
                 'email' => 'required|email|max:191|unique:users,email',
                 'userPhone' => 'required|unique:users',
                 'confirm_password' => 'required|same:password|min:6',
@@ -72,11 +74,12 @@ class RegisterController extends Controller
             $user->UserName=$request->UserName;
             $user->userPhone=$request->userPhone;
             $user->email=$request->email;
+            $user->userID=$request->userID;
             $user->password= Hash::make($request->password);
 
             $user->confirm_password = Hash::make($request->confirm_password);
             $user->userRoleName='Admin';
-            $user->userImage='Admin';
+            $user->userImage=$request->userImage;
             $user->save();
 
             $token = $user->createToken($user->email . '_Token')->plainTextToken;
