@@ -171,7 +171,7 @@ const Home = () => {
             <div className="books-index-search">
               <div className="all-books-index-show">
                 <Link to="/all-books">
-                  <h6>
+                  <h6 className="doc-text">
                     {" "}
                     <span>
                       <LibraryBooksIcon className="icons" />
@@ -181,19 +181,26 @@ const Home = () => {
                 </Link>
               </div>
               <div className="all-books-index-show">
-                <h6>
+                <Link to="/add-document">
+                  <h6 className="doc-text">
+                    {" "}
+                    <span>
+                      <AutoStoriesIcon className="icons" />
+                    </span>
+                    <AddIcon />
+                    ডকুমেন্ট যোগ করুন
+                  </h6>
+                </Link>
+                {/* <h6>
                   {" "}
                   <span>
                     <AutoStoriesIcon className="icons" />
-                    <Link to="/add-document">
-                    ডকুমেন্ট যোগ করুন 
-
-                    </Link>
+                    <Link to="/add-document">ডকুমেন্ট যোগ করুন</Link>
                   </span>
-                  {/* <span className="mx-2">
+                  <span className="mx-2">
                     +
-                  </span> */}
-                </h6>
+                  </span>
+                </h6> */}
               </div>
               <div className="home-serchInput-icon-div">
                 <SearchIcon />
