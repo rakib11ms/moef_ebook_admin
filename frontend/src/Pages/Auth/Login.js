@@ -19,27 +19,27 @@ function Login({ handleSucessLogin }) {
   const navigate = useNavigate({ handleSucessLogin });
   const [clickedRender, setClickedRender] = useState(false);
 
-  const [email, setEmail] = useState("");
+  const [id, setid] = useState("");
   const [password, setPassword] = useState("");
 
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    // if (email.trim() === "" || password.trim() === "") {
-    //   setEmail("Email and password cannot be empty.");
+    // if (id.trim() === "" || password.trim() === "") {
+    //   setid("id and password cannot be empty.");
     //   return;
     // }
 
-    // // Check if email is a valid format using a regular expression
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   setPassword("Please enter a valid email address.");
+    // // Check if id is a valid format using a regular expression
+    // const idRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!idRegex.test(id)) {
+    //   setPassword("Please enter a valid id address.");
     //   return;
     // }
     e.preventDefault();
     setClickedRender(true);
     const loginInput = {
-      email: email,
+      id: id,
       password: password,
     };
     // console.log(loginInput);
@@ -90,11 +90,11 @@ function Login({ handleSucessLogin }) {
                     <p className="login-input-tags">শুরু করতে লগইন করুন</p>
                     <div>
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
-                        type="email"
+                        onChange={(e) => setid(e.target.value)}
+                        type="string"
                         className="form-control"
                         id="exampleFormControlInput1"
-                        name="email"
+                        name="id"
                         placeholder="আপনার ইউজার আইডি / অফিস আইডি"
                       />
                       <input
