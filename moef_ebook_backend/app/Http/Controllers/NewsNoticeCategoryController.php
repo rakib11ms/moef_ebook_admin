@@ -15,7 +15,10 @@ class NewsNoticeCategoryController extends Controller
     public function index(Request $request)
     {
         $newsNoticeCategories = NewsNoticeCategory::all();
-        return response()->json($newsNoticeCategories);
+        return response()->json([
+            'status'=>200,
+            'news_notice_categories'=>$newsNoticeCategories
+        ]);
     }
 
     public function store(Request $request)

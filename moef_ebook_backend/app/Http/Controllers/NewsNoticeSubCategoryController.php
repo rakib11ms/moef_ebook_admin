@@ -12,7 +12,10 @@ class NewsNoticeSubCategoryController extends Controller
     public function index(Request $request)
     {
         $newsNoticeSubCategories = NewsNoticeSubCategory::with('categoryName')->get();
-        return response()->json($newsNoticeSubCategories);
+        return response()->json([
+            'status'=>200,
+            'news_notices_sub_categories'=>$newsNoticeSubCategories
+        ]);
     }
 
     public function getSubCategoryByCategoryID(Request $request, string $id)

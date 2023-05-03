@@ -3,7 +3,7 @@ import "./AddDocument.css";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import AddIcon from "@mui/icons-material/Add";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import EditIcon from "@mui/icons-material/Edit";
 import ReactDatePicker from "react-datepicker";
@@ -17,12 +17,12 @@ const AddDocument = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState("Untitled");
 
-  const [bookId,setBookId]=useState('');
-  const [chapterId,setchapterId]=useState('');
-  const [ParagraphId,setParagraphId]=useState('');
-  const [BookCategoryId,setBookCategoryId]=useState('');
+  const [bookId, setBookId] = useState('');
+  const [chapterId, setchapterId] = useState('');
+  const [ParagraphId, setParagraphId] = useState('');
+  const [BookCategoryId, setBookCategoryId] = useState('');
 
-  const [documentTitle,setdocumentTitle]=useState('');
+  const [documentTitle, setdocumentTitle] = useState('');
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -61,79 +61,90 @@ const AddDocument = () => {
   // setPage(buttonPage);
   // };
 
-  const[allBooks,setAllBooks]=useState([]);
-  const[allChapters,setAllChapters]=useState([]);
-  const[allParagraphs,setAllParagraphs]=useState([]);
-  const[allBookCategories,setAllBookCategories]=useState([]);
-  
+  const [allBooks, setAllBooks] = useState([]);
+  const [allChapters, setAllChapters] = useState([]);
+  const [allParagraphs, setAllParagraphs] = useState([]);
+  const [allBookCategories, setAllBookCategories] = useState([]);
+  const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
+  const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
 
-  console.log('all books',allBooks)
-  console.log('all chapters',allChapters)
-  console.log('all paragraphs',allParagraphs)
-  console.log('all book catgeories',allBookCategories)
+
+  console.log('all books', allBooks)
+  console.log('all chapters', allChapters)
+  console.log('all paragraphs', allParagraphs)
+  console.log('all book catgeories', allBookCategories)
 
   useEffect(() => {
     axios.get(`/api/books`).then(res => {
-        if (res.data.status == 200) {
-          setAllBooks(res.data.books);
-            // setLoading(false);
-        }
+      if (res.data.status == 200) {
+        setAllBooks(res.data.books);
+        // setLoading(false);
+      }
     })
 
 
 
     axios.get(`/api/bookParagraph`).then(res => {
-        if (res.data.status == 200) {
-          setAllParagraphs(res.data.book_paragraphs);
-        }
+      if (res.data.status == 200) {
+        setAllParagraphs(res.data.book_paragraphs);
+      }
     })
 
     axios.get(`/api/book-category`).then(res => {
       if (res.data.status == 200) {
         setAllBookCategories(res.data.bookcategories);
       }
-  })
+    })
 
-  axios.get(`/api/bookChapter`).then(res => {
-    if (res.data.status == 200) {
-      setAllChapters(res.data.book_chapters);
-    }
-})
+    axios.get(`/api/bookChapter`).then(res => {
+      if (res.data.status == 200) {
+        setAllChapters(res.data.book_chapters);
+      }
+    })
+    axios.get(`/api/newsNotice`).then(res => {
+      if (res.data.status == 200) {
+        setAllNoticeNewsCategories(res.data.news_notice_categories)
+      }
+    })
 
+    axios.get(`/api/newsNoticeSub`).then(res => {
+      if (res.data.status == 200) {
+        setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories)
+      }
+    })
 
+  }, [])
+  const data = {
+    category: documentTitle,
+    sub_category: 'uncategorised',
+    document_contents: content,
+    document_title: documentTitle,
 
-}, [])
-const data={
-  category:documentTitle,
-  sub_category:'uncategorised',
-  document_contents:content,
-  document_title:documentTitle,
-  
-}
-const handleSubmit=(e)=>{
-  e.preventDefault();
-  axios.post(`/api/save-single-document`, data).then(res => {
-    if (res.data.status == 200) {
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post(`/api/save-single-document`, data).then(res => {
+      if (res.data.status == 200) {
         Swal.fire(res.data.message, '', 'success')
-  
+
         setContent('');
         setdocumentTitle('')
-  
-  
-      
-  
+
+
+
+
         // setImage('');
         // setPicture('');
         // document.getElementById('job_post_logo').value = "";
-    }
-    // else if (res.data.status == 400) {
-    //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-    //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
-  
-    // }
-  })
-  
-}
+      }
+      // else if (res.data.status == 400) {
+      //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+      //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+
+      // }
+    })
+
+  }
 
 
 
@@ -167,19 +178,19 @@ const handleSubmit=(e)=>{
             </div>
           )} */}
 
-            <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex">
-              <h3 className="d-flex align-items-center px-0"> লাইব্রেরী /
-              <input type="text" className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 " placeholder="টাইটেল যোগ করুন " id="editInp" value={documentTitle} onChange={(e)=>setdocumentTitle(e.target.value)
-              }/>
-              </h3>
+          <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex">
+            <h3 className="d-flex align-items-center px-0"> লাইব্রেরী /
+              <input type="text" className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 " placeholder="টাইটেল যোগ করুন " id="editInp" value={documentTitle} onChange={(e) => setdocumentTitle(e.target.value)
+              } />
+            </h3>
 
-              
 
-              <EditIcon
-                className="mt-1 " style={{cursor:"pointer"}}
-                onClick={handleEditClick}
-              />
-            </div>
+
+            <EditIcon
+              className="mt-1 " style={{ cursor: "pointer" }}
+              onClick={handleEditClick}
+            />
+          </div>
         </div>
       </section>
       <hr />
@@ -304,16 +315,16 @@ const handleSubmit=(e)=>{
                   >
                     <option selected disabled>বই নির্বাচন করুন  </option>
                     {
-                      allBooks.map((item)=>{
-                        return(
+                      allBooks.map((item) => {
+                        return (
                           <>
-                              <option value={item.Title} >{item.Title}</option>
+                            <option value={item.Title} >{item.Title}</option>
 
                           </>
                         )
                       })
                     }
-                   
+
                   </select>
                   <AddIcon className="book-add-icon" />
                 </div>
@@ -325,10 +336,10 @@ const handleSubmit=(e)=>{
                     <option selected disabled>অধ্যায় নির্বাচন করুন </option>
 
                     {
-                      allChapters.map((item)=>{
-                        return(
+                      allChapters.map((item) => {
+                        return (
                           <>
-                              <option value={item.ChapterName} >{item.ChapterName}</option>
+                            <option value={item.ChapterName} >{item.ChapterName}</option>
 
                           </>
                         )
@@ -342,12 +353,12 @@ const handleSubmit=(e)=>{
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                  <option selected disabled>অনুচ্ছেদ নির্বাচন করুন  </option>
-                  {
-                      allParagraphs.map((item)=>{
-                        return(
+                    <option selected disabled>অনুচ্ছেদ নির্বাচন করুন  </option>
+                    {
+                      allParagraphs.map((item) => {
+                        return (
                           <>
-                              <option value={item.ParagraphName} >{item.ParagraphName}</option>
+                            <option value={item.ParagraphName} >{item.ParagraphName}</option>
 
                           </>
                         )
@@ -361,12 +372,12 @@ const handleSubmit=(e)=>{
                     className="form-select draft-form-control"
                     aria-label="Default select example"
                   >
-                     <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
-                     {
-                      allBookCategories.map((item)=>{
-                        return(
+                    <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
+                    {
+                      allBookCategories.map((item) => {
+                        return (
                           <>
-                              <option value={item.CatgeoryName} >{item.CatgeoryName}</option>
+                            <option value={item.CategoryName} >{item.CategoryName}</option>
 
                           </>
                         )
@@ -408,10 +419,18 @@ const handleSubmit=(e)=>{
                             className="form-select "
                             aria-label="Default select example"
                           >
-                            <option selected>নোটিশ</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
+
+                            {
+                              allNoticeNewsCategories.map((item) => {
+                                return (
+                                  <>
+                                    <option value={item.Name} >{item.Name}</option>
+
+                                  </>
+                                )
+                              })
+                            }
                           </select>
                           <Link to="/book-categories">
                             <AddIcon className="create-news-notice-icon" />
@@ -423,16 +442,26 @@ const handleSubmit=(e)=>{
                           for="exampleFormControlInput1"
                           class="form-label"
                         >
-                          সাব ক্যটেগরি
+                          সাব ক্যাটাগরি
                         </label>
                         <select
                           className="form-select mb-4"
                           aria-label="Default select example"
                         >
-                          <option selected>অফিস নোটিশ</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          <option selected>
+                            সাব ক্যাটাগরি নির্বাচন করুন</option>
+
+                          {
+                            allNoticeNewsSubCategories.map((item) => {
+                              return (
+                                <>
+                                  <option value={item.Name} >{item.Name}</option>
+
+                                </>
+                              )
+                            })
+                          }
+
                         </select>
                       </div>
                       <div>
@@ -481,7 +510,7 @@ const handleSubmit=(e)=>{
           </div>
         </div>
 
-        
+
       </section>
     </div>
   );
