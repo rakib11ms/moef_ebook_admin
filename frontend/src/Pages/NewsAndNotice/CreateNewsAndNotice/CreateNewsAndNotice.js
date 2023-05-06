@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import bookLogoImg from "../../../images/book.png";
 import "./CreateNewsAndNotice.css";
@@ -12,11 +12,88 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ReactDatePicker from "react-datepicker";
 import JoditEditor from "jodit-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { Navigate } from "react-router-dom";
+
 
 const CreateNewsAndNotice = () => {
+
+  const navigate=useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [content, setContent] = useState("");
+
+
+  const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
+  const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
+
+
+
+  useEffect(() => {
+
+    axios.get(`/api/newsNotice`).then(res => {
+      if (res.data.status == 200) {
+        setAllNoticeNewsCategories(res.data.news_notice_categories)
+      }
+    })
+
+    axios.get(`/api/newsNoticeSub`).then(res => {
+      if (res.data.status == 200) {
+        setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories)
+      }
+    })
+
+  }, [])
+
+
+  const [documentTitle, setdocumentTitle] = useState('');
+
+  const [notice_news_category_id, setnotice_news_category_id] = useState('');
+  const [notice_news_subcategory_id, setnotice_news_subcategory_id] = useState('');
+  const [redirect_url, setredirect_url] = useState('');
+
+  const data = {
+    Description: content,
+    Title: documentTitle,
+    CategoryId: notice_news_category_id,
+    subCatId: notice_news_subcategory_id,
+    redirect_url: redirect_url,
+    created_by: 1,
+
+
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (content == '') {
+      Swal.fire("Please fill up fileds", '', 'warning');
+    }
+    else {
+      axios.post(`/api/notice`, data).then(res => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, '', 'success')
+
+          setContent('');
+          setdocumentTitle('')
+          navigate('/all-news-notice')
+
+
+        }
+        // else if (res.data.status == 400) {
+        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+
+        // }
+      })
+    }
+
+  }
+
+
+
+
+
+
   return (
     <div>
       <div>
@@ -42,6 +119,12 @@ const CreateNewsAndNotice = () => {
               <hr />
               <div>
                 <div class="mb-3">
+                  <div className="my-3">
+                  <input type="text" className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 " placeholder="টাইটেল যোগ করুন " id="editInp" value={documentTitle} onChange={(e) => setdocumentTitle(e.target.value)
+              } />
+                  </div>
+          
+
                   <label for="exampleFormControlTextarea1" class="form-label">
                     <h5>এডিটর</h5>
                   </label>
@@ -55,15 +138,15 @@ const CreateNewsAndNotice = () => {
                     height="800"
                     autofocus="true"
                   />
-                  <button className="attached-button mt-3">
+                  {/* <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন
-                  </button>
+                  </button> */}
                 </div>
                 <div className="draft-prokas-buttons-div">
-                  <Link to="/draft-documents">
+                  <Link >
                     <button className="draft-prokas-button">ড্রাফট করুন</button>
                   </Link>
-                  <button className="draft-prokas-button">প্রকাশ করুন</button>
+                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
                 </div>
               </div>
             </div>
@@ -80,14 +163,23 @@ const CreateNewsAndNotice = () => {
                       ক্যটেগরি
                     </label>
                     <div className="d-flex categories-select-1 mb-4">
-                      <select
-                        className="form-select "
-                        aria-label="Default select example"
-                      >
-                        <option selected>নোটিশ</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select
+                            className="form-select "
+                            aria-label="Default select example"
+                            onChange={(e) => setnotice_news_category_id(e.target.value)}
+                          >
+                        <option selected disabled>  ক্যটেগরি নির্বাচন করুন</option>
+
+                        {
+                          allNoticeNewsCategories.map((item) => {
+                            return (
+                              <>
+                                <option value={item.id} >{item.Name}</option>
+
+                              </>
+                            )
+                          })
+                        }
                       </select>
                       <AddIcon className="doc-add-icon" />
                     </div>
@@ -98,13 +190,21 @@ const CreateNewsAndNotice = () => {
                     </label>
                     <br />
                     <select
-                      className="form-select2 mb-4"
-                      aria-label="Default select example"
-                    >
-                      <option selected>অফিস নোটিশ</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                            className="form-select "
+                            aria-label="Default select example"
+                            onChange={(e) => setnotice_news_subcategory_id(e.target.value)}
+                          >
+                      <option selected disabled>সাব ক্যটেগরি নির্বাচন করুন</option>
+                      {
+                        allNoticeNewsSubCategories.map((item) => {
+                          return (
+                            <>
+                              <option value={item.id} >{item.Name}</option>
+
+                            </>
+                          )
+                        })
+                      }
                     </select>
                   </div>
 
@@ -143,37 +243,7 @@ const CreateNewsAndNotice = () => {
             </div>
           </div>
         </section>
-        {/* <section>
-          <div className="pagination-div">
-            <nav aria-label="Page navigation example">
-              <ul className="pagination justify-content-center">
-                <li className="page-item disabled">
-                  <a className="page-link">Previous</a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    1
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    2
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    3
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </section> */}
+
       </div>
     </div>
   );

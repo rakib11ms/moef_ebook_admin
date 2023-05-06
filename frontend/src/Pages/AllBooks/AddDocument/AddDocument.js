@@ -83,7 +83,7 @@ const AddDocument = (props) => {
   useEffect(() => {
     axios.get(`/api/books`).then(res => {
       if (res.data.status == 200) {
-        setAllBooks(res.data.books);
+        setAllBooks(res.data.books_masters);
         // setLoading(false);
       }
     })
@@ -104,7 +104,7 @@ const AddDocument = (props) => {
 
     axios.get(`/api/bookChapter`).then(res => {
       if (res.data.status == 200) {
-        setAllChapters(res.data.book_chapters);
+        setAllChapters(res.data.bookChapters);
       }
     })
     axios.get(`/api/newsNotice`).then(res => {
@@ -126,39 +126,39 @@ const AddDocument = (props) => {
     notice_news_category_id: notice_news_category_id,
     notice_news_subcategory_id: notice_news_subcategory_id,
     redirect_url: redirect_url,
-    created_by:1,
-    book_id:bookId,
-    chapter_id:chapterId,
-    paragraph_id:ParagraphId
+    created_by: 1,
+    book_id: bookId,
+    chapter_id: chapterId,
+    paragraph_id: ParagraphId
 
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(content==''){
-        Swal.fire("Please fill up fileds",'','warning');
+    if (content == '') {
+      Swal.fire("Please fill up fileds", '', 'warning');
     }
-    else{
-    axios.post(`/api/save-single-document`, data).then(res => {
-      if (res.data.status == 200) {
-        Swal.fire(res.data.message, '', 'success')
+    else {
+      axios.post(`/api/save-single-document`, data).then(res => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, '', 'success')
 
-        setContent('');
-        setdocumentTitle('')
-
-
+          setContent('');
+          setdocumentTitle('')
 
 
-        // setImage('');
-        // setPicture('');
-        // document.getElementById('job_post_logo').value = "";
-      }
-      // else if (res.data.status == 400) {
-      //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-      //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
 
-      // }
-    })
-  }
+
+          // setImage('');
+          // setPicture('');
+          // document.getElementById('job_post_logo').value = "";
+        }
+        // else if (res.data.status == 400) {
+        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+
+        // }
+      })
+    }
 
   }
 
@@ -226,7 +226,7 @@ const AddDocument = (props) => {
                   >
                     <option selected disabled>বই নির্বাচন করুন  </option>
                     {
-                      allBooks.map((item) => {
+                      allBooks && allBooks.map((item) => {
                         return (
                           <>
                             <option value={item.Title} >{item.Title}</option>
@@ -254,7 +254,7 @@ const AddDocument = (props) => {
                     <option selected disabled>অধ্যায় নির্বাচন করুন </option>
 
                     {
-                      allChapters.map((item) => {
+                      allChapters && allChapters.map((item) => {
                         return (
                           <>
                             <option value={item.ChapterName} >{item.ChapterName}</option>

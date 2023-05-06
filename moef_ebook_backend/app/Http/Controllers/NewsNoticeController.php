@@ -32,7 +32,8 @@ class NewsNoticeController extends Controller
         return response()->json(
             [
                 'status' => 200,
-                'news_notice' => $newsNotice
+                'news_notice' => $newsNotice,
+                'message'=>"NewsNotice created successfully"
             ]
         );
     }

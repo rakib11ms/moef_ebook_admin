@@ -10,7 +10,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
-
+import { useEffect } from "react";
+import axios from "axios";
 const AllNewsAndNotice = () => {
   const [selectedText, setSelectedText] = useState("");
   const [selectedNotice, setSelectedNotice] = useState("");
@@ -20,6 +21,21 @@ const AllNewsAndNotice = () => {
   function handleNoticeClick(event) {
     setSelectedNotice(event.target.innerText);
   }
+
+  const [allNoticeNews, setAllNoticeNews] = useState([]);
+
+  console.log('notice news', allNoticeNews)
+
+  useEffect(() => {
+    axios.get(`/api/notice`).then(res => {
+
+      if (res.data.status == 200) {
+        setAllNoticeNews(res.data.news_notices);
+        // setLoading(false);
+      }
+    })
+
+  }, [])
   return (
     <div>
       <div>
@@ -37,8 +53,11 @@ const AllNewsAndNotice = () => {
                     <input type="search" className="gsearch-news-notice" />
                   </div>
                   <div className="jog-korun-button-div">
-                    <button className="jog-korun-button">যোগ করুন</button>
-                    <AddIcon className="jog-korun-button-icon" />
+                    <Link to="/create-news-notice">
+                      <button className="jog-korun-button">যোগ করুন</button>
+                      <AddIcon className="jog-korun-button-icon" />
+                    </Link>
+
                   </div>
                 </div>
               </div>
@@ -55,21 +74,37 @@ const AllNewsAndNotice = () => {
                     </tr> */}
                   </thead>
                   <tbody>
-                    <tr className="tr-div">
-                      <th scope="row">১</th>
-                      <td onClick={handleParagraphClick}>
-                        <strong>অফসি আদশে, তারিখ ০৯-০৩-২০২৩ (নতুন)</strong>
-                      </td>
-                      <td onClick={handleNoticeClick} className="td-notice">
-                        নোটিশ/ অফিস নোটিশ
-                      </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
+                    {
+                      allNoticeNews.map((item, i) => {
+                        return (
+                          <tr className="tr-div" key={i}>
+                            <th scope="row">১</th>
+                            <td onClick={handleParagraphClick}>
+                              <strong>
+                                {item.Title}, তারিখ ০৯-০৩-২০২৩ (নতুন)</strong>
+                            </td>
+                            <td onClick={handleNoticeClick} className="td-notice">
+
+                              {
+                                item.category.Name
+                              }
+                              /
+                              {
+                                item.sub_category.Name
+                              }
+
+                            </td>
+                            <td>
+                              <CreateOutlinedIcon />
+                            </td>
+                            <td>
+                              <DeleteOutlineOutlinedIcon />
+                            </td>
+                          </tr>
+                        )
+                      })
+                    }
+
                     <tr className="tr-div">
                       <th scope="row">২</th>
                       <td onClick={handleParagraphClick}>
@@ -85,81 +120,11 @@ const AllNewsAndNotice = () => {
                         <DeleteOutlineOutlinedIcon />
                       </td>
                     </tr>
-                    <tr className="tr-div">
-                      <th scope="row">৩</th>
-                      <td onClick={handleParagraphClick}>
-                        <strong>
-                          র্কমশালার নোটিশ, তারিখ ১৩-০৩-২০২৩ (নতুন)
-                        </strong>
-                      </td>
-                      <td onClick={handleNoticeClick}>নোটিশ/ কর্মশালা </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
-                    <tr className="tr-div">
-                      <th scope="row">৪</th>
-                      <td onClick={handleParagraphClick}>
-                        <strong>
-                          র্কমশালার নোটিশ, তারিখ ১৪-০৩-২০২৩ (নতুন)
-                        </strong>
-                      </td>
-                      <td onClick={handleNoticeClick}>নোটিশ/ সভা </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
-                    <tr className="tr-div">
-                      <th scope="row">৫</th>
-                      <td onClick={handleParagraphClick}>
-                        {" "}
-                        <strong>
-                          র্কমশালার নোটশি, তারখিঃ ১২-০৩-২০২৩ (নতুন)
-                        </strong>
-                      </td>
-                      <td onClick={handleNoticeClick}>নোটিশ/ বিবিধ </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
+                
                   </tbody>
                 </table>
               </div>
-              {/* <div className="all-card-books-div">
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">পরিবেশ আইন সংকলন ১০১-২০০</p>
-                </div>
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">জাতীয় পরিবেশ নীতি ২০১৮</p>
-                </div>
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">পরিবেশ আইন সংকলন ২০০-৩৩৬</p>
-                </div>
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">পরিবেশ আদালত আইন, ২০১০</p>
-                </div>
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">১৯২৭ বন আইন</p>
-                </div>
-                <div className="all-card-books">
-                  <img src={bookLogoImg} alt="" />
-                  <p className="all-books-card-p">খসড়া বন আইন ২০১৯</p>
-                </div>
-              </div> */}
+
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
               <div className="all-notice-news-add-card-div">
