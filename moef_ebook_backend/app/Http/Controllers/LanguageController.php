@@ -12,7 +12,12 @@ class LanguageController extends Controller
     public function index(Request $request)    
     {
         $languages = Language::all();
-        return response()->json([$languages], 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'languages'=>$languages
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -27,27 +32,47 @@ class LanguageController extends Controller
             $language = new Language();
             $language->Name = $request->Name;
             $language->save();
-            return response()->json([$language], 201);
+            return response()->json(
+                [
+                    'status'=>200,
+                    'language'=>$language
+                ]
+            );
         }
     }
 
     public function show(Request $request, string $id)
     {
         $language = Language::find($id);
-        return response()->json([$language], 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'language'=>$language
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $language = Language::findOrFail($id);
         $language->update($request->all());
-        return response()->json([$language], 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'language'=>$language
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $language = Language::findOrFail($id);
         $language->delete();
-        return response()->json(['message' => 'Deleted'], 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'message'=>'Language deleted successfully.'
+            ]
+        );
     }
 }

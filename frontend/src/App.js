@@ -7,6 +7,8 @@ import {
   Route,
   useLocation,
   useHistory,
+  BrowserRouter
+
 } from "react-router-dom";
 import axios from "axios";
 import Login from "./Pages/Auth/Login";
@@ -28,9 +30,9 @@ import Book101200 from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/Book101200";
 import AddDocument from "./Pages/AllBooks/AddDocument/AddDocument";
 import EditDocuments from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import SignUp from "./Pages/Auth/SignUp";
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -69,6 +71,7 @@ function App() {
           <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
           <Route path="/categories-news" element={<CategoriesNews />} />
         </Routes>
+        
       )}
     </div>
   );

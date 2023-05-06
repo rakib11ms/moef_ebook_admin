@@ -32,15 +32,22 @@ class LoginController extends Controller
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             $response = [
-                'message' => 'Invalid credentials',
-                'status' => 401
+                'status' => 400,
+                'message' => 'Invalid credentials'
             ];
-            return response($response, 401);
+            return response($response, 400);
         } else {
+            if($user->ActiveStatus == false) {
+                $response = [
+                    'status' => 400,
+                    'message' => 'User is deleted'
+                ];
+                return response($response, 400);
+            }
             $token = $user->createToken('auth-token')->plainTextToken;
             $response = [
-                'user' => $user,
                 'status' => 200,
+                'user' => $user,
                 'token' => $token
             ];
             return response($response, 200);

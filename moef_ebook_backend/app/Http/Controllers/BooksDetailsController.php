@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BooksDetails;
+use App\Models\BookDetails;
 use Illuminate\Http\Request;
 
 
@@ -10,41 +10,66 @@ class BooksDetailsController extends Controller
 {
     public function index(Request $request)
     {
-        $booksDetails = BooksDetails::all();
-        return response()->json($booksDetails);
+        $booksDetails = BookDetails::all();
+        return response()->json(
+            [
+                'status'=>200,
+                'books_details'=>$booksDetails
+            ]
+        );
     }
 
     public function store(Request $request)
     {
-        $booksDetails = new BooksDetails();
-        $booksDetails->bookId = $request->bookId;
-        $booksDetails->ChapterId = $request->ChapterId;
-        $booksDetails->ParagrpahId = $request->ParagrpahId;
+        $booksDetails = new BookDetails();
+        $booksDetails->bookID = $request->bookID;
+        $booksDetails->ChapterID = $request->ChapterID;
+        $booksDetails->ParagraphID = $request->ParagrpahID;
         $booksDetails->pageNum = $request->pageNum;
         $booksDetails->Details = $request->Details;
         // $booksDetails->created_by = auth('sanctum')->user()->UserID;
         $booksDetails->created_by = $request->created_by;
         $booksDetails->save();
-        return response()->json($booksDetails, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_details' => $booksDetails
+            ]
+        );
     }
 
     public function show(Request $request,string $id)
     {
-        $booksDetails = BooksDetails::findOrFail($id);
-        return response()->json($booksDetails, 200);
+        $booksDetails = BookDetails::findOrFail($id);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_details' => $booksDetails
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
-        $booksDetails = BooksDetails::findOrFail($id);
+        $booksDetails = BookDetails::findOrFail($id);
         $booksDetails->update($request->all());
-        return response()->json($booksDetails, 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_details' => $booksDetails
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
-        $booksDetails = BooksDetails::findOrFail($id);
+        $booksDetails = BookDetails::findOrFail($id);
         $booksDetails->delete();
-        return response()->json(['message' => 'Deleted Successfully'], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Book Details Deleted Successfully.'
+            ]
+        );
     }
 }

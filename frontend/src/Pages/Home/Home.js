@@ -27,6 +27,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import JoditEditor from "jodit-react";
+import axios from "axios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,9 +79,9 @@ const Home = () => {
     setOpenCollapse(openCollapse === id ? "" : id);
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   // Upload button
   const [selectedFile, setSelectedFile] = useState(null);
@@ -92,6 +93,35 @@ const Home = () => {
   const handleUploadButtonClick = () => {
     // handle the upload logic here
     console.log(selectedFile);
+  };
+
+  const [inputs, setInputs] = useState({});
+  const handleChange = (event) => {
+
+    // const addBookInput = {
+    //   bookname : "bookname",
+    //   category : "category",
+    // }
+
+    console.log(event.target.value);
+
+    // setInputs(values => ({...values, [addBookInput.bookname]: event.target.value}));
+    // setInputs(values => ({...values, [addBookInput.category]: event.target.value}));
+    // console.log(inputs);
+  }
+
+  const handleSubmit = (event) => {
+    console.log(inputs.bookname);
+  }
+
+  const [categories, setCategories] = useState([]);
+
+  const handleCategory = (event) => {
+    axios.get("api/book-category").then((res) => {
+      res.data.bookcategories.forEach(element => {
+        setCategories(res.data.bookcategories.map(element => element.CategoryName));
+      });
+    });
   };
 
   return (
@@ -576,80 +606,94 @@ const Home = () => {
                       </Link>
                     </div> */}
                   </div>
-                  <div className="container">
-                    <div className="row ">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel>বই এর নাম </lebel> <br />
-                        <input className="home-input" type="text" />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> ক্যাটেগরি *</lebel> <br />
-                        <div className="d-flex border align-items-center">
+
+                  <form onSubmit={handleSubmit}>
+                    <div className="container">
+                      <div className="row ">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel>বই এর নাম </lebel> <br />
+                          <input
+                            className="home-input"
+                            type="text"
+                            name="bookname"
+                            value={inputs.bookname}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel> ক্যাটেগরি *</lebel> <br />
+                          <div className="d-flex border align-items-center">
+                            <select
+                              onClick={handleCategory}
+                              className="form-select select-category"
+                              aria-label="Default select example"
+                            >
+                              <option selected></option>
+                              {
+                                categories.map((category, index) => (
+                                  <option name="category" key={index} value={category}>{category}</option>
+                                ))
+                              }
+                            </select>
+                            {/* <div>
+                              <Link to="/book-categories">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div> */}
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel> লেখক এর নাম </lebel> <br />
+                          <input
+                            className="home-input"
+                            type="text"
+                          />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel>প্রকাশক </lebel> <br />
+                          <input className="home-input" type="text" />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel> প্রকাশ কাল </lebel> <br />
+                          <DatePicker
+                            className="home-input"
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                          />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel> ভাষা </lebel> <br />
                           <select
-                            className="form-select select-category"
+                            className=" select-category2"
                             aria-label="Default select example"
                           >
                             <option selected></option>
-                            <option value="1">ফিকশণ </option>
-                            <option value="2">প্রবন্ধ</option>
-                            <option value="3">কবিতা</option>
-                            <option value="3">উপন্যাস</option>
+                            <option value="1">বাংলা</option>
+                            <option value="2">ইংরেজি</option>
+                            <option value="3">হিন্দী</option>
                           </select>
-                          <div>
-                            <Link to="/book-categories">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
-                          </div>
                         </div>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> লেখক এর নাম </lebel> <br />
-                        <input className="home-input" type="text" />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel>প্রকাশক </lebel> <br />
-                        <input className="home-input" type="text" />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> প্রকাশ কাল </lebel> <br />
-                        <DatePicker
-                          className="home-input"
-                          selected={startDate}
-                          onChange={(date) => setStartDate(date)}
+                      <div>
+                        <input
+                          type="file"
+                          id="fileInput"
+                          onChange={handleFileInputChange}
+                          style={{ display: "none" }}
                         />
+                        <label htmlFor="fileInput" className="btn btn-warning">
+                          <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
+                        </label>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> ভাষা </lebel> <br />
-                        <select
-                          className=" select-category2"
-                          aria-label="Default select example"
-                        >
-                          <option selected></option>
-                          <option value="1">বাংলা</option>
-                          <option value="2">ইংরেজি</option>
-                          <option value="3">হিন্দী</option>
-                        </select>
+                      <div className="home-input-button-div">
+                        <button className="home-input-button1">খসড়া </button>
+                        <button className="home-input-button2">
+                          প্রকাশ করুন{" "}
+                        </button>
                       </div>
                     </div>
-                    <div>
-                      <input
-                        type="file"
-                        id="fileInput"
-                        onChange={handleFileInputChange}
-                        style={{ display: "none" }}
-                      />
-                      <label htmlFor="fileInput" className="btn btn-warning">
-                        <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                      </label>
-                    </div>
-                    <div className="home-input-button-div">
-                      <button className="home-input-button1">খসড়া </button>
-                      <button className="home-input-button2">
-                        প্রকাশ করুন{" "}
-                      </button>
-                    </div>
-                  </div>
+                  </form>
                 </section>
               </div>
             )}

@@ -35,7 +35,12 @@ class NewsNoticeCategoryController extends Controller
             // $newsNoticeCategory->created_by = auth('sanctum')->user()->UserID;
             $newsNoticeCategory->created_by = $request->created_by;
             $newsNoticeCategory->save();
-            return response()->json($newsNoticeCategory, 201);
+            return response()->json(
+                [
+                    'status' => 200,
+                    'news_notice_category' => $newsNoticeCategory
+                ]
+            );
         }
 
     }
@@ -43,14 +48,24 @@ class NewsNoticeCategoryController extends Controller
     public function show(Request $request,string $id)
     {
         $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
-        return response()->json($newsNoticeCategory);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice_category' => $newsNoticeCategory
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
         $newsNoticeCategory->update($request->all());
-        return response()->json($newsNoticeCategory, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice_category' => $newsNoticeCategory
+            ]
+        );
     }
 
 
@@ -58,6 +73,11 @@ class NewsNoticeCategoryController extends Controller
     {
         $newsNoticeCategory = NewsNoticeCategory::findOrFail($id);
         $newsNoticeCategory->delete();
-        return response()->json(['message' => 'News Notice Category deleted successfully'], 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'News Notice Category deleted successfully'
+            ]
+        );
     }
 }

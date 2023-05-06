@@ -11,11 +11,12 @@ class BookCategoryController extends Controller
     public function index(Request $request)
     {
         $bookcategories = BookCategory::all();
-        return response()->json([
-
-            'status' => 200,
-            'bookcategories' => $bookcategories
-        ]);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookcategories' => $bookcategories
+            ]
+        );
     }
     
 
@@ -32,27 +33,47 @@ class BookCategoryController extends Controller
             $bookcategory->CategoryName = $request->CategoryName;
             $bookcategory->Created_by = $request->Created_by;
             $bookcategory->save();
-            return response()->json([$bookcategory], 201);
+            return response()->json(
+                [
+                    'status' => 200,
+                    'bookcategory' => $bookcategory
+                ]
+            );
         }
     }
 
     public function show(Request $request, string $id)
     {
         $bookcategory = BookCategory::find($id);
-        return response()->json([$bookcategory], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookcategory' => $bookcategory
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $bookcategory = BookCategory::findOrFail($id);
         $bookcategory->update($request->all());
-        return response()->json([$bookcategory], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookcategory' => $bookcategory
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $bookcategory = BookCategory::findOrFail($id);
         $bookcategory->delete();
-        return response()->json(['message' => 'Deleted'], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Book Category deleted successfully'
+            ]
+        );
     }
 }

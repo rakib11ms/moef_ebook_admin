@@ -12,10 +12,10 @@ class BooksMasterController extends Controller
     {
         $booksMasters = BooksMaster::all();
         return response()->json(
-                ['status'=>200,
-                    'books'=>$booksMasters
+            [
+                'status'=>200,
+                'books_masters'=>$booksMasters
             ]
-
         );
     }
 
@@ -31,28 +31,48 @@ class BooksMasterController extends Controller
         $booksMaster->publish_date = $request->publish_date;
         $booksMaster->file_url = $request->file_url;
         $booksMaster->created_by = $request->created_by;
-        $booksMaster->AuthorId = $request->Author_id;
+        $booksMaster->AuthorId = $request->AuthorID;
         $booksMaster->save();
-        return response()->json($booksMaster, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_master' => $booksMaster
+            ]
+        );
     }
 
     public function show(Request $request ,string $id)
     {
         $booksMaster = BooksMaster::findOrFail($id);
-        return response()->json($booksMaster, 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_master' => $booksMaster
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $booksMaster = BooksMaster::findOrFail($id);
         $booksMaster->update($request->all());
-        return response()->json($booksMaster, 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'books_master' => $booksMaster
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $booksMaster = BooksMaster::findOrFail($id);
         $booksMaster->delete();
-        return response()->json(['message' => 'Deleted Successfully'], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Books Master deleted successfully'
+            ]
+        );
     }
 }

@@ -13,7 +13,7 @@ class LogoutController extends Controller
     {
         // dd('check');
         // dd(auth('sanctum')->user()->id());
-        auth('sanctum')->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully', 'status' => 200]);
+        $logoutUser = auth('sanctum')->user()->tokens()->delete();
+        return response()->json(['status' => 200, 'message' => 'Logged out successfully']);
     }
-}
+} 
