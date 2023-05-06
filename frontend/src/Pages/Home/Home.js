@@ -28,6 +28,8 @@ import Box from "@mui/material/Box";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import JoditEditor from "jodit-react";
 import axios from "axios";
+import ReactDatePicker from "react-datepicker";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,7 +79,15 @@ const Home = (props) => {
     setActiveButton(buttonNumber);
   };
 
-
+  // const handleDateChange = (date) => {
+  //   setStartDate(date);
+  //   handleChange({
+  //     target: {
+  //       name: "publicationdate",
+  //       value: date.toISOString().substr(0, 10),
+  //     },
+  //   });
+  // };
 
   // useEffect(()=>{
   //   setActiveButton(props.activeButton)
@@ -102,34 +112,83 @@ const Home = (props) => {
     console.log(selectedFile);
   };
 
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState(
+    {
+      CatID: "",
+      Title: "",
+      publisher_id: "",
+      BookCoverImage: "",
+      language_id: "",
+      publish_date: "",
+      File_url: "",
+      created_by: "",
+      AuthorID: "",
+    }
+  );
+
+  // console.log('i',inputs);
+
+  // console.log(inputs);
   const handleChange = (event) => {
-
-    // const addBookInput = {
-    //   bookname : "bookname",
-    //   category : "category",
-    // }
-
-    console.log(event.target.value);
-
-    // setInputs(values => ({...values, [addBookInput.bookname]: event.target.value}));
-    // setInputs(values => ({...values, [addBookInput.category]: event.target.value}));
-    // console.log(inputs);
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs(values => ({...values, [name]: value}))
   }
+  // console.log(inputs);
 
   const handleSubmit = (event) => {
-    console.log(inputs.bookname);
+    event.preventDefault();
+    
+    axios.post("api/books", inputs).then((res) => {
+      console.log(res.data);
+    })
   }
 
   const [categories, setCategories] = useState([]);
+  const [languages, setLanguages] = useState([]);
 
-  const handleCategory = (event) => {
+  useEffect(() => {
     axios.get("api/book-category").then((res) => {
-      res.data.bookcategories.forEach(element => {
-        setCategories(res.data.bookcategories.map(element => element.CategoryName));
-      });
+      if(res.data.bookcategories){
+        setCategories(res.data.bookcategories);
+      }
+    })
+
+    axios.get("api/language").then((res) => {
+      if(res.data.languages){
+        setLanguages(res.data.languages);
+      }
     });
-  };
+
+  }, [])
+  
+  // const handleCategory = (event) => {
+  //   axios.get("api/book-category").then((res) => {
+  //     res.data.bookcategories.forEach(element => {
+  //       setCategories(res.data.bookcategories.map(
+  //         element => element.CategoryName,
+  //       ));
+  //     });
+  //   });
+  // };
+
+
+  // const handleLanguage = (event) => {
+  //   axios.get("api/language").then((res) => {
+  //     res.data.languages.forEach(element => {
+  //       setLanguages(res.data.languages.map(
+  //         element => element.Name,
+  //       ));
+  //     });
+  //   });
+  // };
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+    setInputs({ publish_date: formattedDate });
+  }, []);
+
 
   return (
     <div>
@@ -327,7 +386,7 @@ const Home = (props) => {
                           <input
                             className="home-input"
                             type="text"
-                            name="bookname"
+                            name="Title"
                             value={inputs.bookname}
                             onChange={handleChange}
                           />
@@ -336,15 +395,21 @@ const Home = (props) => {
                           <lebel> ক্যাটেগরি *</lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
-                              onClick={handleCategory}
+                              name="CatID"
+                              // value={inputs.category}
+                              onChange={handleChange}
                               className="form-select select-category"
                               aria-label="Default select example"
                             >
                               <option selected></option>
                               {
-                                categories.map((category, index) => (
-                                  <option name="category" key={index} value={category}>{category}</option>
-                                ))
+                                categories.map((category, index) => {
+                                  return (
+                                    <option key={index} value={category.id}>
+                                      {category.CategoryName}
+                                    </option>
+                                  );
+                                })
                               }
                             </select>
                             {/* <div>
@@ -358,32 +423,55 @@ const Home = (props) => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> লেখক এর নাম </lebel> <br />
                           <input
+                            name="AuthorID"
+                            value={inputs.authorname}
+                            onChange={handleChange}
                             className="home-input"
                             type="text"
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel>প্রকাশক </lebel> <br />
-                          <input className="home-input" type="text" />
+                          <input
+                            name="publisher_id"
+                            value={inputs.publishername}
+                            onChange={handleChange}
+                            className="home-input"
+                            type="text"
+                          />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> প্রকাশ কাল </lebel> <br />
-                          <DatePicker
-                            className="home-input"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                          />
+                    
+                              <ReactDatePicker
+                                className="home-input"
+                                name="publish_date"
+                                value={inputs.publicationdate}
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                              />
+
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> ভাষা </lebel> <br />
                           <select
+                            name="language_id"
+                            // value={inputs.language}
+                            onChange={handleChange}
                             className=" select-category2"
                             aria-label="Default select example"
                           >
                             <option selected></option>
-                            <option value="1">বাংলা</option>
-                            <option value="2">ইংরেজি</option>
-                            <option value="3">হিন্দী</option>
+                              {
+                                languages.map((language, index) => {
+                                  return (
+                                    <option key={index} value={language.id}>
+                                      {language.Name}
+                                    </option>
+                                  );
+                                })
+                              }
+                            
                           </select>
                         </div>
                       </div>
