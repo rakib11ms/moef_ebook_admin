@@ -10,9 +10,10 @@ import ReactDatePicker from "react-datepicker";
 import axios from "axios";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import Swal from "sweetalert2";
-const AddDocument = () => {
+import Home from "../../Home/Home";
+const AddDocument = (props) => {
   // Header Text edit
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState("Untitled");
@@ -23,6 +24,11 @@ const AddDocument = () => {
   const [BookCategoryId, setBookCategoryId] = useState('');
 
   const [documentTitle, setdocumentTitle] = useState('');
+
+  const [notice_news_category_id, setnotice_news_category_id] = useState('');
+  const [notice_news_subcategory_id, setnotice_news_subcategory_id] = useState('');
+  const [redirect_url, setredirect_url] = useState('');
+
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -115,14 +121,23 @@ const AddDocument = () => {
 
   }, [])
   const data = {
-    category: documentTitle,
-    sub_category: 'uncategorised',
-    document_contents: content,
-    document_title: documentTitle,
+    contents: content,
+    title: documentTitle,
+    notice_news_category_id: notice_news_category_id,
+    notice_news_subcategory_id: notice_news_subcategory_id,
+    redirect_url: redirect_url,
+    created_by:1,
+    book_id:bookId,
+    chapter_id:chapterId,
+    paragraph_id:ParagraphId
 
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(content==''){
+        Swal.fire("Please fill up fileds",'','warning');
+    }
+    else{
     axios.post(`/api/save-single-document`, data).then(res => {
       if (res.data.status == 200) {
         Swal.fire(res.data.message, '', 'success')
@@ -143,6 +158,7 @@ const AddDocument = () => {
 
       // }
     })
+  }
 
   }
 
@@ -155,28 +171,7 @@ const AddDocument = () => {
       </section>
       <section className="container-fluid">
         <div className="row">
-          {/* {isEditing ? (
-            <div className="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6">
-              <input
-                className="edit-input"
-                type="text"
-                value={text}
-                onChange={handleInputChange}
-              />
-              <br />
-              <button onClick={handleSaveClick} className="edit-save">
-                Save
-              </button>
-            </div>
-          ) : (
-            <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex ">
-              <h3>লাইব্রেরী / {text}</h3>
-              <EditIcon
-                className="edit-icon-button"
-                onClick={handleEditClick}
-              />
-            </div>
-          )} */}
+
 
           <div className="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6 d-flex">
             <h3 className="d-flex align-items-center px-0"> লাইব্রেরী /
@@ -198,91 +193,7 @@ const AddDocument = () => {
         <div className="">
           <div className="row">
             <div className="col-1">
-              {/* <>
-                <h5 className="suchipotro-h5">সূচীপত্র</h5>
-                <div>
-                  <h6>অধ্যায় - ১</h6>
-                  <div className="chapter-div">
-                    <h6
-                      className={
-                        activeButton === 1
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(1, "অধ্যায়-১", "চ্যাপ্টার ১.১")
-                      }
-                    >
-                      চ্যাপ্টার - ১.১
-                    </h6>
-                    <h6
-                      className={
-                        activeButton === 2
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(2, "অধ্যায়-১", "চ্যাপ্টার - ১.২")
-                      }
-                    >
-                      চ্যাপ্টার - ১.২
-                    </h6>
-                    <h6
-                      className={
-                        activeButton === 3
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(3, "অধ্যায়-১", "চ্যাপ্টার - ১.৩")
-                      }
-                    >
-                      চ্যাপ্টার - ১.৩
-                    </h6>
-                  </div>
-                </div>
-                <div>
-                  <h6> অধ্যায় - ২</h6>
-                  <div className="chapter-div">
-                    <h6
-                      className={
-                        activeButton === 4
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(4, "অধ্যায়-২", "চ্যাপ্টার - ২.১")
-                      }
-                    >
-                      চ্যাপ্টার - ২.১
-                    </h6>
-                    <h6
-                      className={
-                        activeButton === 5
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(5, "অধ্যায়-২", "চ্যাপ্টার - ২.২")
-                      }
-                    >
-                      চ্যাপ্টার - ২.২
-                    </h6>
-                    <h6
-                      className={
-                        activeButton === 6
-                          ? "active-button1"
-                          : "inactive-button1"
-                      }
-                      onClick={() =>
-                        handleButtonClick(6, "অধ্যায়-২", "চ্যাপ্টার - ২.৩")
-                      }
-                    >
-                      চ্যাপ্টার - ২.৩
-                    </h6>
-                  </div>
-                </div>
-              </> */}
+
             </div>
 
             <div className=" col-8 ">
@@ -307,7 +218,7 @@ const AddDocument = () => {
 
             <div className="col-3">
               <div className="">
-                <h5 className="mt-3">তথ্য পরিবর্তন করুন </h5>
+                <h5 className="mt-3">তথ্য যোগ করুন </h5>
                 <div className="book-add-input">
                   <select
                     className="form-select draft-form-control"
@@ -326,7 +237,14 @@ const AddDocument = () => {
                     }
 
                   </select>
-                  <AddIcon className="book-add-icon" />
+                  <Link to="/home" className="text-dark">
+                    <AddIcon className="book-add-icon" />
+                    <div className="d-none">
+                      <Home activeButton={1} />
+
+                    </div>
+                  </Link>
+
                 </div>
                 <div className="book-add-input">
                   <select
@@ -346,7 +264,13 @@ const AddDocument = () => {
                       })
                     }
                   </select>
-                  <AddIcon className="book-add-icon" />
+                  <Link to="/home" className="text-dark">
+                    <AddIcon className="book-add-icon" />
+                    <div className="d-none" >
+                      <Home activeButton={2} />
+
+                    </div>
+                  </Link>
                 </div>
                 <div className="book-add-input">
                   <select
@@ -365,27 +289,14 @@ const AddDocument = () => {
                       })
                     }
                   </select>
-                  <AddIcon className="book-add-icon" />
-                </div>
-                <div className="book-add-input">
-                  <select
-                    className="form-select draft-form-control"
-                    aria-label="Default select example"
-                  >
-                    <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
-                    {
-                      allBookCategories.map((item) => {
-                        return (
-                          <>
-                            <option value={item.CategoryName} >{item.CategoryName}</option>
+                  <Link to="/home" className="text-dark">
+                    <AddIcon className="book-add-icon" />
+                    <div className="d-none" >
+                      <Home activeButton={2} />
 
-                          </>
-                        )
-                      })
-                    }
-                  </select>
-                  <AddIcon className="book-add-icon" />
-                </div>
+                    </div>
+                  </Link>                 </div>
+
               </div>
               <div className="form-check">
                 <input
@@ -418,6 +329,7 @@ const AddDocument = () => {
                           <select
                             className="form-select "
                             aria-label="Default select example"
+                            onChange={(e) => setnotice_news_category_id(e.target.value)}
                           >
                             <option selected disabled>ক্যাটাগরি নির্বাচন করুন </option>
 
@@ -425,7 +337,7 @@ const AddDocument = () => {
                               allNoticeNewsCategories.map((item) => {
                                 return (
                                   <>
-                                    <option value={item.Name} >{item.Name}</option>
+                                    <option value={item.id} >{item.Name}</option>
 
                                   </>
                                 )
@@ -447,6 +359,8 @@ const AddDocument = () => {
                         <select
                           className="form-select mb-4"
                           aria-label="Default select example"
+                          onChange={(e) => setnotice_news_subcategory_id(e.target.value)}
+
                         >
                           <option selected>
                             সাব ক্যাটাগরি নির্বাচন করুন</option>
@@ -494,7 +408,8 @@ const AddDocument = () => {
                       </div>
                       <div>
                         <lebel> লিংক </lebel> <br />
-                        <input className=" doc-link"></input>
+                        <input className=" doc-link" value={redirect_url} onChange={(e) => setredirect_url(e.target.value)}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -502,7 +417,7 @@ const AddDocument = () => {
               </div>
 
               <div className=" doc-input-button-div">
-                <button type="submit" className="doc-input-button" onClick={handleSubmit}>
+                <button type="submit" className="doc-input-button py-2" onClick={handleSubmit}>
                   সংরক্ষন করুন
                 </button>
               </div>

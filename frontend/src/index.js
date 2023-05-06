@@ -7,8 +7,8 @@ import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// axios.defaults.baseURL = 'http://172.31.120.39:8000/';
-axios.defaults.baseURL = 'https://test.austtaa.com/server/public/api/';
+axios.defaults.baseURL = 'http://172.31.120.39:8000/';
+// axios.defaults.baseURL = 'https://test.austtaa.com/server/public/';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';

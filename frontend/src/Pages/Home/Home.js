@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NavigationBa from "../Shared/NavigationBa/NavigationBa";
@@ -61,7 +61,9 @@ function a11yProps(index) {
   };
 }
 
-const Home = () => {
+const Home = (props) => {
+
+  console.log('X',props)
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
@@ -74,6 +76,11 @@ const Home = () => {
     setActiveButton(buttonNumber);
   };
 
+
+
+  // useEffect(()=>{
+  //   setActiveButton(props.activeButton)
+  // },[props.activeButton])
   const handleCollapse = (id) => {
     setOpenCollapse(openCollapse === id ? "" : id);
   };
@@ -212,303 +219,8 @@ const Home = () => {
       </section>
       <hr />
       <section className="container-fluid">
-        {/* <div>
-          <HomeSlider />
-        </div> */}
-        {/* <div>
-          <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="basic tabs example"
-              >
-                <Tab label="বই যোগ করুন +" {...a11yProps(0)} />
-                <Tab label="অধ্যায়  যোগ করুন +" {...a11yProps(1)} />
-                <Tab label="অনুচ্ছেদ যোগ করুন +" {...a11yProps(2)} />
-                <Tab label="পেইজ যোগ করুন  +" {...a11yProps(3)} />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-              <section className="">
-                <div className="row home-input-tags container-fluid">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <h5>বই এর তথ্য যোগ করুন </h5>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                    <Link to="/draft-documents">
-                      {" "}
-                      <p className="khosra-songrokkhon-p">
-                        <span>
-                          <ErrorOutlineOutlinedIcon className="me-2" />
-                        </span>
-                        আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-                <div className="container">
-                  <div className="row ">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>বই এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> ক্যাটেগরি * </lebel> <br />
-                      <div className="d-flex border align-items-center">
-                        <select
-                          class="form-select select-category"
-                          aria-label="Default select example"
-                        >
-                          <option selected></option>
-                          <option value="1">ফিকশণ </option>
-                          <option value="2">প্রবন্ধ</option>
-                          <option value="3">কবিতা</option>
-                          <option value="3">উপন্যাস</option>
-                        </select>
-                        <div>
-                          <Link to="/book-categories">
-                            {" "}
-                            <ControlPointOutlinedIcon className="control-icon" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> লেখক এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>প্রকাশক </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> প্রকাশ কাল </lebel> <br />
-                      <DatePicker
-                        className="home-input"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> ভাষা </lebel> <br />
-                      <select
-                        class="form-select select-category2"
-                        aria-label="Default select example"
-                      >
-                        <option selected></option>
-                        <option value="1">বাংলা</option>
-                        <option value="2">ইংরেজি</option>
-                        <option value="3">হিন্দী</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      onChange={handleFileInputChange}
-                      style={{ display: "none" }}
-                    />
-                    <label htmlFor="fileInput" className="btn btn-warning">
-                      <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
-                    </label>
-                  </div>
-                  <div className="home-input-button-div">
-                    <button className="home-input-button1">খসড়া </button>
-                    <button className="home-input-button2">প্রকাশ করুন </button>
-                  </div>
-                </div>
-              </section>
-            </TabPanel>
-
-            <TabPanel value={value} index={1}>
-              <section className="">
-                <div className="row home-input-tags container-fluid">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <h5>বই এর তথ্য যোগ করুন </h5>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                    <Link to="/draft-documents">
-                      {" "}
-                      <p className="khosra-songrokkhon-p">
-                        <span>
-                          <ErrorOutlineOutlinedIcon className="me-2" />
-                        </span>
-                        আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-                <div className="container">
-                  <div className="row ">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>অধ্যায়ের নাম * </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> বই নির্নয় করুন * </lebel> <br />
-                      <div className="d-flex border align-items-center">
-                        <select
-                          class="form-select select-category"
-                          aria-label="Default select example"
-                        >
-                          <option selected>জাতীয় পরিবেশ নীতি ২০১৯ </option>
-                          <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
-                          <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
-                          <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
-                          <option value="3">জাতীয় পরিবেশ নীতি ২০১২</option>
-                        </select>
-                        <div>
-                          <Link to="">
-                            {" "}
-                            <ControlPointOutlinedIcon className="control-icon" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> লেখক এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> প্রকাশ কাল </lebel> <br />
-                      <DatePicker
-                        className="home-input"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                  </div>
-                  <div className="home-input-button-div">
-                    <button className="home-input-button1">খসড়া </button>
-                    <button className="home-input-button2">প্রকাশ করুন </button>
-                  </div>
-                </div>
-              </section>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <section className="">
-                <div className="row home-input-tags container-fluid">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <h5>বই এর তথ্য যোগ করুন </h5>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                    <Link to="/draft-documents">
-                      {" "}
-                      <p className="khosra-songrokkhon-p">
-                        <span>
-                          <ErrorOutlineOutlinedIcon className="me-2" />
-                        </span>
-                        আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-                <div className="container">
-                  <div className="row ">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>বই এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> লেখক এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> প্রকাশ কাল </lebel> <br />
-                      <DatePicker
-                        className="home-input"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                  </div>
-                  <div className="home-input-button-div">
-                    <button className="home-input-button1">খসড়া </button>
-                    <button className="home-input-button2">প্রকাশ করুন </button>
-                  </div>
-                </div>
-              </section>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <section className="">
-                <div className="row home-input-tags container-fluid">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <h5>বই এর তথ্য যোগ করুন </h5>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                    <Link to="/draft-documents">
-                      {" "}
-                      <p className="khosra-songrokkhon-p">
-                        <span>
-                          <ErrorOutlineOutlinedIcon className="me-2" />
-                        </span>
-                        আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                      </p>
-                    </Link>
-                  </div>
-                </div>
-                <div className="container">
-                  <div className="row ">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>বই এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> লেখক এর নাম </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel>অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> প্রকাশ কাল </lebel> <br />
-                      <DatePicker
-                        className="home-input"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <lebel> অন্যান্য </lebel> <br />
-                      <input className="home-input" type="text" />
-                    </div>
-                  </div>
-                  <div className="home-input-button-div">
-                    <button className="home-input-button1">খসড়া </button>
-                    <button className="home-input-button2">প্রকাশ করুন </button>
-                  </div>
-                </div>
-              </section>
-            </TabPanel>
-          </Box>
-        </div> */}
+    
+       
       </section>
 
       <section className="active-div container-fluid">

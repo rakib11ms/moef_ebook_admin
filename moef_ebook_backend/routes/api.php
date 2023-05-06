@@ -27,6 +27,7 @@ use App\Http\Controllers\BookChapterController;
 use App\Http\Controllers\SingleDocumentController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookSubCategoryController;
+use App\Http\Controllers\MainBookController;
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
@@ -54,6 +55,8 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
 Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);
 Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
+
+Route::get('/create-main-book', [MainBookController::class, 'createMainBook']);
 
 
 Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 

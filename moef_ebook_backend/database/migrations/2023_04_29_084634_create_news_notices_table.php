@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
             
             $table->boolean('isPublished')->default(false);
+            $table->string('published_date')->nullable();
+            $table->string('view_post')->nullable();
+            $table->string('priority')->nullable();
             $table->timestamps();
         });
     }
