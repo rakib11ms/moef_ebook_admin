@@ -21,7 +21,12 @@ class NewsNoticeSubCategoryController extends Controller
     public function getSubCategoryByCategoryID(Request $request, string $id)
     {
         $newsNoticeSubCategories = NewsNoticeSubCategory::where('CategoryId', $id)->get();
-        return response()->json($newsNoticeSubCategories);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notices_sub_categories' => $newsNoticeSubCategories
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -39,27 +44,47 @@ class NewsNoticeSubCategoryController extends Controller
             // $newsNoticeSubCategory->created_by = auth('sanctum')->user()->UserID;
             $newsNoticeSubCategory->created_by = $request->created_by;
             $newsNoticeSubCategory->save();
-            return response()->json($newsNoticeSubCategory, 201);
+            return response()->json(
+                [
+                    'status' => 200,
+                    'news_notice_sub_category' => $newsNoticeSubCategory
+                ]
+            );
         }
     }
 
     public function show(Request $request ,string $id)
     {
         $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
-        return response()->json($newsNoticeSubCategory);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice_sub_category' => $newsNoticeSubCategory
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
         $newsNoticeSubCategory->update($request->all());
-        return response()->json($newsNoticeSubCategory, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice_sub_category' => $newsNoticeSubCategory
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $newsNoticeSubCategory = NewsNoticeSubCategory::findOrFail($id);
         $newsNoticeSubCategory->delete();
-        return response()->json(['message' => 'News Notice Sub Category deleted successfully'], 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'News Notice Sub Category deleted successfully'
+            ]
+        );
     }
 }

@@ -23,6 +23,7 @@ return new class extends Migration
                 $table->string('confirm_password');
                 $table->string('userImage')->nullable();
                 $table->boolean('isVerified')->default(false);
+                $table->boolean('ActiveStatus')->default(true);
                 $table->timestamp('last_used_time')->nullable();
             $table->timestamps();
         });

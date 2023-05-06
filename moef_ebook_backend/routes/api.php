@@ -28,6 +28,8 @@ use App\Http\Controllers\SingleDocumentController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookSubCategoryController;
 use App\Http\Controllers\MainBookController;
+use App\Http\Controllers\DeleteUserController;
+use App\Http\Controllers\ResetPasswordController;
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
@@ -58,6 +60,8 @@ Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSi
 
 Route::get('/create-main-book', [MainBookController::class, 'createMainBook']);
 
+Route::post('/delete-user/{id}', [DeleteUserController::class, 'update']);
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);

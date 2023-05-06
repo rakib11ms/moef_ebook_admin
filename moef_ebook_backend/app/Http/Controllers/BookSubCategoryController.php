@@ -11,13 +11,23 @@ class BookSubCategoryController extends Controller
     public function index(Request $request)
     {
         $subcategories = BookSubCategory::with('bookCategory')->get();
-        return response()->json($subcategories);
+        return response()->json(
+            [
+                'status' => 200,
+                'subcategories' => $subcategories
+            ]
+        );
     }
 
     public function getBookSubCategoryByCategoryID(Request $request, string $id)
     {
         $subcategories = BookSubCategory::where('CategoryID', $id)->get();
-        return response()->json($subcategories);
+        return response()->json(
+            [
+                'status' => 200,
+                'subcategories' => $subcategories
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -35,27 +45,47 @@ class BookSubCategoryController extends Controller
             $subcategory->CategoryID = $request->CategoryID;
             $subcategory->Created_by = $request->Created_by;
             $subcategory->save();
-            return response()->json([$subcategory], 201);
+            return response()->json(
+                [
+                    'status' => 200,
+                    'subcategory' => $subcategory
+                ]
+            );
         }
     }
 
     public function show(Request $request, string $id)
     {
         $subcategory = BookSubCategory::findOrFail($id);
-        return response()->json([$subcategory], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'subcategory' => $subcategory
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $subcategory = BookSubCategory::findOrFail($id);
         $subcategory->update($request->all());
-        return response()->json([$subcategory], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'subcategory' => $subcategory
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $subcategory = BookSubCategory::findOrFail($id);
         $subcategory->delete();
-        return response()->json([$subcategory], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Book Sub Category deleted successfully'
+            ]
+        );
     }
 }

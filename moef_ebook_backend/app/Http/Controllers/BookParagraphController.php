@@ -11,45 +11,61 @@ class BookParagraphController extends Controller
     public function index(Request $request)
     {
         $bookParagraphs = BookParagraph::all();
-   return response()->json(
-            ['status'=>200,
-            'book_paragraphs'=>$bookParagraphs
+        return response()->json(
+            [
+                'status'=>200,
+                'book_paragraphs'=>$bookParagraphs
             ]
         ); 
-
-           }
+    }
 
     public function store(Request $request)
     {
         $bookParagraph = new bookParagraph();
         $bookParagraph->ParagraphName=$request->paragraphName;
-        $bookParagraph->bookId=$request->bookId;
-        $bookParagraph->chapterId=$request->chapterId;
+        $bookParagraph->bookID=$request->bookID;
+        $bookParagraph->chapterID=$request->chapterID;
         $bookParagraph->save();
-   return response()->json(
-            ['status'=>200,
-            'bookParagraph'=>'Book Paragraph Created Successfully'
+        return response()->json(
+            [
+                'status'=>200,
+                'book_paragraph'=>$bookParagraph
             ]
-        ); 
+        );
     }
 
     public function show(Request $request, $id)
     {
         $bookParagraph = BookParagraph::findOrFail($id);
-        return response()->json($bookParagraph, 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'book_paragraph'=>$bookParagraph
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
     {
         $bookParagraph = BookParagraph::findOrFail($id);
         $bookParagraph->update($request->all());
-        return response()->json($bookParagraph, 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'book_paragraph'=>$bookParagraph
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $bookParagraph = BookParagraph::findOrFail($id);
         $bookParagraph->delete();
-        return response()->json(['message' => 'Deleted Successfully'], 200);
+        return response()->json(
+            [
+                'status'=>200,
+                'message'=>'Book Paragraph deleted successfully'
+            ]
+        );
     }
 }

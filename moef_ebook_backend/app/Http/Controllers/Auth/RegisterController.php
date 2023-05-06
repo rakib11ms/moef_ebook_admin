@@ -64,8 +64,8 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'validation_errors' => $validator->messages(),
-                'status' => 400
+                'status' => 400,
+                'validation_errors' => $validator->messages()
             ]);
         } else {
 
@@ -82,11 +82,11 @@ class RegisterController extends Controller
             $user->userImage=$request->userImage;
             $user->save();
 
-            $token = $user->createToken($user->email . '_Token')->plainTextToken;
+            // $token = $user->createToken($user->email . '_Token')->plainTextToken;
             
             return response()->json([
             'status' => 200,
-            'token' => $token,
+            // 'token' => $token,
             'user' => $user,
             'message' => 'Registration Successfull'
             ]);

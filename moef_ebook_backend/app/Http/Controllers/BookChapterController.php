@@ -12,8 +12,9 @@ class BookChapterController extends Controller
     {
         $bookChapters = BookChapter::all();
         return response()->json(
-            ['status'=>200,
-            'book_chapters'=>$bookChapters
+            [
+                'status' => 200,
+                'bookChapters' => $bookChapters
             ]
         );
     }
@@ -21,26 +22,46 @@ class BookChapterController extends Controller
     public function store(Request $request)
     {
         $bookChapter = BookChapter::create($request->all());
-        return response()->json($bookChapter, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookChapter' => $bookChapter
+            ]
+        );
     }
 
     public function show(Request $request, $id)
     {
         $bookChapter = BookChapter::findOrFail($id);
-        return response()->json($bookChapter);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookChapter' => $bookChapter
+            ]
+        );
     }
 
     public function update(Request $request, $id)
     {
         $bookChapter = BookChapter::findOrFail($id);
         $bookChapter->update($request->all());
-        return response()->json($bookChapter, 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'bookChapter' => $bookChapter
+            ]
+        );
     }
 
     public function destroy(Request $request, $id)
     {
         $bookChapter = BookChapter::findOrFail($id);
         $bookChapter->delete();
-        return response()->json(['message' => 'Record deleted'], 200);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'BookChapter deleted successfully'
+            ]
+        );
     }
 }

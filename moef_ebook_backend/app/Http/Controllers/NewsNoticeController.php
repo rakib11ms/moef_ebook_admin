@@ -12,9 +12,9 @@ class NewsNoticeController extends Controller
     {
         $newsNotices = NewsNotice::with('category')->with('subCategory')->get();
         return response()->json(
-            ['status'=>200,
-            'news_notices'=>$newsNotices
-        ]
+            [   'status'=>200,
+                'news_notices'=>$newsNotices
+            ]
         );
     }
 
@@ -29,13 +29,23 @@ class NewsNoticeController extends Controller
         // $newsNotice->created_by = auth('sanctum')->user()->UserID;
         $newsNotice->created_by = $request->created_by;
         $newsNotice->save();
-        return response()->json($newsNotice, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice' => $newsNotice
+            ]
+        );
     }
 
     public function show(Request $request ,string $id)
     {
         $newsNotice = NewsNotice::findOrFail($id);
-        return response()->json($newsNotice);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice' => $newsNotice
+            ]
+        );
     }
 
     public function update(Request $request, string $id)
@@ -43,15 +53,25 @@ class NewsNoticeController extends Controller
         $newsNotice = NewsNotice::findOrFail($id);
         
         
-        $newsNotice->updated_by = auth('sanctum')->user()->UserID;
+        // $newsNotice->updated_by = auth('sanctum')->user()->UserID;
         $newsNotice->update($request->all());
-        return response()->json($newsNotice, 201);
+        return response()->json(
+            [
+                'status' => 200,
+                'news_notice' => $newsNotice
+            ]
+        );
     }
 
     public function destroy(Request $request, string $id)
     {
         $newsNotice = NewsNotice::findOrFail($id);
         $newsNotice->delete();
-        return response()->json(null, 204);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'News Notice deleted successfully'
+            ]
+        );
     }
 }
