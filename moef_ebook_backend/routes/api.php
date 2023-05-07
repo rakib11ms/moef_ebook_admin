@@ -60,7 +60,7 @@ Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSi
 
 Route::get('/create-main-book', [MainBookController::class, 'createMainBook']);
 
-Route::post('/delete-user/{id}', [DeleteUserController::class, 'update']);
+Route::get('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 

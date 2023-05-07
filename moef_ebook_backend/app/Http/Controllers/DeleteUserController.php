@@ -8,7 +8,7 @@ use App\Models\User;
 
 class DeleteUserController extends Controller
 {
-    public function update(Request $request, string $id)
+    public function update($id)
     {
         // dd($id);
         $user = User::findOrFail($id);

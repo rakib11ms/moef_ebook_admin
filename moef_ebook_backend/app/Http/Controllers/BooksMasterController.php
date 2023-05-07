@@ -36,7 +36,8 @@ class BooksMasterController extends Controller
         return response()->json(
             [
                 'status' => 200,
-                'books_master' => $booksMaster
+                'books_master' => $booksMaster,
+                'message'=>"Book created successfully"
             ]
         );
     }

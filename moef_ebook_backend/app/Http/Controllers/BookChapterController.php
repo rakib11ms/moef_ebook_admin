@@ -25,7 +25,9 @@ class BookChapterController extends Controller
         return response()->json(
             [
                 'status' => 200,
-                'bookChapter' => $bookChapter
+                'bookChapter' => $bookChapter,
+            'message'=>"Book chapter created successfully"
+
             ]
         );
     }

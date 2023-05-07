@@ -29,7 +29,8 @@ class BookParagraphController extends Controller
         return response()->json(
             [
                 'status'=>200,
-                'book_paragraph'=>$bookParagraph
+                'book_paragraph'=>$bookParagraph,
+                'message'=>"Book Paragraph created successfully"
             ]
         );
     }

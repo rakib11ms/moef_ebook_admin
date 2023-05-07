@@ -29,6 +29,7 @@ import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 import ReactDatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,7 +66,7 @@ function a11yProps(index) {
 
 const Home = (props) => {
 
-  console.log('X',props)
+  console.log('X', props)
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
@@ -109,20 +110,26 @@ const Home = (props) => {
       File_url: "",
       created_by: "",
       AuthorID: "",
+      paragraphName: "",
+      BookID: "",
+      ChapterID: ""
     }
   );
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({...values, [name]: value}))
+    setInputs(values => ({ ...values, [name]: value }))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    document.getElementById("myForm").reset();
+
     axios.post("api/books", inputs).then((res) => {
-      console.log(res.data);
+      if (res.data.status == 200) {
+        Swal.fire(res.data.message, '', 'success')
+      }
     })
   }
 
@@ -136,42 +143,58 @@ const Home = (props) => {
   const handleChapterChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setChapterInputs(values => ({...values, [name]: value}))
+    setChapterInputs(values => ({ ...values, [name]: value }))
   }
 
   const handleChapterSubmit = (event) => {
     event.preventDefault();
     axios.post("api/bookChapter", chapterInputs).then((res) => {
-      console.log(res.data);
+      if (res.data.status == 200) {
+        Swal.fire(res.data.message, '', 'success')
+      }
+    })
+  }
+  const handleParagraphSubmit= (event) => {
+    event.preventDefault();
+    axios.post("api/bookParagraph", chapterInputs).then((res) => {
+      if (res.data.status == 200) {
+        Swal.fire(res.data.message, '', 'success')
+      }
     })
   }
 
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
+  const [chapters, setchapters] = useState([]);
 
   useEffect(() => {
     axios.get("api/book-category").then((res) => {
-      if(res.data.bookcategories){
+      if (res.data.bookcategories) {
         setCategories(res.data.bookcategories);
       }
     })
 
     axios.get("api/language").then((res) => {
-      if(res.data.languages){
+      if (res.data.languages) {
         console.log(res.data.languages);
         setLanguages(res.data.languages);
       }
     });
 
     axios.get("api/books").then((res) => {
-      if(res.data.books_masters){
+      if (res.data.books_masters) {
         setBooks(res.data.books_masters);
+      }
+    });
+    axios.get("api/bookChapter").then((res) => {
+      if (res.data.bookChapters) {
+        setchapters(res.data.bookChapters);
       }
     });
 
   }, [])
-  
+
 
   useEffect(() => {
     const currentDate = new Date();
@@ -298,8 +321,8 @@ const Home = (props) => {
       </section>
       <hr />
       <section className="container-fluid">
-    
-       
+
+
       </section>
 
       <section className="active-div container-fluid">
@@ -368,7 +391,7 @@ const Home = (props) => {
                     </div> */}
                   </div>
 
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} id="myForm">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -432,14 +455,14 @@ const Home = (props) => {
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> প্রকাশ কাল </lebel> <br />
-                    
-                              <ReactDatePicker
-                                className="home-input"
-                                name="publish_date"
-                                value={inputs.publicationdate}
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                              />
+
+                          <ReactDatePicker
+                            className="home-input"
+                            name="publish_date"
+                            value={inputs.publicationdate}
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                          />
 
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -452,16 +475,16 @@ const Home = (props) => {
                             aria-label="Default select example"
                           >
                             <option selected></option>
-                              {
-                                languages.map((language, index) => {
-                                  return (
-                                    <option key={index} value={language.id}>
-                                      {language.Name}
-                                    </option>
-                                  );
-                                })
-                              }
-                            
+                            {
+                              languages.map((language, index) => {
+                                return (
+                                  <option key={index} value={language.id}>
+                                    {language.Name}
+                                  </option>
+                                );
+                              })
+                            }
+
                           </select>
                         </div>
                       </div>
@@ -564,6 +587,7 @@ const Home = (props) => {
             {activeButton === 3 && (
               <div>
                 <section className="">
+                  <form id="myForm" onSubmit={handleParagraphSubmit}>
                   <div className="row home-input-tags container-fluid">
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
@@ -592,12 +616,22 @@ const Home = (props) => {
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
+                            value={inputs.BookID}
+                            onChange={handleChange}
+                            name="BookID"
                           >
-                            <option selected>বই যোগ করুন </option>
-                            <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
-                            <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১২</option>
+                            <option selected disabled>বই যোগ করুন </option>
+                            {
+                              books.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>{item.Title} </option>
+
+                                  </>
+                                )
+                              })
+                            }
+
                           </select>
                           <div>
                             <Link to="">
@@ -613,12 +647,22 @@ const Home = (props) => {
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
+                            value={inputs.ChapterID}
+                            onChange={handleChange}
+                            name="chapterID"
+
                           >
-                            <option selected> অধ্যায় সমগ্র </option>
-                            <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
-                            <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৪</option>
+                            <option selected disabled> অধ্যায় সমগ্র </option>
+                            {
+                              chapters.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>{item.ChapterName} </option>
+
+                                  </>
+                                )
+                              })
+                            }
                           </select>
                           <div>
                             <Link to="">
@@ -630,12 +674,13 @@ const Home = (props) => {
                       </div>
                     </div>
                     <div className="home-input-button-div">
-                      <button className="home-input-button1">খসড়া </button>
-                      <button className="home-input-button2">
+                      <button className="home-input-button1" >খসড়া </button>
+                      <button className="home-input-button2" >
                         প্রকাশ করুন{" "}
                       </button>
                     </div>
                   </div>
+                  </form>
                 </section>
               </div>
             )}
@@ -749,60 +794,7 @@ const Home = (props) => {
         </div>
       </section>
 
-      {/* <section className="">
-        <div className="row home-input-tags container-fluid">
-          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-            <h5>বই এর তথ্য যোগ করুন </h5>
-          </div>
-          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-            <Link to="/draft-documents">
-              {" "}
-              <p className="khosra-songrokkhon-p">
-                <span>
-                  <ErrorOutlineOutlinedIcon className="me-2" />
-                </span>
-                আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-              </p>
-            </Link>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row ">
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel>বই এর নাম </lebel> <br />
-              <input className="home-input" type="text" />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel> অন্যান্য </lebel> <br />
-              <input className="home-input" type="text" />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel> লেখক এর নাম </lebel> <br />
-              <input className="home-input" type="text" />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel>অন্যান্য </lebel> <br />
-              <input className="home-input" type="text" />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel> প্রকাশ কাল </lebel> <br />
-              <DatePicker
-                className="home-input"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-              <lebel> অন্যান্য </lebel> <br />
-              <input className="home-input" type="text" />
-            </div>
-          </div>
-          <div className="home-input-button-div">
-            <button className="home-input-button1">খসড়া </button>
-            <button className="home-input-button2">প্রকাশ করুন </button>
-          </div>
-        </div>
-      </section> */}
+
     </div>
   );
 };
