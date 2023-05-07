@@ -8,6 +8,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import "./NavigationBa.css";
 import republicImg from "../../../images/Government of Bangladesh-logo.png";
@@ -17,8 +18,9 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 
-import { Link } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
+import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
+import axios from 'axios';
 
 const NavigationBa = () => {
   // Sub menu
@@ -279,6 +281,9 @@ const NavigationBa = () => {
 
   // SideBar Navigation
 
+
+
+
   return (
     <div className="mt-3">
       <div className="row">
@@ -322,11 +327,13 @@ const NavigationBa = () => {
                 <MarkChatUnreadOutlinedIcon className="icons-nav" />
               </Link>
             </div>
-            <div className="icons-nav-div">
+            <div className="icons-nav-div  ">
               <Link to="/my-area">
                 <PersonIcon className="icons-nav" />
               </Link>
+
             </div>
+          
           </div>
         </div>
       </div>
