@@ -4,6 +4,9 @@ import peoplesRepublicLogo from "../../images/Government of Bangladesh-logo.png"
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import Swal from 'sweetalert2';
+import axios from "axios";
+
 const SignUpBg = {
   background: `url(${backgroundlogin})`,
   backgroundRepeat: "no-repeat",
@@ -13,23 +16,79 @@ const SignUpBg = {
 };
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  const [input, setInput] = useState({
+    UserName: "",
+    userPhone: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    userID: "",
+    OfficeID: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInput(values => ({ ...values, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email.trim() === "" || password.trim() === "") {
-      setEmail("Email and password cannot be empty.");
-      return;
+    if (input.email.trim() === "" || input.password.trim() === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Email and password cannot be empty.',
+      })
+    }
+
+    if (input.password !== input.confirm_password) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Password and confirm password does not match.',
+      })
     }
 
     // Check if email is a valid format using a regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setPassword("Please enter a valid email address.");
-      return;
+    if (!emailRegex.test(input.email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter a valid email address.',
+      })
     }
-  };
+
+    axios.post("api/register", input).then((res) => {
+      console.log(res.data);
+      if (res.data.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Registration Successful',
+        })
+      }
+    })
+      
+  }
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    // if (email.trim() === "" || password.trim() === "") {
+    //   setEmail("Email and password cannot be empty.");
+    //   return;
+    // }
+
+  //   // Check if email is a valid format using a regular expression
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   if (!emailRegex.test(email)) {
+  //     setPassword("Please enter a valid email address.");
+  //     return;
+  //   }
+  // };
   // const history = useHistory();
   // import { useHistory } from "react-router-dom";
   // history.push("/home");
@@ -59,60 +118,58 @@ function SignUp() {
                     <p className="login-input-tags">শুরু করতে লগইন করুন</p>
                     <div>
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         type="text"
                         className="form-control"
-                        id="exampleFormControlInput1"
-                        placeholder="আপনার ইউজার আইডি / অফিস আইডি"
+                        name="userID"
+                        placeholder="আপনার ইউজার আইডি"
                       />
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         type="name"
                         className="form-control"
-                        id="exampleFormControlInput1"
+                        name="UserName"
                         placeholder="নাম"
                       />
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         type="number"
                         className="form-control"
-                        id="exampleFormControlInput1"
+                        name="userPhone"
                         placeholder="ফোন নম্বর"
                       />
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         type="email"
                         className="form-control"
-                        id="exampleFormControlInput1"
+                        name="email"
                         placeholder="ইমেইল"
                       />
                       <input
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                         type="text"
                         className="form-control"
-                        id="exampleFormControlInput1"
+                        name="OfficeID"
                         placeholder="অফিস আইডি"
-                      />
+                      />  
                       <input
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleChange}
                         type="password"
                         className="form-control"
-                        id="inputPassword"
+                        name="password"
                         placeholder="পাসওয়ার্ড দিন"
                       ></input>
                       <input
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleChange}
                         type="password"
                         className="form-control "
-                        id="inputPassword"
+                        name="confirm_password"
                         placeholder="পুনরায় পাসওয়ার্ড দিন"
                       ></input>
-                      <Link to="/">
                         {" "}
                         <button type="submit" className="login-submit-button">
                           নিবন্ধন করুন
                         </button>
-                      </Link>
                     </div>{" "}
                     <p className="change-pass mt-3">
                       আপনার একাউন্ট আছে?
