@@ -31,6 +31,7 @@ use App\Http\Controllers\MainBookController;
 use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
 
+
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
@@ -53,6 +54,8 @@ Route::resource('book-sub-category', BookSubCategoryController::class);
 Route::get('get-all-book-sub-cat-By-Category-ID/{id}', [BookSubCategoryController::class, 'getBookSubCategoryByCategoryID']);
 Route::resource('bookmark', BookmarkController::class);
 Route::resource('bookChapter', BookChapterController::class);
+Route::get('total-document-count', [App\Http\Controllers\TotalDocsNumberController::class, 'index']);
+
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
 Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);

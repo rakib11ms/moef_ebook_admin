@@ -65,7 +65,7 @@ function a11yProps(index) {
 
 const Home = (props) => {
 
-  console.log('X',props)
+  // console.log('X',props)
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
@@ -95,7 +95,7 @@ const Home = (props) => {
 
   const handleUploadButtonClick = () => {
     // handle the upload logic here
-    console.log(selectedFile);
+    // console.log(selectedFile);
   };
 
   const [inputs, setInputs] = useState(
@@ -149,6 +149,7 @@ const Home = (props) => {
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
+  const [totalDocuments, setTotalDocuments] = useState(0);
 
   useEffect(() => {
     axios.get("api/book-category").then((res) => {
@@ -159,7 +160,7 @@ const Home = (props) => {
 
     axios.get("api/language").then((res) => {
       if(res.data.languages){
-        console.log(res.data.languages);
+        // console.log(res.data.languages);
         setLanguages(res.data.languages);
       }
     });
@@ -167,6 +168,12 @@ const Home = (props) => {
     axios.get("api/books").then((res) => {
       if(res.data.books_masters){
         setBooks(res.data.books_masters);
+      }
+    });
+
+    axios.get("api/total-document-count").then((res) => {
+      if(res.data){
+        setTotalDocuments(res.data);
       }
     });
 
@@ -191,7 +198,7 @@ const Home = (props) => {
             <Link to="/add-document" className=" amounts-div">
               <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> ৩৩ টি</span>
+                <span className="doc-span1"> {totalDocuments.singleDocs} </span>
                 <br />
                 <span className="doc-span">ডকুমেন্ট </span>{" "}
               </h4>
@@ -199,7 +206,7 @@ const Home = (props) => {
             <Link to="/books-101200" className=" amounts-div">
               <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">২০ টি</span>
+                <span className="doc-span1"> {totalDocuments.bookChapter} </span>
                 <br />
                 <span className="doc-span">চ্যাপ্টার </span>{" "}
               </h4>
@@ -207,7 +214,7 @@ const Home = (props) => {
             <Link to="/all-books" className=" amounts-div">
               <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">৩০ টি</span>
+                <span className="doc-span1"> {totalDocuments.booksMaster} </span>
                 <br />
                 <span className="doc-span">বই </span>{" "}
               </h4>
