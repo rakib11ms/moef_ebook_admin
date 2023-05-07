@@ -54,11 +54,19 @@ function Login({ handleSucessLogin }) {
     }).catch((err) => {
       console.log(err);
       setClickedRender(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-      })
+      if(err.response.data.errors) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.errors[Object.keys(err.response.data.errors)[0]][0],
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.message,
+        })
+      }
     });
   }
   // const history = useHistory();

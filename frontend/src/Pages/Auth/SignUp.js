@@ -36,44 +36,47 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (input.email.trim() === "" || input.password.trim() === "") {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Email and password cannot be empty.',
       })
-    }
-
-    if (input.password !== input.confirm_password) {
+    } else if (input.password !== input.confirm_password) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Password and confirm password does not match.',
       })
+    } else {
+      axios.post("api/register", input).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Registration Successful',
+          })
+        } else {
+          console.log(res.data.validation_errors);
+          if(res.data.validation_errors) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              //print the first error only
+              text: res.data.validation_errors[Object.keys(res.data.validation_errors)[0]][0],
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: res.data.message,
+            })
+          }
+        }
+      });
     }
-
-    // Check if email is a valid format using a regular expression
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(input.email)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please enter a valid email address.',
-      })
-    }
-
-    axios.post("api/register", input).then((res) => {
-      console.log(res.data);
-      if (res.data.status === 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Registration Successful',
-        })
-      }
-    })
-      
-  }
+  };
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
