@@ -8,7 +8,6 @@ import {
   useLocation,
   useHistory,
   BrowserRouter
-
 } from "react-router-dom";
 import axios from "axios";
 import Login from "./Pages/Auth/Login";
