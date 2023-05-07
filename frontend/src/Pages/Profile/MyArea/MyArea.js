@@ -49,20 +49,6 @@ const MyArea = () => {
     ],
   };
 
-  
-  const navigate = useNavigate();
-  const handleLogOut = (e) => {
-      e.preventDefault();
-      axios.post('/api/logout').then(res => {
-          if (res.data.status === 200) {
-            localStorage.removeItem('auth_token', res.data.token);
-            localStorage.removeItem('user', JSON.stringify(res.data.user));
-            navigate('/');
-          }
-      }).catch(err => {
-          console.log(err);
-      })
-  }
 
   return (
     <div>
@@ -104,9 +90,7 @@ const MyArea = () => {
                   প্রোফাইল ভেরিফাইড
                 </button>
               </div>
-              <div class=" text-white" onClick={handleLogOut}>
-                <button className="area-varify-button">Logout</button>
-              </div>
+           
             </div>
           </div>
           <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
