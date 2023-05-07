@@ -833,7 +833,8 @@ const Home = (props) => {
                   </div>
                 </section>
               </div>
-            )}
+        
+        )}
           </div>
         </div>
       </section>
