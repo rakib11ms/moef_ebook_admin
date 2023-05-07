@@ -29,7 +29,6 @@ import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 import ReactDatePicker from "react-datepicker";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,19 +78,6 @@ const Home = (props) => {
     setActiveButton(buttonNumber);
   };
 
-  // const handleDateChange = (date) => {
-  //   setStartDate(date);
-  //   handleChange({
-  //     target: {
-  //       name: "publicationdate",
-  //       value: date.toISOString().substr(0, 10),
-  //     },
-  //   });
-  // };
-
-  // useEffect(()=>{
-  //   setActiveButton(props.activeButton)
-  // },[props.activeButton])
   const handleCollapse = (id) => {
     setOpenCollapse(openCollapse === id ? "" : id);
   };
@@ -126,15 +112,11 @@ const Home = (props) => {
     }
   );
 
-  // console.log('i',inputs);
-
-  // console.log(inputs);
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs(values => ({...values, [name]: value}))
   }
-  // console.log(inputs);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -144,8 +126,29 @@ const Home = (props) => {
     })
   }
 
+  const [chapterInputs, setChapterInputs] = useState(
+    {
+      ChapterName: "",
+      BookID: "",
+    }
+  );
+
+  const handleChapterChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setChapterInputs(values => ({...values, [name]: value}))
+  }
+
+  const handleChapterSubmit = (event) => {
+    event.preventDefault();
+    axios.post("api/bookChapter", chapterInputs).then((res) => {
+      console.log(res.data);
+    })
+  }
+
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
     axios.get("api/book-category").then((res) => {
@@ -156,32 +159,19 @@ const Home = (props) => {
 
     axios.get("api/language").then((res) => {
       if(res.data.languages){
+        console.log(res.data.languages);
         setLanguages(res.data.languages);
+      }
+    });
+
+    axios.get("api/books").then((res) => {
+      if(res.data.books_masters){
+        setBooks(res.data.books_masters);
       }
     });
 
   }, [])
   
-  // const handleCategory = (event) => {
-  //   axios.get("api/book-category").then((res) => {
-  //     res.data.bookcategories.forEach(element => {
-  //       setCategories(res.data.bookcategories.map(
-  //         element => element.CategoryName,
-  //       ));
-  //     });
-  //   });
-  // };
-
-
-  // const handleLanguage = (event) => {
-  //   axios.get("api/language").then((res) => {
-  //     res.data.languages.forEach(element => {
-  //       setLanguages(res.data.languages.map(
-  //         element => element.Name,
-  //       ));
-  //     });
-  //   });
-  // };
 
   useEffect(() => {
     const currentDate = new Date();
@@ -517,41 +507,56 @@ const Home = (props) => {
                       </Link>
                     </div> */}
                   </div>
-                  <div className="container">
-                    <div className="row ">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel required>অধ্যায়ের নাম * </lebel> <br />
-                        <input className="home-input" type="text" />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel> বই নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                          >
-                            <option selected>জাতীয় নীতি-মালা যোগ করুন </option>
-                            <option value="1">জাতীয় পরিবেশ নীতি ২০১৮ </option>
-                            <option value="2">জাতীয় পরিবেশ নীতি ২০১৩</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১৪</option>
-                            <option value="3">জাতীয় পরিবেশ নীতি ২০১২</option>
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
+                  <form onSubmit={handleChapterSubmit}>
+                    <div className="container">
+                      <div className="row ">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel required>অধ্যায়ের নাম * </lebel> <br />
+                          <input
+                            className="home-input"
+                            type="text"
+                            name="ChapterName"
+                            value={inputs.chaptername}
+                            onChange={handleChapterChange}
+                          />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel> বই নির্নয় করুন * </lebel> <br />
+                          <div className="d-flex border align-items-center">
+                            <select
+                              name="BookID"
+                              onChange={handleChapterChange}
+                              class="form-select select-category"
+                              aria-label="Default select example"
+                            >
+                              <option selected></option>
+                              {
+                                books.map((book, index) => {
+                                  return (
+                                    <option key={index} value={book.id}>
+                                      {book.Title}
+                                    </option>
+                                  );
+                                })
+                              }
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
+                      <div className="home-input-button-div">
+                        <button className="home-input-button1">খসড়া </button>
+                        <button className="home-input-button2">
+                          প্রকাশ করুন{" "}
+                        </button>
+                      </div>
                     </div>
-                    <div className="home-input-button-div">
-                      <button className="home-input-button1">খসড়া </button>
-                      <button className="home-input-button2">
-                        প্রকাশ করুন{" "}
-                      </button>
-                    </div>
-                  </div>
+                  </form>
                 </section>
               </div>
             )}
