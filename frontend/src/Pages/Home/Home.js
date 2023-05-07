@@ -67,7 +67,7 @@ function a11yProps(index) {
 
 const Home = (props) => {
 
-  console.log('X', props)
+  // console.log('X', props)
   // console.log('X',props)
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
@@ -156,7 +156,7 @@ const Home = (props) => {
       }
     })
   }
-  const handleParagraphSubmit= (event) => {
+  const handleParagraphSubmit = (event) => {
     event.preventDefault();
     axios.post("api/bookParagraph", chapterInputs).then((res) => {
       if (res.data.status == 200) {
@@ -169,7 +169,10 @@ const Home = (props) => {
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
+  const [allParagraphs, setallParagraphs] = useState([]);
   const [totalDocuments, setTotalDocuments] = useState(0);
+
+  // console.log('totalDoc',totalDocuments)
 
   useEffect(() => {
     axios.get("api/book-category").then((res) => {
@@ -179,7 +182,7 @@ const Home = (props) => {
     })
 
     axios.get("api/language").then((res) => {
-      if(res.data.languages){
+      if (res.data.languages) {
         // console.log(res.data.languages);
         setLanguages(res.data.languages);
       }
@@ -196,8 +199,15 @@ const Home = (props) => {
       }
     });
 
+    axios.get("api/bookParagraph").then((res) => {
+      if (res.data.bookChapters) {
+        setallParagraphs(res.data.book_paragraphs);
+      }
+    });
+
+
     axios.get("api/total-document-count").then((res) => {
-      if(res.data){
+      if (res.data) {
         setTotalDocuments(res.data);
       }
     });
@@ -597,11 +607,11 @@ const Home = (props) => {
               <div>
                 <section className="">
                   <form id="myForm" onSubmit={handleParagraphSubmit}>
-                  <div className="row home-input-tags container-fluid">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                      <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
-                    </div>
-                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
+                    <div className="row home-input-tags container-fluid">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
+                      </div>
+                      {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
                       <Link to="/draft-documents">
                         {" "}
                         <p className="khosra-songrokkhon-p">
@@ -612,83 +622,83 @@ const Home = (props) => {
                         </p>
                       </Link>
                     </div> */}
-                  </div>
-                  <div className="container">
-                    <div className="row ">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <lebel>অনুচ্ছেদের নাম * </lebel> <br />
-                        <input className="home-input" type="text" />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
-                        <lebel> বই নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                            value={inputs.BookID}
-                            onChange={handleChange}
-                            name="BookID"
-                          >
-                            <option selected disabled>বই যোগ করুন </option>
-                            {
-                              books.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>{item.Title} </option>
+                    </div>
+                    <div className="container">
+                      <div className="row ">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                          <lebel>অনুচ্ছেদের নাম * </lebel> <br />
+                          <input className="home-input" type="text" />
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
+                          <lebel> বই নির্নয় করুন * </lebel> <br />
+                          <div className="d-flex border align-items-center">
+                            <select
+                              class="form-select select-category"
+                              aria-label="Default select example"
+                              value={inputs.BookID}
+                              onChange={handleChange}
+                              name="BookID"
+                            >
+                              <option selected disabled>বই যোগ করুন </option>
+                              {
+                                books.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>{item.Title} </option>
 
-                                  </>
-                                )
-                              })
-                            }
+                                    </>
+                                  )
+                                })
+                              }
 
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
+                          <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
+                          <div className="d-flex border align-items-center">
+                            <select
+                              class="form-select select-category"
+                              aria-label="Default select example"
+                              value={inputs.ChapterID}
+                              onChange={handleChange}
+                              name="chapterID"
+
+                            >
+                              <option selected disabled> অধ্যায় সমগ্র </option>
+                              {
+                                chapters.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>{item.ChapterName} </option>
+
+                                    </>
+                                  )
+                                })
+                              }
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
-                        <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
-                        <div className="d-flex border align-items-center">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                            value={inputs.ChapterID}
-                            onChange={handleChange}
-                            name="chapterID"
-
-                          >
-                            <option selected disabled> অধ্যায় সমগ্র </option>
-                            {
-                              chapters.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>{item.ChapterName} </option>
-
-                                  </>
-                                )
-                              })
-                            }
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
-                          </div>
-                        </div>
+                      <div className="home-input-button-div">
+                        <button className="home-input-button1" >খসড়া </button>
+                        <button className="home-input-button2" >
+                          প্রকাশ করুন{" "}
+                        </button>
                       </div>
                     </div>
-                    <div className="home-input-button-div">
-                      <button className="home-input-button1" >খসড়া </button>
-                      <button className="home-input-button2" >
-                        প্রকাশ করুন{" "}
-                      </button>
-                    </div>
-                  </div>
                   </form>
                 </section>
               </div>
@@ -721,12 +731,21 @@ const Home = (props) => {
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
+                            value={inputs.ChapterID}
+                            onChange={handleChange}
+                            name="BookID"
                           >
                             <option selected>বই নির্বাচন করুন</option>
-                            <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
-                            <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৪</option>
+                            {
+                              books.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>{item.Title} </option>
+
+                                  </>
+                                )
+                              })
+                            }
                           </select>
                           <div>
                             <Link to="">
@@ -743,12 +762,21 @@ const Home = (props) => {
                           <select
                             class="form-select select-category"
                             aria-label="Default select example"
+                            value={inputs.ChapterID}
+                            onChange={handleChange}
+                            name="chapterID"
                           >
                             <option selected>অধ্যায় নির্বাচন করুন</option>
-                            <option value="1">পরিবেশ নীতির সকল সমগ্র১ </option>
-                            <option value="2">পরিবেশ নীতির সকল সমগ্র২</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৩</option>
-                            <option value="3">পরিবেশ নীতির সকল সমগ্র৪</option>
+                            {
+                              chapters.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>{item.ChapterName} </option>
+
+                                  </>
+                                )
+                              })
+                            }
                           </select>
                           <div>
                             <Link to="">
@@ -766,10 +794,17 @@ const Home = (props) => {
                             aria-label="Default select example"
                           >
                             <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
-                            <option value="1">অনুচ্ছেদ ১ </option>
-                            <option value="2">অনুচ্ছেদ ২</option>
-                            <option value="3">অনুচ্ছেদ ৩</option>
-                            <option value="3">অনুচ্ছেদ ৪</option>
+                            {
+
+                              allParagraphs.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>{item.ParagraphName} </option>
+
+                                  </>
+                                )
+                              })
+                            }
                           </select>
                           <div>
                             <Link to="">
