@@ -49,7 +49,6 @@ const MyArea = () => {
     ],
   };
 
-
   return (
     <div>
       <section>
@@ -90,7 +89,7 @@ const MyArea = () => {
                   প্রোফাইল ভেরিফাইড
                 </button>
               </div>
-           
+             
             </div>
           </div>
           <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">

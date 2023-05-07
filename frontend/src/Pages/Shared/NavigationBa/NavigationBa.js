@@ -282,6 +282,19 @@ const NavigationBa = () => {
   // SideBar Navigation
 
 
+  const navigate = useNavigate();
+  const handleLogOut = (e) => {
+      e.preventDefault();
+      axios.post('/api/logout').then(res => {
+          if (res.data.status === 200) {
+            localStorage.removeItem('auth_token', res.data.token);
+            localStorage.removeItem('user', JSON.stringify(res.data.user));
+            navigate('/');
+          }
+      }).catch(err => {
+          console.log(err);
+      })
+  }
 
 
   return (
@@ -333,7 +346,10 @@ const NavigationBa = () => {
               </Link>
 
             </div>
-          
+            <div className="icons-nav-div  " onClick={handleLogOut}>
+                <LogoutIcon className="icons-nav text-success fw-bold" />
+
+            </div>
           </div>
         </div>
       </div>
