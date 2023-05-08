@@ -9,6 +9,8 @@
 <body>
     <h1>Reset Password</h1>
     <p>Please click the following link to reset your password:</p>
-    <a href="{{ $resetLink }}">localhost:3000/change-password-confirm</a>
+    <a href="{{ url('localhost:3000/change-password-confirm/'.$resetLink) }}">Click</a>
+
+
 </body>
 </html>

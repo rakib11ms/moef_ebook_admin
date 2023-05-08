@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthorController;
@@ -66,6 +64,7 @@ Route::get('/create-main-book', [MainBookController::class, 'createMainBook']);
 
 Route::get('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
+Route::post('/reset-password-email-confirm', [ResetPasswordController::class, 'resetPasswordConfirm']);
 
 Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);

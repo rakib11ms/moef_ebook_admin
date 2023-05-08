@@ -7,7 +7,8 @@ use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
- 
+use Illuminate\Support\Facades\Hash;
+
 class ResetPasswordController extends Controller
 {
     /**
@@ -33,6 +34,22 @@ class ResetPasswordController extends Controller
                 'status'=>200,
                 'message'=>"User not found!"
             ]);
+        }
+    }
+    public function resetPasswordConfirm(Request $request,$id){
+        $user = User::where('email', $request->email)->first();
+        if($user){
+                $user=User::find($id);
+            $user->password= Hash::make($request->password);
+            $user->confirm_password = Hash::make($request->confirm_password);    
+            $user->update();
+            return response()->json([
+                'status'=>200
+            ]);
+
+            }
+        else{
+
         }
     }
 }
