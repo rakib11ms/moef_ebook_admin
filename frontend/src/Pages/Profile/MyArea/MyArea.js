@@ -53,7 +53,11 @@ const MyArea = () => {
   };
   const formData = new FormData();
   formData.append('userImage', selectedFile);
-  
+  const config = {
+    headers: {
+        'content-type': 'multipart/form-data'
+    }
+}
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -62,7 +66,7 @@ const MyArea = () => {
     const userID = JSON.parse(localStorage.getItem('user')).id;
 
     try {
-      await axios.post("api/update-user/" + userID, formData).then(res => {
+      await axios.post("api/update-user/" + userID, formData,config).then(res => {
 
         console.log(res);
         Swal.fire({
