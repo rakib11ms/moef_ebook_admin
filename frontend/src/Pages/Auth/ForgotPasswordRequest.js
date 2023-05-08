@@ -29,6 +29,7 @@ function ForgotPasswordRequest() {
         const loginInput = {
             email:email,
         };
+
         
 
         // console.log(loginInput);
