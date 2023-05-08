@@ -129,7 +129,7 @@ const Home = (props) => {
     document.getElementById("myForm").reset();
 
     axios.post("api/books", inputs).then((res) => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
       }
     })
@@ -148,10 +148,18 @@ const Home = (props) => {
     setChapterInputs(values => ({ ...values, [name]: value }))
   }
 
+  const fetchBooks = () => {
+    axios.get("api/books").then((res) => {
+      if (res.data.books_masters) {
+        setBooks(res.data.books_masters);
+      }
+    });
+  };
+
   const handleChapterSubmit = (event) => {
     event.preventDefault();
     axios.post("api/bookChapter", chapterInputs).then((res) => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
       }
     })
@@ -159,7 +167,7 @@ const Home = (props) => {
   const handleParagraphSubmit = (event) => {
     event.preventDefault();
     axios.post("api/bookParagraph", chapterInputs).then((res) => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
       }
     })
@@ -193,6 +201,7 @@ const Home = (props) => {
         setBooks(res.data.books_masters);
       }
     });
+
     axios.get("api/bookChapter").then((res) => {
       if (res.data.bookChapters) {
         setchapters(res.data.bookChapters);
@@ -568,6 +577,7 @@ const Home = (props) => {
                             <select
                               name="BookID"
                               onChange={handleChapterChange}
+                              onClick={fetchBooks}
                               class="form-select select-category"
                               aria-label="Default select example"
                             >
