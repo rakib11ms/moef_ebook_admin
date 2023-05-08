@@ -7,6 +7,16 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function getUserImage($id)
+    {
+        $user = User::find($id);
+        $image = $user->userImage;
+        $image_path = public_path('images/user/' . $image);
+        if (file_exists($image_path)) {
+            return response()->file($image_path);
+        }
+    }
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -18,6 +28,15 @@ class UserController extends Controller
             $user->userPhone = $request->userPhone;
  
         if ($request->hasFile('userImage')) {
+            // Delete old image
+            $oldImage = $user->userImage;
+            if ($oldImage != 'default.png' && $oldImage != null) {
+                $image_path = public_path('images/user/' . $oldImage);
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+
             $image = $request->file('userImage');
             $userName = $user->userID;
             $imageName = $userName . '.' . $image->getClientOriginalExtension();
