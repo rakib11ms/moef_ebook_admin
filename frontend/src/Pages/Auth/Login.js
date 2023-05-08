@@ -44,8 +44,8 @@ function Login({ handleSucessLogin }) {
     };
     // console.log(loginInput);
     axios.post("api/login", loginInput).then((res) => {
-      console.log(res.data);  
-      if(res.data.status === 200){
+      console.log(res.data);
+      if (res.data.status === 200) {
         setClickedRender(false);
         localStorage.setItem('auth_token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -54,7 +54,7 @@ function Login({ handleSucessLogin }) {
     }).catch((err) => {
       console.log(err);
       setClickedRender(false);
-      if(err.response.data.errors) {
+      if (err.response.data.errors) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -127,14 +127,17 @@ function Login({ handleSucessLogin }) {
                         type="submit"
                         className="login-submit-button mb-3"
                       >
-                        লগইন { clickedRender ? <span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span> : '' }
+                        লগইন {clickedRender ? <span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span> : ''}
                       </button>
                     </div>
                     <p className="change-pass">
                       পাসওয়ার্ড ভুলে গেছেন ?{" "}
-                      <span className="change-pass-span">
-                        এখনই পরিবর্তন করুন
-                      </span>
+                      <Link to="/forgot-password-request">
+                        <span className="change-pass-span">
+                          এখনই পরিবর্তন করুন
+                        </span>
+                      </Link>
+
                     </p>
                     <hr className="hr-line" />
                     <div className="">

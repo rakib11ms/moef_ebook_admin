@@ -29,6 +29,8 @@ import Book101200 from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/Book101200";
 import AddDocument from "./Pages/AllBooks/AddDocument/AddDocument";
 import EditDocuments from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import SignUp from "./Pages/Auth/SignUp";
+import ForgotPasswordRequest from "./Pages/Auth/ForgotPasswordRequest";
+import ForgotPasswordConfirm from "./Pages/Auth/ForgotPasswordConfirm";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +57,8 @@ function App() {
           <Route path="/navigation" element={<NavigationBa />} />
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password-request" element={<ForgotPasswordRequest />} />
+          <Route path="/change-password-confirm/:id" element={<ForgotPasswordConfirm />} />
           <Route path="/my-area" element={<MyArea />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
