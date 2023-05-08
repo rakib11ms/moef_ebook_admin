@@ -42,6 +42,17 @@ function Login({ handleSucessLogin }) {
       id: id,
       password: password,
     };
+
+    if (id.trim() === "" || password.trim() === "") {
+      setClickedRender(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'ID and Password cannot be empty.',
+      })
+      return;
+    }
+
     // console.log(loginInput);
     axios.post("api/login", loginInput).then((res) => {
       console.log(res.data);
