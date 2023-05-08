@@ -29,6 +29,7 @@ function ForgotPasswordRequest() {
         const loginInput = {
             email:email,
         };
+        
 
         // console.log(loginInput);
         axios.post("api/reset-password-email-request", loginInput).then((res) => {
