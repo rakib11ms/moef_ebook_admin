@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./MyArea.css";
@@ -44,6 +44,24 @@ import Swal from "sweetalert2";
 // };
 
 const MyArea = () => {
+  const userInfo = JSON.parse(localStorage.getItem('user'));
+  const userID = JSON.parse(localStorage.getItem('user')).id;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    axios.get('api/get-user-image/' + userID, { responseType: 'arraybuffer' })
+      .then(res => {
+        const base64Img = window.btoa(
+          new Uint8Array(res.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        );
+        setUser('data:image/png;base64,' + base64Img);
+      });
+  }, [userID]);
+
+  console.log(user);
 
   const [selectedFile, setSelectedFile] = useState(null);
   // console.log(selectedFile);
@@ -51,23 +69,43 @@ const MyArea = () => {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+
   const formData = new FormData();
   formData.append('userImage', selectedFile);
+
   const config = {
     headers: {
         'content-type': 'multipart/form-data'
     }
-}
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (!selectedFile) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a file!",
+      });
+      return;
+    }
     // console.log("xx",formData.get('userImage'))
-    
-    const userID = JSON.parse(localStorage.getItem('user')).id;
 
     try {
       await axios.post("api/update-user/" + userID, formData,config).then(res => {
+        //display current user image
+        axios.get('api/get-user-image/' + userID, { responseType: 'arraybuffer' })
+          .then(res => {
+            const base64Img = window.btoa(
+              new Uint8Array(res.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+              )
+            );
+            setUser('data:image/png;base64,' + base64Img);
 
+          });
+        
         console.log(res);
         Swal.fire({
           icon: "success",
@@ -83,7 +121,7 @@ const MyArea = () => {
         title: "Oops...",
         text: "আপলোড করা যায়নি!",
       });
-    }
+    } 
   };
 
   var settings = {
@@ -134,7 +172,7 @@ const MyArea = () => {
                 আমার এরিয়া
               </h3>
               <div className="name-pic-div">
-                <img className="profile-pic" src={profilePic} alt="" />
+                <img className="profile-pic" src={user} alt="User dp" />
                 <br />
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
                   <strong className="change-pp-button">
@@ -150,11 +188,11 @@ const MyArea = () => {
                   <CreateIcon />
                 </div>
                 <div className="name-info container">
-                  <p>অফিসের নাম</p>
-                  <p>ঠিকানা</p>
-                  <p>অফিস এর আইডি</p>
-                  <p>ইমেইল</p>
-                  <p>ফোন নম্বর</p>
+                  <p>নাম: {userInfo.UserName}</p>
+                  <p>ইমেইল: {userInfo.email}</p>
+                  <p>ফোন: {userInfo.userPhone}</p>
+                  <p>ব্যবহারকারী আইডি: {userInfo.userID}</p>
+                  <p>অফিস আইডি: {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
                 </div>
               </div>
               <div className="varify-button-div">
