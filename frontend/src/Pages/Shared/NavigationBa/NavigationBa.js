@@ -205,13 +205,13 @@ const NavigationBa = () => {
               {showSubmenu3 && (
                 <ul>
                   <li className="side-li-link">
-                    <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
+                    <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
                   </li>
-                  <li className="side-li-link">
+                  {/* <li className="side-li-link">
                     <Link to="/categories-news">ক্যটেগরি</Link>
-                  </li>
+                  </li> */}
                   <li className="side-li-link">
-                    <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
+                    <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
                   </li>
                 </ul>
               )}

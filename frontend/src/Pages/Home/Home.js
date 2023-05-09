@@ -168,7 +168,6 @@ const Home = (props) => {
     {
       ChapterName: "",
       BookID: "",
-
     }
   );
 

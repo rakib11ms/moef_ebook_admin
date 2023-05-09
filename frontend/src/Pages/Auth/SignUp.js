@@ -57,6 +57,8 @@ function SignUp() {
             title: 'Success',
             text: 'Registration Successful',
           })
+          // redirect to login page
+          window.location.href = "/";
         } else {
           console.log(res.data.validation_errors);
           if(res.data.validation_errors) {
