@@ -25,24 +25,24 @@ const CreateNewsAndNotice = () => {
   const [content, setContent] = useState("");
 
 
-  const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
-  const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
+  // const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
+  // const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
 
 
 
   useEffect(() => {
 
-    axios.get(`/api/newsNotice`).then(res => {
-      if (res.data.status == 200) {
-        setAllNoticeNewsCategories(res.data.news_notice_categories)
-      }
-    })
+    // axios.get(`/api/newsNotice`).then(res => {
+    //   if (res.data.status == 200) {
+    //     setAllNoticeNewsCategories(res.data.news_notice_categories)
+    //   }
+    // })
 
-    axios.get(`/api/newsNoticeSub`).then(res => {
-      if (res.data.status == 200) {
-        setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories)
-      }
-    })
+    // axios.get(`/api/newsNoticeSub`).then(res => {
+    //   if (res.data.status == 200) {
+    //     setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories)
+    //   }
+    // })
 
   }, [])
 
@@ -104,7 +104,7 @@ const CreateNewsAndNotice = () => {
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
-                <h5>নিউজ ও নোটিশ তৈরি করুন</h5>
+                <h5>বিজ্ঞপ্তি তৈরি করুন </h5>
                 {/* <div className="news-notice-search-input-div ">
                   <div className="news-notice-serchInput-icon-div">
                     <SearchIcon />
@@ -158,7 +158,7 @@ const CreateNewsAndNotice = () => {
                 <hr />
 
                 <div className="suchi-div">
-                  <div>
+                  {/* <div>
                     <label for="exampleFormControlInput1" class="form-label">
                       ক্যটেগরি
                     </label>
@@ -206,7 +206,7 @@ const CreateNewsAndNotice = () => {
                         })
                       }
                     </select>
-                  </div>
+                  </div> */}
 
                   <div>
                     <label for="exampleFormControlInput1" class="form-label">
@@ -218,9 +218,9 @@ const CreateNewsAndNotice = () => {
                       aria-label="Default select example"
                     >
                       <option selected>সকলের জন্য</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option value="1">এডমিন ইউজার </option>
+                      <option value="2">অফিস ইউজার </option>
+                      <option value="3">নরমাল ইউজার</option>
                     </select>
                   </div>
                   <div className="mb-4">

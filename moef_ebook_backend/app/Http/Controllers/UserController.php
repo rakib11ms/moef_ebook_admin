@@ -69,7 +69,10 @@ class UserController extends Controller
 
         if($request->has('userPhone'))
             $user->userPhone = $request->userPhone;
- 
+
+        if($request->has('userEmail'))
+            $user->email = $request->userEmail;
+
         if ($request->hasFile('userImage')) {
             // Delete old image
             $oldImage = $user->userImage;
@@ -78,16 +81,19 @@ class UserController extends Controller
                 if (file_exists($image_path)) {
                     unlink($image_path);
                 }
-            }
 
-            $image = $request->file('userImage');
-            $userName = $user->userID;
-            $imageName = $userName . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/user'), $imageName);
-            $user->userImage = $imageName;
+                $image = $request->file('userImage');
+                $userName = $user->userID;
+                $imageName = $userName . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/user'), $imageName);
+                $user->userImage = $imageName;
+                $user->update();
+
+            }
+         
+      
         }
 
-        $user->save();
 
         return response()->json(
             [
