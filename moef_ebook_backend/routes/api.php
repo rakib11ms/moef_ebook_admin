@@ -55,6 +55,8 @@ Route::resource('bookChapter', BookChapterController::class);
 Route::get('total-document-count', [App\Http\Controllers\TotalDocsNumberController::class, 'index']);
 Route::get('get-user-image/{id}', [App\Http\Controllers\UserController::class, 'getUserImage']);
 Route::post('update-user/{id}', [App\Http\Controllers\UserController::class, 'update']);
+Route::get('get-user-info/{id}', [App\Http\Controllers\UserController::class, 'getUserInfo']);
+Route::get('get-all-user-info', [App\Http\Controllers\UserController::class, 'getAllUserInfo']);
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);

@@ -1,0 +1,1 @@
+global.imageURL = "http://172.31.120.99:8000";
