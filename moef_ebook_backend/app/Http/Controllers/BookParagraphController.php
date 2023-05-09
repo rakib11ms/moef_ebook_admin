@@ -22,9 +22,9 @@ class BookParagraphController extends Controller
     public function store(Request $request)
     {
         $bookParagraph = new bookParagraph();
-        $bookParagraph->ParagraphName=$request->paragraphName;
-        $bookParagraph->bookID=$request->bookID;
-        $bookParagraph->chapterID=$request->chapterID;
+        $bookParagraph->ParagraphName=$request->ParagraphName;
+        $bookParagraph->BookID=$request->BookID;
+        $bookParagraph->ChapterID=$request->chapterID;
         $bookParagraph->save();
         return response()->json(
             [

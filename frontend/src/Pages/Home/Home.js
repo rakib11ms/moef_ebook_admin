@@ -69,7 +69,7 @@ const Home = (props) => {
 
   const [renderData, setRenderData] = useState('')
 
-    useEffect(() => {
+  useEffect(() => {
     axios.get("api/total-document-count").then((res) => {
       if (res.data) {
         setTotalDocuments(res.data);
@@ -81,6 +81,7 @@ const Home = (props) => {
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
   const [content, setContent] = useState("");
+  console.log('cont', content)
 
   // active div
 
@@ -123,7 +124,8 @@ const Home = (props) => {
       AuthorID: "",
       ParagraphName: "",
       BookID: "",
-      ChapterID: ""
+      ChapterID: "",
+      ParagraphID: "",
     }
   );
 
@@ -141,6 +143,23 @@ const Home = (props) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
         setRenderData(res.data)
+        setInputs({
+          CatID: "",
+          Title: "",
+          publisher_id: "",
+          BookCoverImage: "",
+          language_id: "",
+          publish_date: "",
+          File_url: "",
+          created_by: "",
+          AuthorID: "",
+          ParagraphName: "",
+          BookID: "",
+          ChapterID: "",
+          ParagraphID: "",
+        })
+
+
       }
     })
   }
@@ -149,6 +168,7 @@ const Home = (props) => {
     {
       ChapterName: "",
       BookID: "",
+
     }
   );
 
@@ -172,16 +192,82 @@ const Home = (props) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
         setRenderData(res.data)
+        setInputs({
+          CatID: "",
+          Title: "",
+          publisher_id: "",
+          BookCoverImage: "",
+          language_id: "",
+          publish_date: "",
+          File_url: "",
+          created_by: "",
+          AuthorID: "",
+          ParagraphName: "",
+          BookID: "",
+          ChapterID: "",
+          ParagraphID: "",
+        })
 
       }
     })
   }
   const handleParagraphSubmit = (event) => {
     event.preventDefault();
-    axios.post("api/bookParagraph", chapterInputs).then((res) => {
+    // console.log('paragraph check',inputs)
+    axios.post("api/bookParagraph", inputs).then((res) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
         setRenderData(res.data)
+        setInputs({
+          CatID: "",
+          Title: "",
+          publisher_id: "",
+          BookCoverImage: "",
+          language_id: "",
+          publish_date: "",
+          File_url: "",
+          created_by: "",
+          AuthorID: "",
+          ParagraphName: "",
+          BookID: "",
+          ChapterID: "",
+          ParagraphID: "",
+        })
+
+      }
+    })
+  }
+  const mainBookData = {
+    book_id: inputs.BookID,
+    chapter_id: inputs.ChapterID,
+    paragraph_id: inputs.ParagraphID,
+    content: content
+  }
+
+
+  const handlePageSubmit = (e) => {
+    e.preventDefault();
+    axios.post("api/create-main-book", mainBookData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire(res.data.message, '', 'success')
+        setRenderData(res.data)
+
+        setInputs({
+          CatID: "",
+          Title: "",
+          publisher_id: "",
+          BookCoverImage: "",
+          language_id: "",
+          publish_date: "",
+          File_url: "",
+          created_by: "",
+          AuthorID: "",
+          ParagraphName: "",
+          BookID: "",
+          ChapterID: "",
+          ParagraphID: "",
+        })
+
 
       }
     })
@@ -253,7 +339,7 @@ const Home = (props) => {
             <Link to="/add-document" className=" amounts-div">
               <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> {totalDocuments.singleDocs==null?'...':totalDocuments.singleDocs} </span>
+                <span className="doc-span1"> {totalDocuments.singleDocs == null ? '...' : totalDocuments.singleDocs} </span>
                 <br />
                 <span className="doc-span">ডকুমেন্ট </span>{" "}
               </h4>
@@ -261,7 +347,7 @@ const Home = (props) => {
             <Link to="/books-101200" className=" amounts-div">
               <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">  {totalDocuments.bookChapter==null?'...':totalDocuments.bookChapter}  </span>
+                <span className="doc-span1">  {totalDocuments.bookChapter == null ? '...' : totalDocuments.bookChapter}  </span>
                 <br />
                 <span className="doc-span">চ্যাপ্টার </span>{" "}
               </h4>
@@ -269,7 +355,7 @@ const Home = (props) => {
             <Link to="/all-books" className=" amounts-div">
               <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">  {totalDocuments.booksMaster==null?'...':totalDocuments.booksMaster} </span>
+                <span className="doc-span1">  {totalDocuments.booksMaster == null ? '...' : totalDocuments.booksMaster} </span>
                 <br />
                 <span className="doc-span">বই </span>{" "}
               </h4>
@@ -339,16 +425,7 @@ const Home = (props) => {
                     ডকুমেন্ট যোগ করুন
                   </h6>
                 </Link>
-                {/* <h6>
-                  {" "}
-                  <span>
-                    <AutoStoriesIcon className="icons" />
-                    <Link to="/add-document">ডকুমেন্ট যোগ করুন</Link>
-                  </span>
-                  <span className="mx-2">
-                    +
-                  </span>
-                </h6> */}
+
               </div>
               <div className="home-serchInput-icon-div">
                 <SearchIcon />
@@ -417,17 +494,7 @@ const Home = (props) => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বই এর তথ্য যোগ করুন </h5>
                     </div>
-                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                      <Link to="/draft-documents">
-                        {" "}
-                        <p className="khosra-songrokkhon-p">
-                          <span>
-                            <ErrorOutlineOutlinedIcon className="me-2" />
-                          </span>
-                          আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                        </p>
-                      </Link>
-                    </div> */}
+
                   </div>
 
                   <form onSubmit={handleSubmit} id="myForm">
@@ -436,7 +503,7 @@ const Home = (props) => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel>বই এর নাম </lebel> <br />
                           <input
-                            className="home-input"
+                            className="home-input allField"
                             type="text"
                             name="Title"
                             value={inputs.bookname}
@@ -450,7 +517,7 @@ const Home = (props) => {
                               name="CatID"
                               // value={inputs.category}
                               onChange={handleChange}
-                              className="form-select select-category"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                             >
                               <option selected disabled>ক্যাটাগরি নির্বাচন করুন</option>
@@ -478,7 +545,7 @@ const Home = (props) => {
                             name="AuthorID"
                             value={inputs.authorname}
                             onChange={handleChange}
-                            className="home-input"
+                            className="home-input allField"
                             type="text"
                           />
                         </div>
@@ -488,7 +555,7 @@ const Home = (props) => {
                             name="publisher_id"
                             value={inputs.publishername}
                             onChange={handleChange}
-                            className="home-input"
+                            className="home-input allField"
                             type="text"
                           />
                         </div>
@@ -496,7 +563,7 @@ const Home = (props) => {
                           <lebel> প্রকাশ কাল </lebel> <br />
 
                           <ReactDatePicker
-                            className="home-input"
+                            className="home-input allField"
                             name="publish_date"
                             value={inputs.publicationdate}
                             selected={startDate}
@@ -510,7 +577,7 @@ const Home = (props) => {
                             name="language_id"
                             // value={inputs.language}
                             onChange={handleChange}
-                            className=" select-category2"
+                            className=" select-category2 allField"
                             aria-label="Default select example"
                           >
                             <option selected disabled>ভাষা নির্বাচন করুন </option>
@@ -557,17 +624,7 @@ const Home = (props) => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বইয়ের অধ্যায় যোগ করুন </h5>
                     </div>
-                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                      <Link to="/draft-documents">
-                        {" "}
-                        <p className="khosra-songrokkhon-p">
-                          <span>
-                            <ErrorOutlineOutlinedIcon className="me-2" />
-                          </span>
-                          আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                        </p>
-                      </Link>
-                    </div> */}
+
                   </div>
                   <form onSubmit={handleChapterSubmit}>
                     <div className="container">
@@ -575,7 +632,7 @@ const Home = (props) => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel required>অধ্যায়ের নাম * </lebel> <br />
                           <input
-                            className="home-input"
+                            className="home-input allField"
                             type="text"
                             name="ChapterName"
                             value={inputs.chaptername}
@@ -589,7 +646,7 @@ const Home = (props) => {
                               name="BookID"
                               onChange={handleChapterChange}
                               // onClick={fetchBooks}
-                              class="form-select select-category"
+                              class="form-select select-category allField"
                               aria-label="Default select example"
                             >
                               <option selected disabled>বই নির্নয় করুন</option>
@@ -632,29 +689,20 @@ const Home = (props) => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
                       </div>
-                      {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                      <Link to="/draft-documents">
-                        {" "}
-                        <p className="khosra-songrokkhon-p">
-                          <span>
-                            <ErrorOutlineOutlinedIcon className="me-2" />
-                          </span>
-                          আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                        </p>
-                      </Link>
-                    </div> */}
+
                     </div>
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel>অনুচ্ছেদের নাম * </lebel> <br />
-                          <input className="home-input" type="text" />
+                          <input className="home-input" type="text" onChange={handleChange} name="ParagraphName" value={inputs.ParagraphName}
+                          />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
                           <lebel> বই নির্নয় করুন * </lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
-                              class="form-select select-category"
+                              class="form-select select-category allField"
                               aria-label="Default select example"
                               value={inputs.BookID}
                               onChange={handleChange}
@@ -685,7 +733,7 @@ const Home = (props) => {
                           <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
-                              class="form-select select-category"
+                              class="form-select select-category allField"
                               aria-label="Default select example"
                               value={inputs.ChapterID}
                               onChange={handleChange}
@@ -728,130 +776,126 @@ const Home = (props) => {
             {activeButton === 4 && (
               <div>
                 <section className="">
-                  <div className="row home-input-tags container-fluid">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                      <h5>নতুন পৃষ্ঠা যোগ করুন </h5>
-                    </div>
-                    {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 khosra-songrokkhon">
-                      <Link to="/draft-documents">
-                        {" "}
-                        <p className="khosra-songrokkhon-p">
-                          <span>
-                            <ErrorOutlineOutlinedIcon className="me-2" />
-                          </span>
-                          আপনার ০২ টি খসড়া সংরক্ষণ করা আছে{" "}
-                        </p>
-                      </Link>
-                    </div> */}
-                  </div>
-                  <div className="container">
-                    <div className="row ">
-                      <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12  mb-4">
-                        <lebel>বই নির্নয় করুন * </lebel> <br />
-                        <div className="select-category-div">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                            value={inputs.ChapterID}
-                            onChange={handleChange}
-                            name="BookID"
-                          >
-                            <option selected disabled>বই নির্বাচন করুন</option>
-                            {
-                              books.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>{item.Title} </option>
+                  <form id="myForm4" onSubmit={handlePageSubmit}>
+                    <div className="row home-input-tags container-fluid">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <h5>নতুন পৃষ্ঠা যোগ করুন </h5>
+                      </div>
 
-                                  </>
-                                )
-                              })
-                            }
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
+                    </div>
+                    <div className="container">
+                      <div className="row ">
+                        <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12  mb-4">
+                          <lebel>বই নির্নয় করুন * </lebel> <br />
+                          <div className="select-category-div">
+                            <select
+                              class="form-select select-category allField"
+                              aria-label="Default select example"
+                              value={inputs.BookID}
+                              onChange={handleChange}
+                              name="BookID"
+                            >
+                              <option selected disabled>বই নির্বাচন করুন</option>
+                              {
+                                books.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>{item.Title} </option>
+
+                                    </>
+                                  )
+                                })
+                              }
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"></div> */}
-                      <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
-                        <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
-                        <div className="select-category-div">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                            value={inputs.ChapterID}
-                            onChange={handleChange}
-                            name="chapterID"
-                          >
-                            <option selected disabled>অধ্যায় নির্বাচন করুন</option>
-                            {
-                              chapters.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>{item.ChapterName} </option>
+                        {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"></div> */}
+                        <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-5 select-Chapter">
+                          <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
+                          <div className="select-category-div">
+                            <select
+                              class="form-select select-category allField"
+                              aria-label="Default select example"
+                              value={inputs.ChapterID}
+                              onChange={handleChange}
+                              name="ChapterID"
+                            >
+                              <option selected disabled>অধ্যায় নির্বাচন করুন</option>
+                              {
+                                chapters.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>{item.ChapterName} </option>
 
-                                  </>
-                                )
-                              })
-                            }
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
+                                    </>
+                                  )
+                                })
+                              }
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-5">
-                        <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
-                        <div className="select-category-div">
-                          <select
-                            class="form-select select-category"
-                            aria-label="Default select example"
-                          >
-                            <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
-                            {
+                        <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-5">
+                          <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
+                          <div className="select-category-div">
+                            <select
+                              class="form-select select-category allField"
+                              aria-label="Default select example"
+                              value={inputs.ParagraphID}
+                              onChange={handleChange}
+                              name="ParagraphID"
+                            >
+                              <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
+                              {
 
-                              allParagraphs.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>{item.P} </option>
+                                allParagraphs.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>{item.ParagraphName
+                                      } </option>
 
-                                  </>
-                                )
-                              })
-                            }
-                          </select>
-                          <div>
-                            <Link to="">
-                              {" "}
-                              <ControlPointOutlinedIcon className="control-icon" />
-                            </Link>
+                                    </>
+                                  )
+                                })
+                              }
+                            </select>
+                            <div>
+                              <Link to="">
+                                {" "}
+                                <ControlPointOutlinedIcon className="control-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
+                        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                          <JoditEditor
+                            value={content}
+                            onChange={setContent}
+                            height={400}
+                            // spellcheck={false}
+                            language="en"
+                          />
+                        </div>
                       </div>
-                      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
-                        <JoditEditor
-                          value={content}
-                          onChange={setContent}
-                          height={400}
-                          spellcheck={false}
-                          language="en"
-                        />
+                      <div className="home-input-button-div">
+                        <button className="home-input-button1">খসড়া </button>
+                        <button className="home-input-button2" type="submit">
+                          প্রকাশ করুন{" "}
+                        </button>
                       </div>
                     </div>
-                    <div className="home-input-button-div">
-                      <button className="home-input-button1">খসড়া </button>
-                      <button className="home-input-button2">
-                        প্রকাশ করুন{" "}
-                      </button>
-                    </div>
-                  </div>
+                  </form>
                 </section>
               </div>
 
