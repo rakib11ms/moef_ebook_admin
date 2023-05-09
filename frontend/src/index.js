@@ -9,7 +9,7 @@ import './ImageUrl';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-axios.defaults.baseURL = 'http://172.31.120.39:8000/';
+// axios.defaults.baseURL = 'http://172.31.120.39:8000/';
 // axios.defaults.baseURL = 'https://test.austtaa.com/server/public/';
 
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/';

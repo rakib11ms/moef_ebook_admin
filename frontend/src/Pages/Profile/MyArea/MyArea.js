@@ -92,7 +92,6 @@ const MyArea = () => {
           .then(res => {
             setUser(res.data.image);
           });
-        
         console.log(res);
         Swal.fire({
           icon: "success",
@@ -146,10 +145,67 @@ const MyArea = () => {
     ],
   };
 
+  const [userUpdate, setUserInfo] = useState({
+    UserName: userInfo.UserName,
+    userEmail: userInfo.email,
+    userPhone: userInfo.userPhone
+  });
+
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setUserInfo({ ...userUpdate, [name]: value });
+  // };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  
+  console.log(userUpdate);
+  
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post("api/update-user/" + userID, userUpdate).then(res => {
+        console.log(res);
+        handleEditClick();
+        //update local storage only name, email and phone
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.UserName = userUpdate.UserName;
+        user.email = userUpdate.userEmail;
+        user.userPhone = userUpdate.userPhone;
+        localStorage.setItem('user', JSON.stringify(user));
+
+        Swal.fire({
+          icon: "success",
+          title: "সফলভাবে আপডেট হয়েছে",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "আপডেট করা যায়নি!",
+      });
+    }
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
     <div>
       <section>
-        <NavigationBa />
+        <NavigationBa onClick={handleEditClick} />
       </section>
       <section className="container-fluid">
         <div className="row ">
@@ -172,14 +228,48 @@ const MyArea = () => {
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
-                  <CreateIcon />
+                  <CreateIcon onClick={handleEditClick} />
                 </div>
                 <div className="name-info container">
-                  <p>নাম: {userInfo.UserName}</p>
-                  <p>ইমেইল: {userInfo.email}</p>
-                  <p>ফোন: {userInfo.userPhone}</p>
-                  <p>ব্যবহারকারী আইডি: {userInfo.userID}</p>
-                  <p>অফিস আইডি: {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
+                  {/* <p>নাম: {userInfo.UserName}</p> */}
+                  <form onSubmit={handleUpdate}>
+                    <p>নাম:- 
+                      <input
+                        type="text"
+                        name="UserName"
+                        value={userUpdate.UserName}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                        style={{width: userInfo.UserName.length + 1 + 'ch'}}
+                      />
+                    </p>
+
+                    <p>ইমেইল:-
+                      <input
+                        type="text"
+                        name="userEmail"
+                        value={userUpdate.userEmail}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                        style={{width: userInfo.email.length + 1 + 'ch'}}
+                      />
+                    </p>
+
+                    <p>ফোন:-
+                      <input
+                        type="text"
+                        name="userPhone"
+                        value={userUpdate.userPhone}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                        style={{width: userInfo.userPhone.length + 1 + 'ch'}}
+                      />
+                    </p>
+                  <p>ব্যবহারকারী আইডি:- {userInfo.userID}</p>
+                  <p>অফিস আইডি:- {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
+                  <button className="btn btn-success" type="submit">আপডেট</button>
+                </form>
+                <hr />
                 </div>
               </div>
               <div className="varify-button-div">
