@@ -19,9 +19,9 @@ class ResetPasswordController extends Controller
         $user = User::where('email', $request->email)->first();
      
         if ($user) {
-            $link='localhost:3000/change-password-confirm/'.$user->id;
+            $resetLink=$user->id;
 
-            $res =  Mail::to($user->email)->send(new ResetPassword($link));
+            $res =  Mail::to($user->email)->send(new ResetPassword($resetLink));
             // dd($res);
             return response()->json([
                 'status'=>200,
@@ -43,12 +43,18 @@ class ResetPasswordController extends Controller
             $user->confirm_password = Hash::make($request->confirm_password);    
             $user->update();
             return response()->json([
-                'status'=>200
+                'status'=>200,
+                 'message'=>"Password Changed Successful"
+
             ]);
 
             }
         else{
+   return response()->json([
+                'status'=>200,
+                 'message'=>"User not found"
 
+            ]);
         }
     }
 }

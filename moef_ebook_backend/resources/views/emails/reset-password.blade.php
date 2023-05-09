@@ -9,7 +9,9 @@
 <body>
     <h1>Reset Password</h1>
     <p>Please click the following link to reset your password:</p>
-    <a href="{{ $link}}">Click</a>
+    @component('mail::button', ['url' => 'http://localhost:3000/change-password-confirm/'.$resetLink])
+Click to verify
+@endcomponent
 
 
 </body>
