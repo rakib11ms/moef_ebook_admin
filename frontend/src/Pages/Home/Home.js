@@ -67,14 +67,23 @@ function a11yProps(index) {
 
 const Home = (props) => {
 
-  // console.log('X', props)
-  // console.log('X',props)
+  const [renderData, setRenderData] = useState('')
+
+    useEffect(() => {
+    axios.get("api/total-document-count").then((res) => {
+      if (res.data) {
+        setTotalDocuments(res.data);
+      }
+    });
+  }, [renderData])
+
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
   const [content, setContent] = useState("");
 
   // active div
+
   const [activeButton, setActiveButton] = useState(1);
 
   const handleButtonClick = (buttonNumber) => {
@@ -112,7 +121,7 @@ const Home = (props) => {
       File_url: "",
       created_by: "",
       AuthorID: "",
-      paragraphName: "",
+      ParagraphName: "",
       BookID: "",
       ChapterID: ""
     }
@@ -131,6 +140,7 @@ const Home = (props) => {
     axios.post("api/books", inputs).then((res) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
+        setRenderData(res.data)
       }
     })
   }
@@ -148,19 +158,21 @@ const Home = (props) => {
     setChapterInputs(values => ({ ...values, [name]: value }))
   }
 
-  const fetchBooks = () => {
-    axios.get("api/books").then((res) => {
-      if (res.data.books_masters) {
-        setBooks(res.data.books_masters);
-      }
-    });
-  };
+  // const fetchBooks = () => {
+  //   axios.get("api/books").then((res) => {
+  //     if (res.data.books_masters) {
+  //       setBooks(res.data.books_masters);
+  //     }
+  //   });
+  // };
 
   const handleChapterSubmit = (event) => {
     event.preventDefault();
     axios.post("api/bookChapter", chapterInputs).then((res) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
+        setRenderData(res.data)
+
       }
     })
   }
@@ -169,6 +181,8 @@ const Home = (props) => {
     axios.post("api/bookParagraph", chapterInputs).then((res) => {
       if (res.data.status === 200) {
         Swal.fire(res.data.message, '', 'success')
+        setRenderData(res.data)
+
       }
     })
   }
@@ -178,7 +192,8 @@ const Home = (props) => {
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
-  const [totalDocuments, setTotalDocuments] = useState(0);
+  const [totalDocuments, setTotalDocuments] = useState('');
+  console.log('allParagraphs', allParagraphs)
 
   // console.log('totalDoc',totalDocuments)
 
@@ -209,19 +224,15 @@ const Home = (props) => {
     });
 
     axios.get("api/bookParagraph").then((res) => {
-      if (res.data.bookChapters) {
+      if (res.data.book_paragraphs) {
         setallParagraphs(res.data.book_paragraphs);
       }
     });
 
 
-    axios.get("api/total-document-count").then((res) => {
-      if (res.data) {
-        setTotalDocuments(res.data);
-      }
-    });
 
-  }, [])
+  }, [renderData])
+
 
 
   useEffect(() => {
@@ -242,7 +253,7 @@ const Home = (props) => {
             <Link to="/add-document" className=" amounts-div">
               <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> {totalDocuments.singleDocs} </span>
+                <span className="doc-span1"> {totalDocuments.singleDocs==null?'...':totalDocuments.singleDocs} </span>
                 <br />
                 <span className="doc-span">ডকুমেন্ট </span>{" "}
               </h4>
@@ -250,7 +261,7 @@ const Home = (props) => {
             <Link to="/books-101200" className=" amounts-div">
               <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> {totalDocuments.bookChapter} </span>
+                <span className="doc-span1">  {totalDocuments.bookChapter==null?'...':totalDocuments.bookChapter}  </span>
                 <br />
                 <span className="doc-span">চ্যাপ্টার </span>{" "}
               </h4>
@@ -258,7 +269,7 @@ const Home = (props) => {
             <Link to="/all-books" className=" amounts-div">
               <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> {totalDocuments.booksMaster} </span>
+                <span className="doc-span1">  {totalDocuments.booksMaster==null?'...':totalDocuments.booksMaster} </span>
                 <br />
                 <span className="doc-span">বই </span>{" "}
               </h4>
@@ -442,7 +453,7 @@ const Home = (props) => {
                               className="form-select select-category"
                               aria-label="Default select example"
                             >
-                              <option selected></option>
+                              <option selected disabled>ক্যাটাগরি নির্বাচন করুন</option>
                               {
                                 categories.map((category, index) => {
                                   return (
@@ -502,7 +513,7 @@ const Home = (props) => {
                             className=" select-category2"
                             aria-label="Default select example"
                           >
-                            <option selected></option>
+                            <option selected disabled>ভাষা নির্বাচন করুন </option>
                             {
                               languages.map((language, index) => {
                                 return (
@@ -577,11 +588,11 @@ const Home = (props) => {
                             <select
                               name="BookID"
                               onChange={handleChapterChange}
-                              onClick={fetchBooks}
+                              // onClick={fetchBooks}
                               class="form-select select-category"
                               aria-label="Default select example"
                             >
-                              <option selected></option>
+                              <option selected disabled>বই নির্নয় করুন</option>
                               {
                                 books.map((book, index) => {
                                   return (
@@ -745,7 +756,7 @@ const Home = (props) => {
                             onChange={handleChange}
                             name="BookID"
                           >
-                            <option selected>বই নির্বাচন করুন</option>
+                            <option selected disabled>বই নির্বাচন করুন</option>
                             {
                               books.map((item, i) => {
                                 return (
@@ -776,7 +787,7 @@ const Home = (props) => {
                             onChange={handleChange}
                             name="chapterID"
                           >
-                            <option selected>অধ্যায় নির্বাচন করুন</option>
+                            <option selected disabled>অধ্যায় নির্বাচন করুন</option>
                             {
                               chapters.map((item, i) => {
                                 return (
@@ -809,7 +820,7 @@ const Home = (props) => {
                               allParagraphs.map((item, i) => {
                                 return (
                                   <>
-                                    <option value={item.id}>{item.ParagraphName} </option>
+                                    <option value={item.id}>{item.P} </option>
 
                                   </>
                                 )
@@ -843,8 +854,8 @@ const Home = (props) => {
                   </div>
                 </section>
               </div>
-        
-        )}
+
+            )}
           </div>
         </div>
       </section>

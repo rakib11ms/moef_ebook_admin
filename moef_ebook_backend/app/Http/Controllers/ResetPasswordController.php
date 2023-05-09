@@ -17,12 +17,11 @@ class ResetPasswordController extends Controller
     public function resetPassword(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        // dd($user);
+     
         if ($user) {
-            // $resetLink = url('/localhost:3000/reset-password-confirm/' . $user->id);
-            $resetLink = $user->id;
-                // dd($resetLink);
-            $res =  Mail::to($user->email)->send(new ResetPassword($resetLink));
+            $link='localhost:3000/change-password-confirm/'.$user->id;
+
+            $res =  Mail::to($user->email)->send(new ResetPassword($link));
             // dd($res);
             return response()->json([
                 'status'=>200,

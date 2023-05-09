@@ -13,7 +13,11 @@ class UserController extends Controller
         $image = $user->userImage;
         $image_path = public_path('images/user/' . $image);
         if (file_exists($image_path)) {
-            return response()->file($image_path);
+            // return response()->file($image_path);
+            return response()->json([
+                'status'=>200,
+                'img_path'=>$image_path
+            ]);
         }
     }
 
