@@ -79,7 +79,7 @@ const CreateNewsAndNotice = () => {
   }
 
 
-  const [isPublished, setisPublished] = useState(false);
+  // const [isPublished, setisPublished] = useState(false);
 
   const handleSubmit = (e) => {
     // e.preventDefault();
