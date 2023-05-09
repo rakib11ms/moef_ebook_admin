@@ -22,12 +22,11 @@ const CreateNewsAndNotice = () => {
 
   const navigate=useNavigate();
   const [startDate, setStartDate] = useState(new Date());
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState();
 
 
   // const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
   // const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
-
 
 
   useEffect(() => {
@@ -47,52 +46,83 @@ const CreateNewsAndNotice = () => {
   }, [])
 
 
-  const [documentTitle, setdocumentTitle] = useState('');
+  // const [documentTitle, setdocumentTitle] = useState('');
 
-  const [notice_news_category_id, setnotice_news_category_id] = useState('');
-  const [notice_news_subcategory_id, setnotice_news_subcategory_id] = useState('');
-  const [redirect_url, setredirect_url] = useState('');
+  // const [notice_news_category_id, setnotice_news_category_id] = useState('');
+  // const [notice_news_subcategory_id, setnotice_news_subcategory_id] = useState('');
+  // const [redirect_url, setredirect_url] = useState('');
 
-  const data = {
-    Description: content,
-    Title: documentTitle,
-    CategoryId: notice_news_category_id,
-    subCatId: notice_news_subcategory_id,
-    redirect_url: redirect_url,
-    created_by: 1,
+  
+  const $user = JSON.parse(localStorage.getItem('user'));
 
+  // const [data, setData] = useState({
+  //   Title: "",
+  //   Description: content,
+  //   CategoryId: "1",
+  //   subCatId: "1",
+  //   redirect_url: "/" + $user.id,
+  //   created_by: "",
+  //   updated_by: "",
+  //   isPublished: false,
+  // });
 
+  // const handleInputChange = (event) => {
+  //   const name = event.target.name;
+  //   const value = event.target.value;
+  //   setData({ ...data, [name]: value });
+  // };
+
+  const [Title, setTitle] = useState('');
+
+  const onTitleChange = (e) => {
+    setTitle(e.target.value);
   }
+
+
+  // const [isPublished, setisPublished] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (content == '') {
-      Swal.fire("Please fill up fileds", '', 'warning');
-    }
-    else {
-      axios.post(`/api/notice`, data).then(res => {
-        if (res.data.status == 200) {
-          Swal.fire(res.data.message, '', 'success')
+    // if (content == '') {
+    //   Swal.fire("Please fill up fileds", '', 'warning');
+    // }
+    // else {
+    //   axios.post(`/api/notice`, data).then(res => {
+    //     if (res.data.status == 200) {
+    //       Swal.fire(res.data.message, '', 'success')
 
-          setContent('');
-          setdocumentTitle('')
-          navigate('/all-news-notice')
+    //       // setContent('');
+    //       // setdocumentTitle('')
+    //       navigate('/all-news-notice')
+    //     }
+    //     // else if (res.data.status == 400) {
+    //     //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
+    //     //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
 
+    //     // }
+    //   })
+    // }
 
-        }
-        // else if (res.data.status == 400) {
-        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("Title", Title);
+    formData.append("Description", content);
+    formData.append("CategoryId", "1");
+    formData.append("subCatId", "1");
+    formData.append("redirect_url", "/" + $user.id);
+    formData.append("created_by", "");
+    formData.append("updated_by", "");
+    formData.append("isPublished", true);
 
-        // }
-      })
-    }
-
+    axios.post(`/api/notice`, formData).then(res => {
+      if (res.data.status === 200) {
+        Swal.fire(res.data.message, '', 'success')
+        // navigate('/all-news-notice')
+      } else if (res.data.status === 400) {
+        Swal.fire(res.data.message, '', 'warning')
+      }
+    })
   }
-
-
-
-
-
 
   return (
     <div>
@@ -120,8 +150,15 @@ const CreateNewsAndNotice = () => {
               <div>
                 <div class="mb-3">
                   <div className="my-3">
-                  <input type="text" className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 " placeholder="টাইটেল যোগ করুন " id="editInp" value={documentTitle} onChange={(e) => setdocumentTitle(e.target.value)
-              } />
+                  <input
+                    type="text"
+                    name="Title"
+                    className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
+                    placeholder="টাইটেল যোগ করুন "
+                    id="editInp"
+                    value={Title}
+                    onChange={onTitleChange}
+                  />
                   </div>
           
 
@@ -130,13 +167,13 @@ const CreateNewsAndNotice = () => {
                   </label>
                   <JoditEditor
                     className="news-jodit-editor"
-                    value={content}
-                    onChange={setContent}
                     spellcheck={false}
                     language="en"
                     toolbarAdaptive="false"
                     height="800"
                     autofocus="true"
+                    onBlur={newContent => setContent(newContent)}
+                    onChange={newContent => { }}
                   />
                   {/* <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন

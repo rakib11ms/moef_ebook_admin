@@ -82,13 +82,14 @@ class UserController extends Controller
                     unlink($image_path);
                 }
 
-            }
-                    $image = $request->file('userImage');
+                $image = $request->file('userImage');
                 $userName = $user->userID;
                 $imageName = $userName . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/user'), $imageName);
                 $user->userImage = $imageName;
                 $user->update();
+
+            }
          
       
         }
