@@ -49,15 +49,9 @@ const MyArea = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('api/get-user-image/' + userID, { responseType: 'arraybuffer' })
+    axios.get('api/get-user-image/' + userID)
       .then(res => {
-        const base64Img = window.btoa(
-          new Uint8Array(res.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ''
-          )
-        );
-        setUser('data:image/png;base64,' + base64Img);
+        setUser(res.data.image);
       });
   }, [userID]);
 
@@ -94,16 +88,9 @@ const MyArea = () => {
     try {
       await axios.post("api/update-user/" + userID, formData,config).then(res => {
         //display current user image
-        axios.get('api/get-user-image/' + userID, { responseType: 'arraybuffer' })
+        axios.get('api/get-user-image/' + userID)
           .then(res => {
-            const base64Img = window.btoa(
-              new Uint8Array(res.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-              )
-            );
-            setUser('data:image/png;base64,' + base64Img);
-
+            setUser(res.data.image);
           });
         
         console.log(res);
@@ -172,14 +159,14 @@ const MyArea = () => {
                 আমার এরিয়া
               </h3>
               <div className="name-pic-div">
-                <img className="profile-pic" src={user} alt="User dp" />
+                <img className="profile-pic" src={`${global.imageURL}/images/user/${user}`}  alt="User dp" />
                 <br />
+                <strong className="change-pp-button">
+                  প্রোফাইল ছবি পরিবর্তন করুন
+                </strong>
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
-                  <strong className="change-pp-button">
-                    প্রোফাইল ছবি পরিবর্তন করুন
                     <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} />
                     <button className="btn btn-success" type="submit">আপলোড</button>
-                  </strong>
                 </form>
               </div>
               <div>

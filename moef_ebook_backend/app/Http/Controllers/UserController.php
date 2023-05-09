@@ -7,13 +7,56 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function getAllUserInfo()
+    {
+        $users = User::all();
+        //return only username, email and phone number
+        $users = $users->map(function ($user) {
+            return [
+                'UserName' => $user->UserName,
+                'userEmail' => $user->email,
+                'userPhone' => $user->userPhone
+            ];
+        });
+
+        return response()->json(
+            [
+                'status' => 200,
+                'users' => $users
+            ]
+        );
+    }
+
+    public function getUserInfo($id)
+    {
+        $user = User::find($id);
+        
+        //return onlt username, email and phone number
+        $userInfo = [
+            'UserName' => $user->UserName,
+            'userEmail' => $user->email,
+            'userPhone' => $user->userPhone
+        ];
+
+        return response()->json(
+            [
+                'status' => 200,
+                'userInfo' => $userInfo
+            ]
+        );
+    }
+
     public function getUserImage($id)
     {
         $user = User::find($id);
         $image = $user->userImage;
         $image_path = public_path('images/user/' . $image);
         if (file_exists($image_path)) {
-            return response()->file($image_path);
+            // return response()->file($image_path);
+            return response()->json([
+                'status'=>200,
+                'image'=>$image
+            ]);
         }
     }
 
