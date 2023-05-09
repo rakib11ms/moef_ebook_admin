@@ -82,7 +82,7 @@ const CreateNewsAndNotice = () => {
   // const [isPublished, setisPublished] = useState(false);
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     // if (content == '') {
     //   Swal.fire("Please fill up fileds", '', 'warning');
     // }
