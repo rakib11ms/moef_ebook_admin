@@ -15,6 +15,8 @@ const SignUpBg = {
   overflowX: "hiden",
 };
 
+//
+
 function SignUp() {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
