@@ -189,7 +189,7 @@ const NavigationBa = () => {
         <div className="sidebar-lower-news-div">
           <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
-              নিউজ ও নোটিশ
+              বিজ্ঞপ্তি
               {showSubmenu3 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick3}>
                   &#8593;
