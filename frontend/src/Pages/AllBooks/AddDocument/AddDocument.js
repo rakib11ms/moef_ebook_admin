@@ -58,14 +58,7 @@ const AddDocument = (props) => {
     setIsOpen(!isOpen);
   };
 
-  // const handleDocClick = (buttonNumber) => {
-  //   setActiveButton(buttonNumber);
 
-  // const handleButtonClick = (buttonNumber, buttonChapter, buttonPage) => {
-  // setActiveButton(buttonNumber);
-  // setChapter(buttonChapter);
-  // setPage(buttonPage);
-  // };
 
   const [allBooks, setAllBooks] = useState([]);
   const [allChapters, setAllChapters] = useState([]);
@@ -146,17 +139,8 @@ const AddDocument = (props) => {
           setdocumentTitle('')
 
 
-
-
-          // setImage('');
-          // setPicture('');
-          // document.getElementById('job_post_logo').value = "";
         }
-        // else if (res.data.status == 400) {
-        //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-        //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
-
-        // }
+      
       })
     }
 

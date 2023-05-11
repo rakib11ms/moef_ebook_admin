@@ -35,10 +35,10 @@ class ResetPasswordController extends Controller
             ]);
         }
     }
-    public function resetPasswordConfirm(Request $request,$id){
+    public function resetPasswordConfirm(Request $request){
         $user = User::where('email', $request->email)->first();
         if($user){
-                $user=User::find($id);
+                // $user=User::find($id);
             $user->password= Hash::make($request->password);
             $user->confirm_password = Hash::make($request->confirm_password);    
             $user->update();
