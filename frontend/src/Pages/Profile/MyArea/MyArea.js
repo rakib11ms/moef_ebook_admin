@@ -48,6 +48,11 @@ const MyArea = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'));
   const userID = JSON.parse(localStorage.getItem('user')).id;
   const [user, setUser] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  }
 
   useEffect(() => {
     axios.get('api/get-user-image/' + userID)
@@ -63,7 +68,17 @@ const MyArea = () => {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    setFile(event.target.files[0]);
   };
+
+  const [file, setFile] = useState(null);
+
+  
+
+  const handleUpload = () => {
+    console.log('Uploading file:', file);
+    // Implement your file upload logic here
+  }
 
   const formData = new FormData();
   formData.append('userImage', selectedFile);
@@ -204,6 +219,13 @@ const MyArea = () => {
     document.getElementById("editInp").focus();
   };
 
+   // Upload button
+  ;
+
+   const handleFileInputChange = (e) => {
+     setSelectedFile(e.target.files[0]);
+   };
+
   return (
     <div>
       <section>
@@ -219,26 +241,45 @@ const MyArea = () => {
               <div className="name-pic-div">
                 <img className="profile-pic" src={`${global.imageURL}/images/user/${user}`}  alt="User dp" />
                 <br />
-                <strong className="change-pp-button">
+                {/* <strong className="change-pp-button mb-2">
                   প্রোফাইল ছবি পরিবর্তন করুন
-                </strong>
+                </strong> */}
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
-                    <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} />
-                    <button className="btn btn-success" type="submit">আপলোড</button>
+
+                <div>
+                        <input
+                          type="file"
+                          id="fileInput"
+                          onChange={handleFileChange}
+                          // style={{ display: "none" }}
+                          className="area-upload"
+                        />
+                        <label htmlFor="fileInput" className="btn btn-warning">
+                          <strong>প্রোফাইল ছবি পরিবর্তন করুন</strong>
+                        </label>
+                      </div>
+{/* 
+                    <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} /> */}
+                  
+                    {file &&   <button onClick={handleUpload} className="btn btn-success upload-button" type="submit">আপলোড</button>}
                 </form>
               </div>
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
-                  <EditIcon onClick={handleEditClick} className="mt-1 " style={{ cursor: "pointer" }} />
+                  <EditIcon onClick={handleClick} onDoubleClick={handleEditClick} onDoubleClickDelay={500} className="mt-1 " style={{ cursor: "pointer" }} />
+                  
                 </div>
-                <div className="name-info container">
+                <div className="name-info ">
                   {/* <p>নাম: {userInfo.UserName}</p> */}
                   <form onSubmit={handleUpdate}>
-                    <p>নাম:- 
-                      <input
+                  {/* <div className="area-infor">
+                  
+                  </div> */}
+                  <p className="areaName-p">নাম:-
+                  <input
                         id="editInp"
-                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
+                        className="form-control-sm outline-0 area-in "
                         type="text"
                         name="UserName"
                         value={userUpdate.UserName}
@@ -248,10 +289,10 @@ const MyArea = () => {
                       />
                     </p>
 
-                    <p>ইমেইল:-
+                    <p className="areaEmail-p">ইমেইল:-
                       <input
                         id="editInp"
-                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
+                        className="form-control-sm area-in "
                         type="text"
                         name="userEmail"
                         value={userUpdate.userEmail}
@@ -261,10 +302,10 @@ const MyArea = () => {
                       />
                     </p>
 
-                    <p>ফোন:-
+                    <p className="areaPhone-p">ফোন:-
                       <input
                         id="editInp"
-                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
+                        className="form-control-sm area-in "
                         type="text"
                         name="userPhone"
                         value={userUpdate.userPhone}
@@ -273,9 +314,10 @@ const MyArea = () => {
                         style={{width: userInfo.userPhone.length + 3 + 'ch'}}
                       />
                     </p>
-                  <p>ব্যবহারকারী আইডি:- {userInfo.userID}</p>
-                  <p>অফিস আইডি:- {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
-                  <button className="btn btn-success" type="submit">আপডেট</button>
+                  <p className="areaUserID-p">ব্যবহারকারী আইডি:- {userInfo.userID}</p>
+                  <p className="areaOfficeID-p">অফিস আইডি:- {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
+                  
+                  {isClicked && <button className="btn btn-success" type="submit">আপডেট</button>}
                 </form>
                 <hr />
                 </div>

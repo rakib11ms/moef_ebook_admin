@@ -51,9 +51,8 @@ class SingleDocumentController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'notice news created successfully',
-
             ]);
-        } 
+        }
         if ($request->contents !== null && $request->book_id !== null && $request->chapter_id !== null && $request->paragraph_id !== null && $request->notice_news_category_id == null && $request->redirect_url == null) {
 
             $create_book = new MainBook();
@@ -96,8 +95,12 @@ class SingleDocumentController extends Controller
                 'message' => 'Main Book and notice news created successfully',
 
             ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong',
+            ]);
         }
-
 
 
     }
