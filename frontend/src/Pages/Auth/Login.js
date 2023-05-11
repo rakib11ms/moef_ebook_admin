@@ -1,9 +1,13 @@
 import backgroundlogin from "../../images/logincover.png";
 import "../Auth/auth.css";
-import peoplesRepublicLogo from "../../images/Government of Bangladesh-logo.png";
+import peoplesRepublicLogo from "../../images/moefccebook.png";
+import ios from "../../images/ios.png";
+import playStore from "../../images/play-store.png";
+import bangladeshLogo from "../../images/Government of Bangladesh-logo.png";
+import ptvlLogo from "../../images/ptvl-logo-PNG.png";
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const loginBg = {
@@ -15,13 +19,11 @@ const loginBg = {
 };
 
 function Login({ handleSucessLogin }) {
-
   const navigate = useNavigate({ handleSucessLogin });
   const [clickedRender, setClickedRender] = useState(false);
 
   const [id, setid] = useState("");
   const [password, setPassword] = useState("");
-
 
   const handleSubmit = (e) => {
     // e.preventDefault();
@@ -46,40 +48,45 @@ function Login({ handleSucessLogin }) {
     if (id.trim() === "" || password.trim() === "") {
       setClickedRender(false);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'ID and Password cannot be empty.',
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "ID and Password cannot be empty.",
+      });
       return;
     }
 
     // console.log(loginInput);
-    axios.post("api/login", loginInput).then((res) => {
-      console.log(res.data);
-      if (res.data.status === 200) {
+    axios
+      .post("api/login", loginInput)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status === 200) {
+          setClickedRender(false);
+          localStorage.setItem("auth_token", res.data.token);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setClickedRender(false);
-        localStorage.setItem('auth_token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        navigate('/home');
-      }
-    }).catch((err) => {
-      console.log(err);
-      setClickedRender(false);
-      if (err.response.data.errors) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.response.data.errors[Object.keys(err.response.data.errors)[0]][0],
-        })
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.response.data.message,
-        })
-      }
-    });
-  }
+        if (err.response.data.errors) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.errors[
+              Object.keys(err.response.data.errors)[0]
+            ][0],
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.message,
+          });
+        }
+      });
+  };
   // const history = useHistory();
   // import { useHistory } from "react-router-dom";
   // history.push("/home");
@@ -138,7 +145,16 @@ function Login({ handleSucessLogin }) {
                         type="submit"
                         className="login-submit-button mb-3"
                       >
-                        লগইন {clickedRender ? <span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span> : ''}
+                        লগইন{" "}
+                        {clickedRender ? (
+                          <span
+                            class="spinner-border spinner-border-sm mx-1"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        ) : (
+                          ""
+                        )}
                       </button>
                     </div>
                     <p className="change-pass">
@@ -148,7 +164,6 @@ function Login({ handleSucessLogin }) {
                           এখনই পরিবর্তন করুন
                         </span>
                       </Link>
-
                     </p>
                     <hr className="hr-line" />
                     <div className="">
@@ -164,6 +179,39 @@ function Login({ handleSucessLogin }) {
                     </div>
                   </div>
                 </form>
+              </div>
+            </div>
+
+            <div className="">
+              <div className="row container sign-up-footer">
+                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 footer-div1">
+                  <div className="login-footer-div">
+                    <div className="footer-download-text">
+                      <a href="#">
+                        {" "}
+                        <h6>Download</h6>
+                      </a>
+                    </div>
+                    <img className="login-footer-icon" src={ios} alt="" />
+                    <img className="login-footer-icon" src={playStore} alt="" />
+                  </div>
+                </div>
+                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
+                  <div className="signup-footer-logos">
+                    <img className="login-logos" src={bangladeshLogo} alt="" />
+                    <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                  </div>
+                </div>
+                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
+                  <div className="sign-up-map-polices">
+                    <Link to="/">
+                      <p className="map-link">Site Map</p>
+                    </Link>{" "}
+                    <Link to="/privacy-policies">
+                      <p className="map-link">Privacy & Policies</p>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import "./NavigationBa.css";
 import republicImg from "../../../images/Government of Bangladesh-logo.png";
@@ -20,7 +20,7 @@ import List from "@mui/material/List";
 
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 const NavigationBa = () => {
   // Sub menu
@@ -205,7 +205,11 @@ const NavigationBa = () => {
               {showSubmenu3 && (
                 <ul>
                   <li className="side-li-link">
+<<<<<<< HEAD
                     <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
+=======
+                    <Link to="/all-news-notice">সকল বিজ্ঞপ্তি</Link>
+>>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
                   </li>
                   {/* <li className="side-li-link">
                     <Link to="/categories-news">ক্যটেগরি</Link>
@@ -281,21 +285,22 @@ const NavigationBa = () => {
 
   // SideBar Navigation
 
-
   const navigate = useNavigate();
   const handleLogOut = (e) => {
-      e.preventDefault();
-      axios.post('/api/logout').then(res => {
-          if (res.data.status === 200) {
-            localStorage.removeItem('auth_token', res.data.token);
-            localStorage.removeItem('user', JSON.stringify(res.data.user));
-            navigate('/');
-          }
-      }).catch(err => {
-          console.log(err);
+    e.preventDefault();
+    axios
+      .post("/api/logout")
+      .then((res) => {
+        if (res.data.status === 200) {
+          localStorage.removeItem("auth_token", res.data.token);
+          localStorage.removeItem("user", JSON.stringify(res.data.user));
+          navigate("/");
+        }
       })
-  }
-
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="mt-3">
@@ -344,11 +349,9 @@ const NavigationBa = () => {
               <Link to="/my-area">
                 <PersonIcon className="icons-nav" />
               </Link>
-
             </div>
             <div className="icons-nav-div  " onClick={handleLogOut}>
-                <LogoutIcon className="icons-nav text-success fw-bold" />
-
+              <LogoutIcon className="icons-nav text-success fw-bold" />
             </div>
           </div>
         </div>
