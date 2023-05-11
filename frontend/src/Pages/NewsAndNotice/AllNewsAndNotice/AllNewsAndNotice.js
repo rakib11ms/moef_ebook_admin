@@ -12,6 +12,38 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { DataGrid } from '@mui/x-data-grid';
+
+const columns = [
+  { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
+  { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 150 },
+  { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 150 },
+  {
+    field: 'edit',
+    headerName: 'Edit',
+    width: 80,
+    renderCell: (params) => (
+      <div className="d-flex justify-content-around align-items-center">
+        <Link to={`/update-news-notice/${params.row.id}`}>
+          <CreateOutlinedIcon className="text-warning" />
+        </Link>
+      </div>
+    ),
+  },
+  {
+    field: 'delete',
+    headerName: 'Delete',
+    width: 80,
+    renderCell: (params) => (
+      <div className="d-flex justify-content-around align-items-center">
+        <Link to={`/notice/${params.row.id}`}>
+          <DeleteOutlineOutlinedIcon className="text-danger" />
+        </Link>
+      </div>
+    ),
+  },
+];
+
 const AllNewsAndNotice = () => {
   const [selectedText, setSelectedText] = useState("");
   const [selectedNotice, setSelectedNotice] = useState("");
@@ -24,18 +56,37 @@ const AllNewsAndNotice = () => {
 
   const [allNoticeNews, setAllNoticeNews] = useState([]);
 
-  console.log('notice news', allNoticeNews)
+  // console.log('notice news', allNoticeNews)
 
   useEffect(() => {
     axios.get(`/api/notice`).then(res => {
 
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         setAllNoticeNews(res.data.news_notices);
+        console.log('notice news', res.data.news_notices);
         // setLoading(false);
+      } else {
+        console.log('error');
       }
     })
 
   }, [])
+
+  const rows = [
+    ...allNoticeNews.map((notice, index) => (
+      {
+        id: notice.id,
+        newsNotice: notice.Title,
+        category: notice.category.Name,
+        sub_category: notice.sub_category.Name,
+        // set the edit button for each row edit field in columns array by using renderCell
+        
+      }
+    ))
+  ];
+
+  console.log('rows', rows);
+
   return (
     <div>
       <div>
@@ -63,66 +114,17 @@ const AllNewsAndNotice = () => {
               </div>
               <hr />
               <div className="container-fluid table-responsive-lg table-responsive-sm">
-                <table className="table table-borderless ">
-                  <thead>
-                    {/* <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">h4</th>
-                      <th scope="col">Handle</th>
-                    </tr> */}
-                  </thead>
-                  <tbody>
-                    {
-                      allNoticeNews.map((item, i) => {
-                        return (
-                          <tr className="tr-div" key={i}>
-                            <th scope="row">১</th>
-                            <td onClick={handleParagraphClick}>
-                              <strong>
-                                {item.Title}, তারিখ ০৯-০৩-২০২৩ (নতুন)</strong>
-                            </td>
-                            <td onClick={handleNoticeClick} className="td-notice">
-
-                              {
-                                item.category.Name
-                              }
-                              /
-                              {
-                                item.sub_category.Name
-                              }
-
-                            </td>
-                            <td>
-                              <CreateOutlinedIcon />
-                            </td>
-                            <td>
-                              <DeleteOutlineOutlinedIcon />
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-
-                    <tr className="tr-div">
-                      <th scope="row">২</th>
-                      <td onClick={handleParagraphClick}>
-                        <strong>
-                          র্কমশালার নোটিশ, তারিখ ০২-০৩-২০২৩ (নতুন)
-                        </strong>
-                      </td>
-                      <td onClick={handleNoticeClick}>নোটিশ/ কর্মশালা </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
-                
-                  </tbody>
-                </table>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+              />
               </div>
 
             </div>

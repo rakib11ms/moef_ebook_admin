@@ -81,20 +81,16 @@ class UserController extends Controller
                 if (file_exists($image_path)) {
                     unlink($image_path);
                 }
-
-                $image = $request->file('userImage');
-                $userName = $user->userID;
-                $imageName = $userName . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/user'), $imageName);
-                $user->userImage = $imageName;
-                $user->update();
-
             }
-         
+            $image = $request->file('userImage');
+            $userName = $user->userID;
+            $imageName = $userName . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/user'), $imageName);
+            $user->userImage = $imageName;
       
         }
 
-
+        $user->update();
         return response()->json(
             [
                 'status' => 200,

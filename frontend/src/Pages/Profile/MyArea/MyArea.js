@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
 import axios from 'axios';
 import Swal from "sweetalert2";
+import EditIcon from "@mui/icons-material/Edit";
 
 // const state = {
 //   selectedFile: null
@@ -55,7 +56,7 @@ const MyArea = () => {
       });
   }, [userID]);
 
-  console.log(user);
+  // console.log(user);
 
   const [selectedFile, setSelectedFile] = useState(null);
   // console.log(selectedFile);
@@ -92,7 +93,7 @@ const MyArea = () => {
           .then(res => {
             setUser(res.data.image);
           });
-        console.log(res);
+        // console.log(res);
         Swal.fire({
           icon: "success",
           title: "সফলভাবে আপলোড হয়েছে",
@@ -101,7 +102,7 @@ const MyArea = () => {
         });
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -164,7 +165,7 @@ const MyArea = () => {
     }));
   };
   
-  console.log(userUpdate);
+  // console.log(userUpdate);
   
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -191,7 +192,7 @@ const MyArea = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "আপডেট করা যায়নি!",
+        text: "ইমেইল অথবা ফোন নাম্বার পরিবর্তন করে আবার চেষ্টা করুন "
       });
     }
   };
@@ -200,6 +201,7 @@ const MyArea = () => {
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
+    document.getElementById("editInp").focus();
   };
 
   return (
@@ -228,41 +230,47 @@ const MyArea = () => {
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
-                  <CreateIcon onClick={handleEditClick} />
+                  <EditIcon onClick={handleEditClick} className="mt-1 " style={{ cursor: "pointer" }} />
                 </div>
                 <div className="name-info container">
                   {/* <p>নাম: {userInfo.UserName}</p> */}
                   <form onSubmit={handleUpdate}>
                     <p>নাম:- 
                       <input
+                        id="editInp"
+                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
                         type="text"
                         name="UserName"
                         value={userUpdate.UserName}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.UserName.length + 1 + 'ch'}}
+                        style={{width: userInfo.UserName.length + 2 + 'ch'}}
                       />
                     </p>
 
                     <p>ইমেইল:-
                       <input
+                        id="editInp"
+                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
                         type="text"
                         name="userEmail"
                         value={userUpdate.userEmail}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.email.length + 1 + 'ch'}}
+                        style={{width: userInfo.email.length + 2 + 'ch'}}
                       />
                     </p>
 
                     <p>ফোন:-
                       <input
+                        id="editInp"
+                        className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 "
                         type="text"
                         name="userPhone"
                         value={userUpdate.userPhone}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.userPhone.length + 1 + 'ch'}}
+                        style={{width: userInfo.userPhone.length + 3 + 'ch'}}
                       />
                     </p>
                   <p>ব্যবহারকারী আইডি:- {userInfo.userID}</p>
