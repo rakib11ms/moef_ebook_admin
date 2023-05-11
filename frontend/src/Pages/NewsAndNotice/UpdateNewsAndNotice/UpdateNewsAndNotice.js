@@ -86,7 +86,7 @@ const UpdateNewsAndNotice = () => {
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
-                <h5>বিজ্ঞপ্তি তৈরি করুন </h5>
+                <h5>বিজ্ঞপ্তি সম্পাদনা</h5>
 
               </div>
               <hr />
@@ -121,10 +121,7 @@ const UpdateNewsAndNotice = () => {
                   />
                 </div>
                 <div className="draft-prokas-buttons-div">
-                  <Link >
-                    <button className="draft-prokas-button">ড্রাফট করুন</button>
-                  </Link>
-                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
+                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
                 </div>
               </div>
             </div>

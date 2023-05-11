@@ -22,6 +22,7 @@ import BooksCatagories from "./Pages/AllBooks/BooksCatagories/BooksCatagories";
 import AllNewsAndNotice from "./Pages/NewsAndNotice/AllNewsAndNotice/AllNewsAndNotice";
 import CreateNewsAndNotice from "./Pages/NewsAndNotice/CreateNewsAndNotice/CreateNewsAndNotice";
 import UpdateNewsAndNotice from "./Pages/NewsAndNotice/UpdateNewsAndNotice/UpdateNewsAndNotice";
+import ViewNewsAndNotice from "./Pages/NewsAndNotice/ViewNewsNotice/ViewNewsAndNotice";
 import MyArea from "./Pages/Profile/MyArea/MyArea";
 import DraftDocuments from "./Pages/DraftDocuments/DraftDocuments";
 import LoadingSpinner from "./Pages/LoadingSpinner/LoadingSpinner";
@@ -74,6 +75,7 @@ function App() {
           <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
           <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
           <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
+          <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
           <Route path="/categories-news" element={<CategoriesNews />} />
         </Routes>
         

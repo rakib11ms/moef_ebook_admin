@@ -13,36 +13,10 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
+import swal from "sweetalert";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-const columns = [
-  { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
-  { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 150 },
-  { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 150 },
-  {
-    field: 'edit',
-    headerName: 'Edit',
-    width: 80,
-    renderCell: (params) => (
-      <div className="d-flex justify-content-around align-items-center">
-        <Link to={`/update-news-notice/${params.row.id}`}>
-          <CreateOutlinedIcon className="text-warning" />
-        </Link>
-      </div>
-    ),
-  },
-  {
-    field: 'delete',
-    headerName: 'Delete',
-    width: 80,
-    renderCell: (params) => (
-      <div className="d-flex justify-content-around align-items-center">
-        <Link to={`/notice/${params.row.id}`}>
-          <DeleteOutlineOutlinedIcon className="text-danger" />
-        </Link>
-      </div>
-    ),
-  },
-];
+
 
 const AllNewsAndNotice = () => {
   const [selectedText, setSelectedText] = useState("");
@@ -85,7 +59,78 @@ const AllNewsAndNotice = () => {
     ))
   ];
 
-  console.log('rows', rows);
+  const columns = [
+    { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
+    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 150 },
+    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 150 },
+    {
+      field: 'edit',
+      headerName: 'সম্পাদনা করুন ',
+      width: 120,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          <Link to={`/update-news-notice/${params.row.id}`}>
+            <CreateOutlinedIcon className="text-warning" />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      field: 'delete',
+      headerName: 'ডিলিট করুন ',
+      width: 120,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          {/* sweet alert for confirm delete */}
+          <DeleteOutlineOutlinedIcon
+            className="text-danger"
+            onClick={() => {
+              swal({
+                title: "নিশ্চিত করুন",
+                text: "আপনি কি বিজ্ঞপ্তিটি ডিলিট করতে চান? ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              }).then((willDelete) => {
+                if (willDelete) {
+                  axios.delete(`/api/notice/${params.row.id}`).then((res) => {
+                    if (res.data.status === 200) {
+                      swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                      });
+                      axios.get(`/api/notice`).then((res) => {
+                        if (res.data.status === 200) {
+                          setAllNoticeNews(res.data.news_notices);
+                        } else {
+                          console.log("error");
+                        }
+                      });
+                    } else {
+                      swal("Oops! Something went wrong, Please try again");
+                    }
+                  });
+                }
+              });
+            }}
+          />
+        </div>
+      ),
+    },
+    {
+      field: 'view',
+      headerName: 'দেখুন',
+      width: 120,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          <Link to={`/view-news-notice/${params.row.id}`}>
+            <RemoveRedEyeIcon className="text-success" />
+          </Link>
+        </div>
+      ),
+    }
+  ];
+
+  // console.log('rows', rows);
 
   return (
     <div>

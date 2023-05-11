@@ -181,9 +181,9 @@ const CreateNewsAndNotice = () => {
                 </div>
                 <div className="draft-prokas-buttons-div">
                   <Link >
-                    <button className="draft-prokas-button">ড্রাফট করুন</button>
+                    <button className="draft-button">ড্রাফট করুন</button>
                   </Link>
-                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
+                  <button className="prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
                 </div>
               </div>
             </div>
