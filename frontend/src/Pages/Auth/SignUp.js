@@ -61,19 +61,12 @@ function SignUp() {
       axios.post("api/register", input).then((res) => {
         if (res.data.status === 200) {
           Swal.fire({
-<<<<<<< HEAD
             icon: 'success',
             title: 'Success',
             text: 'Registration Successful',
           })
           // redirect to login page
           window.location.href = "/";
-=======
-            icon: "success",
-            title: "Success",
-            text: "Registration Successful",
-          });
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
         } else {
           console.log(res.data.validation_errors);
           if (res.data.validation_errors) {

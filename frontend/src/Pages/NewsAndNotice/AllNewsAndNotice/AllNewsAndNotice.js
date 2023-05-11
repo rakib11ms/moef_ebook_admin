@@ -30,27 +30,18 @@ const AllNewsAndNotice = () => {
 
   const [allNoticeNews, setAllNoticeNews] = useState([]);
 
-<<<<<<< HEAD
   // console.log('notice news', allNoticeNews)
 
   useEffect(() => {
     axios.get(`/api/notice`).then(res => {
 
       if (res.data.status === 200) {
-=======
-  console.log("notice news", allNoticeNews);
-
-  useEffect(() => {
-    axios.get(`/api/notice`).then((res) => {
-      if (res.data.status == 200) {
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
         setAllNoticeNews(res.data.news_notices);
         console.log('notice news', res.data.news_notices);
         // setLoading(false);
       } else {
         console.log('error');
       }
-<<<<<<< HEAD
     })
 
   }, [])
@@ -141,10 +132,6 @@ const AllNewsAndNotice = () => {
 
   // console.log('rows', rows);
 
-=======
-    });
-  }, []);
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
   return (
     <div>
       <div>
@@ -155,11 +142,7 @@ const AllNewsAndNotice = () => {
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
-<<<<<<< HEAD
                 <h5>বিজ্ঞপ্তি</h5>
-=======
-                <h5>সকল বিজ্ঞপ্তি </h5>
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
                 <div className="news-notice-search-input-div ">
                   <div className="news-notice-serchInput-icon-div">
                     <SearchIcon />
@@ -175,7 +158,6 @@ const AllNewsAndNotice = () => {
               </div>
               <hr />
               <div className="container-fluid table-responsive-lg table-responsive-sm">
-<<<<<<< HEAD
               <DataGrid
                 rows={rows}
                 columns={columns}
@@ -187,58 +169,6 @@ const AllNewsAndNotice = () => {
                 pageSizeOptions={[5, 10]}
                 checkboxSelection
               />
-=======
-                <table className="table table-borderless ">
-                  <thead>
-                    {/* <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">h4</th>
-                      <th scope="col">Handle</th>
-                    </tr> */}
-                  </thead>
-                  <tbody>
-                    {allNoticeNews.map((item, i) => {
-                      return (
-                        <tr className="tr-div" key={i}>
-                          <th scope="row">১</th>
-                          <td onClick={handleParagraphClick}>
-                            <strong>
-                              {item.Title}, তারিখ ০৯-০৩-২০২৩ (নতুন)
-                            </strong>
-                          </td>
-                          <td onClick={handleNoticeClick} className="td-notice">
-                            {item.category.Name}/{item.sub_category.Name}
-                          </td>
-                          <td>
-                            <CreateOutlinedIcon />
-                          </td>
-                          <td>
-                            <DeleteOutlineOutlinedIcon />
-                          </td>
-                        </tr>
-                      );
-                    })}
-
-                    <tr className="tr-div">
-                      <th scope="row">২</th>
-                      <td onClick={handleParagraphClick}>
-                        <strong>
-                          র্কমশালার নোটিশ, তারিখ ০২-০৩-২০২৩ (নতুন)
-                        </strong>
-                      </td>
-                      <td onClick={handleNoticeClick}>নোটিশ/ কর্মশালা </td>
-                      <td>
-                        <CreateOutlinedIcon />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
