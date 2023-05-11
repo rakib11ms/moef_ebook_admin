@@ -7,7 +7,7 @@ import {
   Route,
   useLocation,
   useHistory,
-  BrowserRouter
+  BrowserRouter,
 } from "react-router-dom";
 import axios from "axios";
 import Login from "./Pages/Auth/Login";
@@ -31,6 +31,7 @@ import EditDocuments from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import SignUp from "./Pages/Auth/SignUp";
 import ForgotPasswordRequest from "./Pages/Auth/ForgotPasswordRequest";
 import ForgotPasswordConfirm from "./Pages/Auth/ForgotPasswordConfirm";
+import PrivacyPolicies from "./Pages/Shared/Privacy&Policies/Privacy&Policies";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -57,8 +58,14 @@ function App() {
           <Route path="/navigation" element={<NavigationBa />} />
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/forgot-password-request" element={<ForgotPasswordRequest />} />
-          <Route path="/change-password-confirm/:id" element={<ForgotPasswordConfirm />} />
+          <Route
+            path="/forgot-password-request"
+            element={<ForgotPasswordRequest />}
+          />
+          <Route
+            path="/change-password-confirm/:id"
+            element={<ForgotPasswordConfirm />}
+          />
           <Route path="/my-area" element={<MyArea />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
@@ -73,8 +80,8 @@ function App() {
           <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
           <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
           <Route path="/categories-news" element={<CategoriesNews />} />
+          <Route path="/privacy-policies" element={<PrivacyPolicies />} />
         </Routes>
-        
       )}
     </div>
   );

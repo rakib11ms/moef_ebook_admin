@@ -8,7 +8,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import "./NavigationBa.css";
 import republicImg from "../../../images/Government of Bangladesh-logo.png";
@@ -20,7 +20,7 @@ import List from "@mui/material/List";
 
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 const NavigationBa = () => {
   // Sub menu
@@ -189,7 +189,7 @@ const NavigationBa = () => {
         <div className="sidebar-lower-news-div">
           <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
-              নিউজ ও নোটিশ
+              বিজ্ঞপ্তি
               {showSubmenu3 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick3}>
                   &#8593;
@@ -205,13 +205,13 @@ const NavigationBa = () => {
               {showSubmenu3 && (
                 <ul>
                   <li className="side-li-link">
-                    <Link to="/all-news-notice">সকল নিউজ ও নোটিশ</Link>
+                    <Link to="/all-news-notice">সকল বিজ্ঞপ্তি</Link>
                   </li>
-                  <li className="side-li-link">
+                  {/* <li className="side-li-link">
                     <Link to="/categories-news">ক্যটেগরি</Link>
-                  </li>
+                  </li> */}
                   <li className="side-li-link">
-                    <Link to="/create-news-notice">নিউজ ও নোটিশ গঠন করুন</Link>
+                    <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
                   </li>
                 </ul>
               )}
@@ -281,21 +281,22 @@ const NavigationBa = () => {
 
   // SideBar Navigation
 
-
   const navigate = useNavigate();
   const handleLogOut = (e) => {
-      e.preventDefault();
-      axios.post('/api/logout').then(res => {
-          if (res.data.status === 200) {
-            localStorage.removeItem('auth_token', res.data.token);
-            localStorage.removeItem('user', JSON.stringify(res.data.user));
-            navigate('/');
-          }
-      }).catch(err => {
-          console.log(err);
+    e.preventDefault();
+    axios
+      .post("/api/logout")
+      .then((res) => {
+        if (res.data.status === 200) {
+          localStorage.removeItem("auth_token", res.data.token);
+          localStorage.removeItem("user", JSON.stringify(res.data.user));
+          navigate("/");
+        }
       })
-  }
-
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="mt-3">
@@ -344,11 +345,9 @@ const NavigationBa = () => {
               <Link to="/my-area">
                 <PersonIcon className="icons-nav" />
               </Link>
-
             </div>
             <div className="icons-nav-div  " onClick={handleLogOut}>
-                <LogoutIcon className="icons-nav text-success fw-bold" />
-
+              <LogoutIcon className="icons-nav text-success fw-bold" />
             </div>
           </div>
         </div>

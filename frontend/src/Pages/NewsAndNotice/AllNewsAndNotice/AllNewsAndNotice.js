@@ -24,18 +24,16 @@ const AllNewsAndNotice = () => {
 
   const [allNoticeNews, setAllNoticeNews] = useState([]);
 
-  console.log('notice news', allNoticeNews)
+  console.log("notice news", allNoticeNews);
 
   useEffect(() => {
-    axios.get(`/api/notice`).then(res => {
-
+    axios.get(`/api/notice`).then((res) => {
       if (res.data.status == 200) {
         setAllNoticeNews(res.data.news_notices);
         // setLoading(false);
       }
-    })
-
-  }, [])
+    });
+  }, []);
   return (
     <div>
       <div>
@@ -46,7 +44,7 @@ const AllNewsAndNotice = () => {
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
-                <h5>নিউজ ও নোটিশ </h5>
+                <h5>সকল বিজ্ঞপ্তি </h5>
                 <div className="news-notice-search-input-div ">
                   <div className="news-notice-serchInput-icon-div">
                     <SearchIcon />
@@ -57,7 +55,6 @@ const AllNewsAndNotice = () => {
                       <button className="jog-korun-button">যোগ করুন</button>
                       <AddIcon className="jog-korun-button-icon" />
                     </Link>
-
                   </div>
                 </div>
               </div>
@@ -74,36 +71,27 @@ const AllNewsAndNotice = () => {
                     </tr> */}
                   </thead>
                   <tbody>
-                    {
-                      allNoticeNews.map((item, i) => {
-                        return (
-                          <tr className="tr-div" key={i}>
-                            <th scope="row">১</th>
-                            <td onClick={handleParagraphClick}>
-                              <strong>
-                                {item.Title}, তারিখ ০৯-০৩-২০২৩ (নতুন)</strong>
-                            </td>
-                            <td onClick={handleNoticeClick} className="td-notice">
-
-                              {
-                                item.category.Name
-                              }
-                              /
-                              {
-                                item.sub_category.Name
-                              }
-
-                            </td>
-                            <td>
-                              <CreateOutlinedIcon />
-                            </td>
-                            <td>
-                              <DeleteOutlineOutlinedIcon />
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
+                    {allNoticeNews.map((item, i) => {
+                      return (
+                        <tr className="tr-div" key={i}>
+                          <th scope="row">১</th>
+                          <td onClick={handleParagraphClick}>
+                            <strong>
+                              {item.Title}, তারিখ ০৯-০৩-২০২৩ (নতুন)
+                            </strong>
+                          </td>
+                          <td onClick={handleNoticeClick} className="td-notice">
+                            {item.category.Name}/{item.sub_category.Name}
+                          </td>
+                          <td>
+                            <CreateOutlinedIcon />
+                          </td>
+                          <td>
+                            <DeleteOutlineOutlinedIcon />
+                          </td>
+                        </tr>
+                      );
+                    })}
 
                     <tr className="tr-div">
                       <th scope="row">২</th>
@@ -120,11 +108,9 @@ const AllNewsAndNotice = () => {
                         <DeleteOutlineOutlinedIcon />
                       </td>
                     </tr>
-                
                   </tbody>
                 </table>
               </div>
-
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
               <div className="all-notice-news-add-card-div">
