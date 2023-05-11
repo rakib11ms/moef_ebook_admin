@@ -55,22 +55,9 @@ const MyArea = () => {
   }
 
   useEffect(() => {
-<<<<<<< HEAD
     axios.get('api/get-user-image/' + userID)
       .then(res => {
         setUser(res.data.image);
-=======
-    axios
-      .get("api/get-user-image/" + userID, { responseType: "arraybuffer" })
-      .then((res) => {
-        const base64Img = window.btoa(
-          new Uint8Array(res.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
-        );
-        setUser("data:image/png;base64," + base64Img);
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
       });
   }, [userID]);
 
@@ -115,20 +102,6 @@ const MyArea = () => {
     // console.log("xx",formData.get('userImage'))
 
     try {
-<<<<<<< HEAD
-      await axios.post("api/update-user/" + userID, formData,config).then(res => {
-        //display current user image
-        axios.get('api/get-user-image/' + userID)
-          .then(res => {
-            setUser(res.data.image);
-          });
-        // console.log(res);
-        Swal.fire({
-          icon: "success",
-          title: "সফলভাবে আপলোড হয়েছে",
-          showConfirmButton: false,
-          timer: 1500,
-=======
       await axios
         .post("api/update-user/" + userID, formData, config)
         .then((res) => {
@@ -154,7 +127,6 @@ const MyArea = () => {
             showConfirmButton: false,
             timer: 1500,
           });
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
         });
     } catch (error) {
       // console.log(error);
@@ -268,13 +240,8 @@ const MyArea = () => {
 
   return (
     <div>
-<<<<<<< HEAD
       <section>
         <NavigationBa onClick={handleEditClick} />
-=======
-      <section id="area-nav-section">
-        <NavigationBa />
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
       </section>
       <section className="container-fluid">
         <div className="row ">
@@ -293,25 +260,6 @@ const MyArea = () => {
                   প্রোফাইল ছবি পরিবর্তন করুন
                 </strong> */}
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
-<<<<<<< HEAD
-
-                <div>
-                        <input
-                          type="file"
-                          id="fileInput"
-                          onChange={handleFileChange}
-                          // style={{ display: "none" }}
-                          className="area-upload"
-                        />
-                        <label htmlFor="fileInput" className="btn btn-warning">
-                          <strong>প্রোফাইল ছবি পরিবর্তন করুন</strong>
-                        </label>
-                      </div>
-{/* 
-                    <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} /> */}
-                  
-                    {file &&   <button onClick={handleUpload} className="btn btn-success upload-button" type="submit">আপলোড</button>}
-=======
                   <strong className="change-pp-button">
                     প্রোফাইল ছবি পরিবর্তন করুন
                     <input
@@ -324,7 +272,6 @@ const MyArea = () => {
                       আপলোড
                     </button>
                   </strong>
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
                 </form>
               </div>
               <div>
@@ -333,7 +280,6 @@ const MyArea = () => {
                   <EditIcon onClick={handleClick} onDoubleClick={handleEditClick} onDoubleClickDelay={500} className="mt-1 " style={{ cursor: "pointer" }} />
                   
                 </div>
-<<<<<<< HEAD
                 <div className="name-info ">
                   {/* <p>নাম: {userInfo.UserName}</p> */}
                   <form onSubmit={handleUpdate}>
@@ -384,17 +330,6 @@ const MyArea = () => {
                   {isClicked && <button className="btn btn-success" type="submit">আপডেট</button>}
                 </form>
                 <hr />
-=======
-                <div className="name-info container">
-                  <p>নাম: {userInfo.UserName}</p>
-                  <p>ইমেইল: {userInfo.email}</p>
-                  <p>ফোন: {userInfo.userPhone}</p>
-                  <p>ব্যবহারকারী আইডি: {userInfo.userID}</p>
-                  <p>
-                    অফিস আইডি:{" "}
-                    {userInfo.OfficeID ? userInfo.OfficeID : "অফিস আইডি নেই"}
-                  </p>
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
                 </div>
               </div>
               <div className="varify-button-div">

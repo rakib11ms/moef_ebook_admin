@@ -205,11 +205,7 @@ const NavigationBa = () => {
               {showSubmenu3 && (
                 <ul>
                   <li className="side-li-link">
-<<<<<<< HEAD
                     <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
-=======
-                    <Link to="/all-news-notice">সকল বিজ্ঞপ্তি</Link>
->>>>>>> 3402535cfd9460a0f0dd805f8473655fbbed3a50
                   </li>
                   {/* <li className="side-li-link">
                     <Link to="/categories-news">ক্যটেগরি</Link>
