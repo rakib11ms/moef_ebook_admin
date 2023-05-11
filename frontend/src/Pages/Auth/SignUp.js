@@ -16,6 +16,7 @@ const SignUpBg = {
 };
 
 //
+//
 
 function SignUp() {
   // const [email, setEmail] = useState("");
