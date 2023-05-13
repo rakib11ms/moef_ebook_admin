@@ -57,7 +57,6 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -66,8 +65,7 @@ function a11yProps(index) {
 }
 
 const Home = (props) => {
-
-  const [renderData, setRenderData] = useState('')
+  const [renderData, setRenderData] = useState("");
 
   useEffect(() => {
     axios.get("api/total-document-count").then((res) => {
@@ -75,13 +73,13 @@ const Home = (props) => {
         setTotalDocuments(res.data);
       }
     });
-  }, [renderData])
+  }, [renderData]);
 
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
   const [content, setContent] = useState("");
-  console.log('cont', content)
+  console.log("cont", content);
 
   // active div
 
@@ -111,29 +109,27 @@ const Home = (props) => {
     // console.log(selectedFile);
   };
 
-  const [inputs, setInputs] = useState(
-    {
-      CatID: "",
-      Title: "",
-      publisher_id: "",
-      BookCoverImage: "",
-      language_id: "",
-      publish_date: "",
-      File_url: "",
-      created_by: "",
-      AuthorID: "",
-      ParagraphName: "",
-      BookID: "",
-      ChapterID: "",
-      ParagraphID: "",
-    }
-  );
+  const [inputs, setInputs] = useState({
+    CatID: "",
+    Title: "",
+    publisher_id: "",
+    BookCoverImage: "",
+    language_id: "",
+    publish_date: "",
+    File_url: "",
+    created_by: "",
+    AuthorID: "",
+    ParagraphName: "",
+    BookID: "",
+    ChapterID: "",
+    ParagraphID: "",
+  });
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }))
-  }
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -141,8 +137,13 @@ const Home = (props) => {
 
     axios.post("api/books", inputs).then((res) => {
       if (res.data.status === 200) {
+<<<<<<< HEAD
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
+=======
+        Swal.fire(res.data.message, "", "success");
+        setRenderData(res.data);
+>>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
         setInputs({
           CatID: "",
           Title: "",
@@ -157,25 +158,21 @@ const Home = (props) => {
           BookID: "",
           ChapterID: "",
           ParagraphID: "",
-        })
-
-
+        });
       }
-    })
-  }
+    });
+  };
 
-  const [chapterInputs, setChapterInputs] = useState(
-    {
-      ChapterName: "",
-      BookID: "",
-    }
-  );
+  const [chapterInputs, setChapterInputs] = useState({
+    ChapterName: "",
+    BookID: "",
+  });
 
   const handleChapterChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setChapterInputs(values => ({ ...values, [name]: value }))
-  }
+    setChapterInputs((values) => ({ ...values, [name]: value }));
+  };
 
   // const fetchBooks = () => {
   //   axios.get("api/books").then((res) => {
@@ -189,8 +186,13 @@ const Home = (props) => {
     event.preventDefault();
     axios.post("api/bookChapter", chapterInputs).then((res) => {
       if (res.data.status === 200) {
+<<<<<<< HEAD
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
+=======
+        Swal.fire(res.data.message, "", "success");
+        setRenderData(res.data);
+>>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
         setInputs({
           CatID: "",
           Title: "",
@@ -205,11 +207,10 @@ const Home = (props) => {
           BookID: "",
           ChapterID: "",
           ParagraphID: "",
-        })
-
+        });
       }
-    })
-  }
+    });
+  };
   const handleParagraphSubmit = (event) => {
     event.preventDefault();
     // console.log('paragraph check',inputs)
@@ -231,25 +232,28 @@ const Home = (props) => {
           BookID: "",
           ChapterID: "",
           ParagraphID: "",
-        })
-
+        });
       }
-    })
-  }
+    });
+  };
   const mainBookData = {
     book_id: inputs.BookID,
     chapter_id: inputs.ChapterID,
     paragraph_id: inputs.ParagraphID,
-    content: content
-  }
-
+    content: content,
+  };
 
   const handlePageSubmit = (e) => {
     e.preventDefault();
     axios.post("api/create-main-book", mainBookData).then((res) => {
       if (res.data.status === 200) {
+<<<<<<< HEAD
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
+=======
+        Swal.fire(res.data.message, "", "success");
+        setRenderData(res.data);
+>>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
 
         setInputs({
           CatID: "",
@@ -265,20 +269,29 @@ const Home = (props) => {
           BookID: "",
           ChapterID: "",
           ParagraphID: "",
+<<<<<<< HEAD
         })
         
 
+=======
+        });
+>>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
       }
-    })
-  }
+    });
+  };
 
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
+<<<<<<< HEAD
   const [totalDocuments, setTotalDocuments] = useState('');
   // console.log('allParagraphs', allParagraphs)
+=======
+  const [totalDocuments, setTotalDocuments] = useState("");
+  console.log("allParagraphs", allParagraphs);
+>>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
 
   // console.log('totalDoc',totalDocuments)
 
@@ -287,7 +300,7 @@ const Home = (props) => {
       if (res.data.bookcategories) {
         setCategories(res.data.bookcategories);
       }
-    })
+    });
 
     axios.get("api/language").then((res) => {
       if (res.data.languages) {
@@ -313,19 +326,13 @@ const Home = (props) => {
         setallParagraphs(res.data.book_paragraphs);
       }
     });
-
-
-
-  }, [renderData])
-
-
+  }, [renderData]);
 
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
     setInputs({ publish_date: formattedDate });
   }, []);
-
 
   return (
     <div>
@@ -338,7 +345,12 @@ const Home = (props) => {
             <Link to="/add-document" className=" amounts-div">
               <img className="home-img" src={docIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1"> {totalDocuments.singleDocs == null ? '...' : totalDocuments.singleDocs} </span>
+                <span className="doc-span1">
+                  {" "}
+                  {totalDocuments.singleDocs == null
+                    ? "..."
+                    : totalDocuments.singleDocs}{" "}
+                </span>
                 <br />
                 <span className="doc-span">ডকুমেন্ট </span>{" "}
               </h4>
@@ -346,7 +358,12 @@ const Home = (props) => {
             <Link to="/books-101200" className=" amounts-div">
               <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">  {totalDocuments.bookChapter == null ? '...' : totalDocuments.bookChapter}  </span>
+                <span className="doc-span1">
+                  {" "}
+                  {totalDocuments.bookChapter == null
+                    ? "..."
+                    : totalDocuments.bookChapter}{" "}
+                </span>
                 <br />
                 <span className="doc-span">চ্যাপ্টার </span>{" "}
               </h4>
@@ -354,7 +371,12 @@ const Home = (props) => {
             <Link to="/all-books" className=" amounts-div">
               <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
-                <span className="doc-span1">  {totalDocuments.booksMaster == null ? '...' : totalDocuments.booksMaster} </span>
+                <span className="doc-span1">
+                  {" "}
+                  {totalDocuments.booksMaster == null
+                    ? "..."
+                    : totalDocuments.booksMaster}{" "}
+                </span>
                 <br />
                 <span className="doc-span">বই </span>{" "}
               </h4>
@@ -424,7 +446,6 @@ const Home = (props) => {
                     ডকুমেন্ট যোগ করুন
                   </h6>
                 </Link>
-
               </div>
               <div className="home-serchInput-icon-div">
                 <SearchIcon />
@@ -435,10 +456,7 @@ const Home = (props) => {
         </div>
       </section>
       <hr />
-      <section className="container-fluid">
-
-
-      </section>
+      <section className="container-fluid"></section>
 
       <section className="active-div container-fluid">
         <div className="clickble-div">
@@ -493,7 +511,6 @@ const Home = (props) => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বই এর তথ্য যোগ করুন </h5>
                     </div>
-
                   </div>
 
                   <form onSubmit={handleSubmit} id="myForm">
@@ -518,17 +535,18 @@ const Home = (props) => {
                               onChange={handleChange}
                               className="form-select select-category allField"
                               aria-label="Default select example"
+                              id="add-book-categories"
                             >
-                              <option selected disabled>ক্যাটাগরি নির্বাচন করুন</option>
-                              {
-                                categories.map((category, index) => {
-                                  return (
-                                    <option key={index} value={category.id}>
-                                      {category.CategoryName}
-                                    </option>
-                                  );
-                                })
-                              }
+                              <option selected disabled>
+                                ক্যাটাগরি নির্বাচন করুন
+                              </option>
+                              {categories.map((category, index) => {
+                                return (
+                                  <option key={index} value={category.id}>
+                                    {category.CategoryName}
+                                  </option>
+                                );
+                              })}
                             </select>
                             {/* <div>
                               <Link to="/book-categories">
@@ -560,7 +578,6 @@ const Home = (props) => {
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> প্রকাশ কাল </lebel> <br />
-
                           <ReactDatePicker
                             className="home-input allField"
                             name="publish_date"
@@ -568,7 +585,6 @@ const Home = (props) => {
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
                           />
-
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> ভাষা </lebel> <br />
@@ -578,18 +594,18 @@ const Home = (props) => {
                             onChange={handleChange}
                             className=" select-category2 allField"
                             aria-label="Default select example"
+                            id="add-book-vasha"
                           >
-                            <option selected disabled>ভাষা নির্বাচন করুন </option>
-                            {
-                              languages.map((language, index) => {
-                                return (
-                                  <option key={index} value={language.id}>
-                                    {language.Name}
-                                  </option>
-                                );
-                              })
-                            }
-
+                            <option selected disabled>
+                              ভাষা নির্বাচন করুন{" "}
+                            </option>
+                            {languages.map((language, index) => {
+                              return (
+                                <option key={index} value={language.id}>
+                                  {language.Name}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
@@ -623,7 +639,6 @@ const Home = (props) => {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                       <h5>বইয়ের অধ্যায় যোগ করুন </h5>
                     </div>
-
                   </div>
                   <form onSubmit={handleChapterSubmit}>
                     <div className="container">
@@ -647,17 +662,18 @@ const Home = (props) => {
                               // onClick={fetchBooks}
                               class="form-select select-category allField"
                               aria-label="Default select example"
+                              id="add-chapter-book-nirnoy"
                             >
-                              <option selected disabled>বই নির্নয় করুন</option>
-                              {
-                                books.map((book, index) => {
-                                  return (
-                                    <option key={index} value={book.id}>
-                                      {book.Title}
-                                    </option>
-                                  );
-                                })
-                              }
+                              <option selected disabled>
+                                বই নির্নয় করুন
+                              </option>
+                              {books.map((book, index) => {
+                                return (
+                                  <option key={index} value={book.id}>
+                                    {book.Title}
+                                  </option>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -688,13 +704,17 @@ const Home = (props) => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
                       </div>
-
                     </div>
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel>অনুচ্ছেদের নাম * </lebel> <br />
-                          <input className="home-input" type="text" onChange={handleChange} name="ParagraphName" value={inputs.ParagraphName}
+                          <input
+                            className="home-input"
+                            type="text"
+                            onChange={handleChange}
+                            name="ParagraphName"
+                            value={inputs.ParagraphName}
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
@@ -706,19 +726,20 @@ const Home = (props) => {
                               value={inputs.BookID}
                               onChange={handleChange}
                               name="BookID"
+                              id="add-paragraph-book-nirnoy"
                             >
-                              <option selected disabled>বই যোগ করুন </option>
-                              {
-                                books.map((item, i) => {
-                                  return (
-                                    <>
-                                      <option value={item.id}>{item.Title} </option>
-
-                                    </>
-                                  )
-                                })
-                              }
-
+                              <option selected disabled>
+                                বই যোগ করুন{" "}
+                              </option>
+                              {books.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>
+                                      {item.Title}{" "}
+                                    </option>
+                                  </>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -737,19 +758,21 @@ const Home = (props) => {
                               value={inputs.ChapterID}
                               onChange={handleChange}
                               name="chapterID"
-
+                              id="add-paragraph-nirnoy"
                             >
-                              <option selected disabled> অধ্যায় সমগ্র </option>
-                              {
-                                chapters.map((item, i) => {
-                                  return (
-                                    <>
-                                      <option value={item.id}>{item.ChapterName} </option>
-
-                                    </>
-                                  )
-                                })
-                              }
+                              <option selected disabled>
+                                {" "}
+                                অধ্যায় সমগ্র{" "}
+                              </option>
+                              {chapters.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>
+                                      {item.ChapterName}{" "}
+                                    </option>
+                                  </>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -761,8 +784,8 @@ const Home = (props) => {
                         </div>
                       </div>
                       <div className="home-input-button-div">
-                        <button className="home-input-button1" >খসড়া </button>
-                        <button className="home-input-button2" >
+                        <button className="home-input-button1">খসড়া </button>
+                        <button className="home-input-button2">
                           প্রকাশ করুন{" "}
                         </button>
                       </div>
@@ -780,7 +803,6 @@ const Home = (props) => {
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h5>নতুন পৃষ্ঠা যোগ করুন </h5>
                       </div>
-
                     </div>
                     <div className="container">
                       <div className="row ">
@@ -793,18 +815,20 @@ const Home = (props) => {
                               value={inputs.BookID}
                               onChange={handleChange}
                               name="BookID"
+                              id="add-page-book-selection"
                             >
-                              <option selected disabled>বই নির্বাচন করুন</option>
-                              {
-                                books.map((item, i) => {
-                                  return (
-                                    <>
-                                      <option value={item.id}>{item.Title} </option>
-
-                                    </>
-                                  )
-                                })
-                              }
+                              <option selected disabled>
+                                বই নির্বাচন করুন
+                              </option>
+                              {books.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>
+                                      {item.Title}{" "}
+                                    </option>
+                                  </>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -824,18 +848,20 @@ const Home = (props) => {
                               value={inputs.ChapterID}
                               onChange={handleChange}
                               name="ChapterID"
+                              id="add-page-chapter-selection"
                             >
-                              <option selected disabled>অধ্যায় নির্বাচন করুন</option>
-                              {
-                                chapters.map((item, i) => {
-                                  return (
-                                    <>
-                                      <option value={item.id}>{item.ChapterName} </option>
-
-                                    </>
-                                  )
-                                })
-                              }
+                              <option selected disabled>
+                                অধ্যায় নির্বাচন করুন
+                              </option>
+                              {chapters.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>
+                                      {item.ChapterName}{" "}
+                                    </option>
+                                  </>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -854,20 +880,18 @@ const Home = (props) => {
                               value={inputs.ParagraphID}
                               onChange={handleChange}
                               name="ParagraphID"
+                              id="add-page-paragraph-selection"
                             >
                               <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
-                              {
-
-                                allParagraphs.map((item, i) => {
-                                  return (
-                                    <>
-                                      <option value={item.id}>{item.ParagraphName
-                                      } </option>
-
-                                    </>
-                                  )
-                                })
-                              }
+                              {allParagraphs.map((item, i) => {
+                                return (
+                                  <>
+                                    <option value={item.id}>
+                                      {item.ParagraphName}{" "}
+                                    </option>
+                                  </>
+                                );
+                              })}
                             </select>
                             <div>
                               <Link to="">
@@ -897,13 +921,10 @@ const Home = (props) => {
                   </form>
                 </section>
               </div>
-
             )}
           </div>
         </div>
       </section>
-
-
     </div>
   );
 };
