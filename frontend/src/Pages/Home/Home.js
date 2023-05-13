@@ -137,13 +137,9 @@ const Home = (props) => {
 
     axios.post("api/books", inputs).then((res) => {
       if (res.data.status === 200) {
-<<<<<<< HEAD
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success');
+        
         setRenderData(res.data)
-=======
-        Swal.fire(res.data.message, "", "success");
-        setRenderData(res.data);
->>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
         setInputs({
           CatID: "",
           Title: "",
