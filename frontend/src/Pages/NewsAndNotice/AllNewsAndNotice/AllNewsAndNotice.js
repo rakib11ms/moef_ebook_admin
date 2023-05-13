@@ -95,7 +95,7 @@ const AllNewsAndNotice = () => {
                 if (willDelete) {
                   axios.delete(`/api/notice/${params.row.id}`).then((res) => {
                     if (res.data.status === 200) {
-                      swal("Poof! Your imaginary file has been deleted!", {
+                      swal("বিজ্ঞপ্তিটি সফলভাবে ডিলিট করা হয়েছে ", {
                         icon: "success",
                       });
                       axios.get(`/api/notice`).then((res) => {

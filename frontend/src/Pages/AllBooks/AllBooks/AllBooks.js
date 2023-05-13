@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import bookLogoImg from "../../../images/book.png";
 import bookLogoImg1 from "../../../images/onuchhed1.png";
@@ -6,8 +6,14 @@ import "./AllBooks.css";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { DataGrid } from '@mui/x-data-grid';
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import swal from "sweetalert";
 
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const AllBooks = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -21,6 +27,102 @@ const AllBooks = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+
+  const [allBooks, setAllBooks] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/api/get-all-main-book`).then((res) => {
+      if (res.data.status === 200) {
+        setAllBooks(res.data.data);
+        console.log("all books", res.data.data);
+      } else {
+        console.log("error");
+      }
+    })
+  }, [])
+
+  const columns = [
+    { field: 'book_name', headerName: 'বইয়ের নাম ', width: 250 },
+    { field: 'chapter_name', headerName: 'অধ্যায়', width: 190 },
+    { field: 'paragraph_name', headerName: 'অনুচ্ছেদ', width: 190 },
+    {
+      field: 'edit',
+      headerName: 'সম্পাদনা করুন ',
+      width: 190,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          <Link to={`/edit-books/${params.row.id}`}>
+            <CreateOutlinedIcon className="text-warning" />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      field: 'delete',
+      headerName: 'ডিলিট করুন ',
+      width: 190,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          {/* sweet alert for confirm delete */}
+          <DeleteOutlineOutlinedIcon
+            className="text-danger"
+            onClick={() => {
+              swal({
+                title: "নিশ্চিত করুন",
+                text: "আপনি কি বইটি ডিলিট করতে চান? ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              }).then((willDelete) => {
+                if (willDelete) {
+                  axios.delete(`/api/delete-main-book/${params.row.id}`).then((res) => {
+                    if (res.data.status === 200) {
+                      swal("বইটি সফলভাবে ডিলিট করা হয়েছে", {
+                        icon: "success",
+                      });
+                      axios.get(`/api/get-all-main-book`).then((res) => {
+                        if (res.data.status === 200) {
+                          setAllBooks(res.data.data);
+                        } else {
+                          console.log("error");
+                        }
+                      });
+                    } else {
+                      swal("Oops! Something went wrong, Please try again");
+                    }
+                  });
+                }
+              });
+            }}
+          />
+        </div>
+      ),
+    },
+    {
+      field: 'view',
+      headerName: 'দেখুন',
+      width: 120,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          <Link to={`/view-books/${params.row.id}`}>
+            <RemoveRedEyeIcon className="text-success" />
+          </Link>
+        </div>
+      ),
+    }
+  ];
+
+  const rows = [
+    ...allBooks.map((book) => (
+      {
+        id: book.id,
+        book_name: book.book_master.Title,
+        chapter_name: book.book_chapter.ChapterName,
+        paragraph_name: book.book_paragraph.ParagraphName,
+      }
+    ))
+  ];
+
 
   return (
     <div>
@@ -50,7 +152,18 @@ const AllBooks = () => {
             {/* <hr /> */}
             <>
               <p>আমার ফাইল</p>
-              
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+              />
+
             </>
 
             {/* <>

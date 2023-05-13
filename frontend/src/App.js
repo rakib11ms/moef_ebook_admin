@@ -29,11 +29,12 @@ import LoadingSpinner from "./Pages/LoadingSpinner/LoadingSpinner";
 import CategoriesNews from "./Pages/NewsAndNotice/CategoriesNews/CategoriesNews";
 import Book101200 from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/Book101200";
 import AddDocument from "./Pages/AllBooks/AddDocument/AddDocument";
-import EditDocuments from "./Pages/AllBooks/EditDocuments/EditDocuments";
+import EditBooks from "./Pages/AllBooks/EditBooks/EditBooks";
 import SignUp from "./Pages/Auth/SignUp";
 import ForgotPasswordRequest from "./Pages/Auth/ForgotPasswordRequest";
 import ForgotPasswordConfirm from "./Pages/Auth/ForgotPasswordConfirm";
 import PrivacyPolicies from "./Pages/Shared/Privacy&Policies/Privacy&Policies";
+import ViewBooks from "./Pages/AllBooks/ViewBooks/ViewBooks";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +76,8 @@ function App() {
           <Route path="/permission-users" element={<PermissionUser />} />
           <Route path="/all-books" element={<AllBooks />} />
           <Route path="/add-document" element={<AddDocument />} />
-          <Route path="/edit-documents" element={<EditDocuments />} />
+          <Route path="/edit-books/:id" element={<EditBooks />} />
+          <Route path="/view-books/:id" element={<ViewBooks />} />
           <Route path="/books-101200" element={<Book101200 />} />
           <Route path="/book-categories" element={<BooksCatagories />} />
           <Route path="/draft-documents" element={<DraftDocuments />} />

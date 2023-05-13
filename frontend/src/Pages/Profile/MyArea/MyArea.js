@@ -9,7 +9,7 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import axios from 'axios';
 import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -31,22 +31,22 @@ import EditIcon from "@mui/icons-material/Edit";
 //     return;
 //   }
 //   //get user id from user json local storage
-// const userID = JSON.parse(localStorage.getItem('user')).id;
+  // const userID = JSON.parse(localStorage.getItem('user')).id;
 //   const formData = new FormData();
 //   formData.append(
 //     "file",
 //     state.selectedFile,
 //     state.selectedFile.name
 //   );
-
+  
 //   axios.post("api/update-user/" + userID, formData).then(res => {
 //     console.log(res);
 //   });
 // };
 
 const MyArea = () => {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const userID = JSON.parse(localStorage.getItem("user")).id;
+  const userInfo = JSON.parse(localStorage.getItem('user'));
+  const userID = JSON.parse(localStorage.getItem('user')).id;
   const [user, setUser] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -81,13 +81,13 @@ const MyArea = () => {
   }
 
   const formData = new FormData();
-  formData.append("userImage", selectedFile);
+  formData.append('userImage', selectedFile);
 
   const config = {
     headers: {
-      "content-type": "multipart/form-data",
-    },
-  };
+        'content-type': 'multipart/form-data'
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,32 +102,20 @@ const MyArea = () => {
     // console.log("xx",formData.get('userImage'))
 
     try {
-      await axios
-        .post("api/update-user/" + userID, formData, config)
-        .then((res) => {
-          //display current user image
-          axios
-            .get("api/get-user-image/" + userID, {
-              responseType: "arraybuffer",
-            })
-            .then((res) => {
-              const base64Img = window.btoa(
-                new Uint8Array(res.data).reduce(
-                  (data, byte) => data + String.fromCharCode(byte),
-                  ""
-                )
-              );
-              setUser("data:image/png;base64," + base64Img);
-            });
-
-          console.log(res);
-          Swal.fire({
-            icon: "success",
-            title: "সফলভাবে আপলোড হয়েছে",
-            showConfirmButton: false,
-            timer: 1500,
+      await axios.post("api/update-user/" + userID, formData,config).then(res => {
+        //display current user image
+        axios.get('api/get-user-image/' + userID)
+          .then(res => {
+            setUser(res.data.image);
           });
+        // console.log(res);
+        Swal.fire({
+          icon: "success",
+          title: "সফলভাবে আপলোড হয়েছে",
+          showConfirmButton: false,
+          timer: 1500,
         });
+      });
     } catch (error) {
       // console.log(error);
       Swal.fire({
@@ -135,7 +123,7 @@ const MyArea = () => {
         title: "Oops...",
         text: "আপলোড করা যায়নি!",
       });
-    }
+    } 
   };
 
   var settings = {
@@ -245,10 +233,7 @@ const MyArea = () => {
       </section>
       <section className="container-fluid">
         <div className="row ">
-          <div
-            className="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12"
-            id="my-area-left-side"
-          >
+          <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
             <div className="my-area-left-div container">
               <h3 className="d-flex justify-content-center mb-3 pt-3">
                 আমার এরিয়া
@@ -260,18 +245,23 @@ const MyArea = () => {
                   প্রোফাইল ছবি পরিবর্তন করুন
                 </strong> */}
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
-                  <strong className="change-pp-button">
-                    প্রোফাইল ছবি পরিবর্তন করুন
-                    <input
-                      className="change-pp-button"
-                      type="file"
-                      name="userImage"
-                      onChange={handleFileChange}
-                    />
-                    <button className="btn btn-success" type="submit">
-                      আপলোড
-                    </button>
-                  </strong>
+
+                <div>
+                        <input
+                          type="file"
+                          id="fileInput"
+                          onChange={handleFileChange}
+                          // style={{ display: "none" }}
+                          className="area-upload"
+                        />
+                        <label htmlFor="fileInput" className="btn btn-warning">
+                          <strong>প্রোফাইল ছবি পরিবর্তন করুন</strong>
+                        </label>
+                      </div>
+{/* 
+                    <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} /> */}
+                  
+                    {file &&   <button onClick={handleUpload} className="btn btn-success upload-button" type="submit">আপলোড</button>}
                 </form>
               </div>
               <div>

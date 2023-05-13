@@ -116,8 +116,8 @@ const CreateNewsAndNotice = () => {
 
     axios.post(`/api/notice`, formData).then(res => {
       if (res.data.status === 200) {
-        Swal.fire(res.data.message, '', 'success')
-        // navigate('/all-news-notice')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        navigate('/all-news-notice')
       } else if (res.data.status === 400) {
         Swal.fire(res.data.message, '', 'warning')
       }

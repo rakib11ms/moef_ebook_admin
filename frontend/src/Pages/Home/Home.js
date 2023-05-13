@@ -141,7 +141,7 @@ const Home = (props) => {
 
     axios.post("api/books", inputs).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire(res.data.message, '', 'success')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
         setInputs({
           CatID: "",
@@ -189,7 +189,7 @@ const Home = (props) => {
     event.preventDefault();
     axios.post("api/bookChapter", chapterInputs).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire(res.data.message, '', 'success')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
         setInputs({
           CatID: "",
@@ -215,7 +215,7 @@ const Home = (props) => {
     // console.log('paragraph check',inputs)
     axios.post("api/bookParagraph", inputs).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire(res.data.message, '', 'success')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
         setInputs({
           CatID: "",
@@ -248,7 +248,7 @@ const Home = (props) => {
     e.preventDefault();
     axios.post("api/create-main-book", mainBookData).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire(res.data.message, '', 'success')
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
 
         setInputs({
@@ -266,7 +266,7 @@ const Home = (props) => {
           ChapterID: "",
           ParagraphID: "",
         })
-
+        
 
       }
     })
@@ -278,7 +278,7 @@ const Home = (props) => {
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
   const [totalDocuments, setTotalDocuments] = useState('');
-  console.log('allParagraphs', allParagraphs)
+  // console.log('allParagraphs', allParagraphs)
 
   // console.log('totalDoc',totalDocuments)
 
