@@ -120,6 +120,7 @@ const BooksCatagories = () => {
               <div className="categories-div">
                 <input
                   className="catogories-input"
+                  id="books-categories-inputs"
                   type="text"
                   value={selectedCategory}
                   onChange={(e) => {
@@ -131,6 +132,7 @@ const BooksCatagories = () => {
                 <select
                   className="form-select catalogue-selection-button"
                   aria-label="Default select example"
+                  id="books-categories-select"
                 >
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
@@ -152,6 +154,7 @@ const BooksCatagories = () => {
               <input
                 className="sub-catogories-input"
                 type="text"
+                id="books-sub-categories-inputs"
                 ref={subcategoryRef}
                 value={subcategory}
                 onChange={(e) => {
