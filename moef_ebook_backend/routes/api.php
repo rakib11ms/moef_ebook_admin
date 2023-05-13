@@ -76,3 +76,4 @@ Route::post('/reset-password-email-confirm', [ResetPasswordController::class, 'r
 Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 });
+
