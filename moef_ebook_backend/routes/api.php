@@ -64,6 +64,10 @@ Route::post('/save-single-document', [SingleDocumentController::class, 'saveSing
 Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
 
 Route::post('/create-main-book', [MainBookController::class, 'createMainBook']);
+Route::get('/get-all-main-book', [MainBookController::class, 'getAllMainBook']);
+Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
+Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
+Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);
 
 Route::get('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
