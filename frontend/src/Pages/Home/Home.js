@@ -238,13 +238,8 @@ const Home = (props) => {
     e.preventDefault();
     axios.post("api/create-main-book", mainBookData).then((res) => {
       if (res.data.status === 200) {
-<<<<<<< HEAD
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
-=======
-        Swal.fire(res.data.message, "", "success");
-        setRenderData(res.data);
->>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
 
         setInputs({
           CatID: "",
@@ -260,13 +255,9 @@ const Home = (props) => {
           BookID: "",
           ChapterID: "",
           ParagraphID: "",
-<<<<<<< HEAD
         })
         
 
-=======
-        });
->>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
       }
     });
   };
@@ -276,13 +267,8 @@ const Home = (props) => {
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
-<<<<<<< HEAD
   const [totalDocuments, setTotalDocuments] = useState('');
   // console.log('allParagraphs', allParagraphs)
-=======
-  const [totalDocuments, setTotalDocuments] = useState("");
-  console.log("allParagraphs", allParagraphs);
->>>>>>> c2e3677ec893572a7597cbaf5119b7868d442c1e
 
   // console.log('totalDoc',totalDocuments)
 
