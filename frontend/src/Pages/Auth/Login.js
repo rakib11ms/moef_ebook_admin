@@ -105,7 +105,7 @@ function Login({ handleSucessLogin }) {
                     alt="পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়-লোগো"
                   />
                   <h6 className="environment-tags">
-                    Environment Information Book
+                    Environment Information e-Book
                   </h6>
                   <p className="poribesh-tags">
                     পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়
@@ -118,7 +118,7 @@ function Login({ handleSucessLogin }) {
                       <input
                         onChange={(e) => setid(e.target.value)}
                         type="string"
-                        className="form-control"
+                        className="form-control login-inputs"
                         id="exampleFormControlInput1"
                         name="id"
                         placeholder="আপনার ইউজার আইডি / অফিস আইডি"
@@ -126,7 +126,7 @@ function Login({ handleSucessLogin }) {
                       <input
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
-                        className="form-control mt-4"
+                        className="form-control login-inputs mt-4"
                         id="inputPassword"
                         name="password"
                         placeholder="পাসওয়ার্ড"
@@ -182,12 +182,12 @@ function Login({ handleSucessLogin }) {
               </div>
             </div>
 
-            <div className="">
-              <div className="row container sign-up-footer">
+            <div className="container">
+              <div className="row sign-up-footer">
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 footer-div1">
                   <div className="login-footer-div">
                     <div className="footer-download-text">
-                      <a href="#">
+                      <a href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib  ">
                         {" "}
                         <h6>Download</h6>
                       </a>
@@ -198,8 +198,18 @@ function Login({ handleSucessLogin }) {
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                   <div className="signup-footer-logos">
-                    <img className="login-logos" src={bangladeshLogo} alt="" />
-                    <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                    <Link to="  http://www.moef.gov.bd/">
+                      {" "}
+                      <img
+                        className="login-logos"
+                        src={bangladeshLogo}
+                        alt=""
+                      />
+                    </Link>
+                    <Link to="https://pakizatvl.com/">
+                      {" "}
+                      <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                    </Link>
                   </div>
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
