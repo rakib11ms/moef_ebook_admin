@@ -137,4 +137,35 @@ class SingleDocumentController extends Controller
         ]);
 
     }
+
+    public function updateSingleDocument(Request $request, $id)
+    {
+        $single_document = SingleDocument::find($id);
+
+        if ($request->document_title != null){
+            $single_document->document_title = $request->document_title;
+        }
+        if ($request->document_title != null){
+            $single_document->document_contents = $request->document_contents;
+        }
+
+        $single_document->update();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Document updated sucessfully',
+            'single_document' => $single_document,
+        ]);
+
+    }
+
+    public function deleteSingleDocument($id)
+    {
+        $single_document = SingleDocument::find($id);
+        $single_document->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Document deleted sucessfully',
+        ]);
+    }
 }

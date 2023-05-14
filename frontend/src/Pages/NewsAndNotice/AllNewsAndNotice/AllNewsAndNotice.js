@@ -61,12 +61,12 @@ const AllNewsAndNotice = () => {
 
   const columns = [
     { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
-    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 250 },
-    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 250 },
+    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 200 },
+    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 200 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
-      width: 250,
+      width: 200,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <Link to={`/update-news-notice/${params.row.id}`}>
@@ -78,7 +78,7 @@ const AllNewsAndNotice = () => {
     {
       field: 'delete',
       headerName: 'ডিলিট করুন ',
-      width: 250,
+      width: 200,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           {/* sweet alert for confirm delete */}
@@ -174,7 +174,7 @@ const AllNewsAndNotice = () => {
           
           </div>
         </section>
-        <section>
+        {/* <section>
           <div className="pagination-div">
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center">
@@ -204,7 +204,7 @@ const AllNewsAndNotice = () => {
               </ul>
             </nav>
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );

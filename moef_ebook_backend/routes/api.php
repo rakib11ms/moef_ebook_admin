@@ -67,6 +67,8 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
 Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);
 Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
+Route::post('/update-single-document/{id}', [SingleDocumentController::class, 'updateSingleDocument']);
+Route::delete('/delete-single-document/{id}', [SingleDocumentController::class, 'deleteSingleDocument']);
 
 Route::post('/create-main-book', [MainBookController::class, 'createMainBook']);
 Route::get('/get-all-main-book', [MainBookController::class, 'getAllMainBook']);
