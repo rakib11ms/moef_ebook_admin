@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import SearchIcon from "@mui/icons-material/Search";
 import "./BooksCatagories.css";
@@ -6,95 +6,142 @@ import InterestsIcon from "@mui/icons-material/Interests";
 import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
+import { Category } from "@mui/icons-material";
+import axios from "axios";
+import swal from "sweetalert";
+import { DataGrid } from '@mui/x-data-grid';
+import { Link } from "react-router-dom";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
 
 const BooksCatagories = () => {
-  const [todos, setTodos] = useState([]);
-  const [subcategory, setSubcategory] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [catagoryName, setCatagoryName] = useState("");
+  const [allCatagories, setAllCatagories] = useState([]);
 
-  const subcategoryRef = useRef(null);
-  const categoryRef = useRef(null);
-  const [showCategoryError, setShowCategoryError] = useState(false);
-  const [showSubcategoryError, setShowSubcategoryError] = useState(false);
+  const rows = [
+    ...allCatagories.map((catagory) => {
+      return {
+        id: catagory.id,
+        CategoryName: catagory.CategoryName,
+      };
+    }),
+  ];
 
-  const handleAddTodo = () => {
-    const category = selectedCategory.trim();
-    const subcategoryText = subcategory.trim();
-    if (category !== "") {
-      const todo = { category };
-      if (subcategoryText !== "") {
-        todo.subcategory = subcategoryText;
-      }
-      setTodos([...todos, todo]);
-      setSelectedCategory("");
-      setSubcategory("");
-      subcategoryRef.current.value = "";
-      setShowCategoryError(false); // Reset category error message
-      setShowSubcategoryError(false);
-    } else {
-      setShowCategoryError(true); // Show category error message
-    }
+  // console.log('all catagories', allCatagories);
+
+  const columns = [
+    { field: 'CategoryName', headerName: 'ক্যাটাগরির নাম', width: 250 },
+    {
+      field: 'edit',
+      headerName: 'সম্পাদনা করুন ',
+      width: 180,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          <Link to={`/edit-book-categories/${params.row.id}`} className="text-decoration-none">
+            <CreateOutlinedIcon className="text-warning" />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      field: 'delete',
+      headerName: 'ডিলিট করুন ',
+      width: 180,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-around align-items-center">
+          {/* sweet alert for confirm delete */}
+          <DeleteOutlineOutlinedIcon
+            className="text-danger"
+            onClick={() => {
+              swal({
+                title: "নিশ্চিত করুন",
+                text: "আপনি কি ক্যাটেগরিটি ডিলিট করতে চান? ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              }).then((willDelete) => {
+                if (willDelete) {
+                  axios.delete(`/api/book-category/${params.row.id}`).then((res) => {
+                    if (res.data.status === 200) {
+                      swal("ক্যাটেগরিটি সফলভাবে ডিলিট করা হয়েছে ", {
+                        icon: "success",
+                      });
+                      axios.get(`/api/book-category`).then((res) => {
+                        if (res.data.status === 200) {
+                          console.log(res.data.bookcategories);
+                          setAllCatagories(res.data.bookcategories);
+                        } else {
+                          console.log("error");
+                        }
+                      });
+                    } else {
+                      swal("Oops! Something went wrong, Please try again");
+                    }
+                  });
+                }
+              });
+            }}
+          />
+        </div>
+      ),
+    },
+  ];
+
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setCatagoryName(value);
   };
-
-  // const handleAddTodo1 =(index) =>{
-  //   const newTodos1 = [...todos];
-  //   newTodos1.splice(index,1);
-  //   setTodos(newTodos1);
-  // }
-  const handleDeleteTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  };
-
-  const handleEditTodo = (index) => {
-    const todo = todos[index];
-    setSelectedCategory(todo.category);
-    setSubcategory(todo.subcategory || "");
-  };
-
-  const handleSaveTodo = (index) => {
-    const category = selectedCategory.trim();
-    const subcategoryText = subcategory.trim();
-    if (category !== "") {
-      const newTodos = [...todos];
-      const todo = newTodos[index];
-      todo.category = category;
-      if (subcategoryText !== "") {
-        todo.subcategory = subcategoryText;
-      } else {
-        delete todo.subcategory;
-      }
-      setTodos(newTodos);
-      setSelectedCategory("");
-      setSubcategory("");
-      subcategoryRef.current.value = "";
-    } else {
-      setSubcategory("");
-    }
-  };
-
-  const categories = ["কবিতা", "গল্প", "উপন্যাস", "কাব্য", "সাহিত্য", "ভৌতিক"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const category = categoryRef.current.value.trim();
-    const subcategoryText = subcategoryRef.current.value.trim();
-    if (category !== "") {
-      const todo = { category };
-      if (subcategoryText !== "") {
-        todo.subcategory = subcategoryText;
+    const catagory = {
+      CategoryName: catagoryName,
+    };
+    console.log(catagory);
+    axios.post(`/api/book-category`, catagory).then((res) => {
+      // console.log(res);
+      if (res.data.status === 200) {
+        console.log(res.data.message);
+        swal({
+          title: "সফলভাবে সংরক্ষন করা হয়েছে",
+          icon: "success",
+        });
+        axios.get(`/api/book-category`).then((res) => {
+          if (res.data.status === 200) {
+            console.log(res.data.bookcategories);
+            setAllCatagories(res.data.bookcategories);
+          }
+        });
+      } else {
+        console.log(res.data.message);
+        swal({
+          title: "সংরক্ষন করা হয়নি",
+          icon: "error",
+        });
       }
-      setTodos([...todos, todo]);
-      setSelectedCategory("");
-      setSubcategory("");
-      subcategoryRef.current.value = "";
-      setShowCategoryError(false);
-      setShowSubcategoryError(false);
-    } else {
-      setShowCategoryError(true);
-    }
+    }).catch((err) => {
+      swal({
+        title: "সংরক্ষন করা হয়নি",
+        icon: "error",
+      });
+    });
   };
+
+  useEffect(() => {
+    axios.get(`/api/book-category`).then((res) => {
+      if (res.data.status === 200) {
+        console.log(res.data.bookcategories);
+        setAllCatagories(res.data.bookcategories);
+      } else {
+        console.log("error");
+      }
+    });
+  }, []);
+
+  // console.log(allCatagories);
 
   return (
     <div>
@@ -113,100 +160,46 @@ const BooksCatagories = () => {
       </section>
       <hr />
       <section className="container-fluid">
-        <div className="row " onSubmit={handleSubmit}>
-          <div className="col-xl-8 col-lg-7 col-md-7 col-sm-12 col-12 categories-input-div">
+        <div className="row ">
+          <div className="col-xl-6 col-lg-7 col-md-7 col-sm-12 col-12 categories-input-div">
             <div className="mb-3">
               <lebel>ক্যটেগরি নাম </lebel> <br />
-              <div className="categories-div">
-                <input
-                  className="catogories-input"
-                  id="books-categories-inputs"
-                  type="text"
-                  value={selectedCategory}
-                  onChange={(e) => {
-                    setSelectedCategory(e.target.value);
-                    setShowCategoryError(false);
-                  }}
-                  ref={categoryRef}
-                />
-                <select
-                  className="form-select catalogue-selection-button"
-                  aria-label="Default select example"
-                  id="books-categories-select"
-                >
-                  {categories.map((category, index) => (
-                    <option key={index} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                  {/* <option selected>ক্যাটাগরি</option>
-                  <option value="1">ক্যাটাগরি- ১</option>
-                  <option value="2">ক্যাটাগরি- ২</option>
-                  <option value="3">ক্যাটাগরি- ৩</option> */}
-                </select>
-              </div>
-              {showCategoryError && (
-                <p className="text-danger p-dan-text">ক্যাটেগরি পুরণ করুন</p>
-              )}
-            </div>
-            <div>
-              <lebel>সাব-ক্যাটেগরি </lebel> <br />
-              <input
-                className="sub-catogories-input"
-                type="text"
-                id="books-sub-categories-inputs"
-                ref={subcategoryRef}
-                value={subcategory}
-                onChange={(e) => {
-                  setSubcategory(e.target.value);
-                  setShowSubcategoryError(false);
-                }}
-              />
-            </div>
-            <button
-              onClick={handleAddTodo}
-              className="songrokkhon-button"
-              type="submit"
-            >
-              সংরক্ষন করুন
-            </button>
-          </div>
-          <div className="col-xl-4 col-lg-5 col-md-5 col-sm-12 col-12">
-            <div>
-              {todos.length === 0 ? (
-                <p>ক্যাটাগরি / সাব-ক্যাটাগরি যোগ করুন</p>
-              ) : (
-                <ul>
-                  {todos.map((todo, index) => (
-                    <li key={index}>
-                      <div className="catagories-topics">
-                        <InterestsIcon />
-                        <span>{todo.category}</span>
-                        {todo.selectedCategory && (
-                          <span>{todo.selectedCategory}</span>
-                        )}
-                        {todo.subcategory && <span> - {todo.subcategory}</span>}
-                        <CreateIcon onClick={() => handleEditTodo(index)} />
-                        <CloseIcon onClick={() => handleDeleteTodo(index)} />
-                        {selectedCategory !== "" && (
-                          <SaveIcon onClick={() => handleSaveTodo(index)} />
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* <div className="catagories-topics-div">
-
-                <div className="catagories-topics">
-                  <InterestsIcon />
-                  <p>আইন ও বিধি</p>
-                  <CreateIcon />
-                  <CloseIcon />
+              <form onSubmit={handleSubmit}>
+                <div className="categories-div">
+                  <input
+                    className="catogories-input"
+                    id="books-categories-inputs"
+                    type="text"
+                    placeholder="ক্যাটাগরি নাম"
+                    name="CatagoryName"
+                    value={catagoryName}
+                    onChange={handleInputChange}
+                  />
                 </div>
-              
-              </div> */}
+                <button
+                  // onClick={handleAddTodo}
+                  className="songrokkhon-button"
+                  type="submit"
+                >
+                  সংরক্ষন করুন
+                </button>
+              </form>
+            </div>
+          </div>
+          <div className="col-xl-6 col-lg-5 col-md-5 col-sm-12 col-12">
+            <div>
+              <lebel>ক্যাটাগরি লিস্ট</lebel> <br />
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+              />
             </div>
           </div>
         </div>
