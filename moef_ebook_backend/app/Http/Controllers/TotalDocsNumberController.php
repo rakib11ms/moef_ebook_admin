@@ -24,9 +24,8 @@ class TotalDocsNumberController extends Controller
         $numberToBangla = new NumberToBangla();
         $singleDocs = $numberToBangla->bnNum(SingleDocument::all()->count());
         $bookChapter = $numberToBangla->bnNum(BookChapter::all()->count());
-        // $booksMaster = $numberToBangla->bnNum(BooksMaster::all()->count());
-        $booksMaster = DB::table('main_books')->distinct()->count('book_id');
-        // DB::table('main_books')->distinct()->count('book_id');
+        $booksMaster = $numberToBangla->bnNum(BooksMaster::all()->count());
+        // $booksMaster = DB::table('main_books')->distinct()->count('book_id');
 
         // return as an array
         return response()->json([

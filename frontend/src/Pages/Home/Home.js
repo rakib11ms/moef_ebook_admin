@@ -178,6 +178,7 @@ const Home = (props) => {
     }
     axios.post("api/books", masterBookData).then((res) => {
       if (res.data.status === 200) {
+        document.getElementById('form1').reset();
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
         setRenderData(res.data)
         setCatID('');
@@ -446,7 +447,7 @@ const Home = (props) => {
                     </div>
                   </div>
 
-                  <form onSubmit={SubmitBookMaster} id="myForm">
+                  <form onSubmit={SubmitBookMaster} id="form1">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -472,7 +473,7 @@ const Home = (props) => {
                               id="add-book-categories"
                               required
                             >
-                              <option selected disabled value={CatID}>
+                              <option selected  value="">
                                 ক্যাটাগরি নির্বাচন করুন
                               </option>
                               {categories.map((category, index) => {
@@ -540,7 +541,7 @@ const Home = (props) => {
                             aria-label="Default select example"
                             id="add-book-vasha"
                           >
-                            <option selected disabled value={LanguageID}>
+                            <option selected  value="">
                               ভাষা নির্বাচন করুন{" "}
                             </option>
                             {languages.map((language, index) => {
@@ -609,7 +610,7 @@ const Home = (props) => {
                               onChange={(e)=>setBookID(e.target.value)}
 
                             >
-                              <option selected disabled value={BookID}>
+                              <option selected value="">
                                 বই নির্নয় করুন
                               </option>
                               {books.map((book, index) => {
@@ -673,7 +674,7 @@ const Home = (props) => {
                               name="BookID"
                               id="add-paragraph-book-nirnoy"
                             >
-                              <option selected disabled>
+                              <option selected value="">
                                 বই যোগ করুন{" "}
                               </option>
                               {books.map((item, i) => {
@@ -705,7 +706,7 @@ const Home = (props) => {
                               name="chapterID"
                               id="add-paragraph-nirnoy"
                             >
-                              <option selected disabled>
+                              <option selected value="">
                                 {" "}
                                 অধ্যায় সমগ্র{" "}
                               </option>
@@ -762,7 +763,7 @@ const Home = (props) => {
                               name="BookID"
                               id="add-page-book-selection"
                             >
-                              <option selected disabled>
+                              <option selected value="">
                                 বই নির্বাচন করুন
                               </option>
                               {books.map((item, i) => {
@@ -795,7 +796,7 @@ const Home = (props) => {
                               name="ChapterID"
                               id="add-page-chapter-selection"
                             >
-                              <option selected disabled>
+                              <option selected value="">
                                 অধ্যায় নির্বাচন করুন
                               </option>
                               {chapters.map((item, i) => {
@@ -827,7 +828,7 @@ const Home = (props) => {
                               name="ParagraphID"
                               id="add-page-paragraph-selection"
                             >
-                              <option selected>অনুচ্ছেদ নির্বাচন করুন </option>
+                              <option selected value="">অনুচ্ছেদ নির্বাচন করুন </option>
                               {allParagraphs.map((item, i) => {
                                 return (
                                   <>
