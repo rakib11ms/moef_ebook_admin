@@ -176,10 +176,13 @@ const NavigationBa = () => {
               {showSubmenu2 && (
                 <ul>
                   <li className="side-li-link">
-                    <Link to="/all-books">সকল ডকুমেস্টস</Link>
+                    <Link to="/all-books">সকল বই</Link>
                   </li>
                   <li className="side-li-link">
                     <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
+                  </li>
+                  <li className="side-li-link">
+                    <Link to="/book-categories">সকল ডকুমেন্টস</Link>
                   </li>
                 </ul>
               )}

@@ -104,91 +104,6 @@ const Home = (props) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  const handleUploadButtonClick = () => {
-    // handle the upload logic here
-    // console.log(selectedFile);
-  };
-
-  const [inputs, setInputs] = useState({
-    CatID: "",
-    Title: "",
-    publisher_id: "",
-    BookCoverImage: "",
-    language_id: "",
-    Publish_date: startDate,
-    File_url: "",
-    created_by: "",
-    AuthorID: "",
-    ParagraphName: "",
-    BookID: "",
-    ChapterID: "",
-    ParagraphID: "",
-  });
-
-  
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    document.getElementById("myForm").reset();
-
-    axios.post("api/books", inputs).then((res) => {
-      if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success');
-
-        setRenderData(res.data)
-        setInputs({
-          CatID: "",
-          Title: "",
-          publisher_id: "",
-          BookCoverImage: "",
-          language_id: "",
-          Publish_date: "",
-          File_url: "",
-          created_by: "",
-          AuthorID: "",
-          ParagraphName: "",
-          BookID: "",
-          ChapterID: "",
-          ParagraphID: "",
-        });
-      }
-    });
-  };
-
-  const [chapterInputs, setChapterInputs] = useState({
-    ChapterName: "",
-    BookID: "",
-  });
-
-  const handleChapterChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setChapterInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  // const fetchBooks = () => {
-  //   axios.get("api/books").then((res) => {
-  //     if (res.data.books_masters) {
-  //       setBooks(res.data.books_masters);
-  //     }
-  //   });
-  // };
-
-
-
-  const mainBookData = {
-    book_id: inputs.BookID,
-    chapter_id: inputs.ChapterID,
-    paragraph_id: inputs.ParagraphID,
-    content: content,
-  };
-
 
 
   const [categories, setCategories] = useState([]);
@@ -557,7 +472,7 @@ const Home = (props) => {
                               id="add-book-categories"
                               required
                             >
-                              <option selected disabled>
+                              <option selected disabled value={CatID}>
                                 ক্যাটাগরি নির্বাচন করুন
                               </option>
                               {categories.map((category, index) => {
@@ -625,7 +540,7 @@ const Home = (props) => {
                             aria-label="Default select example"
                             id="add-book-vasha"
                           >
-                            <option selected disabled>
+                            <option selected disabled value={LanguageID}>
                               ভাষা নির্বাচন করুন{" "}
                             </option>
                             {languages.map((language, index) => {
@@ -694,7 +609,7 @@ const Home = (props) => {
                               onChange={(e)=>setBookID(e.target.value)}
 
                             >
-                              <option selected disabled>
+                              <option selected disabled value={BookID}>
                                 বই নির্নয় করুন
                               </option>
                               {books.map((book, index) => {

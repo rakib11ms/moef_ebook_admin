@@ -61,12 +61,12 @@ const AllNewsAndNotice = () => {
 
   const columns = [
     { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
-    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 150 },
-    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 150 },
+    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 250 },
+    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 250 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
-      width: 120,
+      width: 250,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <Link to={`/update-news-notice/${params.row.id}`}>
@@ -78,7 +78,7 @@ const AllNewsAndNotice = () => {
     {
       field: 'delete',
       headerName: 'ডিলিট করুন ',
-      width: 120,
+      width: 250,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           {/* sweet alert for confirm delete */}
@@ -140,7 +140,7 @@ const AllNewsAndNotice = () => {
         </section>
         <section className="container-fluid">
           <div className="row">
-            <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
+            <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বিজ্ঞপ্তি</h5>
                 <div className="news-notice-search-input-div ">
@@ -171,43 +171,7 @@ const AllNewsAndNotice = () => {
               />
               </div>
             </div>
-            <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-              <div className="all-notice-news-add-card-div">
-                <div className="all-notice-news-side-tags">
-                  {selectedText && <p>{selectedText}</p>}
-                  <span className="icon-pen">
-                    <CreateIcon />
-                  </span>
-                </div>
-                <hr />
-                <div className="download-icon-div">
-                  <DownloadForOfflineRoundedIcon className="download-icon" />
-                </div>
-                <div className="suchi-div">
-                  <p>
-                    <strong>{selectedNotice && <p>{selectedNotice}</p>}</strong>
-                  </p>
-
-                  <p>বিষয় বস্তু: </p>
-                </div>
-                <div className="all-books-buttons-ful-div">
-                  <div className="all-news-notice-edit-div">
-                    <Link to="/create-news-notice">
-                      <button className="all-books-edit">এডিট করুন</button>
-                    </Link>
-                  </div>
-                  {/* <div className="all-books-edit-div mt-2">
-                    <button className="all-books-content">
-                      <span>
-                        <AddRoundedIcon />
-                      </span>{" "}
-                      কন্টেন্ট যোগ করুন{" "}
-                    </button>
-                  </div> */}
-                </div>
-              </div>
-              <div></div>
-            </div>
+          
           </div>
         </section>
         <section>
