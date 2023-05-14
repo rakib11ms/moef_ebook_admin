@@ -61,10 +61,10 @@ function SignUp() {
       axios.post("api/register", input).then((res) => {
         if (res.data.status === 200) {
           Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Registration Successful',
-          })
+            icon: "success",
+            title: "Success",
+            text: "Registration Successful",
+          });
           // redirect to login page
           window.location.href = "/";
         } else {
@@ -135,49 +135,56 @@ function SignUp() {
                       <input
                         onChange={handleChange}
                         type="text"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-text"
                         name="userID"
                         placeholder="আপনার ইউজার আইডি"
                       />
                       <input
                         onChange={handleChange}
                         type="name"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-name"
                         name="UserName"
                         placeholder="নাম"
                       />
                       <input
                         onChange={handleChange}
                         type="number"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-number"
                         name="userPhone"
                         placeholder="ফোন নম্বর"
                       />
                       <input
                         onChange={handleChange}
                         type="email"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-email"
                         name="email"
                         placeholder="ইমেইল"
                       />
                       <input
                         onChange={handleChange}
                         type="text"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-text-two"
                         name="OfficeID"
                         placeholder="অফিস আইডি"
                       />
                       <input
                         onChange={handleChange}
                         type="password"
-                        className="form-control"
+                        className="form-control signUp-inputs"
+                        id="sign-password"
                         name="password"
                         placeholder="পাসওয়ার্ড দিন"
                       ></input>
                       <input
                         onChange={handleChange}
                         type="password"
-                        className="form-control "
+                        className="form-control signUp-inputs "
+                        id="sign-password-again"
                         name="confirm_password"
                         placeholder="পুনরায় পাসওয়ার্ড দিন"
                       ></input>{" "}
@@ -198,12 +205,12 @@ function SignUp() {
               </div>
             </div>
 
-            <div className="">
-              <div className="row container sign-up-footer">
+            <div className="container">
+              <div className="row  sign-up-footer">
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 footer-div1">
                   <div className="login-footer-div">
                     <div className="footer-download-text">
-                      <a href="#">
+                      <a href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib  ">
                         {" "}
                         <h6>Download</h6>
                       </a>
@@ -214,8 +221,17 @@ function SignUp() {
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                   <div className="signup-footer-logos">
-                    <img className="login-logos" src={bangladeshLogo} alt="" />
-                    <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                    <Link to="http://www.moef.gov.bd/">
+                      <img
+                        className="login-logos"
+                        src={bangladeshLogo}
+                        alt=""
+                      />
+                    </Link>
+
+                    <Link to="https://pakizatvl.com/">
+                      <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                    </Link>
                   </div>
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">

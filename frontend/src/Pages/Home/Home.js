@@ -111,7 +111,7 @@ const Home = (props) => {
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
-  const [totalDocuments, setTotalDocuments] = useState('');
+  const [totalDocuments, setTotalDocuments] = useState("");
   // console.log('allParagraphs', allParagraphs)
 
   // console.log('totalDoc',totalDocuments)
@@ -358,7 +358,7 @@ const Home = (props) => {
           </div>
           <div className="col-xl-6 col-lg-7 col-md-6 col-sm-12 col-12">
             <div className="books-index-search">
-              <div className="all-books-index-show">
+              <div className="all-books-index-show" id="all-books-show-btn">
                 <Link to="/all-books">
                   <h6 className="doc-text">
                     {" "}
@@ -369,7 +369,7 @@ const Home = (props) => {
                   </h6>
                 </Link>
               </div>
-              <div className="all-books-index-show">
+              <div className="all-books-index-show" id="add-doc-btn">
                 <Link to="/add-document">
                   <h6 className="doc-text">
                     {" "}
@@ -395,9 +395,13 @@ const Home = (props) => {
       <section className="active-div container-fluid">
         <div className="clickble-div">
           <div
-            className={activeButton === 1 ? "active-button" : "inactive-button"}
+            className={
+              activeButton === 1
+                ? "active-button single-slide-div"
+                : "inactive-button single-slide-div"
+            }
             onClick={() => handleButtonClick(1)}
-            id="single-slide-div"
+            id="add-book-button"
           >
             {" "}
             <img className="img-fluid slide-img" src={bookPlusImg} alt="" />
@@ -406,9 +410,13 @@ const Home = (props) => {
           </div>
 
           <div
-            className={activeButton === 2 ? "active-button" : "inactive-button"}
+            className={
+              activeButton === 2
+                ? "active-button single-slide-div"
+                : "inactive-button single-slide-div"
+            }
             onClick={() => handleButtonClick(2)}
-            id="single-slide-div"
+            id="add-chapter-button"
           >
             {" "}
             <img className="img-fluid slide-img" src={chapter1Img} alt="" />
@@ -416,18 +424,26 @@ const Home = (props) => {
             <AddIcon />
           </div>
           <div
-            className={activeButton === 3 ? "active-button" : "inactive-button"}
+            className={
+              activeButton === 3
+                ? "active-button single-slide-div"
+                : "inactive-button single-slide-div"
+            }
             onClick={() => handleButtonClick(3)}
-            id="single-slide-div"
+            id="add-paragraph-button"
           >
             <img className="img-fluid slide-img" src={onuchhedImg} alt="" />
             <h6>অনুচ্ছেদ যোগ করুন</h6>
             <AddIcon />
           </div>
           <div
-            className={activeButton === 4 ? "active-button" : "inactive-button"}
+            className={
+              activeButton === 4
+                ? "active-button single-slide-div"
+                : "inactive-button single-slide-div"
+            }
             onClick={() => handleButtonClick(4)}
-            id="single-slide-div"
+            id="add-book-button"
           >
             <img className="img-fluid slide-img" src={pagePlusImg} alt="" />
             <h6>পেইজ যোগ করুন </h6>
