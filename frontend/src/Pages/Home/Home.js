@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NavigationBa from "../Shared/NavigationBa/NavigationBa";
@@ -66,7 +66,7 @@ function a11yProps(index) {
 
 const Home = (props) => {
   const [renderData, setRenderData] = useState("");
-
+  const editor = useRef(null);
   useEffect(() => {
     axios.get("api/total-document-count").then((res) => {
       if (res.data) {
@@ -115,7 +115,7 @@ const Home = (props) => {
     publisher_id: "",
     BookCoverImage: "",
     language_id: "",
-    publish_date: "",
+    Publish_date: startDate,
     File_url: "",
     created_by: "",
     AuthorID: "",
@@ -124,6 +124,8 @@ const Home = (props) => {
     ChapterID: "",
     ParagraphID: "",
   });
+
+  
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -138,7 +140,7 @@ const Home = (props) => {
     axios.post("api/books", inputs).then((res) => {
       if (res.data.status === 200) {
         Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success');
-        
+
         setRenderData(res.data)
         setInputs({
           CatID: "",
@@ -146,7 +148,7 @@ const Home = (props) => {
           publisher_id: "",
           BookCoverImage: "",
           language_id: "",
-          publish_date: "",
+          Publish_date: "",
           File_url: "",
           created_by: "",
           AuthorID: "",
@@ -178,55 +180,8 @@ const Home = (props) => {
   //   });
   // };
 
-  const handleChapterSubmit = (event) => {
-    event.preventDefault();
-    axios.post("api/bookChapter", chapterInputs).then((res) => {
-      if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        setRenderData(res.data)
-        setInputs({
-          CatID: "",
-          Title: "",
-          publisher_id: "",
-          BookCoverImage: "",
-          language_id: "",
-          publish_date: "",
-          File_url: "",
-          created_by: "",
-          AuthorID: "",
-          ParagraphName: "",
-          BookID: "",
-          ChapterID: "",
-          ParagraphID: "",
-        });
-      }
-    });
-  };
-  const handleParagraphSubmit = (event) => {
-    event.preventDefault();
-    // console.log('paragraph check',inputs)
-    axios.post("api/bookParagraph", inputs).then((res) => {
-      if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        setRenderData(res.data)
-        setInputs({
-          CatID: "",
-          Title: "",
-          publisher_id: "",
-          BookCoverImage: "",
-          language_id: "",
-          publish_date: "",
-          File_url: "",
-          created_by: "",
-          AuthorID: "",
-          ParagraphName: "",
-          BookID: "",
-          ChapterID: "",
-          ParagraphID: "",
-        });
-      }
-    });
-  };
+
+
   const mainBookData = {
     book_id: inputs.BookID,
     chapter_id: inputs.ChapterID,
@@ -234,33 +189,7 @@ const Home = (props) => {
     content: content,
   };
 
-  const handlePageSubmit = (e) => {
-    e.preventDefault();
-    axios.post("api/create-main-book", mainBookData).then((res) => {
-      if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        setRenderData(res.data)
 
-        setInputs({
-          CatID: "",
-          Title: "",
-          publisher_id: "",
-          BookCoverImage: "",
-          language_id: "",
-          publish_date: "",
-          File_url: "",
-          created_by: "",
-          AuthorID: "",
-          ParagraphName: "",
-          BookID: "",
-          ChapterID: "",
-          ParagraphID: "",
-        })
-        
-
-      }
-    });
-  };
 
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -305,12 +234,124 @@ const Home = (props) => {
     });
   }, [renderData]);
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-    setInputs({ publish_date: formattedDate });
-  }, []);
+  //allstates 
 
+  const[Title,setTitle]=useState('');
+  const[CatID,setCatID]=useState('');
+  const[PublisherID,setPublisherID]=useState('');
+  const[Publish_date,setPublish_date]=useState('');
+  const[AuthorID,setAuthorID]=useState('');
+  const[LanguageID,setLanguageID]=useState('');
+
+  const[BookID,setBookID]=useState('');
+  const[ChapterID,setChapterID]=useState('');
+  const[ParagraphID,setParagraphID]=useState('');
+  const[ChapterName,setChapterName]=useState('');
+  const[ParagraphName,setParagraphName]=useState('');
+  
+
+  
+  const SubmitBookMaster = (e) => {
+    e.preventDefault();
+    const masterBookData={
+      CatID:CatID,
+      Title:Title,
+      PublisherID:PublisherID,
+      Publish_date:Publish_date,
+      AuthorID:AuthorID,
+      LanguageID:LanguageID
+    }
+    axios.post("api/books", masterBookData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        setRenderData(res.data)
+        setCatID('');
+        setLanguageID('');
+        setPublish_date('');
+        setPublisherID('');
+        setAuthorID('');
+        setTitle('')
+ 
+
+      }
+    });
+  };
+
+  const handleChapterSubmit = (event) => {
+    event.preventDefault();
+    const  chapterData={
+     BookID:BookID,
+     ChapterName:ChapterName
+    }
+    axios.post("api/bookChapter", chapterData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        setRenderData(res.data)
+        setChapterName('');
+        setBookID('')
+    
+      }
+    });
+  };
+  
+
+  const handleParagraphSubmit = (event) => {
+    event.preventDefault();
+    const  paragraphData={
+      BookID:BookID,
+      ChapterID:ChapterID,
+      ParagraphName:ParagraphName
+     }
+     axios.post("api/bookParagraph", paragraphData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        setRenderData(res.data)
+     
+      }
+    });
+  };
+
+  const handlePageSubmit = (e) => {
+    e.preventDefault();
+    const  pageData={
+      book_id:BookID,
+      chapter_id:ChapterID,
+      paragraph_id:ParagraphID,
+      content:content
+     }
+    axios.post("api/create-main-book", pageData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        setRenderData(res.data)
+
+      
+      }
+    });
+  };
+
+    //dependent dropdowns
+
+
+    useEffect(()=>{
+      if(BookID){
+        axios.get(`api/get-dependent-chapters-by-book-master-id/${BookID}`).then((res) => {
+          if (res.data.book_chapters) {
+            setchapters(res.data.book_chapters)
+          }
+        });
+      }
+      if(ChapterID){
+        axios.get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`).then((res) => {
+          if (res.data.book_paragraphs) {
+            setallParagraphs(res.data.book_paragraphs)
+          }
+        });
+      }
+  
+
+    },[BookID,ChapterID])
+  
+  
   return (
     <div>
       <section>
@@ -490,17 +531,18 @@ const Home = (props) => {
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} id="myForm">
+                  <form onSubmit={SubmitBookMaster} id="myForm">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                          <lebel>বই এর নাম </lebel> <br />
+                          <lebel>বই এর নাম *</lebel> <br />
                           <input
                             className="home-input allField"
                             type="text"
                             name="Title"
-                            value={inputs.bookname}
-                            onChange={handleChange}
+                            value={Title}
+                            onChange={(e)=>setTitle(e.target.value)}
+                            required
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -508,11 +550,12 @@ const Home = (props) => {
                           <div className="d-flex border align-items-center">
                             <select
                               name="CatID"
-                              // value={inputs.category}
-                              onChange={handleChange}
+                              value={CatID}
+                              onChange={(e)=>setCatID(e.target.value)}
                               className="form-select select-category allField"
                               aria-label="Default select example"
                               id="add-book-categories"
+                              required
                             >
                               <option selected disabled>
                                 ক্যাটাগরি নির্বাচন করুন
@@ -534,33 +577,42 @@ const Home = (props) => {
                           </div>
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                          <lebel> লেখক এর নাম </lebel> <br />
+                          <lebel> লেখক এর নাম *</lebel> <br />
                           <input
                             name="AuthorID"
-                            value={inputs.authorname}
-                            onChange={handleChange}
+                            onChange={(e)=>setAuthorID(e.target.value)}
                             className="home-input allField"
                             type="text"
+                            required
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                          <lebel>প্রকাশক </lebel> <br />
+                          <lebel>প্রকাশক *</lebel> <br />
                           <input
-                            name="publisher_id"
-                            value={inputs.publishername}
-                            onChange={handleChange}
+                            name="PublisherID"
+                            value={PublisherID}
+                            onChange={(e)=>setPublisherID(e.target.value)}
                             className="home-input allField"
                             type="text"
+                            required
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                          <lebel> প্রকাশ কাল </lebel> <br />
-                          <ReactDatePicker
+                          <lebel> প্রকাশ কাল *</lebel> <br />
+                          {/* <ReactDatePicker
                             className="home-input allField"
-                            name="publish_date"
-                            value={inputs.publicationdate}
+                            name="Publish_date"
+                            value={inputs.Publish_date}
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
+                          /> */}
+
+                          <input type="date"     className="home-input allField"
+                            name="Publish_date"
+                            value={Publish_date}
+                            selected={startDate}
+                            onChange={(e)=>setPublish_date(e.target.value)}
+                            required
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -568,7 +620,7 @@ const Home = (props) => {
                           <select
                             name="language_id"
                             // value={inputs.language}
-                            onChange={handleChange}
+                            onChange={(e)=>setLanguageID(e.target.value)}
                             className=" select-category2 allField"
                             aria-label="Default select example"
                             id="add-book-vasha"
@@ -586,7 +638,7 @@ const Home = (props) => {
                           </select>
                         </div>
                       </div>
-                      <div>
+                      {/* <div>
                         <input
                           type="file"
                           id="fileInput"
@@ -596,7 +648,7 @@ const Home = (props) => {
                         <label htmlFor="fileInput" className="btn btn-warning">
                           <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
                         </label>
-                      </div>
+                      </div> */}
                       <div className="home-input-button-div">
                         <button className="home-input-button1">খসড়া </button>
                         <button className="home-input-button2">
@@ -626,8 +678,8 @@ const Home = (props) => {
                             className="home-input allField"
                             type="text"
                             name="ChapterName"
-                            value={inputs.chaptername}
-                            onChange={handleChapterChange}
+                            value={ChapterName}
+                            onChange={(e)=>setChapterName(e.target.value)}
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -635,11 +687,12 @@ const Home = (props) => {
                           <div className="d-flex border align-items-center">
                             <select
                               name="BookID"
-                              onChange={handleChapterChange}
                               // onClick={fetchBooks}
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               id="add-chapter-book-nirnoy"
+                              onChange={(e)=>setBookID(e.target.value)}
+
                             >
                               <option selected disabled>
                                 বই নির্নয় করুন
@@ -689,9 +742,9 @@ const Home = (props) => {
                           <input
                             className="home-input"
                             type="text"
-                            onChange={handleChange}
+                            onChange={(e)=>setParagraphName(e.target.value)}
                             name="ParagraphName"
-                            value={inputs.ParagraphName}
+                            value={ParagraphName}
                           />
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
@@ -700,8 +753,8 @@ const Home = (props) => {
                             <select
                               class="form-select select-category allField"
                               aria-label="Default select example"
-                              value={inputs.BookID}
-                              onChange={handleChange}
+                              value={BookID}
+                              onChange={(e)=>setBookID(e.target.value)}
                               name="BookID"
                               id="add-paragraph-book-nirnoy"
                             >
@@ -732,8 +785,8 @@ const Home = (props) => {
                             <select
                               class="form-select select-category allField"
                               aria-label="Default select example"
-                              value={inputs.ChapterID}
-                              onChange={handleChange}
+                              value={ChapterID}
+                              onChange={(e)=>setChapterID(e.target.value)}
                               name="chapterID"
                               id="add-paragraph-nirnoy"
                             >
@@ -789,8 +842,8 @@ const Home = (props) => {
                             <select
                               class="form-select select-category allField"
                               aria-label="Default select example"
-                              value={inputs.BookID}
-                              onChange={handleChange}
+                              value={BookID}
+                              onChange={(e)=>setBookID(e.target.value)}
                               name="BookID"
                               id="add-page-book-selection"
                             >
@@ -822,8 +875,8 @@ const Home = (props) => {
                             <select
                               class="form-select select-category allField"
                               aria-label="Default select example"
-                              value={inputs.ChapterID}
-                              onChange={handleChange}
+                              value={ChapterID}
+                              onChange={(e)=>setChapterID(e.target.value)}
                               name="ChapterID"
                               id="add-page-chapter-selection"
                             >
@@ -854,8 +907,8 @@ const Home = (props) => {
                             <select
                               class="form-select select-category allField"
                               aria-label="Default select example"
-                              value={inputs.ParagraphID}
-                              onChange={handleChange}
+                              value={ParagraphID}
+                              onChange={(e)=>setParagraphID(e.target.value)}
                               name="ParagraphID"
                               id="add-page-paragraph-selection"
                             >
@@ -881,6 +934,9 @@ const Home = (props) => {
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
                           <JoditEditor
                             value={content}
+                            ref={editor}
+                            // config={config}
+
                             onChange={setContent}
                             height={400}
                             // spellcheck={false}

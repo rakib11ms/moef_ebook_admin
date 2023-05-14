@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookParagraph;
+use App\Models\BookChapter;
 use Illuminate\Http\Request;
 
 
@@ -24,7 +25,7 @@ class BookParagraphController extends Controller
         $bookParagraph = new bookParagraph();
         $bookParagraph->ParagraphName=$request->ParagraphName;
         $bookParagraph->BookID=$request->BookID;
-        $bookParagraph->ChapterID=$request->chapterID;
+        $bookParagraph->ChapterID=$request->ChapterID;
         $bookParagraph->save();
         return response()->json(
             [
@@ -66,6 +67,25 @@ class BookParagraphController extends Controller
             [
                 'status'=>200,
                 'message'=>'Book Paragraph deleted successfully'
+            ]
+        );
+    }
+    public function getChaptersByBookMaster($id){
+        $book_chapters = BookChapter::where('BookID',$id)->get();
+   return response()->json(
+            [
+                'status'=>200,
+                'book_chapters'=>$book_chapters
+            ]
+        );
+    }
+
+     public function getParagraphsByChapter($id){
+      $book_paragraphs = BookParagraph::where('ChapterID',$id)->get();
+   return response()->json(
+            [
+                'status'=>200,
+                'book_paragraphs'=>$book_paragraphs
             ]
         );
     }

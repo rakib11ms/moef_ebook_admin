@@ -25,13 +25,13 @@ class BooksMasterController extends Controller
         $booksMaster->CatID = $request->CatID;
         $booksMaster->Title = $request->Title;
         $booksMaster->short_desc = $request->short_desc;
-        $booksMaster->publisherId = $request->publisher_id;
+        $booksMaster->PublisherID = $request->PublisherID;
         $booksMaster->BookCoverImage = $request->BookCoverImage;
-        $booksMaster->languageId = $request->language_id;
-        $booksMaster->publish_date = $request->publish_date;
+        $booksMaster->LanguageID= $request->LanguageID;
+        $booksMaster->Publish_date = $request->Publish_date;
         $booksMaster->file_url = $request->file_url;
         $booksMaster->created_by = $request->created_by;
-        $booksMaster->AuthorId = $request->AuthorID;
+        $booksMaster->AuthorID = $request->AuthorID;
         $booksMaster->save();
         return response()->json(
             [
