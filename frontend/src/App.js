@@ -36,6 +36,8 @@ import ForgotPasswordRequest from "./Pages/Auth/ForgotPasswordRequest";
 import ForgotPasswordConfirm from "./Pages/Auth/ForgotPasswordConfirm";
 import PrivacyPolicies from "./Pages/Shared/Privacy&Policies/Privacy&Policies";
 import ViewBooks from "./Pages/AllBooks/ViewBooks/ViewBooks";
+import AllDocuments from "./Pages/AllBooks/AllDocuments/AllDocuments";
+import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -89,6 +91,8 @@ function App() {
           <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
           <Route path="/categories-news" element={<CategoriesNews />} />
           <Route path="/privacy-policies" element={<PrivacyPolicies />} />
+          <Route path="/all-documents" element={<AllDocuments />} />
+          <Route path="/edit-document/:id" element={<EditDocument />} />
         </Routes>
       )}
     </div>
