@@ -67,6 +67,7 @@ ul.sidebar-lower-ul {
   font-size: 1rem;
   cursor: pointer;
   padding-top: 2px;
+  padding-bottom: 20px;
 }
 .side-li-link {
   padding: 7px 0px;
@@ -130,6 +131,9 @@ ul.sidebar-lower-ul {
 .sidebar-lower-news-div {
   height: 130px;
 }
+.sidebar-lower-div{
+  height: 20vh;
+}
 .sidebar-lower-div-vertual {
   height: 100px;
   margin-top: 10px;
@@ -164,13 +168,11 @@ ul.sidebar-lower-ul {
     cursor: pointer;
     padding-top: 15%;
   }
+ 
   .sidebar-lower-div {
-    /* padding-bottom: 128%; */
-  }
-  .sidebar-lower-div {
-    height: 160px !important;
+    height: 130px !important;
     /* border: 1px solid gray; */
-    margin-top: -7px;
+    /* margin-top: -17px; */
   }
   .sidebar-lower-div-vertual {
     height: 100px;
