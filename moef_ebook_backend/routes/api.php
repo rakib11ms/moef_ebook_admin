@@ -28,6 +28,7 @@ use App\Http\Controllers\BookSubCategoryController;
 use App\Http\Controllers\MainBookController;
 use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\ChatController;
 
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
@@ -84,3 +85,6 @@ Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   {
     Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 });
 
+
+
+Route::post('sendmessage', [ChatController::class, 'sendMessage']);

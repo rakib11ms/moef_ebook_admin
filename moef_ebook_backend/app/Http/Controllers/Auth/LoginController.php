@@ -40,17 +40,21 @@ class LoginController extends Controller
             if($user->ActiveStatus == false) {
                 $response = [
                     'status' => 400,
-                    'message' => 'User is deleted'
+                    'message' => 'User is inactive'
                 ];
                 return response($response, 400);
             }
             $token = $user->createToken('auth-token')->plainTextToken;
-            $response = [
-                'status' => 200,
+            $user_data=User::find($user->id);
+            $user_data->device_token=$request->device_token;
+            $user_data->update();
+
+            return response()->json([
+                'status'=>200,
                 'user' => $user,
                 'token' => $token
-            ];
-            return response($response, 200);
+            ]);
+         
         } 
 
     }

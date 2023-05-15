@@ -25,6 +25,7 @@ return new class extends Migration
                 $table->boolean('isVerified')->default(false);
                 $table->boolean('ActiveStatus')->default(true);
                 $table->timestamp('last_used_time')->nullable();
+                $table->timestamp('device_token')->nullable();
             $table->timestamps();
         });
     }
