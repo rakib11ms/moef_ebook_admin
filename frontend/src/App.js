@@ -38,6 +38,7 @@ import PrivacyPolicies from "./Pages/Shared/Privacy&Policies/Privacy&Policies";
 import ViewBooks from "./Pages/AllBooks/ViewBooks/ViewBooks";
 import AllDocuments from "./Pages/AllBooks/AllDocuments/AllDocuments";
 import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
+import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -93,6 +94,7 @@ function App() {
           <Route path="/privacy-policies" element={<PrivacyPolicies />} />
           <Route path="/all-documents" element={<AllDocuments />} />
           <Route path="/edit-document/:id" element={<EditDocument />} />
+          <Route path="/view-documents/:id" element={<ViewDocuments />} />
         </Routes>
       )}
     </div>

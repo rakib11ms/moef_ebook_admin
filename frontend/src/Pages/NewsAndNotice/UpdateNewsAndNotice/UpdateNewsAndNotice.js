@@ -27,7 +27,7 @@ const UpdateNewsAndNotice = () => {
 
   const navigate=useNavigate();
   const [startDate, setStartDate] = useState(new Date());
-  const [content, setContent] = useState();
+  const [content, setContent] = useState('');
 
   const $user = JSON.parse(localStorage.getItem('user'));
 
@@ -55,7 +55,14 @@ const UpdateNewsAndNotice = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    e.preventDefault();
+    if(Title===''){
+      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+      return;
+    } else if(content.trim()==='<p><br></p>' || content.trim()===''){
+      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+      return;
+    }
+    // console.log(Title, content);
     // const formData = new FormData();
     // formData.append("Title", Title);
     // formData.append("Description", content);

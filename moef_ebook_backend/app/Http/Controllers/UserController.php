@@ -13,9 +13,17 @@ class UserController extends Controller
         //return only username, email and phone number
         $users = $users->map(function ($user) {
             return [
+                'id' => $user->id,
                 'UserName' => $user->UserName,
                 'userEmail' => $user->email,
-                'userPhone' => $user->userPhone
+                'userPhone' => $user->userPhone,
+                'userID' => $user->userID,
+                'officeID' => $user->OfficeID,
+                'userRole' => $user->userRoleName,
+                'activeStatus' => $user->ActiveStatus,
+                'created_at' => $user->created_at,
+                'userImage' => $user->userImage ?? 'default.png'
+
             ];
         });
 
@@ -33,9 +41,16 @@ class UserController extends Controller
         
         //return onlt username, email and phone number
         $userInfo = [
+            'id' => $user->id,
             'UserName' => $user->UserName,
             'userEmail' => $user->email,
-            'userPhone' => $user->userPhone
+            'userPhone' => $user->userPhone,
+            'userID' => $user->userID,
+            'officeID' => $user->OfficeID,
+            'userRole' => $user->userRoleName,
+            'activeStatus' => $user->ActiveStatus,
+            'created_at' => $user->created_at,
+            'userImage' => $user->userImage ?? 'default.png'
         ];
 
         return response()->json(

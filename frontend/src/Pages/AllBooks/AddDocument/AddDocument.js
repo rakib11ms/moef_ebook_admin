@@ -77,11 +77,8 @@ const AddDocument = (props) => {
     axios.get(`/api/books`).then(res => {
       if (res.data.status == 200) {
         setAllBooks(res.data.books_masters);
-        // setLoading(false);
       }
     })
-
-
 
     axios.get(`/api/bookParagraph`).then(res => {
       if (res.data.status == 200) {
@@ -100,6 +97,7 @@ const AddDocument = (props) => {
         setAllChapters(res.data.bookChapters);
       }
     })
+
     axios.get(`/api/newsNotice`).then(res => {
       if (res.data.status == 200) {
         setAllNoticeNewsCategories(res.data.news_notice_categories)
@@ -113,6 +111,7 @@ const AddDocument = (props) => {
     })
 
   }, [])
+
   const data = {
     contents: content,
     title: documentTitle,
@@ -127,10 +126,12 @@ const AddDocument = (props) => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (content == '') {
-      Swal.fire("Please fill up fileds", '', 'warning');
+    if (content.trim() === '<p><br></p>' || content.trim() === '') {
+      Swal.fire('বিষয়বস্তু পূরণ করুন', '', 'warning')
+      return
     }
-    else {
+
+      else {
       axios.post(`/api/save-single-document`, data).then(res => {
         if (res.data.status == 200) {
           Swal.fire(res.data.message, '', 'success')
@@ -143,7 +144,6 @@ const AddDocument = (props) => {
       
       })
     }
-
   }
 
 
@@ -162,8 +162,6 @@ const AddDocument = (props) => {
               <input type="text" className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 " placeholder="টাইটেল যোগ করুন " id="editInp" value={documentTitle} onChange={(e) => setdocumentTitle(e.target.value)
               } />
             </h3>
-
-
 
             <EditIcon
               className="mt-1 " style={{ cursor: "pointer" }}
@@ -302,7 +300,7 @@ const AddDocument = (props) => {
                 {isOpen && (
                   <div>
                     <div className="doc-suchi-div">
-                      <div>
+                      {/* <div>
                         <label
                           for="exampleFormControlInput1"
                           class="form-label"
@@ -361,7 +359,7 @@ const AddDocument = (props) => {
                           }
 
                         </select>
-                      </div>
+                      </div> */}
                       <div>
                         <label
                           for="exampleFormControlInput1"

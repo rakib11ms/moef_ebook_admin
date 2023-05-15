@@ -29,6 +29,7 @@ class NewsNoticeController extends Controller
         $newsNotice->redirect_url = $request->redirect_url;
         // $newsNotice->created_by = auth('sanctum')->user()->UserID;
         $newsNotice->created_by = $request->created_by;
+<<<<<<< HEAD
    
 
 
@@ -64,6 +65,10 @@ $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all(
         $response = curl_exec($ch);
          $newsNotice->save();
 
+=======
+        $newsNotice->isPublished = $request->isPublished;
+        $newsNotice->save();
+>>>>>>> 61ae0a75ddf91f265b075d6405400b7f428911f0
         return response()->json(
             [
                 'status' => 200,
@@ -87,7 +92,6 @@ $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all(
     public function update(Request $request, string $id)
     {
         $newsNotice = NewsNotice::findOrFail($id);
-        
         
         // $newsNotice->updated_by = auth('sanctum')->user()->UserID;
         $newsNotice->update($request->all());

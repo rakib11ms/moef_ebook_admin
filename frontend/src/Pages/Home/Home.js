@@ -65,6 +65,7 @@ function a11yProps(index) {
 }
 
 const Home = (props) => {
+  const $user = JSON.parse(localStorage.getItem('user'));
   const [renderData, setRenderData] = useState("");
   const editor = useRef(null);
   useEffect(() => {
@@ -78,7 +79,7 @@ const Home = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = React.useState(0);
   const [openCollapse, setOpenCollapse] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   console.log("cont", content);
 
   // active div
@@ -228,21 +229,60 @@ const Home = (props) => {
   };
 
   const handlePageSubmit = (e) => {
-    e.preventDefault();
-    const  pageData={
-      book_id:BookID,
-      chapter_id:ChapterID,
-      paragraph_id:ParagraphID,
-      content:content
-     }
-    axios.post("api/create-main-book", pageData).then((res) => {
-      if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        setRenderData(res.data)
-
-      
+    // get class name
+    // console.log(e.nativeEvent.submitter.className);
+    if(e.nativeEvent.submitter.className === 'home-input-button1'){
+      e.preventDefault();
+      if (content.trim() === '<p><br></p>' || content.trim() === '') {
+        Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
+        return;
       }
-    });
+  
+  
+      const  pageData={
+        book_id:BookID,
+        chapter_id:ChapterID,
+        paragraph_id:ParagraphID,
+        content:content,
+        isPublished: true,
+        created_by: $user.id,
+      }
+  
+      axios.post("api/create-main-book", pageData).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+          setRenderData(res.data)
+        }
+      });
+    }
+
+    if(e.nativeEvent.submitter.className === 'home-input-button2'){
+      e.preventDefault();
+      if (content.trim() === '<p><br></p>' || content.trim() === '') {
+        Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
+        return;
+      }
+  
+  
+      const  pageData={
+        book_id:BookID,
+        chapter_id:ChapterID,
+        paragraph_id:ParagraphID,
+        content:content,
+        isPublished: false,
+        created_by: $user.id,
+      }
+  
+      axios.post("api/create-main-book", pageData).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+          setRenderData(res.data)
+  
+        
+        }
+      });
+    }
+
   };
 
     //dependent dropdowns
@@ -582,7 +622,7 @@ const Home = (props) => {
                         </label>
                       </div> */}
                       <div className="home-input-button-div">
-                        <button className="home-input-button1">খসড়া </button>
+                        {/* <button className="home-input-button1">খসড়া </button> */}
                         <button className="home-input-button2">
                           প্রকাশ করুন{" "}
                         </button>
@@ -607,6 +647,7 @@ const Home = (props) => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel required>অধ্যায়ের নাম * </lebel> <br />
                           <input
+                            required
                             className="home-input allField"
                             type="text"
                             name="ChapterName"
@@ -618,6 +659,7 @@ const Home = (props) => {
                           <lebel> বই নির্নয় করুন * </lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
+                              required
                               name="BookID"
                               // onClick={fetchBooks}
                               class="form-select select-category allField"
@@ -647,7 +689,7 @@ const Home = (props) => {
                         </div>
                       </div>
                       <div className="home-input-button-div">
-                        <button className="home-input-button1">খসড়া </button>
+                        {/* <button className="home-input-button1">খসড়া </button> */}
                         <button className="home-input-button2">
                           প্রকাশ করুন{" "}
                         </button>
@@ -672,6 +714,7 @@ const Home = (props) => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel>অনুচ্ছেদের নাম * </lebel> <br />
                           <input
+                            required
                             className="home-input"
                             type="text"
                             onChange={(e)=>setParagraphName(e.target.value)}
@@ -683,6 +726,7 @@ const Home = (props) => {
                           <lebel> বই নির্নয় করুন * </lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
+                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={BookID}
@@ -715,6 +759,7 @@ const Home = (props) => {
                           <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                           <div className="d-flex border align-items-center">
                             <select
+                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={ChapterID}
@@ -746,7 +791,7 @@ const Home = (props) => {
                         </div>
                       </div>
                       <div className="home-input-button-div">
-                        <button className="home-input-button1">খসড়া </button>
+                        {/* <button className="home-input-button1">খসড়া </button> */}
                         <button className="home-input-button2">
                           প্রকাশ করুন{" "}
                         </button>
@@ -772,6 +817,7 @@ const Home = (props) => {
                           <lebel>বই নির্নয় করুন * </lebel> <br />
                           <div className="select-category-div">
                             <select
+                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={BookID}
@@ -805,6 +851,7 @@ const Home = (props) => {
                           <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
                           <div className="select-category-div">
                             <select
+                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={ChapterID}
@@ -837,6 +884,7 @@ const Home = (props) => {
                           <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
                           <div className="select-category-div">
                             <select
+                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={ParagraphID}
@@ -867,18 +915,15 @@ const Home = (props) => {
                           <JoditEditor
                             value={content}
                             ref={editor}
-                            // config={config}
-
                             onChange={setContent}
                             height={400}
-                            // spellcheck={false}
                             language="en"
                           />
                         </div>
                       </div>
                       <div className="home-input-button-div">
-                        <button className="home-input-button1">খসড়া </button>
-                        <button className="home-input-button2" type="submit">
+                        <button className="home-input-button1"> খসড়া </button>
+                        <button className="home-input-button2">
                           প্রকাশ করুন{" "}
                         </button>
                       </div>
