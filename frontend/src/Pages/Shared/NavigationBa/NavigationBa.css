@@ -119,8 +119,9 @@ ul.sidebar-lower-ul {
 .sidebar-lower-div {
   /* padding-bottom: 151px; */
   /* position: fixed; */
-  height: 100px;
-  margin-top: 10px;
+  height: 80px;
+  /* margin-top: -20px; */
+  margin-bottom: 30px;
 }
 .sidebar-lower {
   margin-bottom: 20% !important;
@@ -129,11 +130,12 @@ ul.sidebar-lower-ul {
   /* position: absolute; */
 }
 .sidebar-lower-news-div {
-  height: 130px;
+  height: 110px;
+  margin-top: 70px;
 }
-.sidebar-lower-div{
+/* .sidebar-lower-div {
   height: 20vh;
-}
+} */
 .sidebar-lower-div-vertual {
   height: 100px;
   margin-top: 10px;
@@ -168,11 +170,14 @@ ul.sidebar-lower-ul {
     cursor: pointer;
     padding-top: 15%;
   }
- 
+
   .sidebar-lower-div {
-    height: 130px !important;
+    height: 80px !important;
     /* border: 1px solid gray; */
-    /* margin-top: -17px; */
+    /* margin-bottom: 20%; */
+  }
+  .sidebar-lower-news-div {
+    margin-top: 70px;
   }
   .sidebar-lower-div-vertual {
     height: 100px;
