@@ -28,6 +28,7 @@ class NewsNoticeController extends Controller
         $newsNotice->redirect_url = $request->redirect_url;
         // $newsNotice->created_by = auth('sanctum')->user()->UserID;
         $newsNotice->created_by = $request->created_by;
+        $newsNotice->isPublished = $request->isPublished;
         $newsNotice->save();
         return response()->json(
             [
@@ -52,7 +53,6 @@ class NewsNoticeController extends Controller
     public function update(Request $request, string $id)
     {
         $newsNotice = NewsNotice::findOrFail($id);
-        
         
         // $newsNotice->updated_by = auth('sanctum')->user()->UserID;
         $newsNotice->update($request->all());

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('paragraph_id')->nullable();
             $table->longText('book_content')->nullable();
             $table->string('created_by')->nullable();
+            $table->string('isPublished')->default(false);
             $table->timestamps();
         });
     }

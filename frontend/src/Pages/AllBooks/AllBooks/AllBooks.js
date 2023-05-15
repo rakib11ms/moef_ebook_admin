@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
-import bookLogoImg from "../../../images/book.png";
-import bookLogoImg1 from "../../../images/onuchhed1.png";
 import "./AllBooks.css";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DataGrid } from '@mui/x-data-grid';
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -16,17 +12,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const AllBooks = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const divName = "My Div";
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   const [allBooks, setAllBooks] = useState([]);
 
@@ -39,7 +24,7 @@ const AllBooks = () => {
         console.log("error");
       }
     })
-  }, [])
+  }, []);
 
   const columns = [
     { field: 'book_name', headerName: 'বইয়ের নাম ', width: 250 },
@@ -230,38 +215,6 @@ const AllBooks = () => {
       </section>
 
       <section></section>
-
-      <section>
-        <div className="pagination-div">
-          <nav aria-label="Page navigation example">
-            <ul className="pagination justify-content-center">
-              <li className="page-item disabled">
-                <a className="page-link">Previous</a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  1
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  2
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  3
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
     </div>
   );
 };

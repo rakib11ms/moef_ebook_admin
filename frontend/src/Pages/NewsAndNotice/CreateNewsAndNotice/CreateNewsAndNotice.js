@@ -22,38 +22,10 @@ const CreateNewsAndNotice = () => {
 
   const navigate=useNavigate();
   const [startDate, setStartDate] = useState(new Date());
-  const [content, setContent] = useState();
+  const [content, setContent] = useState('');
 
-
-  // const [allNoticeNewsCategories, setAllNoticeNewsCategories] = useState([]);
-  // const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState([]);
-
-
-  useEffect(() => {
-
-    // axios.get(`/api/newsNotice`).then(res => {
-    //   if (res.data.status == 200) {
-    //     setAllNoticeNewsCategories(res.data.news_notice_categories)
-    //   }
-    // })
-
-    // axios.get(`/api/newsNoticeSub`).then(res => {
-    //   if (res.data.status == 200) {
-    //     setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories)
-    //   }
-    // })
-
-  }, [])
-
-
-  // const [documentTitle, setdocumentTitle] = useState('');
-
-  // const [notice_news_category_id, setnotice_news_category_id] = useState('');
-  // const [notice_news_subcategory_id, setnotice_news_subcategory_id] = useState('');
-  // const [redirect_url, setredirect_url] = useState('');
-
-  
   const $user = JSON.parse(localStorage.getItem('user'));
+  // console.log($user.id);
 
   // const [data, setData] = useState({
   //   Title: "",
@@ -83,36 +55,20 @@ const CreateNewsAndNotice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (content == '') {
-    //   Swal.fire("Please fill up fileds", '', 'warning');
-    // }
-    // else {
-    //   axios.post(`/api/notice`, data).then(res => {
-    //     if (res.data.status == 200) {
-    //       Swal.fire(res.data.message, '', 'success')
+    if(Title==='' || content==='<p><br></p>' || content===''){
+      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+      return;
+    }
 
-    //       // setContent('');
-    //       // setdocumentTitle('')
-    //       navigate('/all-news-notice')
-    //     }
-    //     // else if (res.data.status == 400) {
-    //     //     setjobDesc({ ...jobDesc, error_list: res.data.errors });
-    //     //     Swal.fire(jobDesc.error_list.job_id[0], '', 'error')
-
-    //     // }
-    //   })
-    // }
-
-    e.preventDefault();
     const formData = new FormData();
     formData.append("Title", Title);
     formData.append("Description", content);
     formData.append("CategoryId", "1");
     formData.append("subCatId", "1");
     formData.append("redirect_url", "/" + $user.id);
-    formData.append("created_by", "");
     formData.append("updated_by", "");
-    formData.append("isPublished", true);
+    formData.append("isPublished", 1);
+    formData.append("created_by", $user.id);
 
     axios.post(`/api/notice`, formData).then(res => {
       if (res.data.status === 200) {
@@ -122,6 +78,34 @@ const CreateNewsAndNotice = () => {
         Swal.fire(res.data.message, '', 'warning')
       }
     })
+  }
+
+  const handleDraftSubmit = (e) => {
+    e.preventDefault();
+
+    if(Title==='' || content==='<p><br></p>' || content===''){
+      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+      return;
+    }
+    const formData = new FormData();
+    formData.append("Title", Title);
+    formData.append("Description", content);
+    formData.append("CategoryId", "1");
+    formData.append("subCatId", "1");
+    formData.append("redirect_url", "/" + $user.id);
+    formData.append("updated_by", "");
+    formData.append("isPublished", 0);
+    formData.append("created_by", $user.id);
+
+    axios.post(`/api/notice`, formData).then(res => {
+      if (res.data.status === 200) {
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
+        navigate('/all-news-notice')
+      } else if (res.data.status === 400) {
+        Swal.fire(res.data.message, '', 'warning')
+      }
+    })
+
   }
 
   return (
@@ -151,11 +135,11 @@ const CreateNewsAndNotice = () => {
                 <div class="mb-3">
                   <div className="my-3">
                   <input
+                    required
                     type="text"
                     name="Title"
                     className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
                     placeholder="টাইটেল যোগ করুন "
-                    id="editInp"
                     value={Title}
                     onChange={onTitleChange}
                   />
@@ -173,7 +157,7 @@ const CreateNewsAndNotice = () => {
                     height="800"
                     autofocus="true"
                     onBlur={newContent => setContent(newContent)}
-                    onChange={newContent => { }}
+                    onChange={(newContent) => setContent(newContent)}
                   />
                   {/* <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন
@@ -181,7 +165,7 @@ const CreateNewsAndNotice = () => {
                 </div>
                 <div className="draft-prokas-buttons-div">
                   <Link >
-                    <button className="draft-button">ড্রাফট করুন</button>
+                    <button className="draft-button" onClick={handleDraftSubmit}>ড্রাফট করুন</button>
                   </Link>
                   <button className="prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
                 </div>
