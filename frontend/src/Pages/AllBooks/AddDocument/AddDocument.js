@@ -78,11 +78,7 @@ const AddDocument = (props) => {
       }
     });
 
-<<<<<<< HEAD
     axios.get(`/api/bookParagraph`).then(res => {
-=======
-    axios.get(`/api/bookParagraph`).then((res) => {
->>>>>>> 9dbe633e5bf5da83b3de3462fc97cb954542cc9a
       if (res.data.status == 200) {
         setAllParagraphs(res.data.book_paragraphs);
       }
@@ -98,14 +94,9 @@ const AddDocument = (props) => {
       if (res.data.status == 200) {
         setAllChapters(res.data.bookChapters);
       }
-<<<<<<< HEAD
     })
 
     axios.get(`/api/newsNotice`).then(res => {
-=======
-    });
-    axios.get(`/api/newsNotice`).then((res) => {
->>>>>>> 9dbe633e5bf5da83b3de3462fc97cb954542cc9a
       if (res.data.status == 200) {
         setAllNoticeNewsCategories(res.data.news_notice_categories);
       }
@@ -115,15 +106,10 @@ const AddDocument = (props) => {
       if (res.data.status == 200) {
         setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
       }
-<<<<<<< HEAD
     })
 
   }, [])
 
-=======
-    });
-  }, []);
->>>>>>> 9dbe633e5bf5da83b3de3462fc97cb954542cc9a
   const data = {
     contents: content,
     title: documentTitle,
@@ -137,7 +123,6 @@ const AddDocument = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     if (content.trim() === '<p><br></p>' || content.trim() === '') {
       Swal.fire('বিষয়বস্তু পূরণ করুন', '', 'warning')
       return
@@ -145,12 +130,6 @@ const AddDocument = (props) => {
 
       else {
       axios.post(`/api/save-single-document`, data).then(res => {
-=======
-    if (content == "") {
-      Swal.fire("Please fill up fileds", "", "warning");
-    } else {
-      axios.post(`/api/save-single-document`, data).then((res) => {
->>>>>>> 9dbe633e5bf5da83b3de3462fc97cb954542cc9a
         if (res.data.status == 200) {
           Swal.fire(res.data.message, "", "success");
 
@@ -159,13 +138,9 @@ const AddDocument = (props) => {
         }
       });
     }
-<<<<<<< HEAD
   }
 
 
-=======
-  };
->>>>>>> 9dbe633e5bf5da83b3de3462fc97cb954542cc9a
 
   return (
     <div>
