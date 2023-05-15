@@ -335,7 +335,11 @@ const NavigationBa = () => {
           <div className="nav-rightside-div">
             <div className="serchInput-icon-div">
               <SearchIcon style={{ color: "#777777" }} />
-              <input type="search" className="gsearch-nav" />
+              <input
+                id="nav-inputfield"
+                type="search"
+                className="gsearch-nav"
+              />
             </div>
 
             <div className="icons-nav-div">

@@ -44,7 +44,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault crud"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
@@ -55,7 +55,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault user-permission"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 ব্যবহারকারী ব্যাবস্থাপনা
@@ -66,9 +66,9 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-book"
               />
-              <label class="form-check-label" for="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault ">
                 বই যোগ
               </label>
             </div>
@@ -77,7 +77,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-chapter"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 অধ্যায় যোগ
@@ -88,7 +88,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-genaral-content"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সাধারণ কন্টেন্ট যোগ
@@ -99,7 +99,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault notice-news"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 নোটিশ ও নিউজ
@@ -110,7 +110,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault conferance"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 কনফারেন্স
@@ -123,7 +123,7 @@ const PermissionUser = () => {
                 value=""
                 id="flexCheckDefault"
               />
-              <label class="form-check-label" for="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault etc">
                 অন্যান্য
               </label>
             </div>
@@ -136,7 +136,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault crud2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
@@ -147,7 +147,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault user-permission2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 ব্যবহারকারী ব্যাবস্থাপনা
@@ -158,7 +158,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-book2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 বই যোগ
@@ -169,7 +169,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-chapter2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 অধ্যায় যোগ
@@ -180,7 +180,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-genaral-content2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সাধারণ কন্টেন্ট যোগ
@@ -191,7 +191,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault notice-news2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 নোটিশ ও নিউজ
@@ -202,7 +202,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault conferance2"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 কনফারেন্স
@@ -228,7 +228,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault crud3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
@@ -239,7 +239,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault user-permission3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 ব্যবহারকারী ব্যাবস্থাপনা
@@ -250,7 +250,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-book3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 বই যোগ
@@ -261,7 +261,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-chapter3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 অধ্যায় যোগ
@@ -272,7 +272,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-genaral-content3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সাধারণ কন্টেন্ট যোগ
@@ -283,7 +283,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault notice-news3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 নোটিশ ও নিউজ
@@ -294,7 +294,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault conferance3"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 কনফারেন্স
@@ -320,7 +320,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault crud4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
@@ -331,7 +331,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault user-permission4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 ব্যবহারকারী ব্যাবস্থাপনা
@@ -342,7 +342,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-book4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 বই যোগ
@@ -353,7 +353,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-chapter4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 অধ্যায় যোগ
@@ -364,7 +364,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-genaral-content4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সাধারণ কন্টেন্ট যোগ
@@ -375,7 +375,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault notice-news4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 নোটিশ ও নিউজ
@@ -386,7 +386,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault conferance4"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 কনফারেন্স
@@ -412,7 +412,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault crud5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
@@ -423,7 +423,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault user-permission5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 ব্যবহারকারী ব্যাবস্থাপনা
@@ -434,7 +434,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-book5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 বই যোগ
@@ -445,7 +445,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-chapter5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 অধ্যায় যোগ
@@ -456,7 +456,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault add-genaral-content5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 সাধারণ কন্টেন্ট যোগ
@@ -467,7 +467,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault notice-news5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 নোটিশ ও নিউজ
@@ -478,7 +478,7 @@ const PermissionUser = () => {
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="flexCheckDefault"
+                id="flexCheckDefault conferance5"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 কনফারেন্স

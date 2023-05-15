@@ -9,7 +9,7 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -31,34 +31,33 @@ import EditIcon from "@mui/icons-material/Edit";
 //     return;
 //   }
 //   //get user id from user json local storage
-  // const userID = JSON.parse(localStorage.getItem('user')).id;
+// const userID = JSON.parse(localStorage.getItem('user')).id;
 //   const formData = new FormData();
 //   formData.append(
 //     "file",
 //     state.selectedFile,
 //     state.selectedFile.name
 //   );
-  
+
 //   axios.post("api/update-user/" + userID, formData).then(res => {
 //     console.log(res);
 //   });
 // };
 
 const MyArea = () => {
-  const userInfo = JSON.parse(localStorage.getItem('user'));
-  const userID = JSON.parse(localStorage.getItem('user')).id;
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  const userID = JSON.parse(localStorage.getItem("user")).id;
   const [user, setUser] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
-  }
+  };
 
   useEffect(() => {
-    axios.get('api/get-user-image/' + userID)
-      .then(res => {
-        setUser(res.data.image);
-      });
+    axios.get("api/get-user-image/" + userID).then((res) => {
+      setUser(res.data.image);
+    });
   }, [userID]);
 
   // console.log(user);
@@ -73,21 +72,19 @@ const MyArea = () => {
 
   const [file, setFile] = useState(null);
 
-  
-
   const handleUpload = () => {
-    console.log('Uploading file:', file);
+    console.log("Uploading file:", file);
     // Implement your file upload logic here
-  }
+  };
 
   const formData = new FormData();
-  formData.append('userImage', selectedFile);
+  formData.append("userImage", selectedFile);
 
   const config = {
     headers: {
-        'content-type': 'multipart/form-data'
-    }
-  }
+      "content-type": "multipart/form-data",
+    },
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,20 +99,21 @@ const MyArea = () => {
     // console.log("xx",formData.get('userImage'))
 
     try {
-      await axios.post("api/update-user/" + userID, formData,config).then(res => {
-        //display current user image
-        axios.get('api/get-user-image/' + userID)
-          .then(res => {
+      await axios
+        .post("api/update-user/" + userID, formData, config)
+        .then((res) => {
+          //display current user image
+          axios.get("api/get-user-image/" + userID).then((res) => {
             setUser(res.data.image);
           });
-        // console.log(res);
-        Swal.fire({
-          icon: "success",
-          title: "সফলভাবে আপলোড হয়েছে",
-          showConfirmButton: false,
-          timer: 1500,
+          // console.log(res);
+          Swal.fire({
+            icon: "success",
+            title: "সফলভাবে আপলোড হয়েছে",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
-      });
     } catch (error) {
       // console.log(error);
       Swal.fire({
@@ -123,7 +121,7 @@ const MyArea = () => {
         title: "Oops...",
         text: "আপলোড করা যায়নি!",
       });
-    } 
+    }
   };
 
   var settings = {
@@ -164,7 +162,7 @@ const MyArea = () => {
   const [userUpdate, setUserInfo] = useState({
     UserName: userInfo.UserName,
     userEmail: userInfo.email,
-    userPhone: userInfo.userPhone
+    userPhone: userInfo.userPhone,
   });
 
   // const handleInputChange = (event) => {
@@ -179,21 +177,21 @@ const MyArea = () => {
       [name]: value,
     }));
   };
-  
+
   // console.log(userUpdate);
-  
+
   const handleUpdate = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("api/update-user/" + userID, userUpdate).then(res => {
+      await axios.post("api/update-user/" + userID, userUpdate).then((res) => {
         console.log(res);
         handleEditClick();
         //update local storage only name, email and phone
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem("user"));
         user.UserName = userUpdate.UserName;
         user.email = userUpdate.userEmail;
         user.userPhone = userUpdate.userPhone;
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
 
         Swal.fire({
           icon: "success",
@@ -207,7 +205,7 @@ const MyArea = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "ইমেইল অথবা ফোন নাম্বার পরিবর্তন করে আবার চেষ্টা করুন "
+        text: "ইমেইল অথবা ফোন নাম্বার পরিবর্তন করে আবার চেষ্টা করুন ",
       });
     }
   };
@@ -219,12 +217,10 @@ const MyArea = () => {
     document.getElementById("editInp").focus();
   };
 
-   // Upload button
-  ;
-
-   const handleFileInputChange = (e) => {
-     setSelectedFile(e.target.files[0]);
-   };
+  // Upload button
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   return (
     <div>
@@ -239,91 +235,127 @@ const MyArea = () => {
                 আমার এরিয়া
               </h3>
               <div className="name-pic-div">
-                <img className="profile-pic" src={`${global.imageURL}/images/user/${user}`}  alt="User dp" />
+                <img
+                  className="profile-pic"
+                  id="profile-dp"
+                  src={`${global.imageURL}/images/user/${user}`}
+                  alt="User dp"
+                />
                 <br />
                 {/* <strong className="change-pp-button mb-2">
                   প্রোফাইল ছবি পরিবর্তন করুন
                 </strong> */}
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
-
-                <div>
-                        <input
-                          type="file"
-                          id="fileInput"
-                          onChange={handleFileChange}
-                          // style={{ display: "none" }}
-                          className="area-upload"
-                        />
-                        <label htmlFor="fileInput" className="btn btn-warning">
-                          <strong>প্রোফাইল ছবি পরিবর্তন করুন</strong>
-                        </label>
-                      </div>
-{/* 
+                  <div>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      onChange={handleFileChange}
+                      // style={{ display: "none" }}
+                      className="area-upload"
+                    />
+                    <label htmlFor="fileInput" className="btn btn-warning">
+                      <strong>প্রোফাইল ছবি পরিবর্তন করুন</strong>
+                    </label>
+                  </div>
+                  {/* 
                     <input className="change-pp-button" type="file" name="userImage" onChange={handleFileChange} /> */}
-                  
-                    {file &&   <button onClick={handleUpload} className="btn btn-success upload-button" type="submit">আপলোড</button>}
+
+                  {file && (
+                    <button
+                      onClick={handleUpload}
+                      className="btn btn-success upload-button"
+                      type="submit"
+                    >
+                      আপলোড
+                    </button>
+                  )}
                 </form>
               </div>
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
-                  <EditIcon onClick={handleClick} onDoubleClick={handleEditClick} onDoubleClickDelay={500} className="mt-1 " style={{ cursor: "pointer" }} />
-                  
+                  <EditIcon
+                    onClick={handleClick}
+                    onDoubleClick={handleEditClick}
+                    onDoubleClickDelay={500}
+                    className="mt-1 "
+                    style={{ cursor: "pointer" }}
+                  />
                 </div>
                 <div className="name-info ">
                   {/* <p>নাম: {userInfo.UserName}</p> */}
                   <form onSubmit={handleUpdate}>
-                  {/* <div className="area-infor">
+                    {/* <div className="area-infor">
                   
                   </div> */}
-                  <p className="areaName-p">নাম:-
-                  <input
+                    <p className="areaName-p">
+                      নাম:-
+                      <input
                         id="editInp"
-                        className="form-control-sm outline-0 area-in "
+                        className="form-control-sm outline-0 area-in area-input-name"
                         type="text"
                         name="UserName"
                         value={userUpdate.UserName}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.UserName.length + 2 + 'ch'}}
+                        style={{ width: userInfo.UserName.length + 2 + "ch" }}
                       />
                     </p>
 
-                    <p className="areaEmail-p">ইমেইল:-
+                    <p className="areaEmail-p">
+                      ইমেইল:-
                       <input
                         id="editInp"
-                        className="form-control-sm area-in "
+                        className="form-control-sm area-in area-input-email"
                         type="text"
                         name="userEmail"
                         value={userUpdate.userEmail}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.email.length + 2 + 'ch'}}
+                        style={{ width: userInfo.email.length + 2 + "ch" }}
                       />
                     </p>
 
-                    <p className="areaPhone-p">ফোন:-
+                    <p className="areaPhone-p">
+                      ফোন:-
                       <input
                         id="editInp"
-                        className="form-control-sm area-in "
+                        className="form-control-sm area-in area-input-phone"
                         type="text"
                         name="userPhone"
                         value={userUpdate.userPhone}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        style={{width: userInfo.userPhone.length + 3 + 'ch'}}
+                        style={{ width: userInfo.userPhone.length + 3 + "ch" }}
                       />
                     </p>
-                  <p className="areaUserID-p">ব্যবহারকারী আইডি:- {userInfo.userID}</p>
-                  <p className="areaOfficeID-p">অফিস আইডি:- {userInfo.OfficeID?userInfo.OfficeID:"অফিস আইডি নেই"}</p>
-                  
-                  {isClicked && <button className="btn btn-success" type="submit">আপডেট</button>}
-                </form>
-                <hr />
+                    <p className="areaUserID-p" id="profile-user-id">
+                      ব্যবহারকারী আইডি:- {userInfo.userID}
+                    </p>
+                    <p className="areaOfficeID-p" id="profile-user-office-id">
+                      অফিস আইডি:-{" "}
+                      {userInfo.OfficeID ? userInfo.OfficeID : "অফিস আইডি নেই"}
+                    </p>
+
+                    {isClicked && (
+                      <button
+                        className="btn btn-success"
+                        type="submit"
+                        id="profile-update-button"
+                      >
+                        আপডেট
+                      </button>
+                    )}
+                  </form>
+                  <hr />
                 </div>
               </div>
               <div className="varify-button-div">
-                <button className="area-varify-button">
+                <button
+                  className="area-varify-button"
+                  id="profile-varied-button"
+                >
                   <span>
                     <GppGoodIcon />
                   </span>
