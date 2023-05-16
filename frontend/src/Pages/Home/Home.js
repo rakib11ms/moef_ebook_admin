@@ -119,6 +119,12 @@ const Home = (props) => {
   // console.log('totalDoc',totalDocuments)
 
   async function fetchData() {
+    await axios.get("api/total-document-count").then((res) => {
+      if (res.data) {
+        setTotalDocuments(res.data);
+      }
+    });
+
     await axios.get("api/book-category").then((res) => {
       if (res.data.bookcategories) {
         setCategories(res.data.bookcategories);
@@ -147,12 +153,6 @@ const Home = (props) => {
     await axios.get("api/bookParagraph").then((res) => {
       if (res.data.book_paragraphs) {
         setallParagraphs(res.data.book_paragraphs);
-      }
-    });
-
-    await axios.get("api/total-document-count").then((res) => {
-      if (res.data) {
-        setTotalDocuments(res.data);
       }
     });
   }
@@ -224,7 +224,7 @@ const Home = (props) => {
         setRenderData(res.data);
         setCatID("");
         setLanguageID("");
-        setPublish_date("");
+        setPublish_date(new Date());
         setPublisherID("");
         setAuthorID("");
         setTitle("");
@@ -633,6 +633,7 @@ const Home = (props) => {
                             // value={Publish_date}
                             selected={Publish_date}
                             onChange={handlePublishDateChange}
+                            
                           />
                           {/* <input
                             type="date"
@@ -653,6 +654,7 @@ const Home = (props) => {
                             className=" select-category2 allField"
                             aria-label="Default select example"
                             id="add-book-vasha"
+                            required
                           >
                             <option selected value="">
                               ভাষা নির্বাচন করুন{" "}

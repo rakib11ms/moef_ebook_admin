@@ -40,6 +40,8 @@ import AllDocuments from "./Pages/AllBooks/AllDocuments/AllDocuments";
 import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
 
+const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
@@ -62,7 +64,6 @@ function App() {
         <LoadingSpinner />
       ) : (
         <Routes>
-          <Route path="/navigation" element={<NavigationBa />} />
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route
@@ -73,28 +74,33 @@ function App() {
             path="/change-password-confirm/:id"
             element={<ForgotPasswordConfirm />}
           />
-          <Route path="/my-area" element={<MyArea />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/all-users" element={<AllUsers />} />
-          <Route path="/permission-users" element={<PermissionUser />} />
-          <Route path="/all-books" element={<AllBooks />} />
-          <Route path="/add-document" element={<AddDocument />} />
-          <Route path="/edit-books/:id" element={<EditBooks />} />
-          <Route path="/view-books/:id" element={<ViewBooks />} />
-          <Route path="/books-101200" element={<Book101200 />} />
-          <Route path="/edit-book-categories/:id" element={<EditBookCatagories />} />
-          <Route path="/book-categories" element={<BooksCatagories />} />
-          <Route path="/draft-documents" element={<DraftDocuments />} />
-          <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
-          <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
-          <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
-          <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
-          <Route path="/categories-news" element={<CategoriesNews />} />
           <Route path="/privacy-policies" element={<PrivacyPolicies />} />
-          <Route path="/all-documents" element={<AllDocuments />} />
-          <Route path="/edit-document/:id" element={<EditDocument />} />
-          <Route path="/view-documents/:id" element={<ViewDocuments />} />
+
+
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/navigation" element={<NavigationBa />} />
+            <Route path="/my-area" element={<MyArea />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/all-users" element={<AllUsers />} />
+            <Route path="/permission-users" element={<PermissionUser />} />
+            <Route path="/all-books" element={<AllBooks />} />
+            <Route path="/add-document" element={<AddDocument />} />
+            <Route path="/edit-books/:id" element={<EditBooks />} />
+            <Route path="/view-books/:id" element={<ViewBooks />} />
+            <Route path="/books-101200" element={<Book101200 />} />
+            <Route path="/edit-book-categories/:id" element={<EditBookCatagories />} />
+            <Route path="/book-categories" element={<BooksCatagories />} />
+            <Route path="/draft-documents" element={<DraftDocuments />} />
+            <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
+            <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
+            <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
+            <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
+            <Route path="/categories-news" element={<CategoriesNews />} />
+            <Route path="/all-documents" element={<AllDocuments />} />
+            <Route path="/edit-document/:id" element={<EditDocument />} />
+            <Route path="/view-documents/:id" element={<ViewDocuments />} />
+          </Route>
         </Routes>
       )}
     </div>

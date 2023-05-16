@@ -37,9 +37,7 @@ const UpdateNewsAndNotice = () => {
     setTitle(e.target.value);
   }
 
-
-  useEffect(() => {
-    // store the news notice id provided in the url
+  async function fetchData() {
     axios.get(`/api/notice/${noticeID}`).then(res => {
       if (res.data.status === 200) {
         const notice = res.data.news_notice;
@@ -49,6 +47,10 @@ const UpdateNewsAndNotice = () => {
       }
     }
     )
+  }
+
+  useEffect(() => {
+    fetchData();
   }, [])
 
 
