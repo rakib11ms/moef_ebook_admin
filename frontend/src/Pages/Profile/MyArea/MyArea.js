@@ -282,13 +282,15 @@ const MyArea = () => {
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
-                  <EditIcon
-                    onClick={handleClick}
-                    onDoubleClick={handleEditClick}
-                    onDoubleClickDelay={500}
-                    className="mt-1 "
-                    style={{ cursor: "pointer" }}
-                  />
+                  <div onClick={handleEditClick}>
+                    <EditIcon
+                      onClick={handleClick}
+                      // onClick={handleEditClick}
+                      // onDoubleClickDelay={500}
+                      className="mt-1 "
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
                 </div>
                 <div className="name-info ">
                   {/* <p>নাম: {userInfo.UserName}</p> */}

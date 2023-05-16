@@ -4,11 +4,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./BooksCatagories.css";
 import axios from "axios";
 import swal from "sweetalert";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const BooksCatagories = () => {
   const $user = JSON.parse(localStorage.getItem("user"));
@@ -27,22 +27,25 @@ const BooksCatagories = () => {
   // console.log('all catagories', allCatagories);
 
   const columns = [
-    { field: 'CategoryName', headerName: 'ক্যাটাগরির নাম', width: 250 },
+    { field: "CategoryName", headerName: "ক্যাটাগরির নাম", width: 250 },
     {
-      field: 'edit',
-      headerName: 'সম্পাদনা করুন ',
+      field: "edit",
+      headerName: "সম্পাদনা করুন ",
       width: 180,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/edit-book-categories/${params.row.id}`} className="text-decoration-none">
+          <Link
+            to={`/edit-book-categories/${params.row.id}`}
+            className="text-decoration-none"
+          >
             <CreateOutlinedIcon className="text-warning" />
           </Link>
         </div>
       ),
     },
     {
-      field: 'delete',
-      headerName: 'ডিলিট করুন ',
+      field: "delete",
+      headerName: "ডিলিট করুন ",
       width: 180,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
@@ -58,24 +61,25 @@ const BooksCatagories = () => {
                 dangerMode: true,
               }).then((willDelete) => {
                 if (willDelete) {
-                  axios.delete(`/api/book-category/${params.row.id}`).then((res) => {
-                    if (res.data.status === 200) {
-                      swal("ক্যাটেগরিটি সফলভাবে ডিলিট করা হয়েছে ", {
-                        icon: "success",
-                      });
-                      // axios.get(`/api/book-category`).then((res) => {
-                      //   if (res.data.status === 200) {
-                      //     console.log(res.data.bookcategories);
-                      //     setAllCatagories(res.data.bookcategories);
-                      //   } else {
-                      //     console.log("error");
-                      //   }
-                      // });
-                      fetchData();
-                    } else {
-                      swal("Oops! Something went wrong, Please try again");
-                    }
-                  });
+                  axios
+                    .delete(`/api/book-category/${params.row.id}`)
+                    .then((res) => {
+                      if (res.data.status === 200) {
+                        swal("ক্যাটেগরিটি সফলভাবে ডিলিট করা হয়েছে ", {
+                          icon: "success",
+                        });
+                        axios.get(`/api/book-category`).then((res) => {
+                          if (res.data.status === 200) {
+                            console.log(res.data.bookcategories);
+                            setAllCatagories(res.data.bookcategories);
+                          } else {
+                            console.log("error");
+                          }
+                        });
+                      } else {
+                        swal("Oops! Something went wrong, Please try again");
+                      }
+                    });
                 }
               });
             }}
@@ -84,7 +88,6 @@ const BooksCatagories = () => {
       ),
     },
   ];
-
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -98,28 +101,36 @@ const BooksCatagories = () => {
       Created_by: $user.id,
     };
     console.log(catagory);
-    axios.post(`/api/book-category`, catagory).then((res) => {
-      // console.log(res);
-      if (res.data.status === 200) {
-        console.log(res.data.message);
-        swal({
-          title: "সফলভাবে সংরক্ষন করা হয়েছে",
-          icon: "success",
-        });
-        fetchData();
-      } else {
-        console.log(res.data.message);
+    axios
+      .post(`/api/book-category`, catagory)
+      .then((res) => {
+        // console.log(res);
+        if (res.data.status === 200) {
+          console.log(res.data.message);
+          swal({
+            title: "সফলভাবে সংরক্ষন করা হয়েছে",
+            icon: "success",
+          });
+          axios.get(`/api/book-category`).then((res) => {
+            if (res.data.status === 200) {
+              console.log(res.data.bookcategories);
+              setAllCatagories(res.data.bookcategories);
+            }
+          });
+        } else {
+          console.log(res.data.message);
+          swal({
+            title: "সংরক্ষন করা হয়নি",
+            icon: "error",
+          });
+        }
+      })
+      .catch((err) => {
         swal({
           title: "সংরক্ষন করা হয়নি",
           icon: "error",
         });
-      }
-    }).catch((err) => {
-      swal({
-        title: "সংরক্ষন করা হয়নি",
-        icon: "error",
       });
-    });
   };
 
   async function fetchData () {
@@ -176,6 +187,7 @@ const BooksCatagories = () => {
                   // onClick={handleAddTodo}
                   className="songrokkhon-button"
                   type="submit"
+                  id="books-categories-btn"
                 >
                   সংরক্ষন করুন
                 </button>
@@ -186,6 +198,7 @@ const BooksCatagories = () => {
             <div>
               <lebel>ক্যাটাগরি লিস্ট</lebel> <br />
               <DataGrid
+                id="book-categories-datagrid"
                 rows={rows}
                 columns={columns}
                 initialState={{
