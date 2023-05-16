@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./MyArea.css";
-import profilePic from "../../../images/profile-pic.jpg";
+// import profilePic from "../../../images/profile-pic.jpg";
 import bookImg from "../../../images/book.png";
 import CreateIcon from "@mui/icons-material/Create";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
+// import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
@@ -54,11 +54,18 @@ const MyArea = () => {
     setIsClicked(!isClicked);
   };
 
-  useEffect(() => {
-    axios.get("api/get-user-image/" + userID).then((res) => {
+  async function getUserImage() {
+    await axios.get("api/get-user-image/" + userID).then((res) => {
       setUser(res.data.image);
     });
-  }, [userID]);
+  }
+
+  useEffect(() => {
+    // axios.get("api/get-user-image/" + userID).then((res) => {
+    //   setUser(res.data.image);
+    // });
+    getUserImage();
+  }, []);
 
   // console.log(user);
 

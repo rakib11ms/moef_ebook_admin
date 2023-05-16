@@ -15,15 +15,38 @@ const AllBooks = () => {
 
   const [allBooks, setAllBooks] = useState([]);
 
-  useEffect(() => {
-    axios.get(`/api/get-all-main-book`).then((res) => {
+  // async function fetchBooks() {
+  //   try {
+  //     const res = await axios.get(`/api/get-all-main-book`);
+  //     if (res.data.status === 200) {
+  //       setAllBooks(res.data.data);
+  //       console.log("all books", res.data.data);
+  //     } else {
+  //       console.log("error");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  async function fetchBooks() {
+    try {
+      // console.log('fetchBooks called');
+      const res = await axios.get(`/api/get-all-main-book`);
       if (res.data.status === 200) {
         setAllBooks(res.data.data);
         console.log("all books", res.data.data);
       } else {
         console.log("error");
       }
-    })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+
+  useEffect(() => {
+    fetchBooks();
   }, []);
 
   const columns = [
@@ -65,13 +88,14 @@ const AllBooks = () => {
                       swal("বইটি সফলভাবে ডিলিট করা হয়েছে", {
                         icon: "success",
                       });
-                      axios.get(`/api/get-all-main-book`).then((res) => {
-                        if (res.data.status === 200) {
-                          setAllBooks(res.data.data);
-                        } else {
-                          console.log("error");
-                        }
-                      });
+                      // axios.get(`/api/get-all-main-book`).then((res) => {
+                      //   if (res.data.status === 200) {
+                      //     setAllBooks(res.data.data);
+                      //   } else {
+                      //     console.log("error");
+                      //   }
+                      // });
+                      fetchBooks();
                     } else {
                       swal("Oops! Something went wrong, Please try again");
                     }

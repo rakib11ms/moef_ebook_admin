@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NavigationBa from "../Shared/NavigationBa/NavigationBa";
 import "./Home.css";
@@ -9,7 +9,7 @@ import bookIcon from "../../images/book.png";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+// import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 import chapter1Img from "../../images/chapter1.png";
@@ -18,11 +18,8 @@ import pagePlusImg from "../../images/page-plus.png";
 import AddIcon from "@mui/icons-material/Add";
 import bookPlusImg from "../../images/book-plus.png";
 import SearchIcon from "@mui/icons-material/Search";
-// import HomeSlider from "./HomeSlider";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
@@ -32,6 +29,7 @@ import ReactDatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 
 function TabPanel(props) {
+
   const { children, value, index, ...other } = props;
 
   return (
@@ -57,28 +55,29 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     "aria-controls": `simple-tabpanel-${index}`,
+//   };
+// }
 
 const Home = (props) => {
   const $user = JSON.parse(localStorage.getItem('user'));
+  // console.log($user);
   const [renderData, setRenderData] = useState("");
   const editor = useRef(null);
-  useEffect(() => {
-    axios.get("api/total-document-count").then((res) => {
-      if (res.data) {
-        setTotalDocuments(res.data);
-      }
-    });
-  }, [renderData]);
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [value, setValue] = React.useState(0);
-  const [openCollapse, setOpenCollapse] = useState("");
+  // useEffect(() => {
+  //   axios.get("api/total-document-count").then((res) => {
+  //     if (res.data) {
+  //       setTotalDocuments(res.data);
+  //     }
+  //   });
+  // }, [renderData]);
+  //set current date 
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [value, setValue] = React.useState(0);
+  // const [openCollapse, setOpenCollapse] = useState("");
   const [content, setContent] = useState('');
   console.log("cont", content);
 
@@ -90,20 +89,24 @@ const Home = (props) => {
     setActiveButton(buttonNumber);
   };
 
-  const handleCollapse = (id) => {
-    setOpenCollapse(openCollapse === id ? "" : id);
+  const handlePublishDateChange = (date) => {
+    setPublish_date(date);
   };
+
+  // const handleCollapse = (id) => {
+  //   setOpenCollapse(openCollapse === id ? "" : id);
+  // };
 
   // const handleChange = (event, newValue) => {
   //   setValue(newValue);
   // };
 
   // Upload button
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileInputChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
+  // const handleFileInputChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
+  // };
 
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -115,37 +118,77 @@ const Home = (props) => {
 
   // console.log('totalDoc',totalDocuments)
 
-  useEffect(() => {
-    axios.get("api/book-category").then((res) => {
+  async function fetchData() {
+    await axios.get("api/book-category").then((res) => {
       if (res.data.bookcategories) {
         setCategories(res.data.bookcategories);
       }
     });
 
-    axios.get("api/language").then((res) => {
+    await axios.get("api/language").then((res) => {
       if (res.data.languages) {
         // console.log(res.data.languages);
         setLanguages(res.data.languages);
       }
     });
 
-    axios.get("api/books").then((res) => {
+    await axios.get("api/books").then((res) => {
       if (res.data.books_masters) {
         setBooks(res.data.books_masters);
       }
     });
 
-    axios.get("api/bookChapter").then((res) => {
+    await axios.get("api/bookChapter").then((res) => {
       if (res.data.bookChapters) {
         setchapters(res.data.bookChapters);
       }
     });
 
-    axios.get("api/bookParagraph").then((res) => {
+    await axios.get("api/bookParagraph").then((res) => {
       if (res.data.book_paragraphs) {
         setallParagraphs(res.data.book_paragraphs);
       }
     });
+
+    await axios.get("api/total-document-count").then((res) => {
+      if (res.data) {
+        setTotalDocuments(res.data);
+      }
+    });
+  }
+
+  useEffect(() => {
+    // axios.get("api/book-category").then((res) => {
+    //   if (res.data.bookcategories) {
+    //     setCategories(res.data.bookcategories);
+    //   }
+    // });
+
+    // axios.get("api/language").then((res) => {
+    //   if (res.data.languages) {
+    //     // console.log(res.data.languages);
+    //     setLanguages(res.data.languages);
+    //   }
+    // });
+
+    // axios.get("api/books").then((res) => {
+    //   if (res.data.books_masters) {
+    //     setBooks(res.data.books_masters);
+    //   }
+    // });
+
+    // axios.get("api/bookChapter").then((res) => {
+    //   if (res.data.bookChapters) {
+    //     setchapters(res.data.bookChapters);
+    //   }
+    // });
+
+    // axios.get("api/bookParagraph").then((res) => {
+    //   if (res.data.book_paragraphs) {
+    //     setallParagraphs(res.data.book_paragraphs);
+    //   }
+    // });
+    fetchData();
   }, [renderData]);
 
   //allstates
@@ -153,7 +196,7 @@ const Home = (props) => {
   const [Title, setTitle] = useState("");
   const [CatID, setCatID] = useState("");
   const [PublisherID, setPublisherID] = useState("");
-  const [Publish_date, setPublish_date] = useState("");
+  const [Publish_date, setPublish_date] = useState(new Date());
   const [AuthorID, setAuthorID] = useState("");
   const [LanguageID, setLanguageID] = useState("");
 
@@ -172,6 +215,7 @@ const Home = (props) => {
       Publish_date: Publish_date,
       AuthorID: AuthorID,
       LanguageID: LanguageID,
+      created_by: $user.id,
     };
     axios.post("api/books", masterBookData).then((res) => {
       if (res.data.status === 200) {
@@ -194,6 +238,7 @@ const Home = (props) => {
       BookID: BookID,
       ChapterName: ChapterName,
     };
+
     axios.post("api/bookChapter", chapterData).then((res) => {
       if (res.data.status === 200) {
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
@@ -222,7 +267,7 @@ const Home = (props) => {
   const handlePageSubmit = (e) => {
     // get class name
     // console.log(e.nativeEvent.submitter.className);
-    if(e.nativeEvent.submitter.className === 'home-input-button1'){
+    if(e.nativeEvent.submitter.className === 'home-input-button2'){
       e.preventDefault();
       if (content.trim() === '<p><br></p>' || content.trim() === '') {
         Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
@@ -247,7 +292,7 @@ const Home = (props) => {
       });
     }
 
-    if(e.nativeEvent.submitter.className === 'home-input-button2'){
+    if(e.nativeEvent.submitter.className === 'home-input-button1'){
       e.preventDefault();
       if (content.trim() === '<p><br></p>' || content.trim() === '') {
         Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
@@ -260,7 +305,7 @@ const Home = (props) => {
         chapter_id:ChapterID,
         paragraph_id:ParagraphID,
         content:content,
-        isPublished: false,
+        isPublished: 0,
         created_by: $user.id,
       }
   
@@ -268,8 +313,6 @@ const Home = (props) => {
         if (res.data.status === 200) {
           Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
           setRenderData(res.data)
-  
-        
         }
       });
     }
@@ -278,24 +321,46 @@ const Home = (props) => {
 
   //dependent dropdowns
 
+  async function getDepenentDropdownsByBookID() {
+    await axios
+    .get(`api/get-dependent-chapters-by-book-master-id/${BookID}`)
+    .then((res) => {
+      if (res.data.book_chapters) {
+        setchapters(res.data.book_chapters);
+      }
+    });
+  }
+
+  async function getDepenentDropdownsByChapterID() {
+    await axios
+    .get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`)
+    .then((res) => {
+      if (res.data.book_paragraphs) {
+        setallParagraphs(res.data.book_paragraphs);
+      }
+    });
+  }
+
   useEffect(() => {
     if (BookID) {
-      axios
-        .get(`api/get-dependent-chapters-by-book-master-id/${BookID}`)
-        .then((res) => {
-          if (res.data.book_chapters) {
-            setchapters(res.data.book_chapters);
-          }
-        });
+      // axios
+      //   .get(`api/get-dependent-chapters-by-book-master-id/${BookID}`)
+      //   .then((res) => {
+      //     if (res.data.book_chapters) {
+      //       setchapters(res.data.book_chapters);
+      //     }
+      //   });
+      getDepenentDropdownsByBookID();
     }
     if (ChapterID) {
-      axios
-        .get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`)
-        .then((res) => {
-          if (res.data.book_paragraphs) {
-            setallParagraphs(res.data.book_paragraphs);
-          }
-        });
+      // axios
+      //   .get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`)
+      //   .then((res) => {
+      //     if (res.data.book_paragraphs) {
+      //       setallParagraphs(res.data.book_paragraphs);
+      //     }
+      //   });
+      getDepenentDropdownsByChapterID();
     }
   }, [BookID, ChapterID]);
 
@@ -562,22 +627,22 @@ const Home = (props) => {
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> প্রকাশ কাল *</lebel> <br />
-                          {/* <ReactDatePicker
+                          <ReactDatePicker
                             className="home-input allField"
                             name="Publish_date"
-                            value={inputs.Publish_date}
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                          /> */}
-                          <input
+                            // value={Publish_date}
+                            selected={Publish_date}
+                            onChange={handlePublishDateChange}
+                          />
+                          {/* <input
                             type="date"
                             className="home-input allField"
                             name="Publish_date"
                             value={Publish_date}
                             selected={startDate}
                             onChange={(e) => setPublish_date(e.target.value)}
-                            required
-                          />
+                            // required
+                          /> */}
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                           <lebel> ভাষা </lebel> <br />

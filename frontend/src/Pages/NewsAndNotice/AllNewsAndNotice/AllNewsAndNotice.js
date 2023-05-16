@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
-import bookLogoImg from "../../../images/book.png";
 import "./AllNewsAndNotice.css";
 import SearchIcon from "@mui/icons-material/Search";
-import CreateIcon from "@mui/icons-material/Create";
-import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import AddIcon from "@mui/icons-material/Add";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -19,30 +15,37 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 
 const AllNewsAndNotice = () => {
-  const [selectedText, setSelectedText] = useState("");
-  const [selectedNotice, setSelectedNotice] = useState("");
-  function handleParagraphClick(event) {
-    setSelectedText(event.target.innerText);
-  }
-  function handleNoticeClick(event) {
-    setSelectedNotice(event.target.innerText);
-  }
 
   const [allNoticeNews, setAllNoticeNews] = useState([]);
 
-  // console.log('notice news', allNoticeNews)
+  async function fetchData () {
+    try {
+      await axios.get(`/api/notice`).then(res => {
+        if (res.data.status === 200) {
+          setAllNoticeNews(res.data.news_notices);
+          console.log('notice news', res.data.news_notices);
+          // setLoading(false);
+        } else {
+          console.log('error');
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   useEffect(() => {
-    axios.get(`/api/notice`).then(res => {
-
-      if (res.data.status === 200) {
-        setAllNoticeNews(res.data.news_notices);
-        console.log('notice news', res.data.news_notices);
-        // setLoading(false);
-      } else {
-        console.log('error');
-      }
-    })
+    // axios.get(`/api/notice`).then(res => {
+    //   if (res.data.status === 200) {
+    //     setAllNoticeNews(res.data.news_notices);
+    //     console.log('notice news', res.data.news_notices);
+    //     // setLoading(false);
+    //   } else {
+    //     console.log('error');
+    //   }
+    // })
+    fetchData();
 
   }, [])
 
@@ -81,7 +84,6 @@ const AllNewsAndNotice = () => {
       width: 200,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          {/* sweet alert for confirm delete */}
           <DeleteOutlineOutlinedIcon
             className="text-danger"
             onClick={() => {
@@ -98,13 +100,14 @@ const AllNewsAndNotice = () => {
                       swal("বিজ্ঞপ্তিটি সফলভাবে ডিলিট করা হয়েছে ", {
                         icon: "success",
                       });
-                      axios.get(`/api/notice`).then((res) => {
-                        if (res.data.status === 200) {
-                          setAllNoticeNews(res.data.news_notices);
-                        } else {
-                          console.log("error");
-                        }
-                      });
+                      // axios.get(`/api/notice`).then((res) => {
+                      //   if (res.data.status === 200) {
+                      //     setAllNoticeNews(res.data.news_notices);
+                      //   } else {
+                      //     console.log("error");
+                      //   }
+                      // });
+                      fetchData();
                     } else {
                       swal("Oops! Something went wrong, Please try again");
                     }

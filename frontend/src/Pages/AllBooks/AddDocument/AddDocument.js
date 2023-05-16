@@ -10,18 +10,18 @@ import ReactDatePicker from "react-datepicker";
 import axios from "axios";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { Link, redirect } from "react-router-dom";
+// import { Link, redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import Home from "../../Home/Home";
 const AddDocument = (props) => {
   // Header Text edit
   const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState("Untitled");
+  // const [text, setText] = useState("Untitled");
 
   const [bookId, setBookId] = useState("");
   const [chapterId, setchapterId] = useState("");
   const [ParagraphId, setParagraphId] = useState("");
-  const [BookCategoryId, setBookCategoryId] = useState("");
+  // const [BookCategoryId, setBookCategoryId] = useState("");
 
   const [documentTitle, setdocumentTitle] = useState("");
 
@@ -40,13 +40,13 @@ const AddDocument = (props) => {
     // Save the edited text to your data store
   };
 
-  const handleInputChange = (event) => {
-    setText(event.target.value);
-  };
+  // const handleInputChange = (event) => {
+  //   setText(event.target.value);
+  // };
 
   // const [activeButton, setActiveButton] = useState(null);
-  const [chapter, setChapter] = useState("");
-  const [page, setPage] = useState("");
+  // const [chapter, setChapter] = useState("");
+  // const [page, setPage] = useState("");
   const [content, setContent] = useState("");
   // const [activeButton, setActiveButton] = useState(1);
 
@@ -66,48 +66,114 @@ const AddDocument = (props) => {
     []
   );
 
-  console.log("all books", allBooks);
-  console.log("all chapters", allChapters);
-  console.log("all paragraphs", allParagraphs);
-  console.log("all book catgeories", allBookCategories);
+  // console.log("all books", allBooks);
+  // console.log("all chapters", allChapters);
+  // console.log("all paragraphs", allParagraphs);
+  // console.log("all book catgeories", allBookCategories);
+
+  async function fetchData () {
+    try {
+      await axios.get(`/api/books`).then((res) => {
+        if (res.data.status == 200) {
+          setAllBooks(res.data.books_masters);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      await axios.get(`/api/bookParagraph`).then(res => {
+        if (res.data.status == 200) {
+          setAllParagraphs(res.data.book_paragraphs);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // try {
+    //   await axios.get(`/api/book-category`).then((res) => {
+    //     if (res.data.status == 200) {
+    //       setAllBookCategories(res.data.bookcategories);
+    //       console.log(res.data.bookcategories);
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    try {
+      await axios.get(`/api/bookChapter`).then((res) => {
+        if (res.data.status == 200) {
+          setAllChapters(res.data.bookChapters);
+
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      await axios.get(`/api/newsNotice`).then(res => {
+        if (res.data.status == 200) {
+          setAllNoticeNewsCategories(res.data.news_notice_categories);
+          console.log(res.data.news_notice_categories);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      await axios.get(`/api/newsNoticeSub`).then((res) => {
+        if (res.data.status == 200) {
+          setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
+          console.log(res.data.news_notices_sub_categories);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    axios.get(`/api/books`).then((res) => {
-      if (res.data.status == 200) {
-        setAllBooks(res.data.books_masters);
-      }
-    });
+    // axios.get(`/api/books`).then((res) => {
+    //   if (res.data.status == 200) {
+    //     setAllBooks(res.data.books_masters);
+    //   }
+    // });
 
-    axios.get(`/api/bookParagraph`).then(res => {
-      if (res.data.status == 200) {
-        setAllParagraphs(res.data.book_paragraphs);
-      }
-    });
+    // axios.get(`/api/bookParagraph`).then(res => {
+    //   if (res.data.status == 200) {
+    //     setAllParagraphs(res.data.book_paragraphs);
+    //   }
+    // });
 
-    axios.get(`/api/book-category`).then((res) => {
-      if (res.data.status == 200) {
-        setAllBookCategories(res.data.bookcategories);
-      }
-    });
+    // axios.get(`/api/book-category`).then((res) => {
+    //   if (res.data.status == 200) {
+    //     setAllBookCategories(res.data.bookcategories);
+    //   }
+    // });
 
-    axios.get(`/api/bookChapter`).then((res) => {
-      if (res.data.status == 200) {
-        setAllChapters(res.data.bookChapters);
-      }
-    })
+    // axios.get(`/api/bookChapter`).then((res) => {
+    //   if (res.data.status == 200) {
+    //     setAllChapters(res.data.bookChapters);
+    //   }
+    // })
 
-    axios.get(`/api/newsNotice`).then(res => {
-      if (res.data.status == 200) {
-        setAllNoticeNewsCategories(res.data.news_notice_categories);
-      }
-    });
+    // axios.get(`/api/newsNotice`).then(res => {
+    //   if (res.data.status == 200) {
+    //     setAllNoticeNewsCategories(res.data.news_notice_categories);
+    //   }
+    // });
 
-    axios.get(`/api/newsNoticeSub`).then((res) => {
-      if (res.data.status == 200) {
-        setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
-      }
-    })
-
+    // axios.get(`/api/newsNoticeSub`).then((res) => {
+    //   if (res.data.status == 200) {
+    //     setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
+    //   }
+    // })
+    fetchData();
   }, [])
 
   const data = {
@@ -219,12 +285,12 @@ const AddDocument = (props) => {
                         );
                       })}
                   </select>
-                  <Link to="/home" className="text-dark">
+                  {/* <Link to="/home" className="text-dark">
                     <AddIcon className="book-add-icon" />
                     <div className="d-none">
                       <Home activeButton={1} />
                     </div>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="book-add-input">
                   <select
@@ -247,12 +313,12 @@ const AddDocument = (props) => {
                         );
                       })}
                   </select>
-                  <Link to="/home" className="text-dark">
+                  {/* <Link to="/home" className="text-dark">
                     <AddIcon className="book-add-icon" />
                     <div className="d-none">
                       <Home activeButton={2} />
                     </div>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="book-add-input">
                   <select
@@ -272,12 +338,12 @@ const AddDocument = (props) => {
                       );
                     })}
                   </select>
-                  <Link to="/home" className="text-dark">
+                  {/* <Link to="/home" className="text-dark">
                     <AddIcon className="book-add-icon" />
                     <div className="d-none">
                       <Home activeButton={2} />
                     </div>
-                  </Link>{" "}
+                  </Link>{" "} */}
                 </div>
               </div>
               <div className="form-check">

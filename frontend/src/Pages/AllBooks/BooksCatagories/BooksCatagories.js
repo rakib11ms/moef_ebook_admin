@@ -2,21 +2,16 @@ import React, { useRef, useEffect, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import SearchIcon from "@mui/icons-material/Search";
 import "./BooksCatagories.css";
-import InterestsIcon from "@mui/icons-material/Interests";
-import CreateIcon from "@mui/icons-material/Create";
-import CloseIcon from "@mui/icons-material/Close";
-import SaveIcon from "@mui/icons-material/Save";
-import { Category } from "@mui/icons-material";
 import axios from "axios";
 import swal from "sweetalert";
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 
 const BooksCatagories = () => {
+  const $user = JSON.parse(localStorage.getItem("user"));
   const [catagoryName, setCatagoryName] = useState("");
   const [allCatagories, setAllCatagories] = useState([]);
 
@@ -68,14 +63,15 @@ const BooksCatagories = () => {
                       swal("ক্যাটেগরিটি সফলভাবে ডিলিট করা হয়েছে ", {
                         icon: "success",
                       });
-                      axios.get(`/api/book-category`).then((res) => {
-                        if (res.data.status === 200) {
-                          console.log(res.data.bookcategories);
-                          setAllCatagories(res.data.bookcategories);
-                        } else {
-                          console.log("error");
-                        }
-                      });
+                      // axios.get(`/api/book-category`).then((res) => {
+                      //   if (res.data.status === 200) {
+                      //     console.log(res.data.bookcategories);
+                      //     setAllCatagories(res.data.bookcategories);
+                      //   } else {
+                      //     console.log("error");
+                      //   }
+                      // });
+                      fetchData();
                     } else {
                       swal("Oops! Something went wrong, Please try again");
                     }
@@ -99,6 +95,7 @@ const BooksCatagories = () => {
     e.preventDefault();
     const catagory = {
       CategoryName: catagoryName,
+      Created_by: $user.id,
     };
     console.log(catagory);
     axios.post(`/api/book-category`, catagory).then((res) => {
@@ -109,12 +106,7 @@ const BooksCatagories = () => {
           title: "সফলভাবে সংরক্ষন করা হয়েছে",
           icon: "success",
         });
-        axios.get(`/api/book-category`).then((res) => {
-          if (res.data.status === 200) {
-            console.log(res.data.bookcategories);
-            setAllCatagories(res.data.bookcategories);
-          }
-        });
+        fetchData();
       } else {
         console.log(res.data.message);
         swal({
@@ -130,8 +122,8 @@ const BooksCatagories = () => {
     });
   };
 
-  useEffect(() => {
-    axios.get(`/api/book-category`).then((res) => {
+  async function fetchData () {
+    await axios.get(`/api/book-category`).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data.bookcategories);
         setAllCatagories(res.data.bookcategories);
@@ -139,6 +131,10 @@ const BooksCatagories = () => {
         console.log("error");
       }
     });
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   // console.log(allCatagories);

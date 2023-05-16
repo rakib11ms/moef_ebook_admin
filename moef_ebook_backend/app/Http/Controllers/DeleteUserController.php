@@ -13,7 +13,7 @@ class DeleteUserController extends Controller
         // dd($id);
         $user = User::findOrFail($id);
         $user->ActiveStatus = false;
-        $user->save();
+        $user->update();
         return response()->json(
             [
                 'status' => 200,

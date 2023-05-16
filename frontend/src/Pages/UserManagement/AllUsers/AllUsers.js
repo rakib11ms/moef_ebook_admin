@@ -16,7 +16,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { DataGrid } from '@mui/x-data-grid';
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+// import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import swal from "sweetalert"
 
 
 function TabPanel(props) {
@@ -56,15 +58,21 @@ function a11yProps(index) {
 const AllUsers = () => {
 
   const [allUsers, setAllUsers] = useState([]);
-  useEffect(() => {
-    axios.get(`/api/get-all-user-info`).then((res) => {
+
+  async function fetchUser() {
+    await axios.get(`/api/get-all-user-info`).then((res) => {
       if (res.data.status === 200) {
         const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
         setAllUsers(activeUsers);
+        console.log(activeUsers);
       } else {
         console.log("error");
       }
     });
+  }
+
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   const columns = [
@@ -95,22 +103,56 @@ const AllUsers = () => {
     { field: 'userID', headerName: 'আইডি', width: 120 },
     { field: 'userType', headerName: 'ব্যবহারকারীর ধরণ', width: 150 },
     { field: 'officeID', headerName: 'অফিস আইডি', width: 150 },
-    { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 200 },
+    { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
     { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
     { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
+    // {
+    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
+    //   renderCell: (params) => (
+    //     <div className="d-flex justify-content-center align-items-center">
+    //       <CreateOutlinedIcon className="text-warning" />
+    //     </div>
+    //   )
+    // },
     {
-      field: 'edit', headerName: 'সম্পাদনা', width: 120,
+      field: 'delete', headerName: 'ব্যবহারকারী নিষ্ক্রিয় করুন', width: 180,
       renderCell: (params) => (
         <div className="d-flex justify-content-center align-items-center">
-          <CreateOutlinedIcon className="text-warning" />
-        </div>
-      )
-    },
-    {
-      field: 'delete', headerName: 'মুছুন', width: 120,
-      renderCell: (params) => (
-        <div className="d-flex justify-content-center align-items-center">
-          <DeleteOutlineOutlinedIcon className="text-danger" />
+          <PersonRemoveIcon
+            className="text-danger" 
+            onClick={
+              () => {
+                swal({
+                  title: "নিশ্চিত করুন",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                }).then((willDelete) => {
+                  if (willDelete) {
+                    axios.put(`/api/delete-user/${params.row.id}`).then((res) => {
+                      if (res.data.status === 200) {
+                        swal("ব্যবহারকারী নিষ্ক্রিয় করা হয়েছে", {
+                          icon: "success",
+                        });
+                        axios.get(`/api/get-all-user-info`).then((res) => {
+                          if (res.data.status === 200) {
+                            const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
+                            setAllUsers(activeUsers);
+                          } else {
+                            console.log("error");
+                          }
+                        });
+                      } else {
+                        swal("ব্যবহারকারী নিষ্ক্রিয় করা যায়নি", {
+                          icon: "error",
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            }
+          />
         </div>
       )
     },

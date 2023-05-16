@@ -14,15 +14,19 @@ import axios from "axios";
 const AllDocuments = () => {
   const [AllDocuments, setAllDocuments] = useState([]);
 
-  useEffect(() => {
-    axios.get(`/api/all-single-document`).then((res) => {
+  async function fetchDocs() {
+    await axios.get(`/api/all-single-document`).then((res) => {
       if (res.data.status === 200) {
         setAllDocuments(res.data.single_document);
-        // console.log("all books", res.data.single_document);
+        console.log("all books", res.data.single_document);
       } else {
         console.log("error");
       }
     })
+  }
+
+  useEffect(() => {
+    fetchDocs();
   }, [])
 
   const columns = [
@@ -62,13 +66,14 @@ const AllDocuments = () => {
                       swal("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
                         icon: "success",
                       });
-                      axios.get(`/api/all-single-document`).then((res) => {
-                        if (res.data.status === 200) {
-                          setAllDocuments(res.data.single_document);
-                        } else {
-                          console.log("error");
-                        }
-                      });
+                      // axios.get(`/api/all-single-document`).then((res) => {
+                      //   if (res.data.status === 200) {
+                      //     setAllDocuments(res.data.single_document);
+                      //   } else {
+                      //     console.log("error");
+                      //   }
+                      // });
+                      fetchDocs();
                     } else {
                       swal("Oops! Something went wrong, Please try again");
                     }

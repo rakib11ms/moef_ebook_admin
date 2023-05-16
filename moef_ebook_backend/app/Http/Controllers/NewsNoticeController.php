@@ -29,46 +29,8 @@ class NewsNoticeController extends Controller
         $newsNotice->redirect_url = $request->redirect_url;
         // $newsNotice->created_by = auth('sanctum')->user()->UserID;
         $newsNotice->created_by = $request->created_by;
-<<<<<<< HEAD
-   
-
-
-
-$firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
-// dd($firebaseToken);
-
-        $SERVER_API_KEY = "AAAAcOAYlSo:APA91bE0CzAXkazIrOQ9ZgxSWZsnauhHyCqj-uFApit1othRezO86tcKnFYM6snYYeHD6BD7uLDPd-KRTxZUHqSk0m6rpGs1nwYghR3JFoPokBFo6T5R9co4xnTSfP0lYrzmcfCS9F4g";
-
-        $data = [
-            "registration_ids" => $firebaseToken,
-            "notification" => [
-                "title" => "নতুন বিজ্ঞপ্তি প্রকাশিত হলো। ",
-                "body" => date('Y-m-d'),
-            ]
-        ];
-        $dataString = json_encode($data);
-
-        $headers = [
-            'Authorization:key=' . $SERVER_API_KEY,
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-
-        $response = curl_exec($ch);
-         $newsNotice->save();
-
-=======
         $newsNotice->isPublished = $request->isPublished;
         $newsNotice->save();
->>>>>>> 61ae0a75ddf91f265b075d6405400b7f428911f0
         return response()->json(
             [
                 'status' => 200,

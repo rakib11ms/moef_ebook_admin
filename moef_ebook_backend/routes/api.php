@@ -77,7 +77,7 @@ Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
 Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);
 
-Route::get('/delete-user/{id}', [DeleteUserController::class, 'update']);
+Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
 Route::post('/reset-password-email-confirm', [ResetPasswordController::class, 'resetPasswordConfirm']);
 
