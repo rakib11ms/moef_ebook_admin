@@ -51,7 +51,6 @@ const EditBooks = () => {
 
 
   useEffect(() => {
-    // store the news notice id provided in the url
     axios.get(`/api/get-main-book/${bookID}`).then(res => {
       if (res.data.status === 200) {
         const book = res.data.data;
@@ -82,13 +81,10 @@ const EditBooks = () => {
         setParagraph(res.data.book_paragraphs);
       }
     }),
-
     )
-  }, [])
+  }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     e.preventDefault();
 
     const formData = new FormData();

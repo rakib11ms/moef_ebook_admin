@@ -71,7 +71,7 @@ const ViewBooks = () => {
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
-                <h5>বই সম্পাদনা</h5>
+                <h5>বই দেখুন</h5>
 
               </div>
               <hr />
