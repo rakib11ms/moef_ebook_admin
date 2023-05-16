@@ -105,7 +105,7 @@ function Login({ handleSucessLogin }) {
                     alt="পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়-লোগো"
                   />
                   <h6 className="environment-tags">
-                    Environment Information e-Book
+                    Environment Information ebook
                   </h6>
                   <p className="poribesh-tags">
                     পরিবেশ, বন ও জলবায়ু পরিবর্তন মন্ত্রণালয়

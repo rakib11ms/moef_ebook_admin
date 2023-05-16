@@ -17,14 +17,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Navigate } from "react-router-dom";
 
-
 const CreateNewsAndNotice = () => {
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
-  const $user = JSON.parse(localStorage.getItem('user'));
+  const $user = JSON.parse(localStorage.getItem("user"));
   // console.log($user.id);
 
   // const [data, setData] = useState({
@@ -44,19 +42,18 @@ const CreateNewsAndNotice = () => {
   //   setData({ ...data, [name]: value });
   // };
 
-  const [Title, setTitle] = useState('');
+  const [Title, setTitle] = useState("");
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
-  }
-
+  };
 
   // const [isPublished, setisPublished] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(Title==='' || content==='<p><br></p>' || content===''){
-      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+    if (Title === "" || content === "<p><br></p>" || content === "") {
+      Swal.fire("সব তথ্য পূরণ করুন", "", "warning");
       return;
     }
 
@@ -70,21 +67,21 @@ const CreateNewsAndNotice = () => {
     formData.append("isPublished", 1);
     formData.append("created_by", $user.id);
 
-    axios.post(`/api/notice`, formData).then(res => {
+    axios.post(`/api/notice`, formData).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        navigate('/all-news-notice')
+        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+        navigate("/all-news-notice");
       } else if (res.data.status === 400) {
-        Swal.fire(res.data.message, '', 'warning')
+        Swal.fire(res.data.message, "", "warning");
       }
-    })
-  }
+    });
+  };
 
   const handleDraftSubmit = (e) => {
     e.preventDefault();
 
-    if(Title==='' || content==='<p><br></p>' || content===''){
-      Swal.fire('সব তথ্য পূরণ করুন', '', 'warning')
+    if (Title === "" || content === "<p><br></p>" || content === "") {
+      Swal.fire("সব তথ্য পূরণ করুন", "", "warning");
       return;
     }
     const formData = new FormData();
@@ -97,16 +94,15 @@ const CreateNewsAndNotice = () => {
     formData.append("isPublished", 0);
     formData.append("created_by", $user.id);
 
-    axios.post(`/api/notice`, formData).then(res => {
+    axios.post(`/api/notice`, formData).then((res) => {
       if (res.data.status === 200) {
-        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-        navigate('/all-news-notice')
+        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+        navigate("/all-news-notice");
       } else if (res.data.status === 400) {
-        Swal.fire(res.data.message, '', 'warning')
+        Swal.fire(res.data.message, "", "warning");
       }
-    })
-
-  }
+    });
+  };
 
   return (
     <div>
@@ -134,29 +130,30 @@ const CreateNewsAndNotice = () => {
               <div>
                 <div class="mb-3">
                   <div className="my-3">
-                  <input
-                    required
-                    type="text"
-                    name="Title"
-                    className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
-                    placeholder="টাইটেল যোগ করুন "
-                    value={Title}
-                    onChange={onTitleChange}
-                  />
+                    <input
+                      required
+                      type="text"
+                      id="biggopti-title-input"
+                      name="Title"
+                      className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
+                      placeholder="টাইটেল যোগ করুন "
+                      value={Title}
+                      onChange={onTitleChange}
+                    />
                   </div>
-          
 
                   <label for="exampleFormControlTextarea1" class="form-label">
                     <h5>এডিটর</h5>
                   </label>
                   <JoditEditor
                     className="news-jodit-editor"
+                    id="biggopti-editor-input"
                     spellcheck={false}
                     language="en"
                     toolbarAdaptive="false"
                     height="800"
                     autofocus="true"
-                    onBlur={newContent => setContent(newContent)}
+                    onBlur={(newContent) => setContent(newContent)}
                     onChange={(newContent) => setContent(newContent)}
                   />
                   {/* <button className="attached-button mt-3">
@@ -164,10 +161,17 @@ const CreateNewsAndNotice = () => {
                   </button> */}
                 </div>
                 <div className="draft-prokas-buttons-div">
-                  <Link >
-                    <button className="draft-button" onClick={handleDraftSubmit}>ড্রাফট করুন</button>
+                  <Link>
+                    <button
+                      className="draft-button"
+                      onClick={handleDraftSubmit}
+                    >
+                      ড্রাফট করুন
+                    </button>
                   </Link>
-                  <button className="prokas-button mx-2" onClick={handleSubmit}>প্রকাশ করুন</button>
+                  <button className="prokas-button mx-2" onClick={handleSubmit}>
+                    প্রকাশ করুন
+                  </button>
                 </div>
               </div>
             </div>
@@ -237,6 +241,7 @@ const CreateNewsAndNotice = () => {
                     <select
                       className="form-select2 mb-4"
                       aria-label="Default select example"
+                      id="user-selection"
                     >
                       <option selected>সকলের জন্য</option>
                       <option value="1">এডমিন ইউজার </option>
@@ -249,6 +254,7 @@ const CreateNewsAndNotice = () => {
                     <div className="prokash-date">
                       <ReactDatePicker
                         className="create-news-calander-input "
+                        id="biggopti-date-publish"
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
                       />
@@ -257,14 +263,13 @@ const CreateNewsAndNotice = () => {
                   </div>
                   <div>
                     <lebel> লিংক </lebel> <br />
-                    <input className=" link"></input>
+                    <input id="biggopti-link" className=" link"></input>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
       </div>
     </div>
   );
