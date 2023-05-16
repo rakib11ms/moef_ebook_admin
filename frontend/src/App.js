@@ -39,6 +39,7 @@ import ViewBooks from "./Pages/AllBooks/ViewBooks/ViewBooks";
 import AllDocuments from "./Pages/AllBooks/AllDocuments/AllDocuments";
 import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
+import MyComponent from "./MyComponent";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,6 +65,7 @@ function App() {
         <Routes>
           <Route path="/navigation" element={<NavigationBa />} />
           <Route path="/" element={<Login />} />
+          <Route path="/check1" element={<MyComponent />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route
             path="/forgot-password-request"
