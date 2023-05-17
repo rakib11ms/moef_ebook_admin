@@ -29,7 +29,6 @@ import ReactDatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 
 function TabPanel(props) {
-
   const { children, value, index, ...other } = props;
 
   return (
@@ -63,7 +62,7 @@ TabPanel.propTypes = {
 // }
 
 const Home = (props) => {
-  const $user = JSON.parse(localStorage.getItem('user'));
+  const $user = JSON.parse(localStorage.getItem("user"));
   // console.log($user);
   const [renderData, setRenderData] = useState("");
   const editor = useRef(null);
@@ -74,11 +73,11 @@ const Home = (props) => {
   //     }
   //   });
   // }, [renderData]);
-  //set current date 
+  //set current date
   // const [startDate, setStartDate] = useState(new Date());
   // const [value, setValue] = React.useState(0);
   // const [openCollapse, setOpenCollapse] = useState("");
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   console.log("cont", content);
 
   // active div
@@ -114,6 +113,14 @@ const Home = (props) => {
   const [chapters, setchapters] = useState([]);
   const [allParagraphs, setallParagraphs] = useState([]);
   const [totalDocuments, setTotalDocuments] = useState("");
+  const sectionRef = useRef(null);
+
+  const handleLinkClick = (divId) => {
+    const element = document.getElementById(divId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   // console.log('allParagraphs', allParagraphs)
 
   // console.log('totalDoc',totalDocuments)
@@ -267,78 +274,75 @@ const Home = (props) => {
   const handlePageSubmit = (e) => {
     // get class name
     // console.log(e.nativeEvent.submitter.className);
-    if(e.nativeEvent.submitter.className === 'home-input-button2'){
+    if (e.nativeEvent.submitter.className === "home-input-button2") {
       e.preventDefault();
-      if (content.trim() === '<p><br></p>' || content.trim() === '') {
-        Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
+      if (content.trim() === "<p><br></p>" || content.trim() === "") {
+        Swal.fire("পৃষ্ঠার বিষয়বস্তু পূরণ করুন", "", "warning");
         return;
       }
-  
-  
-      const  pageData={
-        book_id:BookID,
-        chapter_id:ChapterID,
-        paragraph_id:ParagraphID,
-        content:content,
+
+      const pageData = {
+        book_id: BookID,
+        chapter_id: ChapterID,
+        paragraph_id: ParagraphID,
+        content: content,
         isPublished: true,
         created_by: $user.id,
-      }
-  
+      };
+
       axios.post("api/create-main-book", pageData).then((res) => {
         if (res.data.status === 200) {
-          Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-          setRenderData(res.data)
+          Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+          setRenderData(res.data);
         }
       });
     }
 
-    if(e.nativeEvent.submitter.className === 'home-input-button1'){
+    if (e.nativeEvent.submitter.className === "home-input-button1") {
       e.preventDefault();
-      if (content.trim() === '<p><br></p>' || content.trim() === '') {
-        Swal.fire('পৃষ্ঠার বিষয়বস্তু পূরণ করুন', '', 'warning')
+      if (content.trim() === "<p><br></p>" || content.trim() === "") {
+        Swal.fire("পৃষ্ঠার বিষয়বস্তু পূরণ করুন", "", "warning");
         return;
       }
-  
-  
-      const  pageData={
-        book_id:BookID,
-        chapter_id:ChapterID,
-        paragraph_id:ParagraphID,
-        content:content,
+
+      const pageData = {
+        book_id: BookID,
+        chapter_id: ChapterID,
+        paragraph_id: ParagraphID,
+        content: content,
         isPublished: 0,
         created_by: $user.id,
-      }
-  
+      };
+
       axios.post("api/create-main-book", pageData).then((res) => {
         if (res.data.status === 200) {
-          Swal.fire('সফলভাবে সম্পন্ন হয়েছে', '', 'success')
-          setRenderData(res.data)
+          Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+          setRenderData(res.data);
         }
       });
     }
-
   };
 
   //dependent dropdowns
 
   async function getDepenentDropdownsByBookID() {
     await axios
-    .get(`api/get-dependent-chapters-by-book-master-id/${BookID}`)
-    .then((res) => {
-      if (res.data.book_chapters) {
-        setchapters(res.data.book_chapters);
-      }
-    });
+      .get(`api/get-dependent-chapters-by-book-master-id/${BookID}`)
+      .then((res) => {
+        if (res.data.book_chapters) {
+          setchapters(res.data.book_chapters);
+        }
+      });
   }
 
   async function getDepenentDropdownsByChapterID() {
     await axios
-    .get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`)
-    .then((res) => {
-      if (res.data.book_paragraphs) {
-        setallParagraphs(res.data.book_paragraphs);
-      }
-    });
+      .get(`api/get-dependent-paragraphs-by-book-chapter-id/${ChapterID}`)
+      .then((res) => {
+        if (res.data.book_paragraphs) {
+          setallParagraphs(res.data.book_paragraphs);
+        }
+      });
   }
 
   useEffect(() => {
@@ -549,7 +553,7 @@ const Home = (props) => {
         <hr />
 
         <div className="home-inputs-div">
-          <div className="home-inputs">
+          <div className="home-inputs" id="targetDiv">
             {activeButton === 1 && (
               <div className="tab-1">
                 <section className="">
@@ -633,7 +637,6 @@ const Home = (props) => {
                             // value={Publish_date}
                             selected={Publish_date}
                             onChange={handlePublishDateChange}
-                            
                           />
                           {/* <input
                             type="date"
@@ -737,11 +740,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(1)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
@@ -805,11 +806,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(1)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
@@ -839,11 +838,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(2)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
@@ -896,11 +893,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(1)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
@@ -930,11 +925,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(2)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
@@ -963,11 +956,9 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            <div>
-                              <Link to="">
-                                {" "}
-                                <ControlPointOutlinedIcon className="control-icon" />
-                              </Link>
+                            <div onClick={() => setActiveButton(3)}>
+                              {" "}
+                              <ControlPointOutlinedIcon className="control-icon" />
                             </div>
                           </div>
                         </div>
