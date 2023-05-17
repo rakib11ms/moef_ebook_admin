@@ -72,17 +72,17 @@ class BookParagraphController extends Controller
     }
     public function getChaptersByBookMaster($id){
         $book_chapters = BookChapter::where('BookID',$id)->get();
-   return response()->json(
-            [
-                'status'=>200,
-                'book_chapters'=>$book_chapters
-            ]
-        );
+        return response()->json(
+                [
+                    'status'=>200,
+                    'book_chapters'=>$book_chapters
+                ]
+            );
     }
 
-     public function getParagraphsByChapter($id){
-      $book_paragraphs = BookParagraph::where('ChapterID',$id)->get();
-   return response()->json(
+    public function getParagraphsByChapter($id){
+        $book_paragraphs = BookParagraph::where('ChapterID',$id)->get();
+        return response()->json(
             [
                 'status'=>200,
                 'book_paragraphs'=>$book_paragraphs

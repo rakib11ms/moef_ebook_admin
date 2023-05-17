@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\MainBook;
+use App\Models\BooksMaster;
 
 class MainBookController extends Controller
 {
@@ -71,6 +72,37 @@ class MainBookController extends Controller
       [
         'status'=>200,
         'message'=>"Main book deleted successfully"
+      ]
+    );
+  }
+
+  public function getChaptersByBookID($id) {
+    $chapters_by_book_id = MainBook::with('bookChapter')->where('book_id',$id)->get();
+    return response()->json(
+      [
+        'status'=>200,
+        'message'=>"Chapters by book id",
+        'data'=>$chapters_by_book_id
+      ]
+    );
+  }
+
+  public function getAllBookCountByChapterAndParagraph() {
+    // return only book name once and the counts of chapter and paragraph of the book
+    $all_book_count = MainBook::with('bookMaster')->select('book_id','chapter_id','paragraph_id')->get();
+
+    $book_count = array();
+    foreach($all_book_count as $book) {
+      $book_count[$book->book_id]['Title'] = $book->bookMaster->Title;
+      $book_count[$book->book_id]['chapter_count'] = MainBook::where('book_id',$book->book_id)->count();
+      $book_count[$book->book_id]['paragraph_count'] = MainBook::where('book_id',$book->book_id)->count();
+    }
+
+    return response()->json(
+      [
+        'status'=>200,
+        'message'=>"All book count",
+        'data'=>$book_count
       ]
     );
   }
