@@ -47,6 +47,7 @@ Route::resource('bookParagraph', BookParagraphController::class);
 Route::get('get-dependent-chapters-by-book-master-id/{id}', [BookParagraphController::class, 'getChaptersByBookMaster']);
 
 Route::get('get-dependent-paragraphs-by-book-chapter-id/{id}', [BookParagraphController::class, 'getParagraphsByChapter']);
+Route::get('get-dependent-chapter-by-main-book-id/{id}', [MainBookController::class, 'getChaptersByBookID']);
 
 
 Route::resource('bookReview', BookReviewController::class);
@@ -73,6 +74,7 @@ Route::delete('/delete-single-document/{id}', [SingleDocumentController::class, 
 
 Route::post('/create-main-book', [MainBookController::class, 'createMainBook']);
 Route::get('/get-all-main-book', [MainBookController::class, 'getAllMainBook']);
+Route::get('/get-main-book-by-count', [MainBookController::class, 'getAllBookCountByChapterAndParagraph']);
 Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
 Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);

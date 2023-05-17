@@ -7,52 +7,83 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import swal from "sweetalert";
-
 import { Link } from "react-router-dom";
 import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
 
 const AllBooks = () => {
 
   const [allBooks, setAllBooks] = useState([]);
+  const [BookID, setBookID] = useState("");
+  const [books, setBooks] = useState([]);
+  const [ChapterID, setChapterID] = useState("");
+  const [chapters, setchapters] = useState([]);
 
-  // async function fetchBooks() {
-  //   try {
-  //     const res = await axios.get(`/api/get-all-main-book`);
+
+
+
+  async function fetchBooks() {
+    const res = await axios.get(`/api/get-all-main-book`);
+    if (res.data.status === 200) {
+      setAllBooks(res.data.data);
+      setBooks(res.data.data);
+      setchapters(res.data.data);
+      console.log("all books", res.data.data);
+    } else {
+      console.log("error");
+    }
+  }
+
+  // async function fetchChapters() {
+  //   await axios.get(`/api/get-dependent-chapter-by-main-book-id/${BookID}`).then((res) => {
   //     if (res.data.status === 200) {
-  //       setAllBooks(res.data.data);
-  //       console.log("all books", res.data.data);
+  //       setchapters(res.data.data);
+  //       console.log("all chapters", res.data.data);
   //     } else {
   //       console.log("error");
   //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
+  //   });
   // }
 
-  async function fetchBooks() {
-    try {
-      // console.log('fetchBooks called');
-      const res = await axios.get(`/api/get-all-main-book`);
-      if (res.data.status === 200) {
-        setAllBooks(res.data.data);
-        console.log("all books", res.data.data);
-      } else {
-        console.log("error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   
 
   useEffect(() => {
     fetchBooks();
   }, []);
 
+  const handleBookChange = (e) => {
+    // console.log(e.target.value);
+    if (e.target.value !== "") {
+      setchapters([]);
+      setBookID(e.target.value);
+      axios.get(`/api/get-dependent-chapter-by-main-book-id/${e.target.value}`).then((res) => {
+        if (res.data.status === 200) {
+          setchapters(res.data.data);
+          // console.log("all chapters", res.data.data);
+        } else {
+          console.log("error");
+        }
+      });
+    } 
+
+    if (e.target.value === "") {
+      setchapters([]);
+      setBookID("");
+    }
+  };
+
+  const searchBook = (e) => {
+    // console.log(BookID, ChapterID);
+    if (BookID !== "" && ChapterID !== "") {
+      
+    }
+  }
+
+
   const columns = [
     { field: 'book_name', headerName: 'বইয়ের নাম ', width: 250 },
-    { field: 'chapter_name', headerName: 'অধ্যায়', width: 190 },
-    { field: 'paragraph_name', headerName: 'অনুচ্ছেদ', width: 190 },
+    { field: 'chapter_name', headerName: 'অধ্যায়ের সংখ্যা', width: 190 },
+    { field: 'paragraph_name', headerName: 'অনুচ্ছেদের সংখ্যা', width: 190 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
@@ -161,6 +192,75 @@ const AllBooks = () => {
             {/* <hr /> */}
             <>
               <p>আমার ফাইল</p>
+              <div className="books-serchInput-icon-div col-6">
+                
+              <div className="select-category-div col-6">
+                {/* <lebel >বই নির্নয় করুন * </lebel> <br /> */}
+                <select
+                  style={{ border: '1px solid #000', padding: '5px' }}
+                  required
+                  class="form-select select-category allField"
+                  aria-label="Default select example"
+                  value={BookID}
+                  onChange={(e) => handleBookChange(e)}
+                  name="BookID"
+                  id="add-page-book-selection"
+                >
+                  <option selected value="">
+                    বই নির্বাচন করুন
+                  </option>
+                  {books.map((item) => {
+                    return (
+                      <>
+                        <option value={item.book_master.id}>
+                          {item.book_master.Title}{" "}
+                        </option>
+                      </>
+                    );
+                  })}
+                </select>
+                <div>
+                  <Link to="">
+                    {" "}
+                  </Link>
+                </div>
+                {/* <lebel> অধ্যায় নির্নয় করুন * </lebel> <br /> */}
+
+                  <select
+                    style={{ border: '1px solid #000', padding: '5px' }}
+                    required
+                    class="form-select select-category allField"
+                    aria-label="Default select example"
+                    value={ChapterID}
+                    onChange={(e) => setChapterID(e.target.value)}
+                    name="ChapterID"
+                    id="add-page-chapter-selection"
+                  >
+                    <option selected value="">
+                      অধ্যায় নির্বাচন করুন
+                    </option>
+                    {chapters.map((item, i) => {
+                      return (
+                        <>
+                          <option value={item.id}>
+                            {item.book_chapter.ChapterName}{" "}
+                          </option>
+                        </>
+                      );
+                    })}
+                  </select>
+                  <div>
+                    <Link to="">
+                      {" "}
+                    </Link>
+                  </div>
+                  {/* search button */}
+                  <button className="search-btn btn btn-primary btn-sm" onClick={searchBook}>
+                    <SearchIcon style={{ color: "#777777" }} onClick={fetchBooks} />
+                  </button>
+                </div>
+              </div>
+              <hr />
               <DataGrid
                 rows={rows}
                 columns={columns}
@@ -181,64 +281,12 @@ const AllBooks = () => {
             </> */}
           </div>
 
-          {/* <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-            <div className="all-books-add-card-div1">
-              {data && (
-                <div className="all-books-side-tags">
-                  <h6>{data.id}</h6>
-
-                  <span className="icon-pen">
-                    <CreateIcon />
-                  </span>
-                </div>
-              )}
-              <hr />
-              <div className="download-icon-div">
-                <DownloadForOfflineRoundedIcon className="download-icon" />
-              </div>
-              {data && (
-                <div className="suchi-div">
-                  <p>
-                    <strong>অধ্যায় সংখ্যা:</strong> {data.chapter}
-                  </p>
-                  <p>
-                    <strong>পৃষ্ঠা সংখ্যা:</strong> {data.pageNumber}{" "}
-                  </p>
-                  <p>
-                    <strong>প্রথম প্রকাশ কাল :</strong> {data.productionDate}
-                  </p>
-                  <p>
-                    <strong>প্রকাশক :</strong> {data.publicer}
-                  </p>
-                  <p>
-                    <strong>সূচীপত্র:</strong> {data.repartory}
-                  </p>
-                </div>
-              )}
-              <div className="all-books-buttons-ful-div">
-                <div className="all-books-edit-div">
-                  <Link to="/book-categories">
-                    <button className="all-books-edit">এডিট করুন</button>
-                  </Link>
-                </div>
-                <div className="all-books-edit-div mt-2">
-                  <Link to="/draft-documents">
-                    {" "}
-                    <button className="all-books-content">
-                      <span>
-                        <AddRoundedIcon />
-                      </span>{" "}
-                      কন্টেন্ট যোগ করুন{" "}
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </section>
 
-      <section></section>
+      <section>
+
+      </section>
     </div>
   );
 };
