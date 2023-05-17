@@ -18,6 +18,7 @@ class NewsNoticeController extends Controller
             ]
         );
     }
+    
 
     public function store(Request $request)
     {
