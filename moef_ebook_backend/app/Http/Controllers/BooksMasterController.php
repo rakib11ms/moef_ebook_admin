@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BooksMaster;
 use Illuminate\Http\Request;
-
+use File;
 
 class BooksMasterController extends Controller
 {
@@ -26,13 +26,22 @@ class BooksMasterController extends Controller
         $booksMaster->Title = $request->Title;
         $booksMaster->short_desc = $request->short_desc;
         $booksMaster->PublisherID = $request->PublisherID;
-        $booksMaster->BookCoverImage = $request->BookCoverImage;
+        // $booksMaster->BookCoverImage = $request->BookCoverImage;
         $booksMaster->LanguageID= $request->LanguageID;
         $booksMaster->Publish_date = $request->Publish_date;
-        $booksMaster->file_url = $request->file_url;
+        // $booksMaster->file_url = $request->file_url;
         $booksMaster->created_by = $request->created_by;
         $booksMaster->AuthorID = $request->AuthorID;
+
+        if ($request->hasFile('BookCoverImage')) {
+            $image = $request->file('BookCoverImage');
+            $imageName =time().'.'. $image->getClientOriginalName();
+            $image->move('images/', $imageName);
+            $booksMaster->BookCoverImage= $imageName;    
+        }
         $booksMaster->save();
+
+
         return response()->json(
             [
                 'status' => 200,

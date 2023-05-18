@@ -101,11 +101,11 @@ const Home = (props) => {
   // };
 
   // Upload button
-  // const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  // const handleFileInputChange = (e) => {
-  //   setSelectedFile(e.target.files[0]);
-  // };
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -165,36 +165,7 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    // axios.get("api/book-category").then((res) => {
-    //   if (res.data.bookcategories) {
-    //     setCategories(res.data.bookcategories);
-    //   }
-    // });
 
-    // axios.get("api/language").then((res) => {
-    //   if (res.data.languages) {
-    //     // console.log(res.data.languages);
-    //     setLanguages(res.data.languages);
-    //   }
-    // });
-
-    // axios.get("api/books").then((res) => {
-    //   if (res.data.books_masters) {
-    //     setBooks(res.data.books_masters);
-    //   }
-    // });
-
-    // axios.get("api/bookChapter").then((res) => {
-    //   if (res.data.bookChapters) {
-    //     setchapters(res.data.bookChapters);
-    //   }
-    // });
-
-    // axios.get("api/bookParagraph").then((res) => {
-    //   if (res.data.book_paragraphs) {
-    //     setallParagraphs(res.data.book_paragraphs);
-    //   }
-    // });
     fetchData();
   }, [renderData]);
 
@@ -212,19 +183,38 @@ const Home = (props) => {
   const [ParagraphID, setParagraphID] = useState("");
   const [ChapterName, setChapterName] = useState("");
   const [ParagraphName, setParagraphName] = useState("");
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
 
   const SubmitBookMaster = (e) => {
     e.preventDefault();
-    const masterBookData = {
-      CatID: CatID,
-      Title: Title,
-      PublisherID: PublisherID,
-      Publish_date: Publish_date,
-      AuthorID: AuthorID,
-      LanguageID: LanguageID,
-      created_by: $user.id,
-    };
-    axios.post("api/books", masterBookData).then((res) => {
+    // console.log('days',selectedFile)
+    // const masterBookData = {
+    //   CatID: CatID,
+    //   Title: Title,
+    //   PublisherID: PublisherID,
+    //   Publish_date: Publish_date,
+    //   AuthorID: AuthorID,
+    //   LanguageID: LanguageID,
+    //   created_by: JSON.parse( localStorage.getItem("user")).id
+    // };
+
+
+    const formData = new FormData();
+    formData.append('CatID', CatID);
+    formData.append('Title', Title);
+    formData.append('PublisherID', PublisherID);
+    formData.append('AuthorID', AuthorID);
+    formData.append('LanguageID', LanguageID);
+    formData.append('Publish_date', Publish_date);
+    formData.append('BookCoverImage', selectedFile);
+    formData.append('created_by', JSON.parse( localStorage.getItem("user")).id);
+
+
+    axios.post("api/books", formData,config).then((res) => {
       if (res.data.status === 200) {
         document.getElementById("form1").reset();
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
@@ -248,6 +238,8 @@ const Home = (props) => {
 
     axios.post("api/bookChapter", chapterData).then((res) => {
       if (res.data.status === 200) {
+        document.getElementById("form2").reset();
+
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
         setRenderData(res.data);
         setChapterName("");
@@ -265,8 +257,13 @@ const Home = (props) => {
     };
     axios.post("api/bookParagraph", paragraphData).then((res) => {
       if (res.data.status === 200) {
+        document.getElementById("form3").reset();
+
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
         setRenderData(res.data);
+        setBookID('');
+        setChapterID('');
+        setParagraphName('')
       }
     });
   };
@@ -292,6 +289,12 @@ const Home = (props) => {
 
       axios.post("api/create-main-book", pageData).then((res) => {
         if (res.data.status === 200) {
+          document.getElementById("form4").reset();
+          setBookID('');
+          setChapterID('');
+          setParagraphID('');
+          setContent('')
+
           Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
           setRenderData(res.data);
         }
@@ -563,7 +566,7 @@ const Home = (props) => {
                     </div>
                   </div>
 
-                  <form onSubmit={SubmitBookMaster} id="form1">
+                  <form onSubmit={SubmitBookMaster} id="form1"  method="POST">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -589,7 +592,7 @@ const Home = (props) => {
                               id="add-book-categories"
                               required
                             >
-                              <option selected value="">
+                              <option selected value=''>
                                 ক্যাটাগরি নির্বাচন করুন
                               </option>
                               {categories.map((category, index) => {
@@ -657,9 +660,8 @@ const Home = (props) => {
                             className=" select-category2 allField"
                             aria-label="Default select example"
                             id="add-book-vasha"
-                            required
                           >
-                            <option selected value="">
+                            <option selected value=''>
                               ভাষা নির্বাচন করুন{" "}
                             </option>
                             {languages.map((language, index) => {
@@ -672,17 +674,20 @@ const Home = (props) => {
                           </select>
                         </div>
                       </div>
-                      {/* <div>
-                        <input
-                          type="file"
-                          id="fileInput"
-                          onChange={handleFileInputChange}
-                          style={{ display: "none" }}
-                        />
+                      <div>
+
                         <label htmlFor="fileInput" className="btn btn-warning">
                           <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
                         </label>
-                      </div> */}
+                        <input
+                          type="file"
+                          className="ms-3s"
+                          id="fileInput"
+                          name="BookCoverImage"
+                          onChange={handleFileInputChange}
+                        // style={{ display: "none" }}
+                        />
+                      </div>
                       <div className="home-input-button-div">
                         {/* <button className="home-input-button1">খসড়া </button> */}
                         <button className="home-input-button2">
@@ -703,7 +708,7 @@ const Home = (props) => {
                       <h5>বইয়ের অধ্যায় যোগ করুন </h5>
                     </div>
                   </div>
-                  <form onSubmit={handleChapterSubmit}>
+                  <form onSubmit={handleChapterSubmit} id="form2">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -729,7 +734,7 @@ const Home = (props) => {
                               id="add-chapter-book-nirnoy"
                               onChange={(e) => setBookID(e.target.value)}
                             >
-                              <option selected value="">
+                              <option selected value=''>
                                 বই নির্নয় করুন
                               </option>
                               {books.map((book, index) => {
@@ -762,7 +767,7 @@ const Home = (props) => {
             {activeButton === 3 && (
               <div>
                 <section className="">
-                  <form id="myForm" onSubmit={handleParagraphSubmit}>
+                  <form id="form3" onSubmit={handleParagraphSubmit}>
                     <div className="row home-input-tags container-fluid">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h5>বইয়ের অনুচ্ছেদ যোগ করুন </h5>
@@ -828,7 +833,7 @@ const Home = (props) => {
                                 {" "}
                                 অধ্যায় সমগ্র{" "}
                               </option>
-                              {chapters.map((item, i) => {
+                              {BookID && chapters.map((item, i) => {
                                 return (
                                   <>
                                     <option value={item.id}>
@@ -860,7 +865,7 @@ const Home = (props) => {
             {activeButton === 4 && (
               <div>
                 <section className="">
-                  <form id="myForm4" onSubmit={handlePageSubmit}>
+                  <form id="form4" onSubmit={handlePageSubmit}>
                     <div className="row home-input-tags container-fluid">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h5>নতুন পৃষ্ঠা যোগ করুন </h5>
@@ -915,7 +920,7 @@ const Home = (props) => {
                               <option selected value="">
                                 অধ্যায় নির্বাচন করুন
                               </option>
-                              {chapters.map((item, i) => {
+                              {BookID && chapters.map((item, i) => {
                                 return (
                                   <>
                                     <option value={item.id}>
@@ -946,7 +951,7 @@ const Home = (props) => {
                               <option selected value="">
                                 অনুচ্ছেদ নির্বাচন করুন{" "}
                               </option>
-                              {allParagraphs.map((item, i) => {
+                              {ChapterID && allParagraphs.map((item, i) => {
                                 return (
                                   <>
                                     <option value={item.id}>

@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Events\ChatMessageEvent;
-use App\Listeners\ProcessChatMessageListener;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -14,13 +13,8 @@ use App\Listeners\ProcessChatMessageListener;
 |
 */
 
-// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
-
-Broadcast::channel('chat', function () {
-    return true;
+Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
 });
 
-Broadcast::listen(ChatMessageEvent::class, ProcessChatMessageListener::class);
 
