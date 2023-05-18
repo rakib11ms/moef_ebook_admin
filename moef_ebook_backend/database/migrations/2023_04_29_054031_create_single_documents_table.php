@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('sub_category')->nullable();
             $table->string('published_date')->nullable();
             $table->longText('document_contents')->nullable();
+            $table->string('type')->default('single_document');
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }

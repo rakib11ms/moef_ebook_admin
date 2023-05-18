@@ -77,4 +77,34 @@ class NewsNoticeController extends Controller
             ]
         );
     }
+
+    //accept a string
+    public function getNewsNoticeByOldestOrNewest($string)
+    {
+        //for newest get only 3 leatest news notice
+        if($string == "newest"){
+            $newsNotices = NewsNotice::with('category')->with('subCategory')->orderBy('created_at', 'desc')->take(3)->get();
+            return response()->json(
+                [   'status'=>200,
+                    'news_notices'=>$newsNotices
+                ]
+            );
+        }
+
+        //for oldest get all news notice without the leatest 3 news notice
+        if ($string == "oldest") {
+            $newsNotices = NewsNotice::
+                with('category')
+                ->with('subCategory')
+                ->orderBy('created_at', 'desc')
+                ->skip(3)
+                ->take(PHP_INT_MAX)
+                ->get();
+                
+            return response()->json([
+                'status' => 200,
+                'news_notices' => $newsNotices
+            ]);
+        }
+    }
 }

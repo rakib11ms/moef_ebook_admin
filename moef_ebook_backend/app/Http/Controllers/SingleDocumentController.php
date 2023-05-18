@@ -30,6 +30,7 @@ class SingleDocumentController extends Controller
             // $single_document->sub_category=$request->sub_category;
             $single_document->published_date = Carbon\Carbon::now();
             $single_document->document_contents = $request->contents;
+            $single_document->created_by = $request->created_by;
             $single_document->save();
             return response()->json([
                 'status' => 200,
