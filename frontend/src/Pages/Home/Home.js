@@ -681,7 +681,7 @@ const Home = (props) => {
                         </label>
                         <input
                           type="file"
-                          className="ms-3s"
+                          className="ms-3"
                           id="fileInput"
                           name="BookCoverImage"
                           onChange={handleFileInputChange}
