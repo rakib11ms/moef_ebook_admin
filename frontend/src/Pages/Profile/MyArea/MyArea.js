@@ -4,6 +4,7 @@ import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./MyArea.css";
 // import profilePic from "../../../images/profile-pic.jpg";
 import bookImg from "../../../images/book.png";
+import singleDoc from "../../../images/single_doc.png";
 import CreateIcon from "@mui/icons-material/Create";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
@@ -60,11 +61,30 @@ const MyArea = () => {
     });
   }
 
+  const [booksMain, setBooksMain] = useState([]);
+  const [singleDocuments, setSingleDocuments] = useState([]);
+
+  const $user = JSON.parse(localStorage.getItem("user"));
+
+  async function getBooksMain() {
+    await axios.get("api/get-all-main-books-and-single-documents-for-a-specific-user/" + $user.id).then((res) => {
+      //store to bookMain whose type is main_book from res.data.data
+      const bookMain = res.data.data.filter((item) => item.type === "main_book");
+      setBooksMain(bookMain);
+
+      //store to singleDocuments whose type is single_document from res.data.data
+      const singleDocument = res.data.data.filter((item) => item.type === "single_document");
+      setSingleDocuments(singleDocument);
+
+    });
+  }
+
   useEffect(() => {
     // axios.get("api/get-user-image/" + userID).then((res) => {
     //   setUser(res.data.image);
     // });
     getUserImage();
+    getBooksMain();
   }, []);
 
   // console.log(user);
@@ -376,7 +396,39 @@ const MyArea = () => {
           <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
             <section className="container-fluid">
               <h5>আমার বই</h5>
-              <div className="area-all-books-div">
+              {/* show all books */}
+              <div className="row">
+                {booksMain.map((book) => (
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div className="book-div">
+                      <img
+                        className="bookImg"
+                        src={bookImg}
+                        alt="book img"
+                      />
+                      <p>{book.title}</p>
+                    </div>
+                  </div>
+                ))}
+
+                {singleDocuments.map((book) => (
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div className="book-div">
+                      <img
+                        className="single-doc-img"
+                        src={singleDoc}
+                        alt="book img"
+                      />
+                      <p>{book.title}</p>
+                    </div>
+                  </div>
+                ))
+                }
+              </div>
+            
+
+
+              {/* <div className="area-all-books-div">
                 <div className="area-book-div">
                   <img className="bookImg-area" src={bookImg} alt="" />
                   <p>পরিবেশ আইন ১০১-২০০</p>
@@ -397,7 +449,7 @@ const MyArea = () => {
                   <img className="bookImg-area" src={bookImg} alt="" />
                   <p>১৯২৭ বন আইন</p>
                 </div>
-              </div>
+              </div> */}
             </section>
             <section className="mt-5 container-fluid">
               <h5>আমার বুকমার্কস</h5>

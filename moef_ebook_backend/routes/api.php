@@ -48,6 +48,9 @@ Route::get('get-dependent-chapters-by-book-master-id/{id}', [BookParagraphContro
 
 Route::get('get-dependent-paragraphs-by-book-chapter-id/{id}', [BookParagraphController::class, 'getParagraphsByChapter']);
 Route::get('get-dependent-chapter-by-main-book-id/{id}', [MainBookController::class, 'getChaptersByBookID']);
+Route::get('get-news-notice-by-oldest-or-newest/{id}', [NewsNoticeController::class, 'getNewsNoticeByOldestOrNewest']);
+Route::get('get-all-main-books-and-single-documents-in-decending-order', [MainBookController::class, 'getAllMainBooksAndSingleDocumentsInDecendingOrder']);
+Route::get('get-all-main-books-and-single-documents-for-a-specific-user/{id}', [MainBookController::class, 'getAllMainBooksAndSingleDocsForASpecificUser']);
 
 
 Route::resource('bookReview', BookReviewController::class);

@@ -176,17 +176,20 @@ const AddDocument = (props) => {
     fetchData();
   }, [])
 
+  const $user = JSON.parse(localStorage.getItem("user"));
+
   const data = {
     contents: content,
     title: documentTitle,
     notice_news_category_id: notice_news_category_id,
     notice_news_subcategory_id: notice_news_subcategory_id,
-    redirect_url: redirect_url,
-    created_by: 1,
+    redirect_url: redirect_url, 
     book_id: bookId,
     chapter_id: chapterId,
     paragraph_id: ParagraphId,
+    created_by: $user.id,
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (content.trim() === '<p><br></p>' || content.trim() === '') {

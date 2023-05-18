@@ -22,18 +22,30 @@ const AllBooks = () => {
 
 
 
-  async function fetchBooks() {
-    const res = await axios.get(`/api/get-all-main-book`);
+  // async function fetchBooks() {
+  //   const res = await axios.get(`/api/get-all-main-book`);
+  //   if (res.data.status === 200) {
+  //     setAllBooks(res.data.data);
+  //     setBooks(res.data.data);
+  //     setchapters(res.data.data);
+  //     console.log("all books", res.data.data);
+  //   } else {
+  //     console.log("error");
+  //   }
+  // }
+
+  async function fetchBookDetails() {
+    const res = await axios.get(`/api/get-main-book-by-count`);
     if (res.data.status === 200) {
       setAllBooks(res.data.data);
-      setBooks(res.data.data);
-      setchapters(res.data.data);
+      // setBooks(res.data.data);
+      // setchapters(res.data.data);
       console.log("all books", res.data.data);
     } else {
       console.log("error");
     }
   }
-
+  
   // async function fetchChapters() {
   //   await axios.get(`/api/get-dependent-chapter-by-main-book-id/${BookID}`).then((res) => {
   //     if (res.data.status === 200) {
@@ -48,7 +60,7 @@ const AllBooks = () => {
   
 
   useEffect(() => {
-    fetchBooks();
+    fetchBookDetails();
   }, []);
 
   const handleBookChange = (e) => {
@@ -82,8 +94,8 @@ const AllBooks = () => {
 
   const columns = [
     { field: 'book_name', headerName: 'বইয়ের নাম ', width: 250 },
-    { field: 'chapter_name', headerName: 'অধ্যায়ের সংখ্যা', width: 190 },
-    { field: 'paragraph_name', headerName: 'অনুচ্ছেদের সংখ্যা', width: 190 },
+    { field: 'chapter_count', headerName: 'অধ্যায়ের সংখ্যা', width: 190 },
+    { field: 'paragraph_count', headerName: 'অনুচ্ছেদের সংখ্যা', width: 190 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
@@ -126,7 +138,8 @@ const AllBooks = () => {
                       //     console.log("error");
                       //   }
                       // });
-                      fetchBooks();
+                      // fetchBooks();
+                      fetchBookDetails();
                     } else {
                       swal("Oops! Something went wrong, Please try again");
                     }
@@ -155,10 +168,10 @@ const AllBooks = () => {
   const rows = [
     ...allBooks.map((book) => (
       {
-        id: book.id,
-        book_name: book.book_master.Title,
-        chapter_name: book.book_chapter.ChapterName,
-        paragraph_name: book.book_paragraph.ParagraphName,
+        id: book.book_id,
+        book_name: book.Title,
+        chapter_count: book.chapter_count,
+        paragraph_count: book.paragraph_count
       }
     ))
   ];
@@ -256,7 +269,7 @@ const AllBooks = () => {
                   </div>
                   {/* search button */}
                   <button className="search-btn btn btn-primary btn-sm" onClick={searchBook}>
-                    <SearchIcon style={{ color: "#777777" }} onClick={fetchBooks} />
+                    <SearchIcon style={{ color: "#777777" }} onClick={fetchBookDetails} />
                   </button>
                 </div>
               </div>
