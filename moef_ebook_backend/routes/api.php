@@ -81,6 +81,7 @@ Route::get('/get-main-book-by-count', [MainBookController::class, 'getAllBookCou
 Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
 Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);
+Route::get('/global-search-by-book-or-documents/{name}', [MainBookController::class, 'globalSearchByBookOrDocuments']);
 
 Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
