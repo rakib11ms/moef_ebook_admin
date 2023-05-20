@@ -29,29 +29,26 @@
 .change-pp-button:hover {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 } */
-.area-upload{
+.area-upload {
   width: fit-content;
   background-color: #5c5c5c;
-display: none;
-margin-top: 20px !important;
+  display: none;
+  margin-top: 20px !important;
 }
-.upload-button{
+.upload-button {
   margin-top: 10px;
   width: 100%;
 }
-.name-info{
-  /* border: 1px solid #5c5c5c; */
-  height: 40vh;
-}
-.area-infor{
+
+.area-infor {
   display: flex;
   align-items: center;
 }
-.area-in-name{
+.area-in-name {
   border: none;
   /* margin-top: -100px; */
 }
-.area-in{
+.area-in {
   border: none;
 }
 .offi-info-div {
@@ -69,6 +66,7 @@ margin-top: 20px !important;
   display: flex;
   flex-direction: column;
   margin-left: -10px;
+  height: 45vh;
 }
 .varify-button-div {
   display: flex;

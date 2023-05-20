@@ -90,7 +90,7 @@ function ForgotPasswordRequest() {
                     <p className="login-input-tags">
                       আপনার নিবন্ধিত ইমেইল দিন{" "}
                     </p>
-                    <div>
+                    <div className="login-input-div">
                       <input
                         onChange={(e) => setemail(e.target.value)}
                         type="string"

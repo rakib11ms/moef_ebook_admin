@@ -131,7 +131,7 @@ function SignUp() {
                 <form onSubmit={handleSubmit}>
                   <div className="login-input-tags-div">
                     <p className="login-input-tags">শুরু করতে লগইন করুন</p>
-                    <div>
+                    <div className="signUp-inputs-div">
                       <input
                         onChange={handleChange}
                         type="text"
@@ -188,7 +188,7 @@ function SignUp() {
                         name="confirm_password"
                         placeholder="পুনরায় পাসওয়ার্ড দিন"
                       ></input>{" "}
-                      <button type="submit" className="login-submit-button">
+                      <button type="submit" className="login-submit-button ">
                         নিবন্ধন করুন
                       </button>
                     </div>{" "}
