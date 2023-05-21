@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TranslateIcon from "@mui/icons-material/Translate";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
@@ -21,7 +21,9 @@ import List from "@mui/material/List";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
 import axios from "axios";
-
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Swal from "sweetalert2";
 const NavigationBa = () => {
   // Sub menu
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -258,31 +260,7 @@ const NavigationBa = () => {
     </Box>
   );
 
-  //   আমার এরিয়া                                            -
-  // প্রোফাইল
-  // আমার বই
-  // বুকমার্কস
-  // ড্রাফট
-  // প্রকাশিত
-  // নোটিফিকেশন
 
-  // ব্যবহারকারী ব্যবস্থাপনা                              -
-  // নিবন্ধীত ব্যবহারকারী
-  // গেস্ট ব্যবহারকারী
-  // ভেরিফকেশনের জন্য আবেদন
-  // অনুমতি(পারমিশন) ব্যবস্থাপনা
-  // লাইব্রেরি                                                    -
-  // সকল বই
-  // বইয়ের ক্যটালগ
-  // নিউজ ও নোটিশ                                        -
-  // সকল নিউজ ও নোটিশ
-  // ক্যটেগরি
-  // নিউজ ও নোটিশ গঠন করুন
-  // কনফারেন্স
-  // কনফারেন্স তৈরি করুন
-  // লগ দেখুন
-
-  // SideBar Navigation
 
   const navigate = useNavigate();
   const handleLogOut = (e) => {
@@ -300,6 +278,77 @@ const NavigationBa = () => {
         console.log(err);
       });
   };
+
+
+
+
+
+  const [input, setInput] = useState('');
+
+
+  const [searchArray, setSearchArray] = useState([]);
+  const[documentOrBookCount,setDocumentOrBookCount]=useState({
+    book_count:0,
+    document_count:0
+  })
+
+
+  console.log("documentOrBookCount", documentOrBookCount);
+
+  const mappedData = searchArray.map(obj => {
+    if (obj.type === "main_book") {
+      return {
+        id: obj.id,
+        label: obj.book_master.Title,
+        link: `/edit-books/${obj.id}`
+      };
+    } else if (obj.type === "single_document") {
+      return {
+        id: obj.id,
+        label: obj.document_title,
+        link: `/edit-document/${obj.id}`
+      };
+    }
+  });
+  
+
+  console.log('new array', mappedData)
+
+
+  // const top100Films = [
+  //   // { label: 'Check', link: '/check' },
+  //   mappedData
+
+  // ];
+  const top100Films = mappedData
+
+
+  useEffect(() => {
+    if(input){
+         axios.get("api/global-search-by-book-or-documents/" +input).then((res) => {
+          setSearchArray(res.data.data);
+          setDocumentOrBookCount({
+            book_count:res.data.main_book_count,
+            document_count:res.data.single_document_count
+          })       
+        });
+
+        // setTimeout(function() {
+        //   Swal.fire({
+        //     // icon: 'success',
+        //     html: `${documentOrBookCount.book_count}<br>${documentOrBookCount.document_count}`
+        //   });
+        // }, 4000);
+ 
+      }
+    
+  
+  }, [input])
+
+
+
+
+
 
   return (
     <div className="mt-3">
@@ -332,13 +381,36 @@ const NavigationBa = () => {
           </div>
         </div>
         <div className="col-lg-6 col-md-6 col-sm-12 col-12">
-          <div className="nav-rightside-div">
-            <div className="serchInput-icon-div">
+          <div className="nav-rightside-div ">
+            <div className="serchInput-icon-div ">
               <SearchIcon style={{ color: "#777777" }} />
-              <input
+              {/* <input
                 id="nav-inputfield"
                 type="search"
                 className="gsearch-nav"
+              /> */}
+
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={top100Films}
+                inputValue={input}
+
+                onChange={(event, option) => {
+                  // window.location.href = option.link;
+
+                  // history.push(redirect);
+                  navigate(option.link);
+                }}
+                onInputChange={async (event, value) => {
+                  console.log("onInputChange",value);
+                  setInput(value)
+                }}
+                sx={{
+                  width: 300,
+                }}
+                renderInput={(params) => <TextField {...params} size="small" placeholder="" />}
+
               />
             </div>
 
