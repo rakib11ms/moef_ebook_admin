@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 
+import CheckIcon from "@mui/icons-material/Check";
 
 // const state = {
 //   selectedFile: null
@@ -48,6 +49,8 @@ import { Link } from "react-router-dom";
 // };
 
 const MyArea = () => {
+  // Checking
+
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const userID = JSON.parse(localStorage.getItem("user")).id;
   const [user, setUser] = useState(null);
@@ -69,16 +72,24 @@ const MyArea = () => {
   const $user = JSON.parse(localStorage.getItem("user"));
 
   async function getBooksMain() {
-    await axios.get("api/get-all-main-books-and-single-documents-for-a-specific-user/" + $user.id).then((res) => {
-      //store to bookMain whose type is main_book from res.data.data
-      const bookMain = res.data.data.filter((item) => item.type === "main_book");
-      setBooksMain(bookMain);
+    await axios
+      .get(
+        "api/get-all-main-books-and-single-documents-for-a-specific-user/" +
+          $user.id
+      )
+      .then((res) => {
+        //store to bookMain whose type is main_book from res.data.data
+        const bookMain = res.data.data.filter(
+          (item) => item.type === "main_book"
+        );
+        setBooksMain(bookMain);
 
-      //store to singleDocuments whose type is single_document from res.data.data
-      const singleDocument = res.data.data.filter((item) => item.type === "single_document");
-      setSingleDocuments(singleDocument);
-
-    });
+        //store to singleDocuments whose type is single_document from res.data.data
+        const singleDocument = res.data.data.filter(
+          (item) => item.type === "single_document"
+        );
+        setSingleDocuments(singleDocument);
+      });
   }
 
   const [draftsBooks, setDraftsBooks] = useState([]);
@@ -336,65 +347,90 @@ const MyArea = () => {
                   )}
                 </form>
               </div>
+
               <div>
                 <div className="offi-info-div">
                   <p>অফিসিয়াল তথ্য</p>
                   <div onClick={handleEditClick}>
-                    <EditIcon
+                    {/* <EditIcon
                       onClick={handleClick}
                       // onClick={handleEditClick}
                       // onDoubleClickDelay={500}
                       className="mt-1 "
                       style={{ cursor: "pointer" }}
-                    />
+                    /> */}
+                    {isEditing ? (
+                      <CheckIcon
+                        className="mt-1"
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <EditIcon
+                        onClick={handleClick}
+                        className="mt-1"
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
                   </div>
                 </div>
+
                 <div className="name-info ">
                   {/* <p>নাম: {userInfo.UserName}</p> */}
                   <form onSubmit={handleUpdate}>
-                    {/* <div className="area-infor">
-                  
-                  </div> */}
                     <p className="areaName-p">
                       নাম:-
-                      <input
-                        id="editInp"
-                        className="form-control-sm outline-0 area-in area-input-name"
-                        type="text"
-                        name="UserName"
-                        value={userUpdate.UserName}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                        style={{ width: userInfo.UserName.length + 2 + "ch" }}
-                      />
+                      {isEditing ? (
+                        <input
+                          id="editInp"
+                          className="form-control-sm outline-0 area-in area-input-name"
+                          type="text"
+                          name="UserName"
+                          value={userUpdate.UserName}
+                          onChange={handleInputChange}
+                          disabled={!isEditing}
+                          style={{ width: userInfo.UserName.length + 2 + "ch" }}
+                        />
+                      ) : (
+                        <span>{userInfo.UserName}</span>
+                      )}
                     </p>
 
                     <p className="areaEmail-p">
                       ইমেইল:-
-                      <input
-                        id="editInp"
-                        className="form-control-sm area-in area-input-email"
-                        type="text"
-                        name="userEmail"
-                        value={userUpdate.userEmail}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                        style={{ width: userInfo.email.length + 2 + "ch" }}
-                      />
+                      {isEditing ? (
+                        <input
+                          id="editInp"
+                          className="form-control-sm area-in area-input-email"
+                          type="text"
+                          name="userEmail"
+                          value={userUpdate.userEmail}
+                          onChange={handleInputChange}
+                          disabled={!isEditing}
+                          style={{ width: userInfo.email.length + 2 + "ch" }}
+                        />
+                      ) : (
+                        <span>{userInfo.email}</span>
+                      )}
                     </p>
 
                     <p className="areaPhone-p">
                       ফোন:-
-                      <input
-                        id="editInp"
-                        className="form-control-sm area-in area-input-phone"
-                        type="text"
-                        name="userPhone"
-                        value={userUpdate.userPhone}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                        style={{ width: userInfo.userPhone.length + 3 + "ch" }}
-                      />
+                      {isEditing ? (
+                        <input
+                          id="editInp"
+                          className="form-control-sm area-in area-input-phone"
+                          type="text"
+                          name="userPhone"
+                          value={userUpdate.userPhone}
+                          onChange={handleInputChange}
+                          disabled={!isEditing}
+                          style={{
+                            width: userInfo.userPhone.length + 3 + "ch",
+                          }}
+                        />
+                      ) : (
+                        <span>{userInfo.userPhone}</span>
+                      )}
                     </p>
                     <p className="areaUserID-p" id="profile-user-id">
                       ব্যবহারকারী আইডি:- {userInfo.userID}
@@ -404,7 +440,7 @@ const MyArea = () => {
                       {userInfo.OfficeID ? userInfo.OfficeID : "অফিস আইডি নেই"}
                     </p>
 
-                    {isClicked && (
+                    {/* {isClicked && (
                       <button
                         className="btn btn-success"
                         type="submit"
@@ -412,7 +448,7 @@ const MyArea = () => {
                       >
                         আপডেট
                       </button>
-                    )}
+                    )} */}
                   </form>
                   <hr />
                 </div>
@@ -488,8 +524,6 @@ const MyArea = () => {
                 )}
 
               </div>
-            
-
 
               {/* <div className="area-all-books-div">
                 <div className="area-book-div">

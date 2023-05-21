@@ -114,7 +114,7 @@ function Login({ handleSucessLogin }) {
                 <form onSubmit={handleSubmit}>
                   <div className="login-input-tags-div">
                     <p className="login-input-tags">শুরু করতে লগইন করুন</p>
-                    <div>
+                    <div className="login-input-div">
                       <input
                         onChange={(e) => setid(e.target.value)}
                         type="string"
@@ -143,7 +143,7 @@ function Login({ handleSucessLogin }) {
 
                       <button
                         type="submit"
-                        className="login-submit-button mb-3"
+                        className=" login-submit-button mb-3"
                       >
                         লগইন{" "}
                         {clickedRender ? (
@@ -166,7 +166,7 @@ function Login({ handleSucessLogin }) {
                       </Link>
                     </p>
                     <hr className="hr-line" />
-                    <div className="">
+                    <div className="nibondhon-button">
                       <Link to="/sign-up">
                         {" "}
                         <button
@@ -187,7 +187,10 @@ function Login({ handleSucessLogin }) {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 footer-div1">
                   <div className="login-footer-div">
                     <div className="footer-download-text">
-                      <a href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib  ">
+                      <a
+                        href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib  "
+                        target="_blank"
+                      >
                         {" "}
                         <h6>Download</h6>
                       </a>
@@ -198,18 +201,33 @@ function Login({ handleSucessLogin }) {
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                   <div className="signup-footer-logos">
-                    <Link to="  http://www.moef.gov.bd/">
+                    <a href="http://www.moef.gov.bd/" target="_blank">
                       {" "}
                       <img
                         className="login-logos"
                         src={bangladeshLogo}
                         alt=""
                       />
-                    </Link>
-                    <Link to="https://pakizatvl.com/">
+                    </a>
+
+                    {/* <Link to="  http://www.moef.gov.bd/">
+                      {" "}
+                      <img
+                        className="login-logos"
+                        src={bangladeshLogo}
+                        alt=""
+                      />
+                    </Link> */}
+
+                    <a href="https://pakizatvl.com/" target="_blank">
                       {" "}
                       <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
-                    </Link>
+                    </a>
+
+                    {/* <Link to="https://pakizatvl.com/">
+                      {" "}
+                      <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                    </Link> */}
                   </div>
                 </div>
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
