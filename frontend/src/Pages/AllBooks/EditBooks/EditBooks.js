@@ -47,13 +47,62 @@ const EditBooks = () => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs(values => ({ ...values, [name]: value }))
+    console.log(inputs);
+  }
+
+  // async function handlePublish() {
+  //   await axios.post(`/api/update-main-book/${bookID}`, {
+  //     chapter_id: ChapterSelected.id,
+  //     paragraph_id: ParagraphSelected.id,
+  //     title: Title,
+  //     content: content,
+  //     isPublished: "1",
+  //   }).then((res) => {
+  //     if (res.data.status === 200) {
+  //       console.log(res.data);
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Book Published Successfully',
+  //         showConfirmButton: false,
+  //         timer: 1500
+  //       })
+  //       if(prevPage === '/my-area') {
+  //         navigate('/my-area');
+  //       } else {
+  //         navigate('/all-documents');
+  //       }
+  //     }
+  //   })
+  // }
+
+  async function handlePublish(e) {
+    handleSubmit(e);
+
+    await axios.post('/api/publish-Main-Book/' + bookID).then((res) => {
+      if (res.data.status === 200) {
+        console.log(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Book Published Successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        if(prevPage === '/my-area') {
+          navigate('/my-area');
+        } else {
+          navigate('/all-documents');
+        }
+      }
+    })
   }
 
 
   useEffect(() => {
     axios.get(`/api/get-main-book/${bookID}`).then(res => {
       if (res.data.status === 200) {
+        console.log(res.data);
         const book = res.data.data;
+        console.log('book', book);
         setTitle(book.book_master.Title);
         setContent(book.book_content);
         setChapterSelected(book.book_chapter.ChapterName);
@@ -84,6 +133,9 @@ const EditBooks = () => {
     )
   }, []);
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const prevPage = searchParams.get('page');
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -106,7 +158,11 @@ const EditBooks = () => {
           showConfirmButton: false,
           timer: 1500
         })
-        navigate('/all-books');
+        if(prevPage === '/my-area') {
+          navigate('/my-area');
+        } else {
+          navigate('/all-books');
+        }
       }
     })
   }
@@ -124,7 +180,6 @@ const EditBooks = () => {
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বই সম্পাদনা</h5>
-
               </div>
               <hr />
               <div>
@@ -176,6 +231,12 @@ const EditBooks = () => {
                 </div>
                 <div className="draft-prokas-buttons-div">
                   <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
+                  {
+                    prevPage==='/my-area' ?
+                    (
+                      <button className="draft-prokas-button mx-2" onClick={handlePublish}>প্রকাশ করুন</button>
+                    ) : null
+                  }
                 </div>
               </div>
             </div>

@@ -170,4 +170,16 @@ class SingleDocumentController extends Controller
             'message' => 'Document deleted sucessfully',
         ]);
     }
+
+    public function publishSingleDocument($id)
+    {
+        $single_document = SingleDocument::find($id);
+        $single_document->isPublished = 1;
+        $single_document->update();
+        // dd($single_document);
+        return response()->json([
+            'status' => 200,
+            'message' => $single_document->document_title . ' published sucessfully',
+        ]);
+    }
 }
