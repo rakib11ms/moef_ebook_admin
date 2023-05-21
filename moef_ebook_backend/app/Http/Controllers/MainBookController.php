@@ -214,17 +214,6 @@ $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHa
         $query->where('Title',  'LIKE', '%'.$search.'%');
     })->orWhere('book_content',  'LIKE', '%'.$search.'%')->get()->toArray();
 
- //    $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHas('bookMaster', function ($query) use ($search) {
- //        $query->where('Title',  'LIKE', '%'.$search.'%');
- //      // return $query;
- //    })->get()->toArray();
-
- //    // dd($results1);
-
- // // ->with(['products' => function($query) use ($searchString){
- // //        $query->where('name', 'like', '%'.$searchString.'%');
- // //    }])->get();
-
 
 
 // $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->where('book_content',  'LIKE', '%'.$search.'%')->orWhereHas('bookMaster', function ($query) use ($search) {
