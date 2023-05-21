@@ -180,6 +180,15 @@ const EditBooks = () => {
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বই সম্পাদনা</h5>
+                <div className="draft-prokas-buttons-div" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
+                  {
+                    prevPage==='/my-area' ?
+                    (
+                      <button className="draft-prokas-button mx-2" onClick={handlePublish}>প্রকাশ করুন</button>
+                    ) : null
+                  }
+                </div>
               </div>
               <hr />
               <div>
@@ -229,7 +238,7 @@ const EditBooks = () => {
                     onChange={newContent => { }}
                   />
                 </div>
-                <div className="draft-prokas-buttons-div">
+                {/* <div className="draft-prokas-buttons-div">
                   <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
                   {
                     prevPage==='/my-area' ?
@@ -237,7 +246,7 @@ const EditBooks = () => {
                       <button className="draft-prokas-button mx-2" onClick={handlePublish}>প্রকাশ করুন</button>
                     ) : null
                   }
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
