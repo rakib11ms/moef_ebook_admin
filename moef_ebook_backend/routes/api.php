@@ -1,11 +1,10 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\OfficeController;
@@ -29,10 +28,13 @@ use App\Http\Controllers\MainBookController;
 use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Auth\RegisterController;
 
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
 
 Route::resource('authors', AuthorController::class);
 Route::resource('offices', OfficeController::class);
