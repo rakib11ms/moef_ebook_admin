@@ -49,7 +49,9 @@ import CheckIcon from "@mui/icons-material/Check";
 // };
 
 const MyArea = () => {
-  // Checking
+
+  const [loading, setLoading] = useState(true);
+  const [loadingDrafts, setLoadingDrafts] = useState(true);
 
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const userID = JSON.parse(localStorage.getItem("user")).id;
@@ -114,8 +116,16 @@ const MyArea = () => {
     //   setUser(res.data.image);
     // });
     getUserImage();
-    getBooksMain();
-    fetchDrafts();
+    setTimeout(() => {
+      getBooksMain();
+      setLoading(false);
+    }, 2000);
+    
+    setTimeout(() => {
+      fetchDrafts();
+      setLoadingDrafts(false);
+    }, 2000);
+    
   }, []);
 
   // console.log(user);
@@ -243,14 +253,18 @@ const MyArea = () => {
     try {
       await axios.post("api/update-user/" + userID, userUpdate).then((res) => {
         console.log(res);
-        handleEditClick();
+        // handleEditClick();
         //update local storage only name, email and phone
         const user = JSON.parse(localStorage.getItem("user"));
         user.UserName = userUpdate.UserName;
         user.email = userUpdate.userEmail;
         user.userPhone = userUpdate.userPhone;
         localStorage.setItem("user", JSON.stringify(user));
-
+        setUserInfo({
+          UserName: user.UserName,
+          userEmail: user.email,
+          userPhone: user.userPhone,
+        });
         Swal.fire({
           icon: "success",
           title: "সফলভাবে আপডেট হয়েছে",
@@ -270,9 +284,21 @@ const MyArea = () => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleEditClick = () => {
+  useEffect(() => {
+    if (isEditing) {
+      document.getElementById("editInp").focus();
+    }
+  }, [isEditing]);
+
+  const handleEditClick = (e) => {
+    // setIsEditing(!isEditing);
+    // document.getElementById("editInp").focus();
     setIsEditing(!isEditing);
-    document.getElementById("editInp").focus();
+    // console.log(isEditing);
+    if(isEditing){
+      handleUpdate(e);
+    }
+
   };
 
   // Upload button
@@ -468,7 +494,7 @@ const MyArea = () => {
           </div>
           <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
             <section className="container-fluid">
-              <h5>আমার বই</h5>
+              <h5>আমার লাইব্রেরি</h5>
               {/* show all books */}
               <div className="row">
                 {/* {booksMain.map((book) => (
@@ -485,9 +511,15 @@ const MyArea = () => {
                     </button>
                   </div>
                 ))} */}
-                {booksMain.length === 0 ? (
-                  <p className="text-left">কোন বই নেই</p>
-                ) : (
+
+
+                {loading ? (
+                  <div className="d-flex justify-content-center">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className=""></span>
+                    </div>
+                  </div>                    
+                  ) : (
                   booksMain.map((book) => (
                     <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                       <button
@@ -504,9 +536,9 @@ const MyArea = () => {
                   ))
                 )}
 
-                {singleDocuments.length === 0 ? (
-                  <p className="text-left">কোন ডকুমেন্ট নেই</p>
-                ) : (
+                  {loading ? (
+                    <div className=""></div>
+                  ) : (
                   singleDocuments.map((book) => (
                     <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                       <button class="SubmitButtonClass" style={{border:"none", background:"none"}} onClick={() => handleSingleDoc(book)}>
@@ -647,10 +679,15 @@ const MyArea = () => {
                     </div>
                   </div> */}
 
-                    {
-                      draftsBooks.length === 0 ?
-                        <p>কোন ড্রাফট বই নেই</p>
-                      : (
+                  {loadingDrafts ? (
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-border text-primary" role="status">
+                        <span className=""></span>
+                      </div>
+                    </div>
+                    ) : booksMain.length === 0 ? (
+                      <p className="text-left">কোন ড্রাফট বই নেই</p>
+                    ) : (
                       draftsBooks.map((draftsBook) => (
                         <div className="draft-card-div">
                           <div key={draftsBook.id}>
@@ -702,58 +739,66 @@ const MyArea = () => {
                         </div>
                       ))
                     )}
-                    {
-                      draftsBooks.length === 0 ?
-                      <p>কোন ড্রাফট ডকুমেন্ট নেই</p>
-                      : (
-                        draftsSingleDocs.map((draftsSingleDoc) => (
-                          <div className="draft-card-div">
-                            <div key={draftsSingleDoc.id}>
-                              <p>
-                                <strong>ডকুমেন্টের নাম: </strong>
-                                {draftsSingleDoc.title}
-                              </p>
-                              <br />
-                              <h6>
-                                <strong>ডকুমেন্টের বর্ণনা: </strong>
-                                <div className="content-preview" dangerouslySetInnerHTML={{ __html: truncateContent(draftsSingleDoc.document_content, 2) }}></div>
-                              </h6>
-                              <div className="d-flex justify-content-end">
-                                <Link to={`/edit-document/${draftsSingleDoc.id}?page=${encodeURIComponent(currentPage)}`}>
-                                  <CreateIcon className=" area-draft-icon" />
-                                </Link>
-                                <Link>
-                                  <DeleteIcon className=" area-draft-icon"   
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      Swal.fire({
-                                        title: "আপনি কি নিশ্চিত?",
-                                        text: "ডকুমেন্টটি মুছে ফেলতে চান?",
-                                        icon: "warning",
-                                        buttons: true,
-                                        dangerMode: true,
-                                        showCancelButton: true,
-                                        confirmButtonText: 'Yes',
-                                        cancelButtonText: 'Cancel',
-                                      })
-                                      .then((willDelete) => {
-                                        if (willDelete.isConfirmed) {
-                                          axios.delete(`/api/delete-single-document/${draftsSingleDoc.id}`).then((res) => {
-                                            if (res.data.status === 200) {
-                                              Swal.fire("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
-                                                icon: "success",
-                                              });
-                                            }
-                                          });
-                                          fetchDrafts();
-                                        }
-                                      });
-                                  }} />
-                                </Link>
-                              </div>
+
+                    
+                  {loadingDrafts ? (
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-border text-primary" role="status">
+                        <span className=""></span>
+                      </div>
+                    </div>
+                    ) 
+                    : draftsSingleDocs.length === 0 ? (
+                      <p className="text-left">কোন ড্রাফট ডকুমেন্ট নেই</p>
+                    ) : (
+                      draftsSingleDocs.map((draftsSingleDoc) => (
+                        <div className="draft-card-div">
+                          <div key={draftsSingleDoc.id}>
+                            <p>
+                              <strong>ডকুমেন্টের নাম: </strong>
+                              {draftsSingleDoc.title}
+                            </p>
+                            <br />
+                            <h6>
+                              <strong>ডকুমেন্টের বর্ণনা: </strong>
+                              <div className="content-preview" dangerouslySetInnerHTML={{ __html: truncateContent(draftsSingleDoc.document_content, 2) }}></div>
+                            </h6>
+                            <div className="d-flex justify-content-end">
+                              <Link to={`/edit-document/${draftsSingleDoc.id}?page=${encodeURIComponent(currentPage)}`}>
+                                <CreateIcon className=" area-draft-icon" />
+                              </Link>
+                              <Link>
+                                <DeleteIcon className=" area-draft-icon"   
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    Swal.fire({
+                                      title: "আপনি কি নিশ্চিত?",
+                                      text: "ডকুমেন্টটি মুছে ফেলতে চান?",
+                                      icon: "warning",
+                                      buttons: true,
+                                      dangerMode: true,
+                                      showCancelButton: true,
+                                      confirmButtonText: 'Yes',
+                                      cancelButtonText: 'Cancel',
+                                    })
+                                    .then((willDelete) => {
+                                      if (willDelete.isConfirmed) {
+                                        axios.delete(`/api/delete-single-document/${draftsSingleDoc.id}`).then((res) => {
+                                          if (res.data.status === 200) {
+                                            Swal.fire("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
+                                              icon: "success",
+                                            });
+                                          }
+                                        });
+                                        fetchDrafts();
+                                      }
+                                    });
+                                }} />
+                              </Link>
                             </div>
                           </div>
-                        )
+                        </div>
+                      )
                       ))}
                 </Slider>
               </div>
