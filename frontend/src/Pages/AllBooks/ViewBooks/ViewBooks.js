@@ -72,7 +72,11 @@ const ViewBooks = () => {
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বই দেখুন</h5>
-
+                <div className="d-flex justify-content-around align-items-center">
+                  <Link to={`/edit-books/` + bookID}>
+                    <CreateOutlinedIcon className="text-warning" />
+                  </Link>
+                </div>
               </div>
               <hr />
               <div>
@@ -91,11 +95,11 @@ const ViewBooks = () => {
                   </div>
           
                   <label for="exampleFormControlInput1" class="form-label">
-                    বইয়ের নাম:- <b> {Title}</b>
+                    <strong>বইয়ের নাম:-</strong>  <p>{Title}</p>
                   </label>
                   <br />
                   <br />
-                  <JoditEditor
+                  {/* <JoditEditor
                     className="news-jodit-editor"
                     spellcheck={false}
                     language="en"
@@ -105,7 +109,9 @@ const ViewBooks = () => {
                     // make all editors hidden
                     
                     config={{ readonly: true }}
-                  />
+                  /> */}
+                  <strong>বইয়ের বিবরণ:-</strong>
+                  <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
               </div>
             </div>
@@ -119,13 +125,13 @@ const ViewBooks = () => {
                 <div className="suchi-div">
                   <div>
                     <label for="exampleFormControlInput1" class="form-label">
-                      অধ্যায় :- {chapter}
+                      <strong>অধ্যায় :-</strong> {chapter}
                     </label>
                     <br />
                   </div>
                   <div>
                     <label for="exampleFormControlInput1" class="form-label">
-                      অনুচ্ছেদ :- {Paragraph}
+                      <strong>অনুচ্ছেদ :-</strong> {Paragraph}
                     </label>
                     <br />
                     {/* <select

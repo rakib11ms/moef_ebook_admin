@@ -168,8 +168,8 @@ const AllBooks = () => {
   const rows = [
     ...allBooks.map((book) => (
       {
-        id: book.book_id,
-        book_name: book.Title,
+        id: book.id,
+        book_name: book.book_title,
         chapter_count: book.chapter_count,
         paragraph_count: book.paragraph_count
       }

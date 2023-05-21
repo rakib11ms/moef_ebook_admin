@@ -7,6 +7,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 
 const EditDocuments = () => {
 
@@ -50,6 +51,11 @@ const EditDocuments = () => {
             <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>ডকুমেন্ট দেখুন</h5>
+                <div className="d-flex justify-content-around align-items-center">
+                  <Link to={`/edit-document/` + id}>
+                    <CreateOutlinedIcon className="text-warning" />
+                  </Link>
+                </div>
 
               </div>
               <hr />
@@ -66,17 +72,17 @@ const EditDocuments = () => {
                   </div> */}
                   <div className="my-3">
                     <p>
-                      <span>ডকুমেন্ট শিরোনামঃ </span>
-                      <b>{Title}</b>
+                      <strong>ডকুমেন্ট শিরোনামঃ </strong>
+                      <p>{Title}</p>
                     </p>
                   </div>
                   <hr />
                 
 
                   <label for="exampleFormControlTextarea1" class="form-label">
-                    <h5>এডিটর</h5>
+                    <strong>ডকুমেন্ট বিস্তারিত: </strong>
                   </label>
-                  <JoditEditor
+                  {/* <JoditEditor
                     className="news-jodit-editor"
                     spellcheck={false}
                     language="en"
@@ -86,7 +92,9 @@ const EditDocuments = () => {
                     value={content} 
                     config={{ readonly: true }}
                     toolbar={false}
-                  />
+                  /> */}
+                  <br />
+                  <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
               </div>
             </div>

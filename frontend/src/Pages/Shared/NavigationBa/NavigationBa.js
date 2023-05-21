@@ -24,6 +24,9 @@ import axios from "axios";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Swal from "sweetalert2";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const NavigationBa = () => {
   // Sub menu
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -287,63 +290,69 @@ const NavigationBa = () => {
 
 
   const [searchArray, setSearchArray] = useState([]);
-  const[documentOrBookCount,setDocumentOrBookCount]=useState({
-    book_count:0,
-    document_count:0
-  })
 
+  // let mappedData;
+  // useEffect(()=>{
+  //   if(input){
+  //      mappedData = searchArray.map(obj => {
+  //       if (obj.type === "main_book") {
+  //         return {
+  //           id: obj.id,
+  //           label: obj.book_master.Title,
+  //           link: `/edit-books/${obj.id}`
+  //         };
+  //       } else if (obj.type === "single_document") {
+  //         return {
+  //           id: obj.id,
+  //           label: obj.document_title,
+  //           link: `/edit-document/${obj.id}`
+  //         };
+  //       }
+  //     });
 
-  console.log("documentOrBookCount", documentOrBookCount);
+  //   }
 
-  const mappedData = searchArray.map(obj => {
+  // },[input])
+
+  let mappedData = searchArray.map(obj => {
     if (obj.type === "main_book") {
       return {
         id: obj.id,
         label: obj.book_master.Title,
-        link: `/edit-books/${obj.id}`
+        link: `/all-books`,
+        type: obj.type
       };
     } else if (obj.type === "single_document") {
       return {
         id: obj.id,
         label: obj.document_title,
-        link: `/edit-document/${obj.id}`
+        link: `/all-documents`,
+        type: obj.type
+
       };
     }
   });
-  
 
-  console.log('new array', mappedData)
-
-
-  // const top100Films = [
-  //   // { label: 'Check', link: '/check' },
-  //   mappedData
-
-  // ];
   const top100Films = mappedData
 
 
   useEffect(() => {
-    if(input){
-         axios.get("api/global-search-by-book-or-documents/" +input).then((res) => {
-          setSearchArray(res.data.data);
-          setDocumentOrBookCount({
-            book_count:res.data.main_book_count,
-            document_count:res.data.single_document_count
-          })       
-        });
+    if (input) {
+      axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
+        setSearchArray(res.data.data);
+        toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
 
-        // setTimeout(function() {
-        //   Swal.fire({
-        //     // icon: 'success',
-        //     html: `${documentOrBookCount.book_count}<br>${documentOrBookCount.document_count}`
-        //   });
-        // }, 4000);
- 
-      }
-    
-  
+      });
+      // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
+    }
+    else if(input==''){
+      setSearchArray([]);
+    }
+
+
   }, [input])
+
+
 
 
 
@@ -395,24 +404,57 @@ const NavigationBa = () => {
                 id="combo-box-demo"
                 options={top100Films}
                 inputValue={input}
-
                 onChange={(event, option) => {
-                  // window.location.href = option.link;
-
-                  // history.push(redirect);
                   navigate(option.link);
                 }}
+                renderOption={(props, option) => (
+                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    {
+                      option.type == "main_book" ?
+                        <img
+                          loading="lazy"
+                          width="25"
+                          src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
+                          alt=""
+                        />
+                        :
+                        <img
+                          loading="lazy"
+                          width="20"
+                          src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
+                          alt=""
+                        />
+
+                    }
+
+                    {option.label}
+                  </Box>
+                )}
                 onInputChange={async (event, value) => {
-                  console.log("onInputChange",value);
+                  console.log("onInputChange", value);
                   setInput(value)
                 }}
                 sx={{
                   width: 300,
                 }}
-                renderInput={(params) => <TextField {...params} size="small" placeholder="" />}
+                renderInput={(params) => <TextField {...params} size="small" placeholder="Search.." />}
 
               />
             </div>
+
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              type="success"
+            />
 
             <div className="icons-nav-div">
               <Link to="/all-news-notice">
