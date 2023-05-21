@@ -9,7 +9,8 @@ import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const EditDocuments = () => {
-
+  const searchParams = new URLSearchParams(window.location.search);
+  const prevPage = searchParams.get('page');
   const params = useParams();
   const id = params.id;
 
@@ -46,10 +47,35 @@ const EditDocuments = () => {
     })
   }, [id])
 
+  async function handlePublish(e) {
+    handleSubmit(e);
+    await axios.post(`/api/publish-Single-Document/` + id).then(res => {
+      if (res.data.status === 200) {
+        console.log(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'সফলভাবে প্রকাশিত হয়েছে',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        if(prevPage === '/my-area') {
+          navigate('/my-area');
+        } else {
+          navigate('/all-documents');
+        }
+      }
+    }
+    )
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    e.preventDefault();
+    const searchParams = new URLSearchParams(window.location.search);
+    const currentPage = searchParams.get('page');
+    console.log(currentPage);
+
+
 
     const formData = new FormData();
     formData.append('document_title', Title);
@@ -64,7 +90,11 @@ const EditDocuments = () => {
           showConfirmButton: false,
           timer: 1500
         })
-        navigate('/all-documents');
+        if(currentPage === '/my-area') {
+          navigate('/my-area');
+        } else {
+          navigate('/all-documents');
+        }
       }
     })
   }
@@ -116,6 +146,12 @@ const EditDocuments = () => {
                 </div>
                 <div className="draft-prokas-buttons-div">
                   <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
+                  {
+                    prevPage==='/my-area' ?
+                    (
+                      <button className="draft-prokas-button mx-2" onClick={handlePublish}>প্রকাশ করুন</button>
+                    ) : null
+                  }
                 </div>
               </div>
             </div>

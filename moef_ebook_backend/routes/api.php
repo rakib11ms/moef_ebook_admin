@@ -51,6 +51,7 @@ Route::get('get-dependent-chapter-by-main-book-id/{id}', [MainBookController::cl
 Route::get('get-news-notice-by-oldest-or-newest/{id}', [NewsNoticeController::class, 'getNewsNoticeByOldestOrNewest']);
 Route::get('get-all-main-books-and-single-documents-in-decending-order', [MainBookController::class, 'getAllMainBooksAndSingleDocumentsInDecendingOrder']);
 Route::get('get-all-main-books-and-single-documents-for-a-specific-user/{id}', [MainBookController::class, 'getAllMainBooksAndSingleDocsForASpecificUser']);
+Route::get('get-All-Draft-Books-And-Single-Documents-By-UserID/{id}', [MainBookController::class, 'getAllDraftBooksAndSingleDocumentsByUserID']);
 
 
 Route::resource('bookReview', BookReviewController::class);
@@ -81,6 +82,8 @@ Route::get('/get-main-book-by-count', [MainBookController::class, 'getAllBookCou
 Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
 Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);
+Route::post('/publish-Main-Book/{id}', [MainBookController::class, 'publishMainBook']);
+Route::post('/publish-Single-Document/{id}', [SingleDocumentController::class, 'publishSingleDocument']);
 
 Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
