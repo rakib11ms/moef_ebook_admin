@@ -291,28 +291,7 @@ const NavigationBa = () => {
 
   const [searchArray, setSearchArray] = useState([]);
 
-  // let mappedData;
-  // useEffect(()=>{
-  //   if(input){
-  //      mappedData = searchArray.map(obj => {
-  //       if (obj.type === "main_book") {
-  //         return {
-  //           id: obj.id,
-  //           label: obj.book_master.Title,
-  //           link: `/edit-books/${obj.id}`
-  //         };
-  //       } else if (obj.type === "single_document") {
-  //         return {
-  //           id: obj.id,
-  //           label: obj.document_title,
-  //           link: `/edit-document/${obj.id}`
-  //         };
-  //       }
-  //     });
 
-  //   }
-
-  // },[input])
 
   let mappedData = searchArray.map(obj => {
     if (obj.type === "main_book") {
