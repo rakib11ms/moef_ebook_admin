@@ -8,7 +8,9 @@
 .add-doc-div {
   display: flex;
   border: 1px solid gray;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   font-weight: 700;
   padding: 5px;
   cursor: pointer;
