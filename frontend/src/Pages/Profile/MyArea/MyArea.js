@@ -49,7 +49,6 @@ import CheckIcon from "@mui/icons-material/Check";
 // };
 
 const MyArea = () => {
-
   const [loading, setLoading] = useState(true);
   const [loadingDrafts, setLoadingDrafts] = useState(true);
 
@@ -97,18 +96,24 @@ const MyArea = () => {
   const [draftsBooks, setDraftsBooks] = useState([]);
   const [draftsSingleDocs, setDraftsSingleDocs] = useState([]);
 
-  async function fetchDrafts () {
-    await axios.get("api/get-All-Draft-Books-And-Single-Documents-By-UserID/" + $user.id).then((res) => {
-      if (res.data.status === 200) {
-        const draftsBook = res.data.data.filter((item) => item.type === "main_book");
-        setDraftsBooks(draftsBook);
-        // console.log(draftsBook);
+  async function fetchDrafts() {
+    await axios
+      .get("api/get-All-Draft-Books-And-Single-Documents-By-UserID/" + $user.id)
+      .then((res) => {
+        if (res.data.status === 200) {
+          const draftsBook = res.data.data.filter(
+            (item) => item.type === "main_book"
+          );
+          setDraftsBooks(draftsBook);
+          // console.log(draftsBook);
 
-        const draftsSingleDoc = res.data.data.filter((item) => item.type === "single_document");
-        setDraftsSingleDocs(draftsSingleDoc);
-        // console.log(draftsSingleDoc);
-      }
-    });
+          const draftsSingleDoc = res.data.data.filter(
+            (item) => item.type === "single_document"
+          );
+          setDraftsSingleDocs(draftsSingleDoc);
+          // console.log(draftsSingleDoc);
+        }
+      });
   }
 
   useEffect(() => {
@@ -119,13 +124,12 @@ const MyArea = () => {
     setTimeout(() => {
       getBooksMain();
       setLoading(false);
-    }, 2000);
-    
+    }, 500);
+
     setTimeout(() => {
       fetchDrafts();
       setLoadingDrafts(false);
-    }, 2000);
-    
+    }, 500);
   }, []);
 
   // console.log(user);
@@ -295,10 +299,9 @@ const MyArea = () => {
     // document.getElementById("editInp").focus();
     setIsEditing(!isEditing);
     // console.log(isEditing);
-    if(isEditing){
+    if (isEditing) {
       handleUpdate(e);
     }
-
   };
 
   // Upload button
@@ -308,20 +311,23 @@ const MyArea = () => {
 
   const handleSingleDoc = async (event) => {
     const currentPage = window.location.pathname;
-    window.location.href = `/view-documents/${event.id}?page=${encodeURIComponent(currentPage)}`;
-  }
+    window.location.href = `/view-documents/${
+      event.id
+    }?page=${encodeURIComponent(currentPage)}`;
+  };
 
   const currentPage = window.location.pathname;
   const handleBook = async (event) => {
-    window.location.href = `/view-books/${event.id}?page=${encodeURIComponent(currentPage)}`;
-  }
+    window.location.href = `/view-books/${event.id}?page=${encodeURIComponent(
+      currentPage
+    )}`;
+  };
 
   function truncateContent(content, lines) {
-    const paragraphs = content.split('\n');
-    const truncatedContent = paragraphs.slice(0, lines).join('\n');
+    const paragraphs = content.split("\n");
+    const truncatedContent = paragraphs.slice(0, lines).join("\n");
     return truncatedContent;
   }
-  
 
   return (
     <div>
@@ -512,49 +518,53 @@ const MyArea = () => {
                   </div>
                 ))} */}
 
-
                 {loading ? (
                   <div className="d-flex justify-content-center">
                     <div className="spinner-border text-primary" role="status">
                       <span className=""></span>
                     </div>
-                  </div>                    
-                  ) : (
+                  </div>
+                ) : (
                   booksMain.map((book) => (
-                    <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div className="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 singlebooks-area">
                       <button
                         className="SubmitButtonClass"
-                        style={{ border: "none", background: "none" }}
                         onClick={() => handleBook(book)}
                       >
                         <div className="book-div">
-                          <img className="bookImg" src={bookImg} alt="book img" />
-                          <p>{book.title}</p>
+                          <img
+                            className="bookImg"
+                            src={bookImg}
+                            alt="book img"
+                          />
+                          <p className="area-p">{book.title}</p>
                         </div>
                       </button>
                     </div>
                   ))
                 )}
 
-                  {loading ? (
-                    <div className=""></div>
-                  ) : (
+                {loading ? (
+                  <div className=""></div>
+                ) : (
                   singleDocuments.map((book) => (
-                    <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                      <button class="SubmitButtonClass" style={{border:"none", background:"none"}} onClick={() => handleSingleDoc(book)}>
+                    <div className="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 singledoc-area ">
+                      <button
+                        class="SubmitButtonClass"
+                        onClick={() => handleSingleDoc(book)}
+                      >
                         <div className="book-div">
                           <img
                             className="single-doc-img"
                             src={singleDoc}
                             alt="book img"
                           />
-                          <p>{book.title}</p>
+                          <p className="area-p">{book.title}</p>
                         </div>
-                        </button>
+                      </button>
                     </div>
                   ))
                 )}
-
               </div>
 
               {/* <div className="area-all-books-div">
@@ -681,33 +691,37 @@ const MyArea = () => {
 
                   {loadingDrafts ? (
                     <div className="d-flex justify-content-center">
-                      <div className="spinner-border text-primary" role="status">
+                      <div
+                        className="spinner-border text-primary"
+                        role="status"
+                      >
                         <span className=""></span>
                       </div>
                     </div>
-                    ) : booksMain.length === 0 ? (
-                      <p className="text-left">কোন ড্রাফট বই নেই</p>
-                    ) : (
-                      draftsBooks.map((draftsBook) => (
-                        <div className="draft-card-div">
-                          <div key={draftsBook.id}>
-                            <p>
-                              <strong>বইয়ের নাম: </strong>
-                              {draftsBook.title}
-                            </p>
-                            <br />
-                            <h6>
-                              <strong>বইয়ের বর্ণনা: </strong>
-                              <div dangerouslySetInnerHTML={{ __html: draftsBook.book_content }}></div>
-                            </h6>
-                            <div className="d-flex justify-content-end">
-                              {/* show edit and delete icon in the right side */}
-                              {/* <CreateIcon className=" area-draft-icon" /> */}
-                              <Link to={`/edit-books/${draftsBook.id}?page=${encodeURIComponent(currentPage)}`}>
+                  ) : booksMain.length === 0 ? (
+                    <p className="text-left">কোন ড্রাফট বই নেই</p>
+                  ) : (
+                    draftsBooks.map((draftsBook) => (
+                      <div className="draft-card-div ">
+                        <div
+                          key={draftsBook.id}
+                          className="draftinternal-card-div row"
+                        >
+                          <div className="doc-area-div col-xl-10 col-lg-10 col-sm-10 col-md-10 col-10"></div>
+                          <div className=" col-xl-2 col-lg-2 col-sm- col-md-2 col-2">
+                            {/* show edit and delete icon in the right side */}
+                            {/* <CreateIcon className=" area-draft-icon" /> */}
+                            <div className="draftinternal-card-div">
+                              <Link
+                                to={`/edit-books/${
+                                  draftsBook.id
+                                }?page=${encodeURIComponent(currentPage)}`}
+                              >
                                 <CreateIcon className=" area-draft-icon" />
                               </Link>
                               <Link>
-                                <DeleteIcon className=" area-draft-icon"   
+                                <DeleteIcon
+                                  className=" area-draft-icon"
                                   onClick={(e) => {
                                     e.preventDefault();
                                     Swal.fire({
@@ -717,58 +731,83 @@ const MyArea = () => {
                                       buttons: true,
                                       dangerMode: true,
                                       showCancelButton: true,
-                                      confirmButtonText: 'Yes',
-                                      cancelButtonText: 'Cancel',
-                                    })
-                                    .then((willDelete) => {
+                                      confirmButtonText: "Yes",
+                                      cancelButtonText: "Cancel",
+                                    }).then((willDelete) => {
                                       if (willDelete.isConfirmed) {
-                                        axios.delete(`/api/delete-main-book/${draftsBook.id}`).then((res) => {
-                                          if (res.data.status === 200) {
-                                            Swal.fire("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
-                                              icon: "success",
-                                            });
-                                          }
-                                        });
+                                        axios
+                                          .delete(
+                                            `/api/delete-main-book/${draftsBook.id}`
+                                          )
+                                          .then((res) => {
+                                            if (res.data.status === 200) {
+                                              Swal.fire(
+                                                "ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে",
+                                                {
+                                                  icon: "success",
+                                                }
+                                              );
+                                            }
+                                          });
                                         fetchDrafts();
                                       }
                                     });
-                                }} />
+                                  }}
+                                />
                               </Link>
                             </div>
                           </div>
                         </div>
-                      ))
-                    )}
+                        <div className="area-draft-p">
+                          <p>
+                            <strong>বইয়ের নাম: </strong>
+                            {draftsBook.title}
+                          </p>
 
+                          <p>
+                            <strong>বইয়ের বর্ণনা: </strong>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: draftsBook.book_content,
+                              }}
+                            ></div>
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  )}
 
                   {loadingDrafts ? (
                     <div className="d-flex justify-content-center">
-                      <div className="spinner-border text-primary" role="status">
+                      <div
+                        className="spinner-border text-primary"
+                        role="status"
+                      >
                         <span className=""></span>
                       </div>
                     </div>
-                    ) 
-                    : draftsSingleDocs.length === 0 ? (
-                      <p className="text-left">কোন ড্রাফট ডকুমেন্ট নেই</p>
-                    ) : (
-                      draftsSingleDocs.map((draftsSingleDoc) => (
-                        <div className="draft-card-div">
-                          <div key={draftsSingleDoc.id}>
-                            <p>
-                              <strong>ডকুমেন্টের নাম: </strong>
-                              {draftsSingleDoc.title}
-                            </p>
-                            <br />
-                            <h6>
-                              <strong>ডকুমেন্টের বর্ণনা: </strong>
-                              <div className="content-preview" dangerouslySetInnerHTML={{ __html: truncateContent(draftsSingleDoc.document_content, 2) }}></div>
-                            </h6>
-                            <div className="d-flex justify-content-end">
-                              <Link to={`/edit-document/${draftsSingleDoc.id}?page=${encodeURIComponent(currentPage)}`}>
+                  ) : draftsSingleDocs.length === 0 ? (
+                    <p className="text-left">কোন ড্রাফট ডকুমেন্ট নেই</p>
+                  ) : (
+                    draftsSingleDocs.map((draftsSingleDoc) => (
+                      <div className="draft-card-div">
+                        <div
+                          key={draftsSingleDoc.id}
+                          className="draftinternal-card-div row"
+                        >
+                          <div className="doc-area-div col-xl-10 col-lg-10 col-sm-10 col-md-10 col-10"></div>
+                          <div className="col-xl-2 col-lg-2 col-sm- col-md-2 col-2">
+                            <div className="draftinternal-card-div">
+                              <Link
+                                to={`/edit-document/${
+                                  draftsSingleDoc.id
+                                }?page=${encodeURIComponent(currentPage)}`}
+                              >
                                 <CreateIcon className=" area-draft-icon" />
                               </Link>
                               <Link>
-                                <DeleteIcon className=" area-draft-icon"   
+                                <DeleteIcon
+                                  className=" area-draft-icon"
                                   onClick={(e) => {
                                     e.preventDefault();
                                     Swal.fire({
@@ -778,28 +817,55 @@ const MyArea = () => {
                                       buttons: true,
                                       dangerMode: true,
                                       showCancelButton: true,
-                                      confirmButtonText: 'Yes',
-                                      cancelButtonText: 'Cancel',
-                                    })
-                                    .then((willDelete) => {
+                                      confirmButtonText: "Yes",
+                                      cancelButtonText: "Cancel",
+                                    }).then((willDelete) => {
                                       if (willDelete.isConfirmed) {
-                                        axios.delete(`/api/delete-single-document/${draftsSingleDoc.id}`).then((res) => {
-                                          if (res.data.status === 200) {
-                                            Swal.fire("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
-                                              icon: "success",
-                                            });
-                                          }
-                                        });
+                                        axios
+                                          .delete(
+                                            `/api/delete-single-document/${draftsSingleDoc.id}`
+                                          )
+                                          .then((res) => {
+                                            if (res.data.status === 200) {
+                                              Swal.fire(
+                                                "ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে",
+                                                {
+                                                  icon: "success",
+                                                }
+                                              );
+                                            }
+                                          });
                                         fetchDrafts();
                                       }
                                     });
-                                }} />
+                                  }}
+                                />
                               </Link>
                             </div>
                           </div>
                         </div>
-                      )
-                      ))}
+                        <div className="area-draft-p">
+                          <p>
+                            <strong>ডকুমেন্টের নাম: </strong>
+                            {draftsSingleDoc.title}
+                          </p>
+
+                          <p>
+                            <strong>ডকুমেন্টের বর্ণনা: </strong>
+                            <div
+                              className="content-preview"
+                              dangerouslySetInnerHTML={{
+                                __html: truncateContent(
+                                  draftsSingleDoc.document_content,
+                                  2
+                                ),
+                              }}
+                            ></div>
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </Slider>
               </div>
             </section>
@@ -821,7 +887,7 @@ const MyArea = () => {
                 </div>
               </div>
             </section> */}
-            
+
             <section className="container-fluid mt-5 mb-3">
               <h5>নোটিফিকেশন</h5>
               <div className="notification-div">
