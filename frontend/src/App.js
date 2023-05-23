@@ -39,6 +39,7 @@ import ViewBooks from "./Pages/AllBooks/ViewBooks/ViewBooks";
 import AllDocuments from "./Pages/AllBooks/AllDocuments/AllDocuments";
 import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
+import ViewBookMaster from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/ViewBookMaster";
 // import MyComponent from "./MyComponent";
 
 const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
@@ -91,6 +92,7 @@ function App() {
             <Route path="/edit-books/:id" element={<EditBooks />} />
             <Route path="/view-books/:id" element={<ViewBooks />} />
             <Route path="/books-101200" element={<Book101200 />} />
+            <Route path="/view-book-master/:id" element={<ViewBookMaster />} />
             <Route path="/edit-book-categories/:id" element={<EditBookCatagories />} />
             <Route path="/book-categories" element={<BooksCatagories />} />
             <Route path="/draft-documents" element={<DraftDocuments />} />

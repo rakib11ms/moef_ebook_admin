@@ -74,6 +74,13 @@ const EditBookCatagories = () => {
         <NavigationBa />
       </section>
       <section className="container-fluid">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+            <li class="breadcrumb-item"><a href="/book-categories">বইয়ের ক্যাটাগরি</a></li>
+            <li class="breadcrumb-item active" aria-current="page">বইয়ের ক্যাটাগরি সম্পাদনা</li>
+          </ol>
+        </nav>
         <div className="categories-top-div">
           <h5>বইয়ের ক্যাটাগরি/ক্যটেলগ সম্পাদনা করুন  </h5>
 

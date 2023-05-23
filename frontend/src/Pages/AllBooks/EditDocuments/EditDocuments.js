@@ -107,12 +107,19 @@ const EditDocuments = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+                <li class="breadcrumb-item"><a href="/all-documents">সকল ডকুমেন্টস</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ডকুমেন্ট সম্পাদনা</li>
+              </ol>
+          </nav>
           <div className="row">
             <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>ডকুমেন্ট সম্পাদনা</h5>
                 <div className="draft-prokas-buttons-div" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
+                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সংরক্ষণ করুন</button>
                   {
                     prevPage==='/my-area' ?
                     (

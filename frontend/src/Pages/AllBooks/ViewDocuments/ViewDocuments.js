@@ -47,6 +47,13 @@ const EditDocuments = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+              <li class="breadcrumb-item"><a href="/all-documents">সকল ডকুমেন্টস</a></li>
+              <li class="breadcrumb-item active" aria-current="page">ডকুমেন্ট দেখুন</li>
+            </ol>
+          </nav>
           <div className="row">
             <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
@@ -99,10 +106,10 @@ const EditDocuments = () => {
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-              <div className="all-news-notice-card-div">
+              {/* <div className="all-news-notice-card-div">
                 <div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

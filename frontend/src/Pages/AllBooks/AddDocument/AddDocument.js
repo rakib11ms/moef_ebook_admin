@@ -238,9 +238,29 @@ const AddDocument = (props) => {
               onClick={handleEditClick}
               id="docu-edit-icon"
             />
+
+            <button
+              style={{ position: "absolute", right: "0" }}
+              type="submit"
+              className="doc-input-button py-2 ms-2 me-2"
+              onClick={handleSubmit}
+            >
+              সংরক্ষন করুন
+            </button>
           </div>
         </div>
+        {/* <div className=" doc-input-button-div" style={{ display: 'flex', justifyContent: 'right'}}>
+            <button
+              type="submit"
+              className="doc-input-button py-2"
+              onClick={handleSubmit}
+              // style={{ float: 'right', marginTop: '-80px' }}
+            >
+              সংরক্ষন করুন
+            </button>
+          </div> */}
       </section>
+      
       <hr />
       <section className="container-fluid">
         <div className="">
@@ -471,7 +491,7 @@ const AddDocument = (props) => {
                 )}
               </div>
 
-              <div className=" doc-input-button-div">
+              {/* <div className=" doc-input-button-div">
                 <button
                   type="submit"
                   className="doc-input-button py-2"
@@ -479,7 +499,7 @@ const AddDocument = (props) => {
                 >
                   সংরক্ষন করুন
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

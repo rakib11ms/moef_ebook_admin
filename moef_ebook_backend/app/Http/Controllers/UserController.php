@@ -23,7 +23,6 @@ class UserController extends Controller
                 'activeStatus' => $user->ActiveStatus,
                 'created_at' => $user->created_at,
                 'userImage' => $user->userImage ?? 'default.png'
-
             ];
         });
 
@@ -102,7 +101,6 @@ class UserController extends Controller
             $imageName = $userName . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/user'), $imageName);
             $user->userImage = $imageName;
-      
         }
 
         $user->update();

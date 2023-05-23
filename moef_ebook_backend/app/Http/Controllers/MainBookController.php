@@ -10,6 +10,7 @@ use App\Models\BookParagraph;
 use App\Models\SingleDocument;
 use Illuminate\Support\Facades\DB;
 use App\Models\BooksMaster;
+use Rajurayhan\Bndatetime\BnDateTimeConverter;
 
 class MainBookController extends Controller
 {
@@ -153,6 +154,58 @@ class MainBookController extends Controller
     $all_main_book_and_single_document = $all_main_book->merge($all_single_document);
 
     $sorted_collection = $all_main_book_and_single_document->sortByDesc('created_at')->values()->all();
+
+    return response()->json(
+      [
+        'status'=>200,
+        'message'=>"All main book and single document in descending order",
+        'data'=>$sorted_collection
+      ]
+    );
+  }
+
+  public function getLeatestTwoMainBooksAndSingleDocumentsInDecendingOrder() 
+  {
+    $dateConverter = new BnDateTimeConverter();
+
+    $all_main_book = MainBook::with('bookMaster', 'user')->get()->map(function ($item, $key) {
+        return [
+            'id' => $item->id,
+            'created_by' => $item->created_by,
+            'created_at' => $item->created_at,
+            'title' => $item->bookMaster->Title,
+            'type' => $item->type,
+            'user_name' => $item->user->UserName,
+            // 'created_at_Ban' => ''
+        ];
+    });
+
+    $all_single_document = SingleDocument::with('user')->get()->map(function ($item, $key) {
+        return [
+            'id' => $item->id,
+            'title' => $item->document_title,
+            'created_by' => $item->created_by,
+            // convet created_at to 2018-09-07 12:19:50 pm
+            'created_at' => $item->created_at,
+            'type' => $item->type,
+            'user_name' => $item->user->UserName,
+            // 'created_at_Ban' => ''
+        ];
+    });
+
+    $all_main_book = $all_main_book->map(function ($item) use ($dateConverter) {
+      $item['created_at_ban'] = $dateConverter->getConvertedDateTime($item['created_at'], 'BnEn', '');
+      return $item;
+    });
+
+    $all_single_document = $all_single_document->map(function ($item) use ($dateConverter) {
+        $item['created_at_ban'] = $dateConverter->getConvertedDateTime($item['created_at'], 'BnEn', '');
+        return $item;
+    });
+
+    $all_main_book_and_single_document = $all_main_book->merge($all_single_document);
+
+    $sorted_collection = $all_main_book_and_single_document->sortByDesc('created_at')->values()->take(2)->all(); 
 
     return response()->json(
       [
