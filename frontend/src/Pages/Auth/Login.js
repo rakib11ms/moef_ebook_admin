@@ -181,36 +181,38 @@ function Login({ handleSucessLogin }) {
                 </form>
               </div>
             </div>
-
             <div className="container">
-              <div className="row sign-up-footer">
-                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 footer-div1">
-                  <div className="login-footer-div">
-                    <div className="footer-download-text">
-                      <a
-                        href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib  "
-                        target="_blank"
-                      >
-                        {" "}
-                        <h6>Download</h6>
-                      </a>
-                    </div>
-                    <img className="login-footer-icon" src={ios} alt="" />
-                    <img className="login-footer-icon" src={playStore} alt="" />
-                  </div>
+              <div className="row">
+                <div className="col-sm d-flex justify-content-start">
+                  <span className=" align-middle color-white">Downlaod</span>
+                  &nbsp; &nbsp;
+                  <a
+                    className="align-middle"
+                    href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib "
+                    target="_blank"
+                  >
+                    <i className="fab fa-google-play fa-2x color-white"></i>
+                  </a>
+                  &nbsp; &nbsp; &nbsp;
+                  <a
+                    className="align-middle"
+                    href="https://play.google.com/store/apps/details?id=com.moefcc.ptvl.eib "
+                    target="_blank"
+                  >
+                    <i className="fab fa-apple fa-2x color-white"></i>
+                  </a>
                 </div>
-                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                  <div className="signup-footer-logos">
-                    <a href="http://www.moef.gov.bd/" target="_blank">
-                      {" "}
-                      <img
-                        className="login-logos"
-                        src={bangladeshLogo}
-                        alt=""
-                      />
-                    </a>
+                <div className="col-sm d-flex justify-content-center">
+                  <a
+                    href="http://www.moef.gov.bd/"
+                    target="_blank"
+                    className="align-middle"
+                  >
+                    {" "}
+                    <img className="login-logos" src={bangladeshLogo} alt="" />
+                  </a>
 
-                    {/* <Link to="  http://www.moef.gov.bd/">
+                  {/* <Link to="  http://www.moef.gov.bd/">
                       {" "}
                       <img
                         className="login-logos"
@@ -219,26 +221,24 @@ function Login({ handleSucessLogin }) {
                       />
                     </Link> */}
 
-                    <a href="https://pakizatvl.com/" target="_blank">
-                      {" "}
-                      <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
-                    </a>
-
-                    {/* <Link to="https://pakizatvl.com/">
-                      {" "}
-                      <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
-                    </Link> */}
-                  </div>
+                  <a
+                    href="https://pakizatvl.com/"
+                    target="_blank"
+                    className="align-middle"
+                  >
+                    {" "}
+                    <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
+                  </a>
                 </div>
-                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                  <div className="sign-up-map-polices">
-                    <Link to="/">
-                      <p className="map-link">Site Map</p>
-                    </Link>{" "}
-                    <Link to="/privacy-policies">
-                      <p className="map-link">Privacy & Policies</p>
-                    </Link>
-                  </div>
+                <div class="col-sm d-flex justify-content-end">
+                  <Link to="/">
+                    <span className="align-middle map-link">Site Map</span>
+                  </Link>{" "}
+                  <Link to="/privacy-policies">
+                    <span className=" align-middle map-link">
+                      Privacy & Policies
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
