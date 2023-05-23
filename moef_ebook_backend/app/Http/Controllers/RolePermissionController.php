@@ -50,35 +50,49 @@ public function createPermission(Request $request){
 
 // Assign permissions to the role
 
-public function assignPermissionViaRole(){
-    $role=Role::where('id',1)->first();
-    // dd($role);
-// $permissions = Permission::whereIn('name', ['create', 'read', 'update', 'delete'])->get();
-$permissions = Permission::all()->take(3);
-$role->syncPermissions($permissions);
+public function assignPermissionViaRole(Request $request,$id){
+    $role=Role::where('id',$id)->first();
+    $permissions=$request->all();
+    $result = [];
 
-$user=User::find(9);
-$user->assignRole(1);
+// Loop through the object and extract keys with value true
+foreach ($permissions as $key => $value) {
+    if ($value === true) {
+        $result[] = $key;
+    }
+}
+
+$permissions = Permission::whereIn('name', $result)->get();
+$role->syncPermissions($permissions);
 
   return response()->json(
     [
         'status'=>200,
         'message'=>'Assigned Permission via role successfully',
-        // 'permissions'=>$permission
+        'permissions'=>$permissions
     ]);
 }
 
 public function getPermissionViaRole($id){
-    $user=User::find($id);
-
-$permissions = $user->getAllPermissions(); // collection of permission objects
-
+    $role=Role::where('id',$id)->first();
+$permissions=$role->permissions->pluck('name');
 
   return response()->json(
     [
         'status'=>200,
-        'data'=>$user,
-        // 'permissions'=>$permissions
+        'permissions'=>$permissions,
+        'role'=>$role
+    ]);
+}
+public function check(){
+$user = User::find(13);
+
+$user->assignRole('Super admin');
+
+  return response()->json(
+    [
+        'status'=>200,
+        'message'=>'User role created successfully'
     ]);
 }
 }

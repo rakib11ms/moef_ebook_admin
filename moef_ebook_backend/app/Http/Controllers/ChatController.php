@@ -29,4 +29,13 @@ class ChatController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function getAllMessage(){
+        $messages=Message::all()->take(50);
+     return response()->json([
+        'status' => 200,
+        'messages'=>$messages
+ ]);
+
+    }
 }

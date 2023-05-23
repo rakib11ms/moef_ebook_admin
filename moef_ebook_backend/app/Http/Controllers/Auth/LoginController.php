@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use Spatie\Permission\Models\Role;
 
 class LoginController extends Controller
 {
@@ -53,6 +54,7 @@ class LoginController extends Controller
             return response()->json([
                 'status'=>200,
                 'user' => $user,
+                'permissions'=>$user->getAllPermissions(),
                 'token' => $token
             ]);
          
