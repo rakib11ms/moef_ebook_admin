@@ -1,10 +1,40 @@
-import React from "react";
+// import React from "react";
+import axios from "axios";
+
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./PermissionUser.css";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
+import { useState,useEffect } from "react";
 
 const PermissionUser = () => {
+const [allRoles,setAllRoles]=useState([])
+  useEffect(()=>{
+    axios.get("api/get-all-roles").then((res) => {
+      setAllRoles(res.data.all_roles);
+    });
+  },[])
+  const [permissions, setPermissions] = useState({
+    create_user: false,
+    view_user: false,
+    update_user: false,
+    delete_user: false,
+  });
+
+  const handlePermissionChange = (e) => {
+    const { name, checked } = e.target;
+    setPermissions((prevPermissions) => ({
+      ...prevPermissions,
+      [name]: checked,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform the necessary actions with the selected permissions
+  };
+
+
   return (
     <div>
       <section>
@@ -31,21 +61,41 @@ const PermissionUser = () => {
             </button>
             <button className="sonrokkhon-button">সংরক্ষণ করুন</button>
           </div>
+
+          <div className="mt-3 container w-25">
+            <select class="form-select" aria-label="Default select example">
+              <option selected value="" disabled>Choose Role</option>
+              {
+                allRoles.map((item,i)=>{
+                  return(
+                    <option value={item.id}>{item.name}</option>
+
+                  )
+                })
+              }
+     
+            </select>
+          </div>
         </div>
       </section>
 
       <section className="bg-light container-fluid mt-4">
         <div className="row container-fluid permission-card-div">
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>সুপার এডমিন</h5>
+            <h5>ইউজার  </h5>
             <hr />
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
                 id="flexCheckDefault crud"
+                name="create"
+                checked={permissions.create}
+                onChange={handlePermissionChange}
               />
+
+
+
               <label class="form-check-label" for="flexCheckDefault">
                 সকল ধরণের (CRUD)
               </label>

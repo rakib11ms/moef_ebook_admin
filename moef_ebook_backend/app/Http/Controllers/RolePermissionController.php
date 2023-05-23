@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\User;
 class RolePermissionController extends Controller
 {
-// Create roles
+// Create all_roles
 public function createRole(Request $request){
     // dd($request->name);
   $role =new Role();
@@ -21,6 +21,15 @@ public function createRole(Request $request){
         'roles'=>$role
     ]);
 
+  }
+
+  public function getAllRoles(){
+    $all_roles=Role::all();
+      return response()->json(
+    [
+        'status'=>200,
+        'all_roles'=>$all_roles
+    ]);
   }
 
   // Create Permissions

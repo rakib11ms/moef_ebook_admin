@@ -105,6 +105,7 @@ Route::post('sendmessage', [ChatController::class, 'sendMessage']);
 
 //Role permission 
 Route::post('create-role', [RolePermissionController::class, 'createRole']);
+Route::get('get-all-roles', [RolePermissionController::class, 'getAllRoles']);
 Route::post('create-permission', [RolePermissionController::class, 'createPermission']);
 Route::post('assign-permission-via-role', [RolePermissionController::class, 'assignPermissionViaRole']);
 Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'getPermissionViaRole']);
