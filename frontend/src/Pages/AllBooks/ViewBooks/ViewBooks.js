@@ -68,6 +68,13 @@ const ViewBooks = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+              <li class="breadcrumb-item"><a href="/book-categories">সকল বই</a></li>
+              <li class="breadcrumb-item active" aria-current="page">বই দেখুন</li>
+            </ol>
+          </nav>
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">

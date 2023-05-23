@@ -91,7 +91,7 @@ const AllDocuments = () => {
       width: 120,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/view-documents/${params.row.id}`}>
+          <Link to={`/view-documents/${params.row.id}`} target="_blank">
             <RemoveRedEyeIcon className="text-success" />
           </Link>
         </div>
@@ -116,6 +116,12 @@ const AllDocuments = () => {
       </section>
       <section className="container-fluid">
         <div className="">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+              <li class="breadcrumb-item active" aria-current="page">সকল ডকুমেন্টস</li>
+            </ol>
+          </nav>
           <div className="">
             <div className="all-books-tags-input">
               <div>

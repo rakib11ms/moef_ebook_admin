@@ -92,11 +92,20 @@ const UpdateNewsAndNotice = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+              <li class="breadcrumb-item"><a href="/all-news-notice">সকল বিজ্ঞপ্তি</a></li>
+              <li class="breadcrumb-item active" aria-current="page">বিজ্ঞপ্তি সম্পাদনা</li>
+            </ol>
+          </nav>
           <div className="row">
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বিজ্ঞপ্তি সম্পাদনা</h5>
-
+                <div className="draft-prokas-buttons-div">
+                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সংরক্ষণ করুন</button>
+                </div>
               </div>
               <hr />
               <div>
@@ -128,9 +137,6 @@ const UpdateNewsAndNotice = () => {
                     onBlur={newContent => setContent(newContent)}
                     onChange={newContent => { }}
                   />
-                </div>
-                <div className="draft-prokas-buttons-div">
-                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
                 </div>
               </div>
             </div>

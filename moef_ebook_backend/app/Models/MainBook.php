@@ -29,4 +29,8 @@ class MainBook extends Model
     public function bookParagraph() {
         return $this->belongsTo('App\Models\BookParagraph','paragraph_id');
     }
+
+    public function user() {
+        return $this->belongsTo('App\Models\User','created_by');
+    }
 }

@@ -185,3 +185,7 @@
     margin-bottom: 30%;
   }
 }
+
+.text-warning:hover {
+  box-shadow: 0 0 10px yellow;
+}

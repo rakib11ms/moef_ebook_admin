@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.1",
+        "rajurayhan/bndatetime": "dev-master",
         "rakibhstu/number-to-bangla": "^1.5",
         "symfony/http-client": "^6.2",
         "symfony/mailgun-mailer": "^6.2"
@@ -64,6 +65,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

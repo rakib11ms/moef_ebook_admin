@@ -70,6 +70,13 @@ const ViewNewsAndNotice = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+              <li class="breadcrumb-item"><a href="/all-news-notice">সকল বিজ্ঞপ্তি</a></li>
+              <li class="breadcrumb-item active" aria-current="page">বিজ্ঞপ্তি দেখুন</li>
+            </ol>
+          </nav>
           <div className="row">
             <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
@@ -79,12 +86,12 @@ const ViewNewsAndNotice = () => {
               <div>
                 <div class="mb-3">
                   <div className="my-3">
-                  <p>বিজ্ঞপ্তির শিরোনাম:- <b>{Title}</b></p>
+                  <p><strong>বিজ্ঞপ্তির শিরোনাম:-</strong> {Title}</p>
                   </div>
 
                   <div className="my-3">
-                    <p>বিজ্ঞপ্তির বিস্তারিত:-</p>
-                    <JoditEditor
+                    <p><strong>বিজ্ঞপ্তির বিস্তারিত:-</strong></p>
+                    {/* <JoditEditor
                       className="news-jodit-editor"
                       spellcheck={false}
                       language="en"
@@ -94,8 +101,8 @@ const ViewNewsAndNotice = () => {
                       // make all editors hidden
                       
                       config={{ readonly: true }}
-                    />
-                    {/* <div className="news-jodit-editor" dangerouslySetInnerHTML={{ __html: content }}></div> */}
+                    /> */}
+                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
                   </div>
                 </div>
               </div>
