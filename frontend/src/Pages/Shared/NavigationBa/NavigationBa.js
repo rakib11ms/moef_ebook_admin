@@ -313,22 +313,26 @@ const NavigationBa = () => {
   });
 
   const top100Films = mappedData
+  console.log('search data',searchArray);
+  console.log('mpped data',top100Films);
+  
+ async function getGlobalSearch(){
+  if (input) {
+    await axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
+      setSearchArray(res.data.data);
+      toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
 
+    });
+    // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
+  }
+  else if(input==''){
+    setSearchArray([]);
+  }
+
+ }
 
   useEffect(() => {
-    if (input) {
-      axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
-        setSearchArray(res.data.data);
-        toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
-
-      });
-      // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
-    }
-    else if(input==''){
-      setSearchArray([]);
-    }
-
-
+    getGlobalSearch();
   }, [input])
 
 

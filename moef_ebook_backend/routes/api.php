@@ -29,6 +29,7 @@ use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\RolePermissionController;
 
 
 
@@ -99,3 +100,12 @@ Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   {
 
 
 Route::post('sendmessage', [ChatController::class, 'sendMessage']);
+
+
+//Role permission 
+Route::post('create-role', [RolePermissionController::class, 'createRole']);
+Route::post('create-permission', [RolePermissionController::class, 'createPermission']);
+Route::post('assign-permission-via-role', [RolePermissionController::class, 'assignPermissionViaRole']);
+Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'getPermissionViaRole']);
+
+

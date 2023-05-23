@@ -230,24 +230,6 @@ $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHa
 
 
 
-// $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->where('book_content',  'LIKE', '%'.$search.'%')->orWhereHas('bookMaster', function ($query) use ($search) {
-//         $query->where('Title',  'LIKE', '%'.$search.'%');
-//     })->get()->map(function ($item, $key) {
-//       return [
-//         'id' => $item->id,
-//         'book_id' => $item->book_id,
-//         'chapter_id' => $item->chapter_id,
-//         'paragraph_id' => $item->paragraph_id,
-//         'book_content' => $item->book_content,
-//         'created_by' => $item->created_by,
-//         'isPublished' => $item->isPublished,
-//         'created_at' => $item->created_at,
-//         'updated_at' => $item->updated_at,
-//         'title' => $item->bookMaster->Title,
-//         'type' => $item->type
-//       ];
-//     })->toArray();
-
 $results2 = SingleDocument::where('document_title',  'LIKE', '%'.$search.'%')->orWhere('document_contents','LIKE', '%name%')->get()->toArray();
 
 $results = array_merge($results1, $results2);
