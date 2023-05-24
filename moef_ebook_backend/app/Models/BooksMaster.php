@@ -22,4 +22,14 @@ class BooksMaster extends Model
         'created_by',
         'AuthorID',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'CatID', 'id');
+    }
+
+    public function mainBooks()
+    {
+        return $this->hasMany(MainBooks::class, 'BookID', 'id');
+    }
 }

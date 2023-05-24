@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BooksMaster;
 use Illuminate\Http\Request;
 use File;
+use App\Models\SingleDocument;
 
 class BooksMasterController extends Controller
 {
@@ -66,6 +67,7 @@ class BooksMasterController extends Controller
     {
         $booksMaster = BooksMaster::findOrFail($id);
         $booksMaster->update($request->all());
+
         return response()->json(
             [
                 'status' => 200,
@@ -82,6 +84,27 @@ class BooksMasterController extends Controller
             [
                 'status' => 200,
                 'message' => 'Books Master deleted successfully'
+            ]
+        );
+    }
+
+    public function getAllBookAndDocumentsByCategoryID(Request $request, string $id)
+    {
+        // $booksMaster = BooksMaster::where('CatID', $id)->get();
+        // return response()->json(
+        //     [
+        //         'status' => 200,
+        //         'books_master' => $booksMaster
+        //     ]
+        // );
+
+        $booksMaster = BooksMaster::where('CatID', $id)->where('isPublished', 1)->get();
+        $singleDocuments = SingleDocument::where('isPublished', 1)->get();
+        $booksMaster = $booksMaster->merge($singleDocuments);
+        return response()->json(
+            [
+                'status' => 200,
+                'data' => $booksMaster
             ]
         );
     }

@@ -164,7 +164,7 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div">
           <div className="sidebar-lower">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick2}>
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
               লাইব্রেরি
               {showSubmenu2 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick2}>
@@ -180,13 +180,13 @@ const NavigationBa = () => {
               )}
               {showSubmenu2 && (
                 <ul>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-all-books">
                     <Link to="/all-books">সকল বই</Link>
                   </li>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-book-categories">
                     <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
                   </li>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-all-documents">
                     <Link to="/all-documents">সকল ডকুমেন্টস</Link>
                   </li>
                 </ul>
@@ -196,7 +196,7 @@ const NavigationBa = () => {
         </div>
         <div className="sidebar-lower-news-div">
           <div className="sidebar-lower">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick3} id="nav-news">
               বিজ্ঞপ্তি
               {showSubmenu3 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick3}>
@@ -229,7 +229,7 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div-vertual">
           <div className="sidebar-lower-vertual">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick4} id="nav-virtual">
               ভার্চুয়াল মিটিং
               {showSubmenu4 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick4}>

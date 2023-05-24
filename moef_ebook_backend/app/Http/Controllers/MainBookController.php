@@ -373,4 +373,72 @@ $single_document_count=$collection->where('type','single_document')->count();
       ]
     );
   }
+
+  public function getAllMainBookByBookMasterID($id) 
+  {
+    
+    // $all_main_book = MainBook::where('book_id', $id)->where('isPublished', 1)->with(['bookMaster','bookChapter','bookParagraph'])->get()->map(function ($item, $key) {
+    //   return [
+    //     'id' => $item->id,
+    //     'book_id' => $item->book_id,
+    //     'book_master' => $item->bookMaster,
+    //     'book_chapter' => $item->bookChapter,
+    //     'book_paragraph' => $item->bookParagraph,
+    //     'chapter_id' => $item->chapter_id,
+    //     'paragraph_id' => $item->paragraph_id,
+    //     'book_content' => $item->book_content,
+    //     'created_by' => $item->created_by,
+    //     'isPublished' => $item->isPublished,
+    //     'created_at' => $item->created_at,
+    //     'updated_at' => $item->updated_at,
+    //     // 'title' => $item->bookMaster->Title,
+    //     'type' => $item->type
+    //   ];
+    // });
+
+    // $all_main_book = MainBook::where('book_id', $id)
+    // ->where('isPublished', 1)
+    // ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+    // ->get()
+    // ->map(function ($item, $key) {
+    //     return [
+    //         'book_master' => $item->bookMaster->Title,
+    //         'chapter_name' => $item->bookChapter->ChapterName,
+    //         'paragraph_name' => $item->bookParagraph->ParagraphName,
+    //         'book_content' => $item->book_content,
+    //     ];
+    // });
+
+    $all_main_book = MainBook::where('book_id', $id)
+    ->where('isPublished', 1)
+    ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+    ->get();
+
+
+    // dd($all_main_book->toArray());
+
+    $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+    $chapterData = [];
+
+    foreach ($chapters as $chapterName => $chapterItems) {
+        $paragraphs = $chapterItems->map(function ($item) {
+            return [
+                'paragraph_name' => $item->bookParagraph->ParagraphName,
+                'book_content' => $item->book_content,
+            ];
+        });
+
+        $chapterData[] = [
+            'chapter_name' => $chapterName,
+            'paragraphs' => $paragraphs,
+        ];
+    }
+
+    return response()->json([
+        'status' => 200,
+        'message' => "All main book by book master id",
+        'data' => $chapterData
+    ]);
+  }
 }
