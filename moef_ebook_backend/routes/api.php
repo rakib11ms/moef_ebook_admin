@@ -91,6 +91,8 @@ Route::post('/publish-Main-Book/{id}', [MainBookController::class, 'publishMainB
 Route::post('/publish-Single-Document/{id}', [SingleDocumentController::class, 'publishSingleDocument']);
 Route::get('/get-All-Book-And-Documents-By-Category-ID/{id}', [BooksMasterController::class, 'getAllBookAndDocumentsByCategoryID']);
 Route::get('/get-All-Main-Book-By-Book-Master-ID/{id}', [MainBookController::class, 'getAllMainBookByBookMasterID']);
+Route::get('/get-All-Chpter-By-Book-Master-ID/{id}', [MainBookController::class, 'getAllChpterByBookMasterID']);
+Route::get('/get-All-Paragraphs-By-ChapterID/{id}', [MainBookController::class, 'getAllParagraphsByChapterID']);
 
 Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
