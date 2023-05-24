@@ -85,9 +85,9 @@ $permissions=$role->permissions->pluck('name');
     ]);
 }
 public function check(){
-$user = User::find(13);
+// $user = User::find(13);
 
-$user->assignRole('Super admin');
+// $user->assignRole('Super admin');
 
   return response()->json(
     [

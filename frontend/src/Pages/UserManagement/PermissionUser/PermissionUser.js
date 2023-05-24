@@ -30,6 +30,14 @@ const PermissionUser = () => {
     view_meeting: false,
     edit_meeting: false,
     delete_meeting: false,
+    create_book: false,
+    view_book: false,
+    update_book: false,
+    delete_book: false,
+    create_document: false,
+    view_document: false,
+    update_document: false,
+    delete_document: false,
   });
 
   console.log('permission states check', permissions)
@@ -143,6 +151,62 @@ const PermissionUser = () => {
         setPermissions((prevPermissions) => ({
           ...prevPermissions,
           delete_meeting: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('create_book')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          create_book: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('view_book')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          view_book: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('update_book')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          update_book: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('delete_book')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          delete_book: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('create_document')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          create_document: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('view_document')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          view_document: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('update_document')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          update_document: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('delete_document')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          delete_document: true,
 
         }))
       }
@@ -375,8 +439,118 @@ const PermissionUser = () => {
 
           </div>
 
-          <div className="w-25 ">
-            <button className="btn btn-success" type="button" onClick={handleSubmit}>Submit</button>
+          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
+            <h5>বই এবং ডকুমেন্ট</h5>
+            <hr />
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="create_book"
+                checked={permissions.create_book}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                বই তৈরি করা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="view_book"
+                checked={permissions.view_book}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                বই  দেখা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="update_book"
+                checked={permissions.update_book}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                বই আপডেট করা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="delete_book"
+                checked={permissions.delete_book}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                বই ডিলিট করা
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="create_document"
+                checked={permissions.create_document}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                ডকুমেন্ট তৈরি করা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="view_document"
+                checked={permissions.view_document}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                ডকুমেন্ট দেখা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="update_document"
+                checked={permissions.update_document}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                ডকুমেন্ট আপডেট করা
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault crud"
+                name="delete_document"
+                checked={permissions.delete_document}
+                onChange={handlePermissionChange}
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                ডকুমেন্ট ডিলিট করা
+              </label>
+            </div>
+
+          </div>
+          <div className="w-25 align-self-end ">
+            <button className="btn btn-success" type="button" onClick={handleSubmit}>আপডেট </button>
 
           </div>
         </div>
