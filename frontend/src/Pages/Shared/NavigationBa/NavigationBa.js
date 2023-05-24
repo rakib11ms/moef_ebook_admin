@@ -171,7 +171,7 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div">
           <div className="sidebar-lower">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick2}>
+            <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
               লাইব্রেরি
               {showSubmenu2 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick2}>
@@ -187,13 +187,13 @@ const NavigationBa = () => {
               )}
               {showSubmenu2 && (
                 <ul>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-all-books">
                     <Link to="/all-books">সকল বই</Link>
                   </li>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-book-categories">
                     <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
                   </li>
-                  <li className="side-li-link">
+                  <li className="side-li-link" id="nav-all-documents">
                     <Link to="/all-documents">সকল ডকুমেন্টস</Link>
                   </li>
                 </ul>
