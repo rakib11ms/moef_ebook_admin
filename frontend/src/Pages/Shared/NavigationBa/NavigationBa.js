@@ -21,12 +21,12 @@ import List from "@mui/material/List";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, Navigate, useNavigate, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import Swal from "sweetalert2";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const NavigationBa = () => {
   // Sub menu
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -35,12 +35,8 @@ const NavigationBa = () => {
   const [showSubmenu3, setShowSubmenu3] = useState(true);
   const [showSubmenu4, setShowSubmenu4] = useState(false);
 
-
-
-
-  var userData = JSON.parse(localStorage.getItem('user'));
-  console.log('auserData', userData)
-
+  var userData = JSON.parse(localStorage.getItem("user"));
+  console.log("auserData", userData);
 
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
@@ -171,7 +167,11 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div">
           <div className="sidebar-lower">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
+            <ul
+              className="sidebar-lower-ul"
+              onClick={handleArrowClick2}
+              id="nav-library"
+            >
               লাইব্রেরি
               {showSubmenu2 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick2}>
@@ -202,90 +202,82 @@ const NavigationBa = () => {
           </div>
         </div>
         <div className="sidebar-lower-news-div">
-          {
-            userData.roles.length > 0 && userData.roles[0].name == "Super admin" ?
-
-              <div className="sidebar-lower">
-                <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
-
-                  বিজ্ঞপ্তি
-                  {showSubmenu3 ? (
-                    <KeyboardArrowUpIcon onClick={handleArrowClick3}>
-                      &#8593;
-                    </KeyboardArrowUpIcon>
-                  ) : (
-                    <KeyboardArrowDownIcon
-                      className="arrow-btn"
-                      onClick={handleArrowClick3}
-                    >
-                      &#8595;
-                    </KeyboardArrowDownIcon>
-                  )}
-                  {showSubmenu3 && (
-                    <ul>
-                      <li className="side-li-link">
-                        <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/categories-news">ক্যটেগরি</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
-                      </li>
-                    </ul>
-                  )}
-                </ul>
-              </div>
-              :
-              ''
-          }
-
-
-        </div>
-        {
-          userData.roles.length > 0 && userData.roles[0].name == "Super admin" ?
-
-            <div className="sidebar-lower-div-vertual">
-              <div className="sidebar-lower-vertual">
-                <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
-                  ভার্চুয়াল মিটিং
-                  {showSubmenu4 ? (
-                    <KeyboardArrowUpIcon onClick={handleArrowClick4}>
-                      &#8593;
-                    </KeyboardArrowUpIcon>
-                  ) : (
-                    <KeyboardArrowDownIcon
-                      className="arrow-btn"
-                      onClick={handleArrowClick4}
-                    >
-                      &#8595;
-                    </KeyboardArrowDownIcon>
-                  )}
-                  {showSubmenu4 && (
-                    <ul>
-                      <li className="side-li-link">
-                        <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/">যোগদান করুন</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/create-news-notice">লগ দেখুন</Link>
-                      </li>
-                    </ul>
-                  )}
-                </ul>
-              </div>
+          {userData.roles.length > 0 &&
+          userData.roles[0].name == "Super admin" ? (
+            <div className="sidebar-lower">
+              <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
+                বিজ্ঞপ্তি
+                {showSubmenu3 ? (
+                  <KeyboardArrowUpIcon onClick={handleArrowClick3}>
+                    &#8593;
+                  </KeyboardArrowUpIcon>
+                ) : (
+                  <KeyboardArrowDownIcon
+                    className="arrow-btn"
+                    onClick={handleArrowClick3}
+                  >
+                    &#8595;
+                  </KeyboardArrowDownIcon>
+                )}
+                {showSubmenu3 && (
+                  <ul>
+                    <li className="side-li-link">
+                      <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/categories-news">ক্যটেগরি</Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
+                    </li>
+                  </ul>
+                )}
+              </ul>
             </div>
-            :
-            ''
-        }
-
+          ) : (
+            ""
+          )}
+        </div>
+        {userData.roles.length > 0 &&
+        userData.roles[0].name == "Super admin" ? (
+          <div className="sidebar-lower-div-vertual">
+            <div className="sidebar-lower-vertual">
+              <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
+                ভার্চুয়াল মিটিং
+                {showSubmenu4 ? (
+                  <KeyboardArrowUpIcon onClick={handleArrowClick4}>
+                    &#8593;
+                  </KeyboardArrowUpIcon>
+                ) : (
+                  <KeyboardArrowDownIcon
+                    className="arrow-btn"
+                    onClick={handleArrowClick4}
+                  >
+                    &#8595;
+                  </KeyboardArrowDownIcon>
+                )}
+                {showSubmenu4 && (
+                  <ul>
+                    <li className="side-li-link ">
+                      <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/">যোগদান করুন</Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/create-news-notice">লগ দেখুন</Link>
+                    </li>
+                  </ul>
+                )}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </List>
     </Box>
   );
-
-
 
   const navigate = useNavigate();
   const handleLogOut = (e) => {
@@ -304,65 +296,51 @@ const NavigationBa = () => {
       });
   };
 
-
-
-
-
-  const [input, setInput] = useState('');
-
+  const [input, setInput] = useState("");
 
   const [searchArray, setSearchArray] = useState([]);
 
-
-
-  let mappedData = searchArray.map(obj => {
+  let mappedData = searchArray.map((obj) => {
     if (obj.type === "main_book") {
       return {
         id: obj.id,
         label: obj.book_master.Title,
         link: `/all-books`,
-        type: obj.type
+        type: obj.type,
       };
     } else if (obj.type === "single_document") {
       return {
         id: obj.id,
         label: obj.document_title,
         link: `/all-documents`,
-        type: obj.type
-
+        type: obj.type,
       };
     }
   });
 
-  const top100Films = mappedData
-  console.log('search data', searchArray);
+  const top100Films = mappedData;
+  console.log("search data", searchArray);
   // console.log('mpped data',top100Films);
 
   async function getGlobalSearch() {
     if (input) {
-      await axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
-        setSearchArray(res.data.data);
-        toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
-
-      });
+      await axios
+        .get("api/global-search-by-book-or-documents/" + input)
+        .then((res) => {
+          setSearchArray(res.data.data);
+          toast(
+            `${res.data.main_book_count}। ${res.data.single_document_count}`
+          );
+        });
       // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
-    }
-    else if (input == '') {
+    } else if (input == "") {
       setSearchArray([]);
     }
-
   }
 
   useEffect(() => {
     getGlobalSearch();
-  }, [input])
-
-
-
-
-
-
-
+  }, [input]);
 
   return (
     <div className="mt-3">
@@ -413,37 +391,45 @@ const NavigationBa = () => {
                   navigate(option.link);
                 }}
                 renderOption={(props, option) => (
-                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    {
-                      option.type == "main_book" ?
-                        <img
-                          loading="lazy"
-                          width="25"
-                          src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
-                          alt=""
-                        />
-                        :
-                        <img
-                          loading="lazy"
-                          width="20"
-                          src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
-                          alt=""
-                        />
-
-                    }
+                  <Box
+                    component="li"
+                    sx={{
+                      "& > img": {
+                        mr: 2,
+                        flexShrink: 0,
+                      },
+                    }}
+                    {...props}
+                  >
+                    {option.type == "main_book" ? (
+                      <img
+                        loading="lazy"
+                        width="25"
+                        src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
+                        alt=""
+                      />
+                    ) : (
+                      <img
+                        loading="lazy"
+                        width="20"
+                        src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
+                        alt=""
+                      />
+                    )}
 
                     {option.label}
                   </Box>
                 )}
                 onInputChange={async (event, value) => {
                   console.log("onInputChange", value);
-                  setInput(value)
+                  setInput(value);
                 }}
                 sx={{
                   width: 300,
                 }}
-                renderInput={(params) => <TextField {...params} size="small" placeholder="Search.." />}
-
+                renderInput={(params) => (
+                  <TextField {...params} size="small" placeholder="Search.." />
+                )}
               />
             </div>
 

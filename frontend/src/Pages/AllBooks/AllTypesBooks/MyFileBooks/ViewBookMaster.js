@@ -16,16 +16,29 @@ const ViewBookMaster = () => {
   const [page, setPage] = useState("");
   const [bookMaster, setBookMaster] = useState([]);
   const [content, setContent] = useState("");
+  const [singleBookName, setSingleBookName] = useState("");
 
   const handleParagraphClick = (paragraph) => {
     setContent(paragraph);
+  };
 
-  }
+  const handleChapterclick = (chapter) => {
+    setChapter(chapter);
+    console.log(chapter);
+  };
+  console.log("chapter", chapter);
 
   async function getBookMaster() {
-    await axios.get("/api/get-All-Main-Book-By-Book-Master-ID/" + masterBookID).then((res) => {
-      console.log('Book', res.data.data);
-      setBookMaster(res.data.data);
+    await axios
+      .get("/api/get-All-Main-Book-By-Book-Master-ID/" + masterBookID)
+      .then((res) => {
+        console.log("Book", res.data.data);
+        setBookMaster(res.data.data);
+      });
+
+    await axios.get("/api/books/" + masterBookID).then((res) => {
+      console.log("Book_Title", res.data.books_master.Title);
+      setSingleBookName(res.data.books_master.Title);
     });
   }
   useEffect(() => {
@@ -43,42 +56,48 @@ const ViewBookMaster = () => {
         <NavigationBa />
       </div>
       <section className="container-fluid">
-        <h3>লাইব্রেরী</h3>
+        <h3>লাইব্রেরী / {singleBookName}</h3>
       </section>
       <hr />
       <section className="container-fluid">
         <div className="">
           <div className="row">
-          <div className="col-xl-2 col-lg-2 col-md-2 col-sm-4 col-4">
-          <>
-            <h5 className="suchipotro-h5">সূচীপত্র</h5>
-            {bookMaster.map((chapter) => (
-              <div key={chapter.chapter_name}>
-                <h6>{chapter.chapter_name}</h6>
-                <ul>
-                  {chapter.paragraphs.map((paragraph) => (
-                    <li key={paragraph.paragraph_name} onClick={() => handleParagraphClick(paragraph.book_content)}>
-                      <Button>
-                        {paragraph.paragraph_name}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </>
-        </div>
+            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+              <>
+                <h5 className="suchipotro-h5">সূচীপত্র</h5>
+                {bookMaster.map((chapter) => (
+                  <div key={chapter.chapter_name}>
+                    <h6>{chapter.chapter_name}</h6>
+                    <ul>
+                      {chapter.paragraphs.map((paragraph) => (
+                        <li
+                          key={paragraph.paragraph_name}
+                          onClick={() =>
+                            handleParagraphClick(paragraph.book_content)
+                          }
+                        >
+                          <Button>{paragraph.paragraph_name}</Button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </>
+            </div>
 
-            <div className="col-xl-7 col-lg-12 col-md-7 col-sm-8 col-8">
+            <div className="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
               <div className="chapter-text-div">
-                <div className="chapter-text-header">
+                {/* <div className="chapter-text-header">
                   <h5>
                     {chapter} / {page}
                   </h5>
+                </div> */}
+                <div className="story-texts">
+                  {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
                 </div>
-                {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
+
                 <div className="TrendingFlatIcon-div">
-                  <TrendingFlatIcon className="TrendingFlatIcon" />
+                  {/* <TrendingFlatIcon className="TrendingFlatIcon" /> */}
                 </div>
               </div>
             </div>

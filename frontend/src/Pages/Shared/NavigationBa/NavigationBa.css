@@ -136,12 +136,11 @@ ul.sidebar-lower-ul {
 /* .sidebar-lower-div {
   height: 20vh;
 } */
+
 .sidebar-lower-div-vertual {
   height: 100px;
-  margin-top: 10px;
-}
-.sidebar-lower-div-vertual {
-  margin-bottom: 20% !important;
+  margin-top: 20px;
+  /* margin-bottom: 20% !important; */
   display: flex;
   text-align: justify;
   /* position: absolute; */
