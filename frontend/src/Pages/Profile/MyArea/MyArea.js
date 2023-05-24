@@ -4,7 +4,7 @@ import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./MyArea.css";
 // import profilePic from "../../../images/profile-pic.jpg";
 import bookImg from "../../../images/book.png";
-import singleDoc from "../../../images/single_doc.png";
+import singleDoc from "../../../images/document.png";
 import CreateIcon from "@mui/icons-material/Create";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";

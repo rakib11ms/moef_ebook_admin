@@ -41,12 +41,9 @@ const NavigationBa = () => {
   var userData = JSON.parse(localStorage.getItem('user'));
   console.log('auserData', userData)
 
-  const [user_permissions,setUserPermissions]=useState([])
 
-  useEffect(()=>{
-    setUserPermissions(JSON.parse(localStorage.getItem('permissions')));
-  },[])
 
+  const user_permissions = JSON.parse(localStorage.getItem('permissions'));
 
 
   const toggleSubmenu = () => {

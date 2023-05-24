@@ -125,11 +125,15 @@ const Home = (props) => {
   const [notification, setNotification] = useState([]);
 
   async function fetchData() {
-    await axios.get("api/get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order").then((res) => {
-      if(res.status === 200){
-        setNotification(res.data.data);
-      }
-    });
+    await axios
+      .get(
+        "api/get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order"
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setNotification(res.data.data);
+        }
+      });
 
     await axios.get("api/total-document-count").then((res) => {
       if (res.data) {
@@ -172,7 +176,6 @@ const Home = (props) => {
   console.log("notification", notification);
 
   useEffect(() => {
-
     fetchData();
   }, [renderData]);
 
@@ -209,19 +212,17 @@ const Home = (props) => {
     //   created_by: JSON.parse( localStorage.getItem("user")).id
     // };
 
-
     const formData = new FormData();
-    formData.append('CatID', CatID);
-    formData.append('Title', Title);
-    formData.append('PublisherID', PublisherID);
-    formData.append('AuthorID', AuthorID);
-    formData.append('LanguageID', LanguageID);
-    formData.append('Publish_date', Publish_date);
-    formData.append('BookCoverImage', selectedFile);
-    formData.append('created_by', JSON.parse( localStorage.getItem("user")).id);
+    formData.append("CatID", CatID);
+    formData.append("Title", Title);
+    formData.append("PublisherID", PublisherID);
+    formData.append("AuthorID", AuthorID);
+    formData.append("LanguageID", LanguageID);
+    formData.append("Publish_date", Publish_date);
+    formData.append("BookCoverImage", selectedFile);
+    formData.append("created_by", JSON.parse(localStorage.getItem("user")).id);
 
-
-    axios.post("api/books", formData,config).then((res) => {
+    axios.post("api/books", formData, config).then((res) => {
       if (res.data.status === 200) {
         document.getElementById("form1").reset();
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
@@ -268,9 +269,9 @@ const Home = (props) => {
 
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
         setRenderData(res.data);
-        setBookID('');
-        setChapterID('');
-        setParagraphName('')
+        setBookID("");
+        setChapterID("");
+        setParagraphName("");
       }
     });
   };
@@ -297,10 +298,10 @@ const Home = (props) => {
       axios.post("api/create-main-book", pageData).then((res) => {
         if (res.data.status === 200) {
           document.getElementById("form4").reset();
-          setBookID('');
-          setChapterID('');
-          setParagraphID('');
-          setContent('')
+          setBookID("");
+          setChapterID("");
+          setParagraphID("");
+          setContent("");
 
           Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
           setRenderData(res.data);
@@ -432,7 +433,6 @@ const Home = (props) => {
               <h6 className="sob-dekhun">সব দেখুন </h6>
             </div>
             <div className="row ">
-
               {/* <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6 ">
                 <p>
                   ২ টি নতুন চ্যাপ্টার যোগ করা হয়েছে যোগ করেছেন আনিসুর রাহমান (
@@ -458,24 +458,27 @@ const Home = (props) => {
                 </div>
               </div> */}
 
-              {
-                notification.map((notification, index) => (
-                  <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
-                    <div className="d-flex justify-content-between recent-news">
-                      <p>
-                        {notification.user_name} একটি  নতুন {notification.type == 'single_document' ? 'ডকুমেন্ট' : notification.type == 'main_book' ? 'বই' : '' } যোগ করেছেন |
-                        নাম: {notification.title} | তারিখ: {notification.created_at_ban}
-                      </p>
+              {notification.map((notification, index) => (
+                <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
+                  <div className="d-flex justify-content-between recent-news">
+                    <p>
+                      {notification.user_name} একটি নতুন{" "}
+                      {notification.type == "single_document"
+                        ? "ডকুমেন্ট"
+                        : notification.type == "main_book"
+                        ? "বই"
+                        : ""}{" "}
+                      যোগ করেছেন | নাম: {notification.title} | তারিখ:{" "}
+                      {notification.created_at_ban}
+                    </p>
 
-                      <div className="d-flex justify-content-between">
-                        <CancelOutlinedIcon className="icons" />
-                        <RemoveRedEyeIcon className="icons" />
-                      </div>
+                    <div className="d-flex justify-content-between">
+                      <CancelOutlinedIcon className="icons" />
+                      <RemoveRedEyeIcon className="icons" />
                     </div>
                   </div>
-                ))
-              }
-              
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -493,7 +496,7 @@ const Home = (props) => {
                   <h6 className="doc-text">
                     {" "}
                     <span>
-                      <LibraryBooksIcon className="icons" />
+                      <AutoStoriesIcon className="icons" />
                     </span>
                     সকল বই দেখুন{" "}
                   </h6>
@@ -504,7 +507,7 @@ const Home = (props) => {
                   <h6 className="doc-text">
                     {" "}
                     <span>
-                      <AutoStoriesIcon className="icons" />
+                      <LibraryBooksIcon className="icons" />
                     </span>
                     <AddIcon />
                     ডকুমেন্ট যোগ করুন
@@ -593,7 +596,7 @@ const Home = (props) => {
                     </div>
                   </div>
 
-                  <form onSubmit={SubmitBookMaster} id="form1"  method="POST">
+                  <form onSubmit={SubmitBookMaster} id="form1" method="POST">
                     <div className="container">
                       <div className="row ">
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -619,7 +622,7 @@ const Home = (props) => {
                               id="add-book-categories"
                               required
                             >
-                              <option selected value=''>
+                              <option selected value="">
                                 ক্যাটাগরি নির্বাচন করুন
                               </option>
                               {categories.map((category, index) => {
@@ -688,7 +691,7 @@ const Home = (props) => {
                             aria-label="Default select example"
                             id="add-book-vasha"
                           >
-                            <option selected value=''>
+                            <option selected value="">
                               ভাষা নির্বাচন করুন{" "}
                             </option>
                             {languages.map((language, index) => {
@@ -702,7 +705,6 @@ const Home = (props) => {
                         </div>
                       </div>
                       <div>
-
                         <label htmlFor="fileInput" className="btn btn-warning">
                           <strong>বইয়ের প্রচ্ছদ (ছবি আপলোড করুন)</strong>
                         </label>
@@ -712,7 +714,7 @@ const Home = (props) => {
                           id="fileInput"
                           name="BookCoverImage"
                           onChange={handleFileInputChange}
-                        // style={{ display: "none" }}
+                          // style={{ display: "none" }}
                         />
                       </div>
                       <div className="home-input-button-div">
@@ -761,7 +763,7 @@ const Home = (props) => {
                               id="add-chapter-book-nirnoy"
                               onChange={(e) => setBookID(e.target.value)}
                             >
-                              <option selected value=''>
+                              <option selected value="">
                                 বই নির্নয় করুন
                               </option>
                               {books.map((book, index) => {
@@ -860,15 +862,16 @@ const Home = (props) => {
                                 {" "}
                                 অধ্যায় সমগ্র{" "}
                               </option>
-                              {BookID && chapters.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>
-                                      {item.ChapterName}{" "}
-                                    </option>
-                                  </>
-                                );
-                              })}
+                              {BookID &&
+                                chapters.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>
+                                        {item.ChapterName}{" "}
+                                      </option>
+                                    </>
+                                  );
+                                })}
                             </select>
                             <div onClick={() => setActiveButton(2)}>
                               {" "}
@@ -947,15 +950,16 @@ const Home = (props) => {
                               <option selected value="">
                                 অধ্যায় নির্বাচন করুন
                               </option>
-                              {BookID && chapters.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>
-                                      {item.ChapterName}{" "}
-                                    </option>
-                                  </>
-                                );
-                              })}
+                              {BookID &&
+                                chapters.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>
+                                        {item.ChapterName}{" "}
+                                      </option>
+                                    </>
+                                  );
+                                })}
                             </select>
                             <div onClick={() => setActiveButton(2)}>
                               {" "}
@@ -978,15 +982,16 @@ const Home = (props) => {
                               <option selected value="">
                                 অনুচ্ছেদ নির্বাচন করুন{" "}
                               </option>
-                              {ChapterID && allParagraphs.map((item, i) => {
-                                return (
-                                  <>
-                                    <option value={item.id}>
-                                      {item.ParagraphName}{" "}
-                                    </option>
-                                  </>
-                                );
-                              })}
+                              {ChapterID &&
+                                allParagraphs.map((item, i) => {
+                                  return (
+                                    <>
+                                      <option value={item.id}>
+                                        {item.ParagraphName}{" "}
+                                      </option>
+                                    </>
+                                  );
+                                })}
                             </select>
                             <div onClick={() => setActiveButton(3)}>
                               {" "}
