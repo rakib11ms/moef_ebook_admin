@@ -214,8 +214,8 @@ const AllBooks = () => {
               <p>আমার ফাইল</p>
               <div className="books-serchInput-icon-div col-6">
                 
-              <div className="select-category-div col-6">
-                {/* <lebel >বই নির্নয় করুন * </lebel> <br /> */}
+              {/* <div className="select-category-div col-6">
+                <lebel >বই নির্নয় করুন * </lebel> <br />
                 <select
                   style={{ border: '1px solid #000', padding: '5px' }}
                   required
@@ -244,7 +244,7 @@ const AllBooks = () => {
                     {" "}
                   </Link>
                 </div>
-                {/* <lebel> অধ্যায় নির্নয় করুন * </lebel> <br /> */}
+                <lebel> অধ্যায় নির্নয় করুন * </lebel> <br />
 
                   <select
                     style={{ border: '1px solid #000', padding: '5px' }}
@@ -274,11 +274,11 @@ const AllBooks = () => {
                       {" "}
                     </Link>
                   </div>
-                  {/* search button */}
+
                   <button className="search-btn btn btn-primary btn-sm" onClick={searchBook}>
                     <SearchIcon style={{ color: "#777777" }} onClick={fetchBookDetails} />
                   </button>
-                </div>
+                </div> */}
               </div>
               <hr />
               <DataGrid

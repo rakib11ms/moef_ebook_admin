@@ -698,7 +698,7 @@ const MyArea = () => {
                             <br />
                             <h6>
                               <strong>বইয়ের বর্ণনা: </strong>
-                              <div dangerouslySetInnerHTML={{ __html: draftsBook.book_content }}></div>
+                              <div dangerouslySetInnerHTML={{ __html: truncateContent(draftsBook.book_content, 1) }}></div>
                             </h6>
                             <div className="d-flex justify-content-end">
                               {/* show edit and delete icon in the right side */}
@@ -761,7 +761,7 @@ const MyArea = () => {
                             <br />
                             <h6>
                               <strong>ডকুমেন্টের বর্ণনা: </strong>
-                              <div className="content-preview" dangerouslySetInnerHTML={{ __html: truncateContent(draftsSingleDoc.document_content, 2) }}></div>
+                              <div className="content-preview" dangerouslySetInnerHTML={{ __html: truncateContent(draftsSingleDoc.document_content, 1) }}></div>
                             </h6>
                             <div className="d-flex justify-content-end">
                               <Link to={`/edit-document/${draftsSingleDoc.id}?page=${encodeURIComponent(currentPage)}`}>
