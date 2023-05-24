@@ -93,11 +93,11 @@ function Login({ handleSucessLogin }) {
 
   return (
     <>
-      <section className="">
-        <div className="">
+      <section>
+        <div>
           <div className="login-background-wrapper" style={loginBg}>
             <div className="login-input-divs container">
-              <div className="">
+              <div>
                 <div className="login-logo-tags">
                   <img
                     className="peopleRepublic"
@@ -126,7 +126,7 @@ function Login({ handleSucessLogin }) {
                       <input
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
-                        className="form-control login-inputs mt-4"
+                        className="form-control login-inputs mt-2"
                         id="inputPassword"
                         name="password"
                         placeholder="পাসওয়ার্ড"
@@ -143,12 +143,12 @@ function Login({ handleSucessLogin }) {
 
                       <button
                         type="submit"
-                        className=" login-submit-button mb-3"
+                        className=" login-submit-button mb-3 mt-2"
                       >
                         লগইন{" "}
                         {clickedRender ? (
                           <span
-                            class="spinner-border spinner-border-sm mx-1"
+                            className="spinner-border spinner-border-sm mx-1"
                             role="status"
                             aria-hidden="true"
                           ></span>
@@ -230,7 +230,7 @@ function Login({ handleSucessLogin }) {
                     <img className="login-logos-ptvl" src={ptvlLogo} alt="" />
                   </a>
                 </div>
-                <div class="col-sm d-flex justify-content-end">
+                <div className="col-sm d-flex justify-content-end">
                   <Link to="/">
                     <span className="align-middle map-link">Site Map</span>
                   </Link>{" "}
