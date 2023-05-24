@@ -14,7 +14,8 @@ use Rajurayhan\Bndatetime\BnDateTimeConverter;
 
 class MainBookController extends Controller
 {
-  public function getAllMainBook() {
+  public function getAllMainBook() 
+  {
     $all_main_book = MainBook::with('bookMaster','bookChapter','bookParagraph')->get();
     return response()->json(
       [
@@ -25,7 +26,8 @@ class MainBookController extends Controller
     );
   }
 
-  public function getMainBookByID($id) {
+  public function getMainBookByID($id) 
+  {
     $main_book_by_id = MainBook::with('bookMaster','bookChapter','bookParagraph')->find($id);
     // $main_book_by_id = MainBook::find($id);
 
@@ -100,7 +102,7 @@ class MainBookController extends Controller
   public function getAllBookCountByChapterAndParagraph() 
   {
     $all_book_count = MainBook::with('bookMaster')->select('id', 'book_id', 'chapter_id', 'paragraph_id', 'book_id')->get();
-    // dd($all_book_count);
+
     $book_count = array();
     $book_ids = array();
 
@@ -169,28 +171,26 @@ class MainBookController extends Controller
     $dateConverter = new BnDateTimeConverter();
 
     $all_main_book = MainBook::with('bookMaster', 'user')->get()->map(function ($item, $key) {
-        return [
-            'id' => $item->id,
-            'created_by' => $item->created_by,
-            'created_at' => $item->created_at,
-            'title' => $item->bookMaster->Title,
-            'type' => $item->type,
-            'user_name' => $item->user->UserName,
-            // 'created_at_Ban' => ''
-        ];
+      return [
+        'id' => $item->id,
+        'created_by' => $item->created_by,
+        'created_at' => $item->created_at,
+        'title' => $item->bookMaster->Title,
+        'type' => $item->type,
+        'user_name' => $item->user->UserName,
+      ];
     });
 
     $all_single_document = SingleDocument::with('user')->get()->map(function ($item, $key) {
-        return [
-            'id' => $item->id,
-            'title' => $item->document_title,
-            'created_by' => $item->created_by,
-            // convet created_at to 2018-09-07 12:19:50 pm
-            'created_at' => $item->created_at,
-            'type' => $item->type,
-            'user_name' => $item->user->UserName,
-            // 'created_at_Ban' => ''
-        ];
+      return [
+        'id' => $item->id,
+        'title' => $item->document_title,
+        'created_by' => $item->created_by,
+        // convet created_at to 2018-09-07 12:19:50 pm
+        'created_at' => $item->created_at,
+        'type' => $item->type,
+        'user_name' => $item->user->UserName,
+      ];
     });
 
     $all_main_book = $all_main_book->map(function ($item) use ($dateConverter) {
@@ -199,8 +199,8 @@ class MainBookController extends Controller
     });
 
     $all_single_document = $all_single_document->map(function ($item) use ($dateConverter) {
-        $item['created_at_ban'] = $dateConverter->getConvertedDateTime($item['created_at'], 'BnEn', '');
-        return $item;
+      $item['created_at_ban'] = $dateConverter->getConvertedDateTime($item['created_at'], 'BnEn', '');
+      return $item;
     });
 
     $all_main_book_and_single_document = $all_main_book->merge($all_single_document);
@@ -275,33 +275,32 @@ class MainBookController extends Controller
 
   //global search by books or documents functions
 
-  public function globalSearchByBookOrDocuments($search){
+  public function globalSearchByBookOrDocuments($search)
+  {
 
-$results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHas('bookMaster', function ($query) use ($search) {
-        $query->where('Title',  'LIKE', '%'.$search.'%');
+    $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHas('bookMaster', function ($query) use ($search) {
+      $query->where('Title',  'LIKE', '%'.$search.'%');
     })->orWhere('book_content',  'LIKE', '%'.$search.'%')->get()->toArray();
 
 
 
-$results2 = SingleDocument::where('document_title',  'LIKE', '%'.$search.'%')->orWhere('document_contents','LIKE', '%name%')->get()->toArray();
+    $results2 = SingleDocument::where('document_title',  'LIKE', '%'.$search.'%')->orWhere('document_contents','LIKE', '%name%')->get()->toArray();
 
-$results = array_merge($results1, $results2);
+    $results = array_merge($results1, $results2);
 
-$collection = collect($results);
-$main_book_count=$collection->where('type','main_book')->count();
-$single_document_count=$collection->where('type','single_document')->count();
+    $collection = collect($results);
+    $main_book_count=$collection->where('type','main_book')->count();
+    $single_document_count=$collection->where('type','single_document')->count();
 
     return response()->json(
       ['status'=>200,
       'data'=>$results,
       // 'x'=>$results4,
       'main_book_count'=>$main_book_count.'টি বই পাওয়া গিয়েছে',
-      'single_document_count'=>$single_document_count.'টি ডকুমেন্ট পাওয়া গিয়েছে'
-        
-    ]
-    );
+      'single_document_count'=>$single_document_count.'টি ডকুমেন্ট পাওয়া গিয়েছে' 
+    ]);
   }
-  
+
   public function getAllDraftBooksAndSingleDocumentsByUserID($id) 
   {
     $all_draft_main_book = MainBook::where('created_by', $id)->where('isPublished', 0)->get()->map(function ($item, $key) {
@@ -381,7 +380,8 @@ $single_document_count=$collection->where('type','single_document')->count();
     ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
     ->get();
 
-
+    $bookName = $all_main_book[0]->bookMaster->Title;
+    
     $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
 
     $chapterData = [];
@@ -389,21 +389,22 @@ $single_document_count=$collection->where('type','single_document')->count();
     foreach ($chapters as $chapterName => $chapterItems) {
         $paragraphs = $chapterItems->map(function ($item) {
             return [
-                'paragraph_name' => $item->bookParagraph->ParagraphName,
-                'book_content' => $item->book_content,
+              'paragraph_name' => $item->bookParagraph->ParagraphName,
+              'book_content' => $item->book_content,
             ];
         });
 
         $chapterData[] = [
-            'chapter_name' => $chapterName,
-            'paragraphs' => $paragraphs,
+          'book_name' => $chapterItems[0]->bookMaster->Title,
+          'chapter_name' => $chapterName,
+          'paragraphs' => $paragraphs,
         ];
     }
 
     return response()->json([
-        'status' => 200,
-        'message' => "All main book by book master id",
-        'data' => $chapterData
+      'status' => 200,
+      'message' => "All main book by book master id",
+      'data' => $chapterData
     ]);
   }
 
@@ -421,14 +422,14 @@ $single_document_count=$collection->where('type','single_document')->count();
 
     foreach ($chapters as $chapterName => $chapterItems) {
         $chapterData[] = [
-            'chapter_id' => $chapterItems[0]->chapter_id,
-            'chapter_name' => $chapterName,
+          'chapter_id' => $chapterItems[0]->chapter_id,
+          'chapter_name' => $chapterName,
         ];
     }
 
     return response()->json([
-        'status' => 200,
-        'data' => $chapterData
+      'status' => 200,
+      'data' => $chapterData
     ]);
   }
 
@@ -444,16 +445,15 @@ $single_document_count=$collection->where('type','single_document')->count();
     $paragraphData = [];
 
     foreach ($paragraphs as $paragraphName => $paragraphItems) {
-        $paragraphData[] = [
-            // 'paragraph_id' => $paragraphItems[0]->paragraph_id,
-            'paragraph_name' => $paragraphName,
-            'paragraph_content' => $paragraphItems[0]->book_content,
-        ];
+      $paragraphData[] = [
+        'paragraph_name' => $paragraphName,
+        'paragraph_content' => $paragraphItems[0]->book_content,
+      ];
     }
 
     return response()->json([
-        'status' => 200,
-        'data' => $paragraphData
+      'status' => 200,
+      'data' => $paragraphData
     ]);
   }
 }

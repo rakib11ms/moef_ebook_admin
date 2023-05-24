@@ -32,6 +32,7 @@ class SingleDocumentController extends Controller
             $single_document->document_contents = $request->contents;
             $single_document->created_by = $request->created_by;
             $single_document->type = 'single_document';
+            $single_document->isPublished = $request->isPublished;
             $single_document->save();
             return response()->json([
                 'status' => 200,
@@ -49,6 +50,7 @@ class SingleDocumentController extends Controller
             $newsNotice->redirect_url = $request->redirect_url;
             // $newsNotice->created_by = auth('sanctum')->user()->UserID;
             $newsNotice->created_by = $request->created_by;
+            $single_document->isPublished = $request->isPublished;
             $newsNotice->save();
             return response()->json([
                 'status' => 200,
@@ -63,6 +65,7 @@ class SingleDocumentController extends Controller
             $create_book->paragraph_id = $request->paragraph_id;
             $create_book->book_content = $request->contents;
             $create_book->created_by = $request->created_by;
+            $single_document->isPublished = $request->isPublished;
             $create_book->save();
             return response()->json([
                 'status' => 200,
@@ -79,6 +82,7 @@ class SingleDocumentController extends Controller
             $create_book->paragraph_id = $request->paragraph_id;
             $create_book->book_content = $request->contents;
             $create_book->created_by = $request->created_by;
+            $single_document->isPublished = $request->isPublished;
             $create_book->save();
 
 
@@ -90,6 +94,7 @@ class SingleDocumentController extends Controller
             $newsNotice->redirect_url = $request->redirect_url;
             // $newsNotice->created_by = auth('sanctum')->user()->UserID;
             $newsNotice->created_by = $request->created_by;
+            $single_document->isPublished = $request->isPublished;
             $newsNotice->save();
 
             return response()->json([

@@ -188,6 +188,7 @@ const AddDocument = (props) => {
     chapter_id: chapterId,
     paragraph_id: ParagraphId,
     created_by: $user.id,
+    isPublished: true,
   };
 
   const handleSubmit = (e) => {
@@ -209,6 +210,35 @@ const AddDocument = (props) => {
     }
   }
 
+  const handleDraftSubmit = (e) => {
+    e.preventDefault();
+    if (content.trim() === '<p><br></p>' || content.trim() === '') {
+      Swal.fire('বিষয়বস্তু পূরণ করুন', '', 'warning')
+      return
+    } else {
+      const draftData = {
+        contents: content,
+        title: documentTitle,
+        notice_news_category_id: notice_news_category_id,
+        notice_news_subcategory_id: notice_news_subcategory_id,
+        redirect_url: redirect_url, 
+        book_id: bookId,
+        chapter_id: chapterId,
+        paragraph_id: ParagraphId,
+        created_by: $user.id,
+        isPublished: false,
+      };
+
+      axios.post(`/api/save-single-document`, draftData).then(res => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, "", "success");
+
+          setContent("");
+          setdocumentTitle("");
+        }
+      });
+    }
+  }
 
 
   return (
@@ -238,6 +268,14 @@ const AddDocument = (props) => {
               onClick={handleEditClick}
               id="docu-edit-icon"
             />
+
+            <button
+              type="submit"
+              className="doc-input-button py-2 ms-2 me-2"
+              onClick={handleDraftSubmit}
+            >
+              খসড়া করুন
+            </button>
 
             <button
               style={{ position: "absolute", right: "0" }}
