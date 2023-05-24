@@ -125,7 +125,7 @@ const AllNewsAndNotice = () => {
       width: 120,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/view-news-notice/${params.row.id}`}>
+          <Link to={`/view-news-notice/${params.row.id}`} target="_blank">
             <RemoveRedEyeIcon className="text-success" />
           </Link>
         </div>
@@ -142,6 +142,12 @@ const AllNewsAndNotice = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
+          <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">সকল বিজ্ঞপ্তি</li>
+                </ol>
+            </nav>
           <div className="row">
             <div className="col-xl-12 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">

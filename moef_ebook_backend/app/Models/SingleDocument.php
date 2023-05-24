@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SingleDocument extends Model
 {
     use HasFactory;
+
+    public function user() {
+        return $this->belongsTo('App\Models\User','created_by');
+    }
 }

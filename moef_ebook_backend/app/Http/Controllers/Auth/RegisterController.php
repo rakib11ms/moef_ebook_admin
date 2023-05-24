@@ -79,6 +79,7 @@ class RegisterController extends Controller
 
             $user->confirm_password = Hash::make($request->confirm_password);
             $user->userRoleName='Admin';
+            $user->assignRole('Super admin'); 
             $user->userImage=$request->userImage;
             $user->save();
 

@@ -121,11 +121,16 @@ const Home = (props) => {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  // console.log('allParagraphs', allParagraphs)
 
-  // console.log('totalDoc',totalDocuments)
+  const [notification, setNotification] = useState([]);
 
   async function fetchData() {
+    await axios.get("api/get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order").then((res) => {
+      if(res.status === 200){
+        setNotification(res.data.data);
+      }
+    });
+
     await axios.get("api/total-document-count").then((res) => {
       if (res.data) {
         setTotalDocuments(res.data);
@@ -163,6 +168,8 @@ const Home = (props) => {
       }
     });
   }
+
+  console.log("notification", notification);
 
   useEffect(() => {
 
@@ -425,7 +432,8 @@ const Home = (props) => {
               <h6 className="sob-dekhun">সব দেখুন </h6>
             </div>
             <div className="row ">
-              <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6 ">
+
+              {/* <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6 ">
                 <p>
                   ২ টি নতুন চ্যাপ্টার যোগ করা হয়েছে যোগ করেছেন আনিসুর রাহমান (
                   উপ সচিব ) ০৪ জানু ২০২৩ , ১২. ৪৪ মিনিট{" "}
@@ -448,7 +456,26 @@ const Home = (props) => {
                   <CancelOutlinedIcon className="icons" />
                   <RemoveRedEyeIcon className="icons" />
                 </div>
-              </div>
+              </div> */}
+
+              {
+                notification.map((notification, index) => (
+                  <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
+                    <div className="d-flex justify-content-between recent-news">
+                      <p>
+                        {notification.user_name} একটি  নতুন {notification.type == 'single_document' ? 'ডকুমেন্ট' : notification.type == 'main_book' ? 'বই' : '' } যোগ করেছেন |
+                        নাম: {notification.title} | তারিখ: {notification.created_at_ban}
+                      </p>
+
+                      <div className="d-flex justify-content-between">
+                        <CancelOutlinedIcon className="icons" />
+                        <RemoveRedEyeIcon className="icons" />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+              
             </div>
           </div>
         </div>

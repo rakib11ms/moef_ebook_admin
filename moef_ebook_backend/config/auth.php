@@ -59,17 +59,35 @@ return [
     |
     */
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+    // 'providers' => [
+    //     'users' => [
+    //         'driver' => 'eloquent',
+    //         'model' => App\Models\User::class,
+    //     ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+    //     // 'users' => [
+    //     //     'driver' => 'database',
+    //     //     'table' => 'users',
+    //     // ],
+    // ],
+
+    'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
     ],
+
+    'roles' => [
+        'driver' => 'eloquent',
+        'model' => Spatie\Permission\Models\Role::class,
+    ],
+
+    'permissions' => [
+        'driver' => 'eloquent',
+        'model' => Spatie\Permission\Models\Permission::class,
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------

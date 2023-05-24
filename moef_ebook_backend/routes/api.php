@@ -29,6 +29,7 @@ use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\RolePermissionController;
 
 
 
@@ -70,6 +71,7 @@ Route::get('get-user-image/{id}', [App\Http\Controllers\UserController::class, '
 Route::post('update-user/{id}', [App\Http\Controllers\UserController::class, 'update']);
 Route::get('get-user-info/{id}', [App\Http\Controllers\UserController::class, 'getUserInfo']);
 Route::get('get-all-user-info', [App\Http\Controllers\UserController::class, 'getAllUserInfo']);
+Route::get('get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order', [App\Http\Controllers\MainBookController::class, 'getLeatestTwoMainBooksAndSingleDocumentsInDecendingOrder']);
 
 Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
@@ -99,3 +101,17 @@ Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   {
 
 
 Route::post('sendmessage', [ChatController::class, 'sendMessage']);
+Route::get('get-all-messages', [ChatController::class, 'getAllMessage']);
+
+
+//Role permission 
+Route::post('create-role', [RolePermissionController::class, 'createRole']);
+Route::get('get-all-roles', [RolePermissionController::class, 'getAllRoles']);
+Route::post('create-permission', [RolePermissionController::class, 'createPermission']);
+Route::post('assign-permission-via-role/{id}', [RolePermissionController::class, 'assignPermissionViaRole']);
+Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'getPermissionViaRole']);
+
+Route::post('check', [RolePermissionController::class, 'check']);
+
+
+

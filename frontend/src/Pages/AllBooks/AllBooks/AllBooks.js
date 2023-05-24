@@ -90,7 +90,7 @@ const AllBooks = () => {
       
     }
   }
-
+  
 
   const columns = [
     { field: 'book_name', headerName: 'বইয়ের নাম ', width: 250 },
@@ -157,7 +157,7 @@ const AllBooks = () => {
       width: 120,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/view-books/${params.row.id}`}>
+          <Link to={`/view-books/${params.row.id}`} target="_blank">
             <RemoveRedEyeIcon className="text-success" />
           </Link>
         </div>
@@ -169,6 +169,7 @@ const AllBooks = () => {
     ...allBooks.map((book) => (
       {
         id: book.id,
+        book_id: book.id,
         book_name: book.book_title,
         chapter_count: book.chapter_count,
         paragraph_count: book.paragraph_count
@@ -184,6 +185,12 @@ const AllBooks = () => {
       </section>
       <section className="container-fluid">
         <div className="">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">হোম</a></li>
+            <li class="breadcrumb-item active" aria-current="page">সকল বই</li>
+          </ol>
+        </nav>
           <div className="">
             <div className="all-books-tags-input">
               <div>
@@ -192,8 +199,8 @@ const AllBooks = () => {
               <div className="books-search-input-div">
                 <div className="add-doc-div">
                   <AddIcon />
-                  <Link to="/add-document">
-                    <h6>ডকুমেন্ট যোগ করুন</h6>
+                  <Link to="/home">
+                    <h6>বই যোগ করুন</h6>
                   </Link>
                 </div>
                 {/* <div className="books-serchInput-icon-div">

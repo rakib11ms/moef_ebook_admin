@@ -35,6 +35,13 @@ const NavigationBa = () => {
   const [showSubmenu3, setShowSubmenu3] = useState(true);
   const [showSubmenu4, setShowSubmenu4] = useState(false);
 
+
+
+
+  var userData = JSON.parse( localStorage.getItem('user') );
+  console.log('auserData',userData)
+
+
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
   };
@@ -195,8 +202,12 @@ const NavigationBa = () => {
           </div>
         </div>
         <div className="sidebar-lower-news-div">
-          <div className="sidebar-lower">
+          {
+            userData.roles.length>0 && userData.roles[0].name=="Super admin"?
+         
+            <div className="sidebar-lower">
             <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
+
               বিজ্ঞপ্তি
               {showSubmenu3 ? (
                 <KeyboardArrowUpIcon onClick={handleArrowClick3}>
@@ -215,9 +226,9 @@ const NavigationBa = () => {
                   <li className="side-li-link">
                     <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
                   </li>
-                  {/* <li className="side-li-link">
+                  <li className="side-li-link">
                     <Link to="/categories-news">ক্যটেগরি</Link>
-                  </li> */}
+                  </li>
                   <li className="side-li-link">
                     <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
                   </li>
@@ -225,40 +236,51 @@ const NavigationBa = () => {
               )}
             </ul>
           </div>
-        </div>
+          :
+          ''
+          }
 
-        <div className="sidebar-lower-div-vertual">
-          <div className="sidebar-lower-vertual">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
-              ভার্চুয়াল মিটিং
-              {showSubmenu4 ? (
-                <KeyboardArrowUpIcon onClick={handleArrowClick4}>
-                  &#8593;
-                </KeyboardArrowUpIcon>
-              ) : (
-                <KeyboardArrowDownIcon
-                  className="arrow-btn"
-                  onClick={handleArrowClick4}
-                >
-                  &#8595;
-                </KeyboardArrowDownIcon>
-              )}
-              {showSubmenu4 && (
-                <ul>
-                  <li className="side-li-link">
-                    <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
-                  </li>
-                  <li className="side-li-link">
-                    <Link to="/">যোগদান করুন</Link>
-                  </li>
-                  <li className="side-li-link">
-                    <Link to="/create-news-notice">লগ দেখুন</Link>
-                  </li>
-                </ul>
-              )}
-            </ul>
-          </div>
+        
         </div>
+        {
+          userData.roles.length>0 && userData.roles[0].name=="Super admin"?
+          
+        <div className="sidebar-lower-div-vertual">
+        <div className="sidebar-lower-vertual">
+          <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
+            ভার্চুয়াল মিটিং
+            {showSubmenu4 ? (
+              <KeyboardArrowUpIcon onClick={handleArrowClick4}>
+                &#8593;
+              </KeyboardArrowUpIcon>
+            ) : (
+              <KeyboardArrowDownIcon
+                className="arrow-btn"
+                onClick={handleArrowClick4}
+              >
+                &#8595;
+              </KeyboardArrowDownIcon>
+            )}
+            {showSubmenu4 && (
+              <ul>
+                <li className="side-li-link">
+                  <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
+                </li>
+                <li className="side-li-link">
+                  <Link to="/">যোগদান করুন</Link>
+                </li>
+                <li className="side-li-link">
+                  <Link to="/create-news-notice">লগ দেখুন</Link>
+                </li>
+              </ul>
+            )}
+          </ul>
+        </div>
+      </div>
+      :
+      ''
+        }
+
       </List>
     </Box>
   );
@@ -313,22 +335,26 @@ const NavigationBa = () => {
   });
 
   const top100Films = mappedData
+  console.log('search data',searchArray);
+  // console.log('mpped data',top100Films);
+  
+ async function getGlobalSearch(){
+  if (input) {
+    await axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
+      setSearchArray(res.data.data);
+      toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
 
+    });
+    // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
+  }
+  else if(input==''){
+    setSearchArray([]);
+  }
+
+ }
 
   useEffect(() => {
-    if (input) {
-      axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
-        setSearchArray(res.data.data);
-        toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
-
-      });
-      // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
-    }
-    else if(input==''){
-      setSearchArray([]);
-    }
-
-
+    getGlobalSearch();
   }, [input])
 
 

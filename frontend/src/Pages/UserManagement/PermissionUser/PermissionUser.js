@@ -1,10 +1,158 @@
-import React from "react";
+// import React from "react";
+import axios from "axios";
+
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./PermissionUser.css";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 const PermissionUser = () => {
+  const [allRoles, setAllRoles] = useState([])
+  useEffect(() => {
+    axios.get("api/get-all-roles").then((res) => {
+      setAllRoles(res.data.all_roles);
+    });
+  }, [])
+
+  const [role_id, setRole_id] = useState(1)
+  const [permissions, setPermissions] = useState({
+    create_user: false,
+    view_user: false,
+    update_user: false,
+    delete_user: false,
+    create_notice_news: false,
+    view_notice_news: false,
+    update_notice_news: false,
+    delete_notice_news: false,
+    create_meeting: false,
+    view_meeting: false,
+    edit_meeting: false,
+    delete_meeting: false,
+  });
+
+  console.log('permission states check', permissions)
+
+  const handlePermissionChange = (e) => {
+    const { name, checked } = e.target;
+    setPermissions((prevPermissions) => ({
+      ...prevPermissions,
+      [name]: checked,
+    }));
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('data', permissions)
+    axios.post(`api/assign-permission-via-role/${role_id}`, permissions).then((res) => {
+      if (res.data.status == 200) {
+        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+
+      }
+
+    });
+  };
+
+  const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
+  console.log('permission from db', permissionfromDatabase)
+
+  useEffect(() => {
+    axios.get(`api/get-permission-via-role/${role_id}`).then((res) => {
+      // console.log('hello', res.data.permissions)
+      setPermissionFromDatabase(res.data.permissions)
+      if (res.data.permissions.includes('create_user')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          create_user: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('view_user')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          view_user: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('update_user')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          update_user: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('delete_user')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          delete_user: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('create_notice_news')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          create_notice_news: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('view_notice_news')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          view_notice_news: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('update_notice_news')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          update_notice_news: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('delete_notice_news')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          delete_notice_news: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('create_meeting')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          create_meeting: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('view_meeting')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          view_meeting: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('update_meeting')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          update_meeting: true,
+
+        }))
+      }
+      if (res.data.permissions.includes('delete_meeting')) {
+        setPermissions((prevPermissions) => ({
+          ...prevPermissions,
+          delete_meeting: true,
+
+        }))
+      }
+    });
+
+
+
+  }, [role_id])
+
+
   return (
     <div>
       <section>
@@ -22,7 +170,7 @@ const PermissionUser = () => {
             </div>
           </div>
           <hr />
-          <div className="permission-head-buttons container-fluid">
+          {/* <div className="permission-head-buttons container-fluid">
             <button className="Jog-button">
               যোগ করুন{" "}
               <span>
@@ -30,6 +178,21 @@ const PermissionUser = () => {
               </span>
             </button>
             <button className="sonrokkhon-button">সংরক্ষণ করুন</button>
+          </div> */}
+
+          <div className="mt-3 container w-25">
+            <select class="form-select" aria-label="Default select example" value={role_id} onChange={(e) => setRole_id(e.target.value)}>
+              <option selected value="" disabled>Choose Role</option>
+              {
+                allRoles.map((item, i) => {
+                  return (
+                    <option value={item.id}>{item.name}</option>
+
+                  )
+                })
+              }
+
+            </select>
           </div>
         </div>
       </section>
@@ -37,464 +200,184 @@ const PermissionUser = () => {
       <section className="bg-light container-fluid mt-4">
         <div className="row container-fluid permission-card-div">
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>সুপার এডমিন</h5>
+            <h5>ইউজার  </h5>
             <hr />
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
                 id="flexCheckDefault crud"
+                name="create_user"
+                checked={permissions.create_user}
+                onChange={handlePermissionChange}
               />
+
               <label class="form-check-label" for="flexCheckDefault">
-                সকল ধরণের (CRUD)
+                ইউজার তৈরি করা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault user-permission"
+                id="flexCheckDefault crud"
+                name="view_user"
+                checked={permissions.view_user}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                ব্যবহারকারী ব্যাবস্থাপনা
+                ইউজার দেখা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-book"
+                id="flexCheckDefault crud"
+                name="update_user"
+                checked={permissions.update_user}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault ">
-                বই যোগ
+                ইউজার আপডেট করা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-chapter"
+                id="flexCheckDefault crud"
+                name="delete_user"
+                checked={permissions.delete_user}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                অধ্যায় যোগ
+                ইউজার ডিলিট করা
               </label>
             </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-genaral-content"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সাধারণ কন্টেন্ট যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault notice-news"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                নোটিশ ও নিউজ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault conferance"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                কনফারেন্স
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault etc">
-                অন্যান্য
-              </label>
-            </div>
+
           </div>
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>এডমিন</h5>
+            <h5>নিউজ নোটিশ</h5>
             <hr />
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault crud2"
+                id="flexCheckDefault crud"
+                name="create_notice_news"
+                checked={permissions.create_notice_news}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                সকল ধরণের (CRUD)
+                নিউজ নোটিশ তৈরি করা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault user-permission2"
+                id="flexCheckDefault crud"
+                name="view_notice_news"
+                checked={permissions.view_notice_news}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                ব্যবহারকারী ব্যাবস্থাপনা
+                নিউজ নোটিশ দেখা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-book2"
+                id="flexCheckDefault crud"
+                name="update_notice_news"
+                checked={permissions.update_notice_news}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                বই যোগ
+                নিউজ নোটিশ আপডেট করা
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-chapter2"
+                id="flexCheckDefault crud"
+                name="delete_notice_news"
+                checked={permissions.delete_notice_news}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                অধ্যায় যোগ
+                নিউজ নোটিশ ডিলিট করা
               </label>
             </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-genaral-content2"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সাধারণ কন্টেন্ট যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault notice-news2"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                নোটিশ ও নিউজ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault conferance2"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                কনফারেন্স
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অন্যান্য
-              </label>
-            </div>
+
+
+
+
           </div>
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>মডারেটর</h5>
+            <h5>মিটিং </h5>
             <hr />
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault crud3"
+                id="flexCheckDefault crud"
+                name="create_meeting"
+                checked={permissions.create_meeting}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                সকল ধরণের (CRUD)
+                মিটিং তৈরি করুন
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault user-permission3"
+                id="flexCheckDefault crud"
+                name="view_meeting"
+                checked={permissions.view_meeting}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                ব্যবহারকারী ব্যাবস্থাপনা
+                মিটিং দেখুন
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-book3"
+                id="flexCheckDefault crud"
+                name="update_meeting"
+                checked={permissions.update_meeting}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                বই যোগ
+                মিটিং আপডেট করুন
               </label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault add-chapter3"
+                id="flexCheckDefault crud"
+                name="delete_meeting"
+                checked={permissions.delete_meeting}
+                onChange={handlePermissionChange}
               />
               <label class="form-check-label" for="flexCheckDefault">
-                অধ্যায় যোগ
+                মিটিং ডিলিট করুন
               </label>
             </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-genaral-content3"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সাধারণ কন্টেন্ট যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault notice-news3"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                নোটিশ ও নিউজ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault conferance3"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                কনফারেন্স
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অন্যান্য
-              </label>
-            </div>
+
           </div>
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>পাবলিশার্স</h5>
-            <hr />
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault crud4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সকল ধরণের (CRUD)
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault user-permission4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                ব্যবহারকারী ব্যাবস্থাপনা
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-book4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                বই যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-chapter4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অধ্যায় যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-genaral-content4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সাধারণ কন্টেন্ট যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault notice-news4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                নোটিশ ও নিউজ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault conferance4"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                কনফারেন্স
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অন্যান্য
-              </label>
-            </div>
-          </div>
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 permmission-card">
-            <h5>সাধারণ ব্যবহারকারী</h5>
-            <hr />
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault crud5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সকল ধরণের (CRUD)
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault user-permission5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                ব্যবহারকারী ব্যাবস্থাপনা
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-book5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                বই যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-chapter5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অধ্যায় যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault add-genaral-content5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                সাধারণ কন্টেন্ট যোগ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault notice-news5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                নোটিশ ও নিউজ
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault conferance5"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                কনফারেন্স
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                অন্যান্য
-              </label>
-            </div>
+
+          <div className="w-25 ">
+            <button className="btn btn-success" type="button" onClick={handleSubmit}>Submit</button>
+
           </div>
         </div>
       </section>
