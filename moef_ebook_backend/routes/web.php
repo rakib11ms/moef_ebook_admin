@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // use App\Http\Controllers\AuthorController;
 // use App\Http\Controllers\OfficeController;
 // use App\Http\Controllers\Auth\LoginController;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 
 // Route::resource('authors', AuthorController::class);
@@ -45,5 +47,7 @@ Route::get('/', function () {
 //     return view('Auth.login');
 // })->name('login');
 
-// Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+// Route::post('/login', [App\Http\Controllers\Auths\LoginController::class, 'login']);
 // Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

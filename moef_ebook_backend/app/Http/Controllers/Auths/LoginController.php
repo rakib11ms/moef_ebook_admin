@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auths;
 
 use App\Models\User;
 use App\Models\Token;
@@ -25,6 +25,8 @@ class LoginController extends Controller
         );
 
         $user = User::where('email', $data['id'])->first();
+
+
         if(!$user) {
             $user = User::where('OfficeID', $data['id'])->first();
             if(!$user) {
@@ -51,10 +53,15 @@ class LoginController extends Controller
             $user_data->device_token=$request->device_token;
             $user_data->update();
 
+            $check=$user->roles[0]['id'];
+           $role=Role::where('id',$check)->first();
+
+          
             return response()->json([
                 'status'=>200,
                 'user' => $user,
                 'permissions'=>$user->getAllPermissions(),
+                'only_permissions'=>$role->permissions->pluck('name'),
                 'token' => $token
             ]);
          

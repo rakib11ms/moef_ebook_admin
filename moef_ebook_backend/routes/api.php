@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auths\LoginController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\NewsNoticeCategoryController;
@@ -28,10 +28,10 @@ use App\Http\Controllers\MainBookController;
 use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auths\RegisterController;
 use App\Http\Controllers\RolePermissionController;
-
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -73,7 +73,7 @@ Route::get('get-user-info/{id}', [App\Http\Controllers\UserController::class, 'g
 Route::get('get-all-user-info', [App\Http\Controllers\UserController::class, 'getAllUserInfo']);
 Route::get('get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order', [App\Http\Controllers\MainBookController::class, 'getLeatestTwoMainBooksAndSingleDocumentsInDecendingOrder']);
 
-Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+// Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
 Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);
 Route::get('/get-single-document/{id}', [SingleDocumentController::class, 'getSingleDocument']);
@@ -98,8 +98,8 @@ Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
 Route::post('/reset-password-email-confirm', [ResetPasswordController::class, 'resetPasswordConfirm']);
 
-Route :: middleware ( 'auth:sanctum' ) -> group ( function ()   { 
-    Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
+Route::middleware ( 'auth:sanctum' ) -> group(function(){ 
+    Route::post('/logout', [App\Http\Controllers\Auths\LogoutController::class, 'logout']);
 });
 
 
@@ -119,7 +119,13 @@ Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'ge
 
 
 Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () {
-    Route::post('check', [RolePermissionController::class, 'check'])->name('create_meeting');
+    Route::post('check', [RolePermissionController::class, 'check'])->middleware('permission:delete_meeting');
 
 });
+
+// Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () {
+//     Route::post('check', [RolePermissionController::class, 'check'])->name('update_meeting');
+
+// });
+
 

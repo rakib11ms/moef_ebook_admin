@@ -41,6 +41,13 @@ const NavigationBa = () => {
   var userData = JSON.parse(localStorage.getItem('user'));
   console.log('auserData', userData)
 
+  const [user_permissions,setUserPermissions]=useState([])
+
+  useEffect(()=>{
+    setUserPermissions(JSON.parse(localStorage.getItem('permissions')));
+  },[])
+
+
 
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
@@ -154,10 +161,15 @@ const NavigationBa = () => {
                 </KeyboardArrowDownIcon>
               )}
               {showSubmenu1 && (
+                user_permissions.includes('create_user' || 'view_user' || 'update_user' || 'delete_user') &&
                 <ul>
-                  <li className=" side-li-link">
-                    <Link to="/all-users">সকল ব্যবহারকারী</Link>
-                  </li>
+                  {
+                    user_permissions.includes('view_user') && <li className=" side-li-link">
+                      <Link to="/all-users">সকল ব্যবহারকারী</Link>
+                    </li>
+                  }
+
+
                   <li className=" side-li-link">
                     <Link to="/permission-users">
                       অনুমতি(পারমিশন) ব্যবস্থাপনা
@@ -170,40 +182,53 @@ const NavigationBa = () => {
         </div>
 
         <div className="sidebar-lower-div">
-          <div className="sidebar-lower">
-            <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
-              লাইব্রেরি
-              {showSubmenu2 ? (
-                <KeyboardArrowUpIcon onClick={handleArrowClick2}>
-                  &#8593;
-                </KeyboardArrowUpIcon>
-              ) : (
-                <KeyboardArrowDownIcon
-                  className="arrow-btn"
-                  onClick={handleArrowClick2}
-                >
-                  &#8595;
-                </KeyboardArrowDownIcon>
-              )}
-              {showSubmenu2 && (
-                <ul>
-                  <li className="side-li-link" id="nav-all-books">
-                    <Link to="/all-books">সকল বই</Link>
-                  </li>
-                  <li className="side-li-link" id="nav-book-categories">
-                    <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
-                  </li>
-                  <li className="side-li-link" id="nav-all-documents">
-                    <Link to="/all-documents">সকল ডকুমেন্টস</Link>
-                  </li>
-                </ul>
-              )}
-            </ul>
-          </div>
+          {
+            user_permissions.includes('create_document' || 'view_document' || 'update_document' || 'delete_document' || 'create_book' || 'view_book' || 'update_book' || 'delete_book') &&
+            <div className="sidebar-lower">
+              <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
+                লাইব্রেরি
+                {showSubmenu2 ? (
+                  <KeyboardArrowUpIcon onClick={handleArrowClick2}>
+                    &#8593;
+                  </KeyboardArrowUpIcon>
+                ) : (
+                  <KeyboardArrowDownIcon
+                    className="arrow-btn"
+                    onClick={handleArrowClick2}
+                  >
+                    &#8595;
+                  </KeyboardArrowDownIcon>
+                )}
+                {showSubmenu2 && (
+                  <ul>
+                    {
+                      user_permissions.includes('view_book') && <li className="side-li-link" id="nav-all-books">
+                        <Link to="/all-books">সকল বই</Link>
+                      </li>
+                    }
+                    {
+                      user_permissions.includes('view_book') && <li className="side-li-link" id="nav-book-categories">
+                        <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
+                      </li>
+                    }
+                    {
+                      user_permissions.includes('view_document') && <li className="side-li-link" id="nav-all-documents">
+                        <Link to="/all-documents">সকল ডকুমেন্টস</Link>
+                      </li>
+                    }
+
+
+
+                  </ul>
+                )}
+              </ul>
+            </div>
+          }
+
         </div>
         <div className="sidebar-lower-news-div">
           {
-            userData.roles.length > 0 && userData.roles[0].name == "Super admin" ?
+            user_permissions.includes('create_notice_news' || 'view_notice_news' || 'update_notice_news' || 'delete_notice_news') ?
 
               <div className="sidebar-lower">
                 <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
@@ -223,15 +248,23 @@ const NavigationBa = () => {
                   )}
                   {showSubmenu3 && (
                     <ul>
-                      <li className="side-li-link">
-                        <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/categories-news">ক্যটেগরি</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
-                      </li>
+                      {
+                        user_permissions.includes('view_notice_news') && <li className="side-li-link">
+                          <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
+                        </li>
+                      }
+                      {
+                        user_permissions.includes('view_notice_news') && <li className="side-li-link">
+                          <Link to="/categories-news">ক্যটেগরি</Link>
+                        </li>
+                      }
+                      {
+                        user_permissions.includes('create_notice_news') &&
+                        <li className="side-li-link">
+                          <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
+                        </li>
+                      }
+
                     </ul>
                   )}
                 </ul>

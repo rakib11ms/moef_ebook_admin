@@ -17,6 +17,7 @@ const PermissionUser = () => {
   }, [])
 
   const [role_id, setRole_id] = useState(1)
+  console.log('role id change', role_id)
   const [permissions, setPermissions] = useState({
     create_user: false,
     view_user: false,
@@ -56,8 +57,11 @@ const PermissionUser = () => {
     console.log('data', permissions)
     axios.post(`api/assign-permission-via-role/${role_id}`, permissions).then((res) => {
       if (res.data.status == 200) {
-        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
 
+        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+        localStorage.removeItem("permissions",JSON.stringify(res.data.permissions));
+
+        localStorage.setItem("permissions", JSON.stringify(res.data.permissions));
       }
 
     });
@@ -68,8 +72,8 @@ const PermissionUser = () => {
 
   useEffect(() => {
     axios.get(`api/get-permission-via-role/${role_id}`).then((res) => {
-      // console.log('hello', res.data.permissions)
       setPermissionFromDatabase(res.data.permissions)
+      setPermissions(res.data.permissions)
       if (res.data.permissions.includes('create_user')) {
         setPermissions((prevPermissions) => ({
           ...prevPermissions,
@@ -455,7 +459,7 @@ const PermissionUser = () => {
                 বই তৈরি করা
               </label>
             </div>
-          
+
             <div class="form-check">
               <input
                 class="form-check-input"

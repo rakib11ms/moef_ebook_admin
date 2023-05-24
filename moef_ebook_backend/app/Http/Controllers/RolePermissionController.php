@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+
 class RolePermissionController extends Controller
 {
 // Create all_roles
@@ -85,15 +86,12 @@ $permissions=$role->permissions->pluck('name');
     ]);
 }
 public function check(){
-// $user = User::find(13);
+  
+        return response()->json([
+            'message'=>'Access'
+        ]);
 
-// $user->assignRole('Super admin');
-
-  return response()->json(
-    [
-        'status'=>200,
-        'message'=>'User role created successfully'
-    ]);
+ 
 }
 }
 

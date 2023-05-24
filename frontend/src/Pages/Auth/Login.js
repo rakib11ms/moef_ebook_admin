@@ -64,6 +64,7 @@ function Login({ handleSucessLogin }) {
           setClickedRender(false);
           localStorage.setItem("auth_token", res.data.token);
           localStorage.setItem("user", JSON.stringify(res.data.user));
+          localStorage.setItem("permissions", JSON.stringify(res.data.only_permissions));
           navigate("/home");
         }
       })
