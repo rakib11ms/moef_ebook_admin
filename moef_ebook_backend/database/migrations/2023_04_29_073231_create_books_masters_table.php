@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('File_url')->nullable();
             $table->string('created_by')->nullable();
             $table->string('AuthorID')->nullable();
+            $table->string('type')->default('main_book');
+            $table->string('isPublished')->default('1');
             $table->timestamps();
         });
     }

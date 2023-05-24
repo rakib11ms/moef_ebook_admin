@@ -373,4 +373,87 @@ $single_document_count=$collection->where('type','single_document')->count();
       ]
     );
   }
+
+  public function getAllMainBookByBookMasterID($id) 
+  {
+    $all_main_book = MainBook::where('book_id', $id)
+    ->where('isPublished', 1)
+    ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+    ->get();
+
+
+    $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+    $chapterData = [];
+
+    foreach ($chapters as $chapterName => $chapterItems) {
+        $paragraphs = $chapterItems->map(function ($item) {
+            return [
+                'paragraph_name' => $item->bookParagraph->ParagraphName,
+                'book_content' => $item->book_content,
+            ];
+        });
+
+        $chapterData[] = [
+            'chapter_name' => $chapterName,
+            'paragraphs' => $paragraphs,
+        ];
+    }
+
+    return response()->json([
+        'status' => 200,
+        'message' => "All main book by book master id",
+        'data' => $chapterData
+    ]);
+  }
+
+  public function getAllChpterByBookMasterID($id) 
+  {
+    $all_main_book = MainBook::where('book_id', $id)
+    ->where('isPublished', 1)
+    ->with(['bookMaster', 'bookChapter',])
+    ->get();
+
+
+    $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+    $chapterData = [];
+
+    foreach ($chapters as $chapterName => $chapterItems) {
+        $chapterData[] = [
+            'chapter_id' => $chapterItems[0]->chapter_id,
+            'chapter_name' => $chapterName,
+        ];
+    }
+
+    return response()->json([
+        'status' => 200,
+        'data' => $chapterData
+    ]);
+  }
+
+  public function getAllParagraphsByChapterID($id)
+  {
+    $all_main_book = MainBook::where('chapter_id', $id)
+    ->where('isPublished', 1)
+    ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+    ->get();
+
+    $paragraphs = $all_main_book->groupBy('bookParagraph.ParagraphName'); // Group by paragraph name
+
+    $paragraphData = [];
+
+    foreach ($paragraphs as $paragraphName => $paragraphItems) {
+        $paragraphData[] = [
+            // 'paragraph_id' => $paragraphItems[0]->paragraph_id,
+            'paragraph_name' => $paragraphName,
+            'paragraph_content' => $paragraphItems[0]->book_content,
+        ];
+    }
+
+    return response()->json([
+        'status' => 200,
+        'data' => $paragraphData
+    ]);
+  }
 }

@@ -89,6 +89,10 @@ Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainB
 Route::get('/global-search-by-book-or-documents/{name}', [MainBookController::class, 'globalSearchByBookOrDocuments']);
 Route::post('/publish-Main-Book/{id}', [MainBookController::class, 'publishMainBook']);
 Route::post('/publish-Single-Document/{id}', [SingleDocumentController::class, 'publishSingleDocument']);
+Route::get('/get-All-Book-And-Documents-By-Category-ID/{id}', [BooksMasterController::class, 'getAllBookAndDocumentsByCategoryID']);
+Route::get('/get-All-Main-Book-By-Book-Master-ID/{id}', [MainBookController::class, 'getAllMainBookByBookMasterID']);
+Route::get('/get-All-Chpter-By-Book-Master-ID/{id}', [MainBookController::class, 'getAllChpterByBookMasterID']);
+Route::get('/get-All-Paragraphs-By-ChapterID/{id}', [MainBookController::class, 'getAllParagraphsByChapterID']);
 
 Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
@@ -111,7 +115,11 @@ Route::post('create-permission', [RolePermissionController::class, 'createPermis
 Route::post('assign-permission-via-role/{id}', [RolePermissionController::class, 'assignPermissionViaRole']);
 Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'getPermissionViaRole']);
 
-Route::post('check', [RolePermissionController::class, 'check']);
+// Route::post('check', [RolePermissionController::class, 'check']);
 
 
+Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () {
+    Route::post('check', [RolePermissionController::class, 'check'])->name('create_meeting');
+
+});
 

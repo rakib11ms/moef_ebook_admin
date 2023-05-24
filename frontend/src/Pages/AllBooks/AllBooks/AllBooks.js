@@ -37,10 +37,10 @@ const AllBooks = () => {
   async function fetchBookDetails() {
     const res = await axios.get(`/api/get-main-book-by-count`);
     if (res.data.status === 200) {
+      console.log("all books1", res.data.data);
       setAllBooks(res.data.data);
       // setBooks(res.data.data);
       // setchapters(res.data.data);
-      console.log("all books", res.data.data);
     } else {
       console.log("error");
     }
@@ -157,7 +157,7 @@ const AllBooks = () => {
       width: 120,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/view-books/${params.row.id}`} target="_blank">
+          <Link to={`/view-book-master/${params.row.book_id}`} target="_blank">
             <RemoveRedEyeIcon className="text-success" />
           </Link>
         </div>
@@ -169,7 +169,7 @@ const AllBooks = () => {
     ...allBooks.map((book) => (
       {
         id: book.id,
-        book_id: book.id,
+        book_id: book.book_id,
         book_name: book.book_title,
         chapter_count: book.chapter_count,
         paragraph_count: book.paragraph_count
