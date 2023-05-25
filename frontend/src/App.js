@@ -60,6 +60,15 @@ function App() {
     };
   }, [location]);
 
+
+
+
+
+  let user_permissions = JSON.parse(localStorage.getItem('permissions'));
+
+
+
+
   return (
     <div className="App">
       {isLoading ? (
@@ -85,24 +94,64 @@ function App() {
             <Route path="/my-area" element={<MyArea />} />
             <Route path="/home" element={<Home />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/all-users" element={<AllUsers />} />
+            {
+              user_permissions!==null && user_permissions.includes('view_user') &&
+              <Route path="/all-users" element={<AllUsers />} />
+
+            }
             <Route path="/permission-users" element={<PermissionUser />} />
-            <Route path="/all-books" element={<AllBooks />} />
-            <Route path="/add-document" element={<AddDocument />} />
-            <Route path="/edit-books/:id" element={<EditBooks />} />
-            <Route path="/view-books/:id" element={<ViewBooks />} />
+            {
+              user_permissions!==null && user_permissions.includes('view_book') && <Route path="/all-books" element={<AllBooks />} />
+            }
+            {
+              user_permissions!==null && user_permissions.includes('create_document') &&
+              <Route path="/add-document" element={<AddDocument />} />
+
+            }
+            {
+              user_permissions!==null && user_permissions.includes('update_document') &&
+              <Route path="/edit-books/:id" element={<EditBooks />} />
+
+            }
+            {
+              user_permissions!==null && user_permissions.includes('update_book') &&
+              <Route path="/view-books/:id" element={<ViewBooks />} />
+
+            }
+
             <Route path="/books-101200" element={<Book101200 />} />
             <Route path="/view-book-master/:id" element={<ViewBookMaster />} />
             <Route path="/edit-book-categories/:id" element={<EditBookCatagories />} />
             <Route path="/book-categories" element={<BooksCatagories />} />
             <Route path="/draft-documents" element={<DraftDocuments />} />
-            <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
-            <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
-            <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
+            {
+              user_permissions!==null && user_permissions.includes('view_notice_news') &&
+              <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
+
+            }
+            {
+              user_permissions!==null && user_permissions.includes('create_notice_news') &&
+              <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
+
+            }
+            {
+              user_permissions!==null && user_permissions.includes('update_notice_news') &&
+              <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
+
+            }
             <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
             <Route path="/categories-news" element={<CategoriesNews />} />
-            <Route path="/all-documents" element={<AllDocuments />} />
-            <Route path="/edit-document/:id" element={<EditDocument />} />
+            {
+              user_permissions!==null && user_permissions.includes('view_document') &&
+              <Route path="/all-documents" element={<AllDocuments />} />
+
+            }
+            {
+              user_permissions!==null && user_permissions.includes('update_document') &&
+              <Route path="/edit-document/:id" element={<EditDocument />} />
+
+            }
+
             <Route path="/view-documents/:id" element={<ViewDocuments />} />
           </Route>
         </Routes>

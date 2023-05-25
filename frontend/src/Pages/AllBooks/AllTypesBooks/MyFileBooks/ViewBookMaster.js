@@ -10,11 +10,13 @@ import { Button } from "@mui/material";
 const ViewBookMaster = () => {
   const params = useParams();
   const masterBookID = params.id;
+  const [activeParagraph, setActiveParagraph] = useState('');
 
   const [activeButton, setActiveButton] = useState(null);
   const [chapter, setChapter] = useState("");
   const [page, setPage] = useState("");
   const [bookMaster, setBookMaster] = useState([]);
+  console.log('book details',bookMaster)
   const [content, setContent] = useState("");
   const [singleBookName, setSingleBookName] = useState("");
 
@@ -26,7 +28,8 @@ const ViewBookMaster = () => {
     setChapter(chapter);
     console.log(chapter);
   };
-  console.log("chapter", chapter);
+
+
 
   async function getBookMaster() {
     await axios
@@ -34,6 +37,9 @@ const ViewBookMaster = () => {
       .then((res) => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
+        setActiveParagraph(res.data.data[0].paragraphs[0].paragraph_name)
+        setContent(res.data.data[0].paragraphs[0].book_content)
+
       });
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
@@ -50,6 +56,14 @@ const ViewBookMaster = () => {
   //   setChapter(buttonChapter);
   //   setPage(buttonPage);
   // };
+
+
+
+
+  const handleClick = (paragraphName) => {
+    setActiveParagraph(paragraphName);
+  };
+  
   return (
     <div>
       <div>
@@ -72,11 +86,17 @@ const ViewBookMaster = () => {
                       {chapter.paragraphs.map((paragraph) => (
                         <li
                           key={paragraph.paragraph_name}
-                          onClick={() =>
+                          onClick={() =>{
                             handleParagraphClick(paragraph.book_content)
                           }
+                          }
                         >
-                          <Button>{paragraph.paragraph_name}</Button>
+                          <a href='#' onClick={() => handleClick(paragraph.paragraph_name)}
+                          className={paragraph.paragraph_name == activeParagraph ? 'activeColor' : ''} 
+                          >
+                          {paragraph.paragraph_name}
+                          </a>
+                      
                         </li>
                       ))}
                     </ul>
@@ -92,7 +112,7 @@ const ViewBookMaster = () => {
                     {chapter} / {page}
                   </h5>
                 </div> */}
-                <div className="story-texts">
+                <div className="story-texts ">
                   {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
                 </div>
 

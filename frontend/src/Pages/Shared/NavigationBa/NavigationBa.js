@@ -34,45 +34,42 @@ const NavigationBa = () => {
   const [showSubmenu1, setShowSubmenu1] = useState(true);
   const [showSubmenu2, setShowSubmenu2] = useState(true);
   const [showSubmenu3, setShowSubmenu3] = useState(true);
-  const [showSubmenu4, setShowSubmenu4] = useState(false);
+  const [showSubmenu4, setShowSubmenu4] = useState(true);
 
 
-  console.log('submenu',showSubmenu1)
+  // console.log('submenu',showSubmenu1)
 
 
   var userData = JSON.parse(localStorage.getItem('user'));
-  // console.log('bal',userData.roles[0].id)
 
-  const [role_id,setRoleId]=useState('')
-  console.log('role id',role_id)
+  const [role_id, setRoleId] = useState('')
+  // console.log('role id',role_id)
 
   const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
+  console.log('check',permissionfromDatabase)
 
-  console.log('bal data',permissionfromDatabase)
-  useEffect(()=>{
-    setRoleId(userData.roles[0].id)
-     if(role_id){
-      axios.get(`api/get-permission-via-role/${role_id}`).then((res) => {
+  useEffect(() => {
+  
+      axios.get(`api/get-all-permissions`).then((res) => {
         setPermissionFromDatabase(res.data.permissions)
       })
-     }
-   
-  },[showSubmenu1])
+    
+
+  }, [])
 
 
-  let user_permissions=JSON.parse(localStorage.getItem('permissions'));
+  let user_permissions = JSON.parse(localStorage.getItem('permissions'));
 
-  setInterval(()=>{
-    user_permissions=JSON.parse(localStorage.getItem('permissions'));
-  },1000)
-
-  console.log('user permission', user_permissions)
+  // const hasPermission = permissionfromDatabase.some(permission => permission.includes(user_permissions));
+  // const hasPermission = permissionfromDatabase.some(permission =>console.log('ww',permission));
+  // const hasPermission = userPermissions.some(permission => permissions.includes(permission));
 
 
-  const userView = user_permissions.includes('view_user');
-  console.log('xxx',userView)
+    const hasPermission = user_permissions.some(permission => permissionfromDatabase.includes(permission));
 
-  // api/get-permission-via-role/${role_id}
+
+  console.log('a',hasPermission)
+
 
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
@@ -206,8 +203,13 @@ const NavigationBa = () => {
           </div>
         </div>
 
+
+
         <div className="sidebar-lower-div">
           {
+           hasPermission
+            && 
+
 
             <div className="sidebar-lower">
               <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
@@ -232,7 +234,7 @@ const NavigationBa = () => {
                       </li>
                     }
                     {
-                      user_permissions.includes('view_book') && <li className="side-li-link" id="nav-book-categories">
+                      user_permissions.includes('create_book') && <li className="side-li-link" id="nav-book-categories">
                         <Link to="/book-categories">বইয়ের ক্যটালগ</Link>
                       </li>
                     }
@@ -250,12 +252,16 @@ const NavigationBa = () => {
             </div>
           }
 
+
         </div>
-        <div className="sidebar-lower-news-div">
-          {
 
 
+        {
+
+          user_permissions.includes('create_notice_news' || 'view_notice_news' || 'update_notice_news' || 'delete_notice_news') &&
+          <div className="sidebar-lower-news-div">
             <div className="sidebar-lower">
+
               <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
 
                 বিজ্ঞপ্তি
@@ -271,6 +277,7 @@ const NavigationBa = () => {
                     &#8595;
                   </KeyboardArrowDownIcon>
                 )}
+
                 {showSubmenu3 && (
                   <ul>
                     {
@@ -293,49 +300,48 @@ const NavigationBa = () => {
                   </ul>
                 )}
               </ul>
+
             </div>
 
-          }
+          </div>
 
-
-        </div>
+        }
         {
-          userData.roles.length > 0 && userData.roles[0].name == "Super admin" ?
+          user_permissions.includes('create_meeting' || 'view_meeting' || 'update_meeting' || 'delete_meeting') &&
 
-            <div className="sidebar-lower-div-vertual">
-              <div className="sidebar-lower-vertual">
-                <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
-                  ভার্চুয়াল মিটিং
-                  {showSubmenu4 ? (
-                    <KeyboardArrowUpIcon onClick={handleArrowClick4}>
-                      &#8593;
-                    </KeyboardArrowUpIcon>
-                  ) : (
-                    <KeyboardArrowDownIcon
-                      className="arrow-btn"
-                      onClick={handleArrowClick4}
-                    >
-                      &#8595;
-                    </KeyboardArrowDownIcon>
-                  )}
-                  {showSubmenu4 && (
-                    <ul>
-                      <li className="side-li-link">
-                        <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/">যোগদান করুন</Link>
-                      </li>
-                      <li className="side-li-link">
-                        <Link to="/create-news-notice">লগ দেখুন</Link>
-                      </li>
-                    </ul>
-                  )}
-                </ul>
-              </div>
+          <div className="sidebar-lower-div-vertual">
+            <div className="sidebar-lower-vertual">
+              <ul className="sidebar-lower-ul" onClick={handleArrowClick4}>
+                ভার্চুয়াল মিটিং
+                {showSubmenu4 ? (
+                  <KeyboardArrowUpIcon onClick={handleArrowClick4}>
+                    &#8593;
+                  </KeyboardArrowUpIcon>
+                ) : (
+                  <KeyboardArrowDownIcon
+                    className="arrow-btn"
+                    onClick={handleArrowClick4}
+                  >
+                    &#8595;
+                  </KeyboardArrowDownIcon>
+                )}
+                {showSubmenu4 && (
+                  <ul>
+                    <li className="side-li-link">
+                      <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/">যোগদান করুন</Link>
+                    </li>
+                    <li className="side-li-link">
+                      <Link to="/create-news-notice">লগ দেখুন</Link>
+                    </li>
+                  </ul>
+                )}
+              </ul>
             </div>
-            :
-            ''
+          </div>
+
         }
 
       </List>
@@ -353,11 +359,12 @@ const NavigationBa = () => {
         if (res.data.status === 200) {
           localStorage.removeItem("auth_token", res.data.token);
           localStorage.removeItem("user", JSON.stringify(res.data.user));
+          localStorage.removeItem("permissions");
           navigate("/");
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -392,8 +399,8 @@ const NavigationBa = () => {
   });
 
   const top100Films = mappedData
-  console.log('search data', searchArray);
-  // console.log('mpped data',top100Films);
+  // console.log('search data', searchArray);
+  console.log('mpped data', top100Films);
 
   async function getGlobalSearch() {
     if (input) {
@@ -493,7 +500,7 @@ const NavigationBa = () => {
                   </Box>
                 )}
                 onInputChange={async (event, value) => {
-                  console.log("onInputChange", value);
+                  // console.log("onInputChange", value);
                   setInput(value)
                 }}
                 sx={{

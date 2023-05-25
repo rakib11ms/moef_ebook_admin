@@ -103,6 +103,9 @@
   padding: 3% 10%;
   border-radius: 5px;
 }
+.activeColor{
+  color: #27ae60;
+}
 
 @media only screen and (max-width: 576px) {
   .book-input-button-div {

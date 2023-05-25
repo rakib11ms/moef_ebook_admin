@@ -33,6 +33,15 @@ public function createRole(Request $request){
     ]);
   }
 
+    public function getAllPermissions(){
+$permissions = Permission::pluck('name')->toArray();
+     return response()->json(
+    [
+        'status'=>200,
+        'permissions'=>$permissions
+    ]);
+  }
+
   // Create Permissions
 public function createPermission(Request $request){
   $permission =new Permission();
