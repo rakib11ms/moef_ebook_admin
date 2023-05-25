@@ -56,7 +56,9 @@ const ViewBookMaster = () => {
         <NavigationBa />
       </div>
       <section className="container-fluid">
-        <h3>লাইব্রেরী / {singleBookName}</h3>
+        <h3>
+          লাইব্রেরী / <span>{singleBookName}</span>
+        </h3>
       </section>
       <hr />
       <section className="container-fluid">

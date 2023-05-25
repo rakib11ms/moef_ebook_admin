@@ -34,6 +34,10 @@
 .all-books-icons1 {
   width: 60%;
 }
+.btn-add-book {
+  margin-top: 10%;
+  /* border: 1px solid gray; */
+}
 .header {
   position: absolute;
   top: 0;
