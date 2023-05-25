@@ -90,14 +90,6 @@ class BooksMasterController extends Controller
 
     public function getAllBookAndDocumentsByCategoryID(Request $request, string $id)
     {
-        // $booksMaster = BooksMaster::where('CatID', $id)->get();
-        // return response()->json(
-        //     [
-        //         'status' => 200,
-        //         'books_master' => $booksMaster
-        //     ]
-        // );
-
         $booksMaster = BooksMaster::where('CatID', $id)->where('isPublished', 1)->get();
         $singleDocuments = SingleDocument::where('isPublished', 1)->get();
         $booksMaster = $booksMaster->merge($singleDocuments);
