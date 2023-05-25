@@ -102,7 +102,7 @@ const AllBooks = () => {
       width: 190,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
-          <Link to={`/edit-books/${params.row.id}`}>
+          <Link to={`/edit-master-book/${params.row.book_id}`}>
             <CreateOutlinedIcon className="text-warning" />
           </Link>
         </div>

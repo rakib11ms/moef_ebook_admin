@@ -41,6 +41,7 @@ import EditDocument from "./Pages/AllBooks/EditDocuments/EditDocuments";
 import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
 import ViewBookMaster from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/ViewBookMaster";
 // import MyComponent from "./MyComponent";
+import EditMasterBook from "./Pages/AllBooks/EditBooks/EditMasterBook";
 
 const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
 
@@ -120,6 +121,7 @@ function App() {
             }
 
             <Route path="/books-101200" element={<Book101200 />} />
+            <Route path="/edit-master-book/:id" element={<EditMasterBook />} />
             <Route path="/view-book-master/:id" element={<ViewBookMaster />} />
             <Route path="/edit-book-categories/:id" element={<EditBookCatagories />} />
             <Route path="/book-categories" element={<BooksCatagories />} />

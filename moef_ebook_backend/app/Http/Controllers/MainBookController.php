@@ -21,7 +21,7 @@ class MainBookController extends Controller
       [
         'status'=>200,
         'message'=>"All main book",
-        'data'=>$all_main_book
+        'book'=>$all_main_book
       ]
     );
   }
@@ -216,6 +216,48 @@ class MainBookController extends Controller
     );
   }
 
+  public function getAllBookAndDocumentsByCategoryID(Request $request, string $id)
+  {
+    $booksMaster = MainBook::with(['bookMaster' => function ($query) use ($id) {
+      $query->where('CatID', $id);
+    }])
+    ->get();
+
+    $booksMaster = $booksMaster->pluck('bookMaster');
+    foreach ($booksMaster as $key => $value) {
+      if ($value == null) {
+        $booksMaster->forget($key);
+      }
+    }
+    // dd($booksMaster->toArray());
+  
+    // $booksMaster = $booksMaster->map(function ($item, $key) {
+    //   return [
+    //     'book_id' => $item->id,
+    //     // 'book_id' => $item->book_id,
+    //     // 'chapter_id' => $item->chapter_id,
+    //     // 'paragraph_id' => $item->paragraph_id,
+    //     // 'book_content' => $item->book_content,
+    //     // 'created_by' => $item->created_by,
+    //     // 'isPublished' => $item->isPublished,
+    //     'created_at' => $item->created_at,
+    //     'updated_at' => $item->updated_at,
+    //     'book_master_title' => $item->Title,
+    //     'type' => $item->type
+    //   ];
+    // });
+    
+    $singleDocuments = SingleDocument::where('isPublished', 1)->get();
+
+    $booksMaster = $booksMaster->merge($singleDocuments);
+    return response()->json(
+        [
+          'status' => 200,
+          'data' => $booksMaster
+        ]
+    );
+  }
+
   public function getAllMainBooksAndSingleDocsForASpecificUser($id) 
   {
     $all_main_book = MainBook::with('bookMaster')->where('created_by', $id)->get()->map(function ($item, $key) {
@@ -395,6 +437,7 @@ class MainBookController extends Controller
         });
 
         $chapterData[] = [
+          'book_id' => $chapterItems[0]->book_id,
           'book_name' => $chapterItems[0]->bookMaster->Title,
           'chapter_name' => $chapterName,
           'paragraphs' => $paragraphs,
