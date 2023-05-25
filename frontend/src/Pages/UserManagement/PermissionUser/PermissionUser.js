@@ -52,28 +52,33 @@ const PermissionUser = () => {
   };
 
 
+  const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
+  console.log('permission from db', permissionfromDatabase)
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('data', permissions)
     axios.post(`api/assign-permission-via-role/${role_id}`, permissions).then((res) => {
       if (res.data.status == 200) {
-
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
-        localStorage.removeItem("permissions",JSON.stringify(res.data.permissions));
+        // localStorage.removeItem("permissions");
+        // localStorage.setItem("permissions", JSON.stringify(permissionfromDatabase));
+        window.location.reload();
 
-        localStorage.setItem("permissions", JSON.stringify(res.data.permissions));
+
       }
 
     });
   };
 
-  const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
-  console.log('permission from db', permissionfromDatabase)
 
   useEffect(() => {
     axios.get(`api/get-permission-via-role/${role_id}`).then((res) => {
       setPermissionFromDatabase(res.data.permissions)
       setPermissions(res.data.permissions)
+      // localStorage.removeItem("permissions");
+      localStorage.setItem("permissions", JSON.stringify(res.data.permissions));
+        // window.location.reload();
+
       if (res.data.permissions.includes('create_user')) {
         setPermissions((prevPermissions) => ({
           ...prevPermissions,

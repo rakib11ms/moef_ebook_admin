@@ -30,21 +30,49 @@ import 'react-toastify/dist/ReactToastify.css';
 const NavigationBa = () => {
   // Sub menu
   const [showSubmenu, setShowSubmenu] = useState(false);
+
   const [showSubmenu1, setShowSubmenu1] = useState(true);
   const [showSubmenu2, setShowSubmenu2] = useState(true);
   const [showSubmenu3, setShowSubmenu3] = useState(true);
   const [showSubmenu4, setShowSubmenu4] = useState(false);
 
 
+  console.log('submenu',showSubmenu1)
 
 
   var userData = JSON.parse(localStorage.getItem('user'));
-  console.log('auserData', userData)
+  // console.log('bal',userData.roles[0].id)
+
+  const [role_id,setRoleId]=useState('')
+  console.log('role id',role_id)
+
+  const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
+
+  console.log('bal data',permissionfromDatabase)
+  useEffect(()=>{
+    setRoleId(userData.roles[0].id)
+     if(role_id){
+      axios.get(`api/get-permission-via-role/${role_id}`).then((res) => {
+        setPermissionFromDatabase(res.data.permissions)
+      })
+     }
+   
+  },[showSubmenu1])
 
 
+  let user_permissions=JSON.parse(localStorage.getItem('permissions'));
 
-  const user_permissions = JSON.parse(localStorage.getItem('permissions'));
+  setInterval(()=>{
+    user_permissions=JSON.parse(localStorage.getItem('permissions'));
+  },1000)
 
+  console.log('user permission', user_permissions)
+
+
+  const userView = user_permissions.includes('view_user');
+  console.log('xxx',userView)
+
+  // api/get-permission-via-role/${role_id}
 
   const toggleSubmenu = () => {
     setShowSubmenu(!showSubmenu);
@@ -158,7 +186,7 @@ const NavigationBa = () => {
                 </KeyboardArrowDownIcon>
               )}
               {showSubmenu1 && (
-                user_permissions.includes('create_user' || 'view_user' || 'update_user' || 'delete_user') &&
+
                 <ul>
                   {
                     user_permissions.includes('view_user') && <li className=" side-li-link">
@@ -180,7 +208,7 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div">
           {
-            user_permissions.includes('create_document' || 'view_document' || 'update_document' || 'delete_document' || 'create_book' || 'view_book' || 'update_book' || 'delete_book') &&
+
             <div className="sidebar-lower">
               <ul className="sidebar-lower-ul" onClick={handleArrowClick2} id="nav-library">
                 লাইব্রেরি
@@ -225,49 +253,48 @@ const NavigationBa = () => {
         </div>
         <div className="sidebar-lower-news-div">
           {
-            user_permissions.includes('create_notice_news' || 'view_notice_news' || 'update_notice_news' || 'delete_notice_news') ?
 
-              <div className="sidebar-lower">
-                <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
 
-                  বিজ্ঞপ্তি
-                  {showSubmenu3 ? (
-                    <KeyboardArrowUpIcon onClick={handleArrowClick3}>
-                      &#8593;
-                    </KeyboardArrowUpIcon>
-                  ) : (
-                    <KeyboardArrowDownIcon
-                      className="arrow-btn"
-                      onClick={handleArrowClick3}
-                    >
-                      &#8595;
-                    </KeyboardArrowDownIcon>
-                  )}
-                  {showSubmenu3 && (
-                    <ul>
-                      {
-                        user_permissions.includes('view_notice_news') && <li className="side-li-link">
-                          <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
-                        </li>
-                      }
-                      {
-                        user_permissions.includes('view_notice_news') && <li className="side-li-link">
-                          <Link to="/categories-news">ক্যটেগরি</Link>
-                        </li>
-                      }
-                      {
-                        user_permissions.includes('create_notice_news') &&
-                        <li className="side-li-link">
-                          <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
-                        </li>
-                      }
+            <div className="sidebar-lower">
+              <ul className="sidebar-lower-ul" onClick={handleArrowClick3}>
 
-                    </ul>
-                  )}
-                </ul>
-              </div>
-              :
-              ''
+                বিজ্ঞপ্তি
+                {showSubmenu3 ? (
+                  <KeyboardArrowUpIcon onClick={handleArrowClick3}>
+                    &#8593;
+                  </KeyboardArrowUpIcon>
+                ) : (
+                  <KeyboardArrowDownIcon
+                    className="arrow-btn"
+                    onClick={handleArrowClick3}
+                  >
+                    &#8595;
+                  </KeyboardArrowDownIcon>
+                )}
+                {showSubmenu3 && (
+                  <ul>
+                    {
+                      user_permissions.includes('view_notice_news') && <li className="side-li-link">
+                        <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
+                      </li>
+                    }
+                    {
+                      user_permissions.includes('view_notice_news') && <li className="side-li-link">
+                        <Link to="/categories-news">ক্যটেগরি</Link>
+                      </li>
+                    }
+                    {
+                      user_permissions.includes('create_notice_news') &&
+                      <li className="side-li-link">
+                        <Link to="/create-news-notice">বিজ্ঞপ্তি গঠন করুন</Link>
+                      </li>
+                    }
+
+                  </ul>
+                )}
+              </ul>
+            </div>
+
           }
 
 
