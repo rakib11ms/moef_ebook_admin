@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./AllDocuments.css";
 import AddIcon from "@mui/icons-material/Add";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from "@mui/x-data-grid";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import swal from "sweetalert";
 
 import { Link } from "react-router-dom";
@@ -22,18 +22,18 @@ const AllDocuments = () => {
       } else {
         console.log("error");
       }
-    })
+    });
   }
 
   useEffect(() => {
     fetchDocs();
-  }, [])
+  }, []);
 
   const columns = [
-    { field: 'document_title', headerName: 'ডকুমেন্টের নাম', width: 250 },
+    { field: "document_title", headerName: "ডকুমেন্টের নাম", width: 250 },
     {
-      field: 'edit',
-      headerName: 'সম্পাদনা করুন ',
+      field: "edit",
+      headerName: "সম্পাদনা করুন ",
       width: 190,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
@@ -44,8 +44,8 @@ const AllDocuments = () => {
       ),
     },
     {
-      field: 'delete',
-      headerName: 'ডিলিট করুন ',
+      field: "delete",
+      headerName: "ডিলিট করুন ",
       width: 190,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
@@ -61,23 +61,25 @@ const AllDocuments = () => {
                 dangerMode: true,
               }).then((willDelete) => {
                 if (willDelete) {
-                  axios.delete(`/api/delete-single-document/${params.row.id}`).then((res) => {
-                    if (res.data.status === 200) {
-                      swal("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
-                        icon: "success",
-                      });
-                      // axios.get(`/api/all-single-document`).then((res) => {
-                      //   if (res.data.status === 200) {
-                      //     setAllDocuments(res.data.single_document);
-                      //   } else {
-                      //     console.log("error");
-                      //   }
-                      // });
-                      fetchDocs();
-                    } else {
-                      swal("Oops! Something went wrong, Please try again");
-                    }
-                  });
+                  axios
+                    .delete(`/api/delete-single-document/${params.row.id}`)
+                    .then((res) => {
+                      if (res.data.status === 200) {
+                        swal("ডকুমেন্টটি সফলভাবে ডিলিট করা হয়েছে", {
+                          icon: "success",
+                        });
+                        // axios.get(`/api/all-single-document`).then((res) => {
+                        //   if (res.data.status === 200) {
+                        //     setAllDocuments(res.data.single_document);
+                        //   } else {
+                        //     console.log("error");
+                        //   }
+                        // });
+                        fetchDocs();
+                      } else {
+                        swal("Oops! Something went wrong, Please try again");
+                      }
+                    });
                 }
               });
             }}
@@ -86,8 +88,8 @@ const AllDocuments = () => {
       ),
     },
     {
-      field: 'view',
-      headerName: 'দেখুন',
+      field: "view",
+      headerName: "দেখুন",
       width: 120,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
@@ -96,7 +98,7 @@ const AllDocuments = () => {
           </Link>
         </div>
       ),
-    }
+    },
   ];
 
   const rows = [
@@ -108,7 +110,6 @@ const AllDocuments = () => {
     }),
   ];
 
-
   return (
     <div>
       <section>
@@ -118,8 +119,12 @@ const AllDocuments = () => {
         <div className="">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/home">হোম</a></li>
-              <li class="breadcrumb-item active" aria-current="page">সকল ডকুমেন্টস</li>
+              <li class="breadcrumb-item">
+                <a href="/home">হোম</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                সকল ডকুমেন্টস
+              </li>
             </ol>
           </nav>
           <div className="">
@@ -131,7 +136,7 @@ const AllDocuments = () => {
                 <div className="add-doc-div">
                   <AddIcon />
                   <Link to="/add-document">
-                    <h6>ডকুমেন্ট যোগ করুন</h6>
+                    <h6 className="mt-2">ডকুমেন্ট যোগ করুন</h6>
                   </Link>
                 </div>
                 {/* <div className="books-serchInput-icon-div">
@@ -154,7 +159,6 @@ const AllDocuments = () => {
                 pageSizeOptions={[5, 10]}
                 checkboxSelection
               />
-
             </>
 
             {/* <>

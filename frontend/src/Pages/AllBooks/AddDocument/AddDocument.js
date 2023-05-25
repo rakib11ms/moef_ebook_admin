@@ -71,7 +71,7 @@ const AddDocument = (props) => {
   // console.log("all paragraphs", allParagraphs);
   // console.log("all book catgeories", allBookCategories);
 
-  async function fetchData () {
+  async function fetchData() {
     try {
       await axios.get(`/api/books`).then((res) => {
         if (res.data.status == 200) {
@@ -83,7 +83,7 @@ const AddDocument = (props) => {
     }
 
     try {
-      await axios.get(`/api/bookParagraph`).then(res => {
+      await axios.get(`/api/bookParagraph`).then((res) => {
         if (res.data.status == 200) {
           setAllParagraphs(res.data.book_paragraphs);
         }
@@ -107,15 +107,14 @@ const AddDocument = (props) => {
       await axios.get(`/api/bookChapter`).then((res) => {
         if (res.data.status == 200) {
           setAllChapters(res.data.bookChapters);
-
         }
-      })
+      });
     } catch (error) {
       console.log(error);
     }
 
     try {
-      await axios.get(`/api/newsNotice`).then(res => {
+      await axios.get(`/api/newsNotice`).then((res) => {
         if (res.data.status == 200) {
           setAllNoticeNewsCategories(res.data.news_notice_categories);
           console.log(res.data.news_notice_categories);
@@ -131,7 +130,7 @@ const AddDocument = (props) => {
           setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
           console.log(res.data.news_notices_sub_categories);
         }
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -174,7 +173,7 @@ const AddDocument = (props) => {
     //   }
     // })
     fetchData();
-  }, [])
+  }, []);
 
   const $user = JSON.parse(localStorage.getItem("user"));
 
@@ -183,7 +182,7 @@ const AddDocument = (props) => {
     title: documentTitle,
     notice_news_category_id: notice_news_category_id,
     notice_news_subcategory_id: notice_news_subcategory_id,
-    redirect_url: redirect_url, 
+    redirect_url: redirect_url,
     book_id: bookId,
     chapter_id: chapterId,
     paragraph_id: ParagraphId,
@@ -193,13 +192,11 @@ const AddDocument = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (content.trim() === '<p><br></p>' || content.trim() === '') {
-      Swal.fire('বিষয়বস্তু পূরণ করুন', '', 'warning')
-      return
-    }
-
-      else {
-      axios.post(`/api/save-single-document`, data).then(res => {
+    if (content.trim() === "<p><br></p>" || content.trim() === "") {
+      Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
+      return;
+    } else {
+      axios.post(`/api/save-single-document`, data).then((res) => {
         if (res.data.status == 200) {
           Swal.fire(res.data.message, "", "success");
 
@@ -208,20 +205,20 @@ const AddDocument = (props) => {
         }
       });
     }
-  }
+  };
 
   const handleDraftSubmit = (e) => {
     e.preventDefault();
-    if (content.trim() === '<p><br></p>' || content.trim() === '') {
-      Swal.fire('বিষয়বস্তু পূরণ করুন', '', 'warning')
-      return
+    if (content.trim() === "<p><br></p>" || content.trim() === "") {
+      Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
+      return;
     } else {
       const draftData = {
         contents: content,
         title: documentTitle,
         notice_news_category_id: notice_news_category_id,
         notice_news_subcategory_id: notice_news_subcategory_id,
-        redirect_url: redirect_url, 
+        redirect_url: redirect_url,
         book_id: bookId,
         chapter_id: chapterId,
         paragraph_id: ParagraphId,
@@ -229,7 +226,7 @@ const AddDocument = (props) => {
         isPublished: false,
       };
 
-      axios.post(`/api/save-single-document`, draftData).then(res => {
+      axios.post(`/api/save-single-document`, draftData).then((res) => {
         if (res.data.status == 200) {
           Swal.fire(res.data.message, "", "success");
 
@@ -238,8 +235,7 @@ const AddDocument = (props) => {
         }
       });
     }
-  }
-
+  };
 
   return (
     <div>
@@ -271,7 +267,7 @@ const AddDocument = (props) => {
 
             <button
               type="submit"
-              className="doc-input-button py-2 ms-2 me-2"
+              className="doc-input-button "
               onClick={handleDraftSubmit}
             >
               খসড়া করুন
@@ -280,7 +276,7 @@ const AddDocument = (props) => {
             <button
               style={{ position: "absolute", right: "0" }}
               type="submit"
-              className="doc-input-button py-2 ms-2 me-2"
+              className="doc-input-button-songrokkhon"
               onClick={handleSubmit}
             >
               সংরক্ষন করুন
@@ -298,7 +294,7 @@ const AddDocument = (props) => {
             </button>
           </div> */}
       </section>
-      
+
       <hr />
       <section className="container-fluid">
         <div className="">

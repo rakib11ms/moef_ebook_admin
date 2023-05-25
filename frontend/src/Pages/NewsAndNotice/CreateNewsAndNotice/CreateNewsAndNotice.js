@@ -115,6 +115,19 @@ const CreateNewsAndNotice = () => {
             <div className="col-xl-9 col-lg-8 cpl-md-7 col-sm-12 col-12">
               <div className="all-news-notice-tags-input">
                 <h5>বিজ্ঞপ্তি তৈরি করুন </h5>
+                <div className="draft-prokas-buttons-div">
+                  <Link>
+                    <button
+                      className="draft-button"
+                      onClick={handleDraftSubmit}
+                    >
+                      খসড়া করুন
+                    </button>
+                  </Link>
+                  <button className="prokas-button mx-2" onClick={handleSubmit}>
+                    প্রকাশ করুন
+                  </button>
+                </div>
                 {/* <div className="news-notice-search-input-div ">
                   <div className="news-notice-serchInput-icon-div">
                     <SearchIcon />
@@ -159,19 +172,6 @@ const CreateNewsAndNotice = () => {
                   {/* <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন
                   </button> */}
-                </div>
-                <div className="draft-prokas-buttons-div">
-                  <Link>
-                    <button
-                      className="draft-button"
-                      onClick={handleDraftSubmit}
-                    >
-                      ড্রাফট করুন
-                    </button>
-                  </Link>
-                  <button className="prokas-button mx-2" onClick={handleSubmit}>
-                    প্রকাশ করুন
-                  </button>
                 </div>
               </div>
             </div>
