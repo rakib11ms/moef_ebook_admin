@@ -114,32 +114,30 @@ const AllBooks = () => {
             onClick={() => {
               swal({
                 title: "নিশ্চিত করুন",
-                text: "আপনি কি বইটি ডিলিট করতে চান? ",
+                text: "বইটি ডিলিট করার ফলে সংযোজিত সকল অধ্যায় এবং অনুচ্ছেদ মুছে  যাবে। ডিলিট করতে চান? ",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
               }).then((willDelete) => {
                 if (willDelete) {
-                  axios
-                    .delete(`/api/delete-main-book/${params.row.id}`)
-                    .then((res) => {
-                      if (res.data.status === 200) {
-                        swal("বইটি সফলভাবে ডিলিট করা হয়েছে", {
-                          icon: "success",
-                        });
-                        // axios.get(`/api/get-all-main-book`).then((res) => {
-                        //   if (res.data.status === 200) {
-                        //     setAllBooks(res.data.data);
-                        //   } else {
-                        //     console.log("error");
-                        //   }
-                        // });
-                        // fetchBooks();
-                        fetchBookDetails();
-                      } else {
-                        swal("Oops! Something went wrong, Please try again");
-                      }
-                    });
+                  axios.delete(`/api/delete-book-master-with-main-book/${params.row.book_id}`).then((res) => {
+                    if (res.data.status === 200) {
+                      swal("বইটি সফলভাবে ডিলিট করা হয়েছে", {
+                        icon: "success",
+                      });
+                      // axios.get(`/api/get-all-main-book`).then((res) => {
+                      //   if (res.data.status === 200) {
+                      //     setAllBooks(res.data.data);
+                      //   } else {
+                      //     console.log("error");
+                      //   }
+                      // });
+                      // fetchBooks();
+                      fetchBookDetails();
+                    } else {
+                      swal("Oops! Something went wrong, Please try again");
+                    }
+                  });
                 }
               });
             }}
@@ -286,7 +284,7 @@ const AllBooks = () => {
                   },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                checkboxSelection={false}
               />
             </>
 

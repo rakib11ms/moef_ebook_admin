@@ -221,7 +221,7 @@ const AllUsers = () => {
                   },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                checkboxSelection={false}
               />
 
             </section>

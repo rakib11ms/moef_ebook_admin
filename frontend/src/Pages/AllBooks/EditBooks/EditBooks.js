@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
-import bookLogoImg from "../../../images/book.png";
 import "./EditBooks.css";
-import SearchIcon from "@mui/icons-material/Search";
-import CreateIcon from "@mui/icons-material/Create";
-import DownloadForOfflineRoundedIcon from "@mui/icons-material/DownloadForOfflineRounded";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import AddIcon from "@mui/icons-material/Add";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ReactDatePicker from "react-datepicker";
 import JoditEditor from "jodit-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const EditBooks = () => {
@@ -26,10 +15,7 @@ const EditBooks = () => {
   const bookID = params.id;
 
   const navigate=useNavigate();
-  const [startDate, setStartDate] = useState(new Date());
   const [content, setContent] = useState();
-
-  const $user = JSON.parse(localStorage.getItem('user'));
 
   const [Title, setTitle] = useState('');
   const [chapter, setChapter] = useState([]);

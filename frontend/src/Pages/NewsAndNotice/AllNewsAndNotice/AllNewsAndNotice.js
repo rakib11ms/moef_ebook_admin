@@ -176,7 +176,7 @@ const AllNewsAndNotice = () => {
                   },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                checkboxSelection={false}
               />
               </div>
             </div>

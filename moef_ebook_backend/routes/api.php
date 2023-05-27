@@ -85,7 +85,7 @@ Route::get('/get-all-main-book', [MainBookController::class, 'getAllMainBook']);
 Route::get('/get-main-book-by-count', [MainBookController::class, 'getAllBookCountByChapterAndParagraph']);
 Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
-Route::delete('/delete-main-book/{id}', [MainBookController::class, 'deleteMainBook']);
+Route::delete('/delete-book-master-with-main-book/{id}', [BooksMasterController::class, 'deleteMainBook']);
 Route::get('/global-search-by-book-or-documents/{name}', [MainBookController::class, 'globalSearchByBookOrDocuments']);
 Route::post('/publish-Main-Book/{id}', [MainBookController::class, 'publishMainBook']);
 Route::post('/publish-Single-Document/{id}', [SingleDocumentController::class, 'publishSingleDocument']);

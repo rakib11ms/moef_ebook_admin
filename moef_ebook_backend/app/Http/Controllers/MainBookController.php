@@ -74,18 +74,18 @@ class MainBookController extends Controller
     );
   }
 
-  public function deleteMainBook($id)
-  {
-    $main_book = MainBook::find($id);
-    $main_book->delete();
+  // public function deleteMainBook($id)
+  // {
+  //   $main_book = MainBook::find($id);
+  //   $main_book->delete();
 
-    return response()->json(
-      [
-        'status'=>200,
-        'message'=>"Main book deleted successfully"
-      ]
-    );
-  }
+  //   return response()->json(
+  //     [
+  //       'status'=>200,
+  //       'message'=>"Main book deleted successfully"
+  //     ]
+  //   );
+  // }
 
   public function getChaptersByBookID($id) 
   {
@@ -135,7 +135,24 @@ class MainBookController extends Controller
 
   public function getAllMainBooksAndSingleDocumentsInDecendingOrder() 
   {
-    $all_main_book = MainBook::with('bookMaster')->get()->map(function ($item, $key) {
+    // $all_main_book = MainBook::with('bookMaster')->get()->map(function ($item, $key) {
+    //   return [
+    //     'id' => $item->id,
+    //     'book_id' => $item->book_id,
+    //     'chapter_id' => $item->chapter_id,
+    //     'paragraph_id' => $item->paragraph_id,
+    //     'book_content' => $item->book_content,
+    //     'created_by' => $item->created_by,
+    //     'isPublished' => $item->isPublished,
+    //     'created_at' => $item->created_at,
+    //     'updated_at' => $item->updated_at,
+    //     'book_master_title' => $item->bookMaster->Title,
+    //     'type' => $item->type
+    //   ];
+    // });
+
+    // get all main book by unique book_id
+    $all_main_book=MainBook::with('bookMaster')->get()->unique('book_id')->map(function ($item, $key) {
       return [
         'id' => $item->id,
         'book_id' => $item->book_id,
@@ -499,4 +516,9 @@ class MainBookController extends Controller
       'data' => $paragraphData
     ]);
   }
+
+  // public function getAllMainBooksByOrder($order)
+  // {
+  //   // all main book with 
+  // }
 }
