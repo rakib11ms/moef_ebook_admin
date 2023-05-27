@@ -1004,8 +1004,10 @@ const Home = (props) => {
                             value={content}
                             ref={editor}
                             onChange={setContent}
-                            height={400}
-                            language="en"
+                            config={{
+                              height: 400,
+                              language: "en",
+                            }}
                           />
                         </div>
                       </div>

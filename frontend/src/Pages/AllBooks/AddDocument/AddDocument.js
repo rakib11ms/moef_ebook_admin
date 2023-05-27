@@ -309,9 +309,11 @@ const AddDocument = (props) => {
                   value={content}
                   onChange={setContent}
                   spellcheck={false}
-                  language="en"
                   toolbarAdaptive="false"
-                  height="800"
+                  config={{
+                    height: 400,
+                    language: "en",
+                  }}
                   autofocus="true"
                   id="add-doc-jodit-editor"
                 />
