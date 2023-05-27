@@ -30,11 +30,11 @@ const AllDocuments = () => {
   }, [])
 
   const columns = [
-    { field: 'document_title', headerName: 'ডকুমেন্টের নাম', width: 250 },
+    { field: 'document_title', headerName: 'ডকুমেন্টের নাম', width: 400 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
-      width: 190,
+      width: 250,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <Link to={`/edit-document/${params.row.id}`}>
@@ -46,7 +46,7 @@ const AllDocuments = () => {
     {
       field: 'delete',
       headerName: 'ডিলিট করুন ',
-      width: 190,
+      width: 250,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           {/* sweet alert for confirm delete */}
@@ -88,7 +88,7 @@ const AllDocuments = () => {
     {
       field: 'view',
       headerName: 'দেখুন',
-      width: 120,
+      width: 250,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <Link to={`/view-documents/${params.row.id}`} target="_blank">
@@ -152,7 +152,7 @@ const AllDocuments = () => {
                   },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                checkboxSelection={false}
               />
 
             </>

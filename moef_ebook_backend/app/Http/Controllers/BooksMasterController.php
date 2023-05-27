@@ -6,6 +6,7 @@ use App\Models\BooksMaster;
 use Illuminate\Http\Request;
 use File;
 use App\Models\SingleDocument;
+use App\Models\MainBook;
 
 class BooksMasterController extends Controller
 {
@@ -97,6 +98,23 @@ class BooksMasterController extends Controller
             [
                 'status' => 200,
                 'data' => $booksMaster
+            ]
+        );
+    }
+
+    public function deleteMainBook(Request $request, string $id)
+    {
+        //delete all the main books and this master book
+        $booksMaster = BooksMaster::findOrFail($id);
+        $booksMaster->delete();
+        $books = MainBook::where('book_id', $id)->get();
+        foreach ($books as $book) {
+            $book->delete();
+        }
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Books Master deleted successfully'
             ]
         );
     }

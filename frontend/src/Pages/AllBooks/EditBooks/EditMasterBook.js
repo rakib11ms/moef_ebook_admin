@@ -6,14 +6,13 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 
 const EditMasterBook = () => {
     const params = useParams();
     const masterBookID = params.id;
 
-    const [activeButton, setActiveButton] = useState(null);
     const [chapter, setChapter] = useState("");
-    const [page, setPage] = useState("");
     const [bookMaster, setBookMaster] = useState([]);
     const [content, setContent] = useState("");
     const [singleBookName, setSingleBookName] = useState("");
@@ -22,10 +21,20 @@ const EditMasterBook = () => {
     setContent(paragraph);
   };
 
+  const handleEditBook = (e) => {
+    // console.log("book");
+    //set a tick mark instead of edit icon
+
+    document.getElementById("book_name").disabled = !document.getElementById("book_name").disabled;
+    setSingleBookName(e.target.value);
+    console.log("book", singleBookName);
+  };
+
   const handleChapterclick = (chapter) => {
     setChapter(chapter);
   };
-  console.log("chapter", chapter);
+
+  // console.log("chapter", chapter);
 
   async function getBookMaster() {
     await axios
@@ -42,15 +51,19 @@ const EditMasterBook = () => {
   }
   
   const handleEditChapter = (chapter) => {
-        // console.log("chapter", chapter);
-        // document.getElementById("chapter_name").disabled = !document.getElementById("chapter_name").disabled;
-    };
+    // console.log("chapter", chapter);
+    // document.getElementById("chapter_name").disabled = !document.getElementById("chapter_name").disabled;
+  };
 
-    const[chapterName, setChapterName] = useState("")
+  const handleBookNameChange = (book) => {
+    setSingleBookName(book);
+  };
 
-    const handlehapterNameChange = (chapter, i) => {
-        setChapterName(chapter);
-    };
+  const[chapterName, setChapterName] = useState("")
+
+  const handlehapterNameChange = (chapter, i) => {
+    setChapterName(chapter);
+  };
 
   useEffect(() => {
     getBookMaster();
@@ -69,7 +82,23 @@ const EditMasterBook = () => {
       </div>
       <section className="container-fluid">
         <h3>
-            লাইব্রেরী / {singleBookName} <Button>Edit</Button>
+            লাইব্রেরী /
+            <input
+              // _dangerouslySetInnerHTML={{ __html: singleBookName }}
+              type="text"
+              id="book_name"
+              className="input-field"
+              value={singleBookName}
+              onChange={(e) => handleBookNameChange(e.target.value)}
+              disabled
+            />
+            <CreateOutlinedIcon
+              id="edit_book"
+              className="text-warning small-icon"
+              onClick={(e) => handleEditBook(e)}
+            >
+              Edit
+            </CreateOutlinedIcon>
         </h3>
       </section>
       <hr />
@@ -87,16 +116,18 @@ const EditMasterBook = () => {
                             id="chapter_name"
                             type="text"
                             value={chapter.chapter_name}
+                            className="input-field"
                             disabled
                             onChange={(e) => handlehapterNameChange(e.target.value)}
                         >
                         
                         </input>
-                        <Button
-                            onClick={() => handleEditChapter(chapter.chapter_name)}
+                        <CreateOutlinedIcon
+                          className="text-warning small-icon"
+                          onClick={() => handleEditChapter(chapter.chapter_name)}
                         >
                             Edit
-                        </Button>
+                        </CreateOutlinedIcon>
                     </h6>
                     <h6>অনুচ্ছেদ নাম:</h6>
                     <ul>
@@ -110,7 +141,7 @@ const EditMasterBook = () => {
                           <Button>
                             {paragraph.paragraph_name}
                         </Button>
-                        <Button>Edit</Button>
+                        <CreateOutlinedIcon className="text-warning small-icon">Edit</CreateOutlinedIcon>
                         </li>
                       ))}
                     </ul>
