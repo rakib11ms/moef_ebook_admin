@@ -8,12 +8,58 @@ import JoditEditor from "jodit-react";
 import EditIcon from "@mui/icons-material/Edit";
 import ReactDatePicker from "react-datepicker";
 import axios from "axios";
-
+import ImageIcon from '@mui/icons-material/Image';
+import { styled } from '@mui/system';
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import { Link, redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import Home from "../../Home/Home";
+import {
+  FormControl,
+  InputLabel,
+  Autocomplete,
+  TextField,
+  Stack,
+  Select,
+  Chip,
+  MenuItem,
+  makeStyles,
+} from '@mui/material';
+
+import { Box, ThemeProvider, createTheme } from '@mui/system';
+
 const AddDocument = (props) => {
+
+
+
+  const [allUsers, setAllUsers] = useState([]);
+  
+const[targetUser,setTargetUser]=useState('সকল')
+const [contactPerson, setcontactPerson] = React.useState([]);
+let result = contactPerson.map(a => a.id);
+
+console.log('result',result)
+
+function handlePersonChange(event, values) {
+   setcontactPerson(values)
+   
+}
+
+
+
+
+  useEffect(() => {
+    axios.get(`/api/get-all-user-info`).then(res => {
+      if (res.data.status == 200) {
+        setAllUsers(res.data.users);
+
+      }
+    })
+  }, [])
+
+
+
+
   // Header Text edit
   const [isEditing, setIsEditing] = useState(false);
   // const [text, setText] = useState("Untitled");
@@ -40,13 +86,7 @@ const AddDocument = (props) => {
     // Save the edited text to your data store
   };
 
-  // const handleInputChange = (event) => {
-  //   setText(event.target.value);
-  // };
 
-  // const [activeButton, setActiveButton] = useState(null);
-  // const [chapter, setChapter] = useState("");
-  // const [page, setPage] = useState("");
   const [content, setContent] = useState("");
   // const [activeButton, setActiveButton] = useState(1);
 
@@ -66,10 +106,6 @@ const AddDocument = (props) => {
     []
   );
 
-  // console.log("all books", allBooks);
-  // console.log("all chapters", allChapters);
-  // console.log("all paragraphs", allParagraphs);
-  // console.log("all book catgeories", allBookCategories);
 
   async function fetchData() {
     try {
@@ -92,16 +128,7 @@ const AddDocument = (props) => {
       console.log(error);
     }
 
-    // try {
-    //   await axios.get(`/api/book-category`).then((res) => {
-    //     if (res.data.status == 200) {
-    //       setAllBookCategories(res.data.bookcategories);
-    //       console.log(res.data.bookcategories);
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
 
     try {
       await axios.get(`/api/bookChapter`).then((res) => {
@@ -137,41 +164,7 @@ const AddDocument = (props) => {
   }
 
   useEffect(() => {
-    // axios.get(`/api/books`).then((res) => {
-    //   if (res.data.status == 200) {
-    //     setAllBooks(res.data.books_masters);
-    //   }
-    // });
 
-    // axios.get(`/api/bookParagraph`).then(res => {
-    //   if (res.data.status == 200) {
-    //     setAllParagraphs(res.data.book_paragraphs);
-    //   }
-    // });
-
-    // axios.get(`/api/book-category`).then((res) => {
-    //   if (res.data.status == 200) {
-    //     setAllBookCategories(res.data.bookcategories);
-    //   }
-    // });
-
-    // axios.get(`/api/bookChapter`).then((res) => {
-    //   if (res.data.status == 200) {
-    //     setAllChapters(res.data.bookChapters);
-    //   }
-    // })
-
-    // axios.get(`/api/newsNotice`).then(res => {
-    //   if (res.data.status == 200) {
-    //     setAllNoticeNewsCategories(res.data.news_notice_categories);
-    //   }
-    // });
-
-    // axios.get(`/api/newsNoticeSub`).then((res) => {
-    //   if (res.data.status == 200) {
-    //     setAllNoticeNewsSubCategories(res.data.news_notices_sub_categories);
-    //   }
-    // })
     fetchData();
   }, []);
 
@@ -188,6 +181,7 @@ const AddDocument = (props) => {
     paragraph_id: ParagraphId,
     created_by: $user.id,
     isPublished: true,
+    // target_users:
   };
 
   const handleSubmit = (e) => {
@@ -236,6 +230,7 @@ const AddDocument = (props) => {
       });
     }
   };
+
 
   return (
     <div>
@@ -423,65 +418,8 @@ const AddDocument = (props) => {
                 {isOpen && (
                   <div>
                     <div className="doc-suchi-div">
-                      {/* <div>
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label"
-                        >
-                          ক্যটেগরি
-                        </label>
-                        <div className="d-flex doc-select-1 mb-4">
-                          <select
-                            className="form-select "
-                            aria-label="Default select example"
-                            onChange={(e) =>
-                              setnotice_news_category_id(e.target.value)
-                            }
-                            id="add-docu-sub-category"
-                          >
-                            <option selected disabled>
-                              ক্যাটাগরি নির্বাচন করুন{" "}
-                            </option>
 
-                            {allNoticeNewsCategories.map((item) => {
-                              return (
-                                <>
-                                  <option value={item.id}>{item.Name}</option>
-                                </>
-                              );
-                            })}
-                          </select>
-                          <Link to="/book-categories">
-                            <AddIcon className="create-news-notice-icon" />
-                          </Link>
-                        </div>
-                      </div>
-                      <div>
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label"
-                          id="add-docu-sub-category"
-                        >
-                          সাব ক্যাটাগরি
-                        </label>
-                        <select
-                          className="form-select mb-4"
-                          aria-label="Default select example"
-                          onChange={(e) =>
-                            setnotice_news_subcategory_id(e.target.value)
-                          }
-                        >
-                          <option selected>সাব ক্যাটাগরি নির্বাচন করুন</option>
 
-                          {allNoticeNewsSubCategories.map((item) => {
-                            return (
-                              <>
-                                <option value={item.Name}>{item.Name}</option>
-                              </>
-                            );
-                          })}
-                        </select>
-                      </div> */}
                       <div>
                         <label
                           for="exampleFormControlInput1"
@@ -493,13 +431,74 @@ const AddDocument = (props) => {
                           className="form-select mb-4"
                           aria-label="Default select example"
                           id="add-docu-show"
+                          onChange={(e)=>setTargetUser(e.target.value)}
                         >
-                          <option selected>সকলের জন্য</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          <option selected value="সকল">সকলের জন্য</option>
+                          <option value="এডমিন">এডমিন</option>
+                          <option value="মডারেটর">মডারেটর</option>
+                          <option value="ইউজার">ইউজার</option>
+                          <option value="অন্যান্য">অন্যান্য </option>
                         </select>
                       </div>
+                      {
+                        targetUser=='অন্যান্য' 
+                        && 
+                        <div class="">
+                        <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                          <Autocomplete
+                            multiple
+                            id="tags-standard"
+                            options={allUsers}
+                            getOptionLabel={(option) => option.UserName}
+                            // defaultValue={[allUsers[1]]}
+                            onChange={handlePersonChange}
+                            renderOption={(props, option) => (
+                              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                                {
+                                  option.userImage === 'default.png' ?
+                                    <img
+                                      loading="lazy"
+                                      width="25"
+                                      src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                      alt=""
+                                    />
+                                    :
+                                    <img
+                                      loading="lazy"
+                                      width="20"
+                                      src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                      alt=""
+                                    />
+
+                                }
+
+                                {option.UserName}
+                              </Box>
+                            )}
+                            getOptionSelected={(option, value) =>
+                              option.id === value.id
+                            }
+
+                            renderInput={(params) => (
+
+                              <TextField
+
+
+                                {...params}
+                                // variant="standard"
+                                // label="Multiple values"
+                                placeholder="Search..."
+                              />
+                            )}
+
+                          />
+                        </Stack>
+
+                      </div>
+                      }
+
+                     
                       <div className="mb-4">
                         <lebel> প্রকাশ কাল </lebel> <br />
                         <div className="doc-prokash-date">
@@ -520,6 +519,14 @@ const AddDocument = (props) => {
                           onChange={(e) => setredirect_url(e.target.value)}
                         ></input>
                       </div>
+
+
+
+
+
+
+
+
                     </div>
                   </div>
                 )}
@@ -536,10 +543,12 @@ const AddDocument = (props) => {
               </div> */}
             </div>
           </div>
+
+
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
 export default AddDocument;

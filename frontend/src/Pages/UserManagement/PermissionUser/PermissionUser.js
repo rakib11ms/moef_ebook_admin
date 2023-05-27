@@ -17,7 +17,7 @@ const PermissionUser = () => {
   }, [])
 
   const [role_id, setRole_id] = useState(1)
-  console.log('role id change', role_id)
+  // console.log('role id change', role_id)
   const [permissions, setPermissions] = useState({
     create_user: false,
     view_user: false,
@@ -41,7 +41,7 @@ const PermissionUser = () => {
     delete_document: false,
   });
 
-  console.log('permission states check', permissions)
+  // console.log('permission states check', permissions)
 
   const handlePermissionChange = (e) => {
     const { name, checked } = e.target;
@@ -56,7 +56,7 @@ const PermissionUser = () => {
   console.log('permission from db', permissionfromDatabase)
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('data', permissions)
+    // console.log('data', permissions)
     axios.post(`api/assign-permission-via-role/${role_id}`, permissions).then((res) => {
       if (res.data.status == 200) {
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");

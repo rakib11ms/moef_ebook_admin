@@ -41,34 +41,37 @@ const NavigationBa = () => {
 
 
   var userData = JSON.parse(localStorage.getItem('user'));
+  console.log('user data',userData)
 
   const [role_id, setRoleId] = useState('')
   // console.log('role id',role_id)
 
   const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
-  console.log('check',permissionfromDatabase)
+  console.log('check', permissionfromDatabase)
 
   useEffect(() => {
-  
-      axios.get(`api/get-all-permissions`).then((res) => {
-        setPermissionFromDatabase(res.data.permissions)
-      })
-    
+
+    axios.get(`api/get-all-permissions`).then((res) => {
+      setPermissionFromDatabase(res.data.permissions)
+    })
+
 
   }, [])
 
 
   let user_permissions = JSON.parse(localStorage.getItem('permissions'));
 
-  // const hasPermission = permissionfromDatabase.some(permission => permission.includes(user_permissions));
-  // const hasPermission = permissionfromDatabase.some(permission =>console.log('ww',permission));
-  // const hasPermission = userPermissions.some(permission => permissions.includes(permission));
 
 
-    const hasPermission = user_permissions.some(permission => permissionfromDatabase.includes(permission));
+
+  const hasPermission = permissionfromDatabase.some(permission => user_permissions.includes(permission));
+  const show_libray_parent = permissionfromDatabase.some((permission) => permission === 'create_book' || 'view_book' || 'update_book' || 'delete_book'
+    || 'create_document' || 'view_document' || 'update_document' || 'delete_document');
+
+  console.log('show_library', hasPermission)
 
 
-  console.log('a',hasPermission)
+
 
 
   const toggleSubmenu = () => {
@@ -191,12 +194,15 @@ const NavigationBa = () => {
                     </li>
                   }
 
-
+                  {
+                    userData.roles[0].name=='সুপার এডমিন' && 
+                  
                   <li className=" side-li-link">
                     <Link to="/permission-users">
                       অনুমতি(পারমিশন) ব্যবস্থাপনা
                     </Link>
                   </li>
+}
                 </ul>
               )}
             </ul>
@@ -207,8 +213,11 @@ const NavigationBa = () => {
 
         <div className="sidebar-lower-div">
           {
-           hasPermission
-            && 
+            user_permissions.some((permission) =>
+              ['create_book', 'view_book', 'update_book', 'delete_book'
+                , 'create_document', 'view_document', 'update_document', 'delete_document'].includes(permission)
+            )
+            &&
 
 
             <div className="sidebar-lower">
@@ -258,7 +267,9 @@ const NavigationBa = () => {
 
         {
 
-          user_permissions.includes('create_notice_news' || 'view_notice_news' || 'update_notice_news' || 'delete_notice_news') &&
+          user_permissions.some((permission) =>
+            ['create_notice_news', 'view_notice_news', 'update_notice_news', 'delete_notice_news'].includes(permission)
+          ) &&
           <div className="sidebar-lower-news-div">
             <div className="sidebar-lower">
 
@@ -307,7 +318,9 @@ const NavigationBa = () => {
 
         }
         {
-          user_permissions.includes('create_meeting' || 'view_meeting' || 'update_meeting' || 'delete_meeting') &&
+          user_permissions.some((permission) =>
+            ['create_meeting', 'view_meeting', 'update_meeting', 'delete_meeting'].includes(permission)
+          ) &&
 
           <div className="sidebar-lower-div-vertual">
             <div className="sidebar-lower-vertual">

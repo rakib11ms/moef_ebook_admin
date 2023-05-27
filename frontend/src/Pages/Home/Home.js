@@ -108,6 +108,7 @@ const Home = (props) => {
   };
 
   const [categories, setCategories] = useState([]);
+  console.log('categoeis',categories)
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
@@ -433,30 +434,7 @@ const Home = (props) => {
               <h6 className="sob-dekhun">সব দেখুন </h6>
             </div>
             <div className="row ">
-              {/* <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6 ">
-                <p>
-                  ২ টি নতুন চ্যাপ্টার যোগ করা হয়েছে যোগ করেছেন আনিসুর রাহমান (
-                  উপ সচিব ) ০৪ জানু ২০২৩ , ১২. ৪৪ মিনিট{" "}
-                </p>
-              </div>
-              <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6">
-                <div className="d-flex justify-content-between recent-news">
-                  <CancelOutlinedIcon className="icons" />
-                  <RemoveRedEyeIcon className="icons" />
-                </div>
-              </div>
-              <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
-                <p>
-                  ১৫ টি পরিবর্তন ও সংশোধন করা হয়েছে পরিবর্তন করেছেন আনিসুর
-                  রাহমান ( উপ সচিব ) ০৪ জানু ২০২৩ , ১২. ৪৪ মিনিট
-                </p>
-              </div>
-              <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6">
-                <div className="d-flex justify-content-between">
-                  <CancelOutlinedIcon className="icons" />
-                  <RemoveRedEyeIcon className="icons" />
-                </div>
-              </div> */}
+  
 
               {notification.map((notification, index) => (
                 <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
