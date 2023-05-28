@@ -19,18 +19,24 @@
 }
 .editMaster-tagname-span {
   display: flex;
-
+  align-items: center;
   font-size: 1.3rem;
   padding: 5px 0 0 5px;
 }
 .editMaster-chapter-tagname-span {
   display: flex;
-
+  align-items: center;
   font-size: 1rem;
   padding: 5px 0 0 5px;
 }
 .editMaster-chapter-tagname {
   font-size: 1rem;
+}
+.editMaster-edit-icon {
+  /* border: 1px solid gray; */
+  /* height: 10vh; */
+  padding-left: 7px;
+  color: rgb(138, 138, 35);
 }
 #editmaster-input {
   /* width: 200%; */

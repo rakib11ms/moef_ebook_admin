@@ -173,9 +173,15 @@ const EditMasterBook = () => {
             <h3>{tagName}</h3>
           )}
           {isEditing ? (
-            <CheckIcon onClick={handleCheckClick} />
+            <CheckIcon
+              className="editMaster-edit-icon"
+              onClick={handleCheckClick}
+            />
           ) : (
-            <EditIcon onClick={handleEditClick} />
+            <EditIcon
+              className="editMaster-edit-icon"
+              onClick={handleEditClick}
+            />
           )}
         </span>
       </section>
@@ -206,7 +212,10 @@ const EditMasterBook = () => {
                       {isEditingChapter ? (
                         <CheckIcon onClick={handleCheckClickChapter} />
                       ) : (
-                        <EditIcon onClick={handleEditClickChapter} />
+                        <EditIcon
+                          className="editMaster-edit-icon"
+                          onClick={handleEditClickChapter}
+                        />
                       )}
                     </span>
                     {/* 
