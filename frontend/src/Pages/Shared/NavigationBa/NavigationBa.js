@@ -41,13 +41,13 @@ const NavigationBa = () => {
 
 
   var userData = JSON.parse(localStorage.getItem('user'));
-  console.log('user data',userData)
+  // console.log('user data',userData)
 
   const [role_id, setRoleId] = useState('')
   // console.log('role id',role_id)
 
   const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
-  console.log('check', permissionfromDatabase)
+  // console.log('check', permissionfromDatabase)
 
   useEffect(() => {
 
@@ -68,7 +68,7 @@ const NavigationBa = () => {
   const show_libray_parent = permissionfromDatabase.some((permission) => permission === 'create_book' || 'view_book' || 'update_book' || 'delete_book'
     || 'create_document' || 'view_document' || 'update_document' || 'delete_document');
 
-  console.log('show_library', hasPermission)
+  // console.log('show_library', hasPermission)
 
 
 
@@ -413,7 +413,7 @@ const NavigationBa = () => {
 
   const top100Films = mappedData
   // console.log('search data', searchArray);
-  console.log('mpped data', top100Films);
+  // console.log('mpped data', top100Films);
 
   async function getGlobalSearch() {
     if (input) {
