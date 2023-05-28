@@ -60,7 +60,7 @@ const AllUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
 
   async function fetchUser() {
-    await axios.get(`/api/get-all-user-info`).then((res) => {
+    await axios.get("/api/get-all-user-info").then((res) => {
       if (res.data.status === 200) {
         const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
         setAllUsers(activeUsers);

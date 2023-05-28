@@ -26,8 +26,12 @@ const EditMasterBook = () => {
     //set a tick mark instead of edit icon
 
     document.getElementById("book_name").disabled = !document.getElementById("book_name").disabled;
-    setSingleBookName(e.target.value);
-    console.log("book", singleBookName);
+    document.getElementById("tick").hidden = !document.getElementById("tick").hidden;
+    document.getElementById("edit_book").hidden = !document.getElementById("edit_book").hidden;
+  };
+
+  const handleBookNameChange = (book) => {
+    setSingleBookName(book);
   };
 
   const handleChapterclick = (chapter) => {
@@ -41,6 +45,7 @@ const EditMasterBook = () => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
       });
+      
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
       console.log("Book_Title", res.data.books_master.Title);
@@ -51,10 +56,6 @@ const EditMasterBook = () => {
   const handleEditChapter = (chapter) => {
     // console.log("chapter", chapter);
     // document.getElementById("chapter_name").disabled = !document.getElementById("chapter_name").disabled;
-  };
-
-  const handleBookNameChange = (book) => {
-    setSingleBookName(book);
   };
 
   const[chapterName, setChapterName] = useState("")
@@ -97,6 +98,14 @@ const EditMasterBook = () => {
             >
               Edit
             </CreateOutlinedIcon>
+            <Button
+              id="tick"
+              class="tick"
+              hidden
+            >
+              &#10004;
+            </Button>
+
         </h3>
       </section>
       <hr />
