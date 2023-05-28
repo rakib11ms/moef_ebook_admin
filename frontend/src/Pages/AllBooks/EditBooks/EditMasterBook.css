@@ -9,6 +9,34 @@
   margin: 6px;
   /* border: 1px solid gray; */
 }
+
+.editMaster-tagname {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  /* border: 1px solid gray; */
+}
+.editMaster-tagname-span {
+  display: flex;
+
+  font-size: 1.3rem;
+  padding: 5px 0 0 5px;
+}
+.editMaster-chapter-tagname-span {
+  display: flex;
+
+  font-size: 1rem;
+  padding: 5px 0 0 5px;
+}
+.editMaster-chapter-tagname {
+  font-size: 1rem;
+}
+#editmaster-input {
+  /* width: 200%; */
+  /* height: 5vh; */
+  /* width: 300px; */
+}
 .all-card-books:hover {
   background-color: #f8f8f8;
   border-radius: 10px;

@@ -3,19 +3,21 @@ import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./EditMasterBook.css";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 
 const EditMasterBook = () => {
-    const params = useParams();
-    const masterBookID = params.id;
+  const params = useParams();
+  const masterBookID = params.id;
 
-    const [chapter, setChapter] = useState("");
-    const [bookMaster, setBookMaster] = useState([]);
-    const [content, setContent] = useState("");
-    const [singleBookName, setSingleBookName] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [bookMaster, setBookMaster] = useState([]);
+  const [content, setContent] = useState("");
+  const [singleBookName, setSingleBookName] = useState("");
 
   const handleParagraphClick = (paragraph) => {
     setContent(paragraph);
@@ -25,9 +27,12 @@ const EditMasterBook = () => {
     // console.log("book");
     //set a tick mark instead of edit icon
 
-    document.getElementById("book_name").disabled = !document.getElementById("book_name").disabled;
-    document.getElementById("tick").hidden = !document.getElementById("tick").hidden;
-    document.getElementById("edit_book").hidden = !document.getElementById("edit_book").hidden;
+    document.getElementById("book_name").disabled =
+      !document.getElementById("book_name").disabled;
+    document.getElementById("tick").hidden =
+      !document.getElementById("tick").hidden;
+    document.getElementById("edit_book").hidden =
+      !document.getElementById("edit_book").hidden;
   };
 
   const handleBookNameChange = (book) => {
@@ -45,20 +50,19 @@ const EditMasterBook = () => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
       });
-      
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
       console.log("Book_Title", res.data.books_master.Title);
       setSingleBookName(res.data.books_master.Title);
     });
   }
-  
+
   const handleEditChapter = (chapter) => {
     // console.log("chapter", chapter);
     // document.getElementById("chapter_name").disabled = !document.getElementById("chapter_name").disabled;
   };
 
-  const[chapterName, setChapterName] = useState("")
+  const [chapterName, setChapterName] = useState("");
 
   const handlehapterNameChange = (chapter, i) => {
     setChapterName(chapter);
@@ -74,39 +78,106 @@ const EditMasterBook = () => {
   //   setPage(buttonPage);
   // };
 
+  // Edit Tag name
+  const [tagName, setTagName] = useState("বইয়ের-নাম");
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTagName, setNewTagName] = useState("");
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setNewTagName(tagName);
+  };
+
+  const handleCheckClick = () => {
+    setIsEditing(false);
+    setTagName(newTagName);
+  };
+
+  const handleInputChange = (e) => {
+    setNewTagName(e.target.value);
+  };
+
+  // Edit Chapter Tag name
+  const [tagNameChapter, setTagNameChapter] = useState("অনুচ্ছেদের নাম");
+  const [isEditingChapter, setIsEditingChapter] = useState(false);
+  const [newTagNameChapter, setNewTagNameChapter] = useState("");
+
+  const handleEditClickChapter = () => {
+    setIsEditingChapter(true);
+    setNewTagNameChapter(tagNameChapter);
+  };
+
+  const handleCheckClickChapter = () => {
+    setIsEditingChapter(false);
+    setTagNameChapter(newTagNameChapter);
+  };
+
+  const handleInputChangeChapter = (e) => {
+    setNewTagNameChapter(e.target.value);
+  };
+
   return (
     <div>
       <div>
         <NavigationBa />
       </div>
-      <section className="container-fluid">
-        <h3>
-            লাইব্রেরী /
+      <section className="editMaster-tagname container-fluid">
+        {/* <div>
+          {isEditing ? (
             <input
-              // _dangerouslySetInnerHTML={{ __html: singleBookName }}
               type="text"
-              id="book_name"
-              className="input-field"
-              value={singleBookName}
-              onChange={(e) => handleBookNameChange(e.target.value)}
-              disabled
+              value={newTagName}
+              onChange={handleInputChange}
             />
-            <CreateOutlinedIcon
-              id="edit_book"
-              className="text-warning small-icon"
-              onClick={(e) => handleEditBook(e)}
-            >
-              Edit
-            </CreateOutlinedIcon>
-            <Button
-              id="tick"
-              class="tick"
-              hidden
-            >
-              &#10004;
-            </Button>
+          ) : (
+            <h3>{tagName}</h3>
+          )}
 
-        </h3>
+          {isEditing ? (
+            <CheckIcon onClick={handleCheckClick} />
+          ) : (
+            <EditIcon onClick={handleEditClick} />
+          )}
+        </div> */}
+        <h3 className="">
+          লাইব্রেরী /
+          {/* <input
+            // _dangerouslySetInnerHTML={{ __html: singleBookName }}
+            type="text"
+            id="book_name"
+            className="input-field"
+            value={singleBookName}
+            onChange={(e) => handleBookNameChange(e.target.value)}
+            disabled
+          />
+          <CreateOutlinedIcon
+            id="edit_book"
+            className="text-warning small-icon"
+            onClick={(e) => handleEditBook(e)}
+          >
+            Edit
+          </CreateOutlinedIcon>
+          <Button id="tick" class="tick" hidden>
+            &#10004;
+          </Button> */}
+        </h3>{" "}
+        <span className="editMaster-tagname-span">
+          {isEditing ? (
+            <input
+              id="editmaster-input"
+              type="text"
+              value={newTagName}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <h3>{tagName}</h3>
+          )}
+          {isEditing ? (
+            <CheckIcon onClick={handleCheckClick} />
+          ) : (
+            <EditIcon onClick={handleEditClick} />
+          )}
+        </span>
       </section>
       <hr />
       <section className="container-fluid">
@@ -117,26 +188,45 @@ const EditMasterBook = () => {
                 <h5 className="suchipotro-h5">সূচীপত্র</h5>
                 {bookMaster.map((chapter) => (
                   <div key={chapter.chapter_name}>
-                  <h6>অধ্যায় নাম:</h6>
-                    <h6>
+                    <h6>অধ্যায় নাম:</h6>
+
+                    <span className="editMaster-chapter-tagname-span">
+                      {isEditingChapter ? (
                         <input
-                            id="chapter_name"
-                            type="text"
-                            value={chapter.chapter_name}
-                            className="input-field"
-                            disabled
-                            onChange={(e) => handlehapterNameChange(e.target.value)}
-                        >
-                        
-                        </input>
-                        <CreateOutlinedIcon
-                          className="text-warning small-icon"
-                          onClick={() => handleEditChapter(chapter.chapter_name)}
-                        >
-                            Edit
-                        </CreateOutlinedIcon>
-                    </h6>
-                    <h6>অনুচ্ছেদ নাম:</h6>
+                          id="editmaster-input"
+                          type="text"
+                          value={newTagNameChapter}
+                          onChange={handleInputChangeChapter}
+                        />
+                      ) : (
+                        <h3 className="editMaster-chapter-tagname">
+                          {tagNameChapter}
+                        </h3>
+                      )}
+                      {isEditingChapter ? (
+                        <CheckIcon onClick={handleCheckClickChapter} />
+                      ) : (
+                        <EditIcon onClick={handleEditClickChapter} />
+                      )}
+                    </span>
+                    {/* 
+                    <h6>
+                      <input
+                        id="chapter_name"
+                        type="text"
+                        value={chapter.chapter_name}
+                        className="input-field"
+                        disabled
+                        onChange={(e) => handlehapterNameChange(e.target.value)}
+                      ></input>
+                      <CreateOutlinedIcon
+                        className="text-warning small-icon"
+                        onClick={() => handleEditChapter(chapter.chapter_name)}
+                      >
+                        Edit
+                      </CreateOutlinedIcon>
+                    </h6> */}
+                    {/* <h6>অনুচ্ছেদ নাম:</h6> */}
                     <ul>
                       {chapter.paragraphs.map((paragraph) => (
                         <li
@@ -145,10 +235,10 @@ const EditMasterBook = () => {
                             handleParagraphClick(paragraph.book_content)
                           }
                         >
-                          <Button>
-                            {paragraph.paragraph_name}
-                        </Button>
-                        <CreateOutlinedIcon className="text-warning small-icon">Edit</CreateOutlinedIcon>
+                          <Button>{paragraph.paragraph_name}</Button>
+                          <CreateOutlinedIcon className="text-warning small-icon">
+                            Edit
+                          </CreateOutlinedIcon>
                         </li>
                       ))}
                     </ul>
