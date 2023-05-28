@@ -34,8 +34,6 @@ const EditMasterBook = () => {
     setChapter(chapter);
   };
 
-  // console.log("chapter", chapter);
-
   async function getBookMaster() {
     await axios
       .get("/api/get-All-Main-Book-By-Book-Master-ID/" + masterBookID)
