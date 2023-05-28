@@ -339,7 +339,7 @@ class MainBookController extends Controller
 
     $results1 =MainBook::with(['bookMaster','bookChapter','bookParagraph'])->whereHas('bookMaster', function ($query) use ($search) {
       $query->where('Title',  'LIKE', '%'.$search.'%');
-    })->orWhere('book_content',  'LIKE', '%'.$search.'%')->get()->toArray();
+    })->orWhere('book_content',  'LIKE', '%'.$search.'%')->select('book_id','type')->distinct()->get()->toArray();
 
 
 
