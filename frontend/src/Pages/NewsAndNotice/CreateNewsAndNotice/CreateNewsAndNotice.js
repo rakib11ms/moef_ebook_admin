@@ -16,6 +16,19 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Navigate } from "react-router-dom";
+import { Box, ThemeProvider, createTheme } from '@mui/system';
+import { styled } from '@mui/system';
+import {
+  FormControl,
+  InputLabel,
+  Autocomplete,
+  TextField,
+  Stack,
+  Select,
+  Chip,
+  MenuItem,
+  makeStyles,
+} from '@mui/material';
 
 const CreateNewsAndNotice = () => {
   const navigate = useNavigate();
@@ -23,24 +36,31 @@ const CreateNewsAndNotice = () => {
   const [content, setContent] = useState("");
 
   const $user = JSON.parse(localStorage.getItem("user"));
-  // console.log($user.id);
+  const [allUsers, setAllUsers] = useState([]);
 
-  // const [data, setData] = useState({
-  //   Title: "",
-  //   Description: content,
-  //   CategoryId: "1",
-  //   subCatId: "1",
-  //   redirect_url: "/" + $user.id,
-  //   created_by: "",
-  //   updated_by: "",
-  //   isPublished: false,
-  // });
+  const [targetUser, setTargetUser] = useState('সকল')
+  const [contactPerson, setcontactPerson] = React.useState('');
 
-  // const handleInputChange = (event) => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   setData({ ...data, [name]: value });
-  // };
+  function handlePersonChange(event, values) {
+    let result = values.map(a => a.id);
+    let arrString = result.join(',');
+    setcontactPerson(arrString)
+
+  }
+
+
+
+
+  useEffect(() => {
+    axios.get(`/api/get-all-user-info`).then(res => {
+      if (res.data.status == 200) {
+        setAllUsers(res.data.users);
+
+      }
+    })
+  }, [])
+
+
 
   const [Title, setTitle] = useState("");
 
@@ -66,6 +86,8 @@ const CreateNewsAndNotice = () => {
     formData.append("updated_by", "");
     formData.append("isPublished", 1);
     formData.append("created_by", $user.id);
+    formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
+    )
 
     axios.post(`/api/notice`, formData).then((res) => {
       if (res.data.status === 200) {
@@ -80,6 +102,7 @@ const CreateNewsAndNotice = () => {
   const handleDraftSubmit = (e) => {
     e.preventDefault();
 
+
     if (Title === "" || content === "<p><br></p>" || content === "") {
       Swal.fire("সব তথ্য পূরণ করুন", "", "warning");
       return;
@@ -93,6 +116,8 @@ const CreateNewsAndNotice = () => {
     formData.append("updated_by", "");
     formData.append("isPublished", 0);
     formData.append("created_by", $user.id);
+    formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
+    )
 
     axios.post(`/api/notice`, formData).then((res) => {
       if (res.data.status === 200) {
@@ -183,55 +208,7 @@ const CreateNewsAndNotice = () => {
                 <hr />
 
                 <div className="suchi-div">
-                  {/* <div>
-                    <label for="exampleFormControlInput1" class="form-label">
-                      ক্যটেগরি
-                    </label>
-                    <div className="d-flex categories-select-1 mb-4">
-                    <select
-                            className="form-select "
-                            aria-label="Default select example"
-                            onChange={(e) => setnotice_news_category_id(e.target.value)}
-                          >
-                        <option selected disabled>  ক্যটেগরি নির্বাচন করুন</option>
 
-                        {
-                          allNoticeNewsCategories.map((item) => {
-                            return (
-                              <>
-                                <option value={item.id} >{item.Name}</option>
-
-                              </>
-                            )
-                          })
-                        }
-                      </select>
-                      <AddIcon className="doc-add-icon" />
-                    </div>
-                  </div>
-                  <div>
-                    <label for="exampleFormControlInput1" class="form-label">
-                      সাব ক্যটেগরি
-                    </label>
-                    <br />
-                    <select
-                            className="form-select "
-                            aria-label="Default select example"
-                            onChange={(e) => setnotice_news_subcategory_id(e.target.value)}
-                          >
-                      <option selected disabled>সাব ক্যটেগরি নির্বাচন করুন</option>
-                      {
-                        allNoticeNewsSubCategories.map((item) => {
-                          return (
-                            <>
-                              <option value={item.id} >{item.Name}</option>
-
-                            </>
-                          )
-                        })
-                      }
-                    </select>
-                  </div> */}
 
                   <div>
                     <label for="exampleFormControlInput1" class="form-label">
@@ -242,13 +219,75 @@ const CreateNewsAndNotice = () => {
                       className="form-select2 mb-4"
                       aria-label="Default select example"
                       id="user-selection"
+                      onChange={(e) => setTargetUser(e.target.value)}
+
                     >
-                      <option selected>সকলের জন্য</option>
-                      <option value="1">এডমিন ইউজার </option>
-                      <option value="2">অফিস ইউজার </option>
-                      <option value="3">নরমাল ইউজার</option>
+                      <option selected value="সকল">সকলের জন্য</option>
+                      <option value="এডমিন">এডমিন</option>
+                      <option value="মডারেটর">মডারেটর</option>
+                      <option value="ইউজার">ইউজার</option>
+                      <option value="অন্যান্য">অন্যান্য </option>
                     </select>
                   </div>
+                  {
+                    targetUser == 'অন্যান্য'
+                    &&
+                    <div class="">
+                      <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                        <Autocomplete
+                          multiple
+                          id="tags-standard"
+                          options={allUsers}
+                          getOptionLabel={(option) => option.UserName}
+                          // defaultValue={[allUsers[1]]}
+                          onChange={handlePersonChange}
+                          renderOption={(props, option) => (
+                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                              {
+                                option.userImage === 'default.png' ?
+                                  <img
+                                    loading="lazy"
+                                    width="25"
+                                    src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                    alt=""
+                                  />
+                                  :
+                                  <img
+                                    loading="lazy"
+                                    width="20"
+                                    src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                    alt=""
+                                  />
+
+                              }
+
+                              {option.UserName}
+                            </Box>
+                          )}
+                          getOptionSelected={(option, value) =>
+                            option.id === value.id
+                          }
+
+                          renderInput={(params) => (
+
+                            <TextField
+
+
+                              {...params}
+                              // variant="standard"
+                              // label="Multiple values"
+                              placeholder="Search..."
+                            />
+                          )}
+
+                        />
+                      </Stack>
+
+                    </div>
+                  }
+
+
                   <div className="mb-4">
                     <lebel> প্রকাশ কাল </lebel> <br />
                     <div className="prokash-date">

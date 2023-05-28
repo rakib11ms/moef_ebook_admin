@@ -31,6 +31,7 @@ class NewsNoticeController extends Controller
         // $newsNotice->created_by = auth('sanctum')->user()->UserID;
         $newsNotice->created_by = $request->created_by;
         $newsNotice->isPublished = $request->isPublished;
+        $newsNotice->target_users = $request->target_users;
         $newsNotice->save();
         return response()->json(
             [

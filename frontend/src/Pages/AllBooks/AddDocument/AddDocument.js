@@ -32,31 +32,6 @@ const AddDocument = (props) => {
 
 
 
-  const [allUsers, setAllUsers] = useState([]);
-  
-const[targetUser,setTargetUser]=useState('সকল')
-const [contactPerson, setcontactPerson] = React.useState([]);
-let result = contactPerson.map(a => a.id);
-
-console.log('result',result)
-
-function handlePersonChange(event, values) {
-   setcontactPerson(values)
-   
-}
-
-
-
-
-  useEffect(() => {
-    axios.get(`/api/get-all-user-info`).then(res => {
-      if (res.data.status == 200) {
-        setAllUsers(res.data.users);
-
-      }
-    })
-  }, [])
-
 
 
 
@@ -170,6 +145,7 @@ function handlePersonChange(event, values) {
 
   const $user = JSON.parse(localStorage.getItem("user"));
 
+
   const data = {
     contents: content,
     title: documentTitle,
@@ -181,7 +157,6 @@ function handlePersonChange(event, values) {
     paragraph_id: ParagraphId,
     created_by: $user.id,
     isPublished: true,
-    // target_users:
   };
 
   const handleSubmit = (e) => {
@@ -433,7 +408,7 @@ function handlePersonChange(event, values) {
                           className="form-select mb-4"
                           aria-label="Default select example"
                           id="add-docu-show"
-                          onChange={(e)=>setTargetUser(e.target.value)}
+                          // onChange={(e)=>setTargetUser(e.target.value)}
                         >
                           <option selected value="সকল">সকলের জন্য</option>
                           <option value="এডমিন">এডমিন</option>
@@ -442,65 +417,7 @@ function handlePersonChange(event, values) {
                           <option value="অন্যান্য">অন্যান্য </option>
                         </select>
                       </div>
-                      {
-                        targetUser=='অন্যান্য' 
-                        && 
-                        <div class="">
-                        <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
-                          <Autocomplete
-                            multiple
-                            id="tags-standard"
-                            options={allUsers}
-                            getOptionLabel={(option) => option.UserName}
-                            // defaultValue={[allUsers[1]]}
-                            onChange={handlePersonChange}
-                            renderOption={(props, option) => (
-                              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-
-                                {
-                                  option.userImage === 'default.png' ?
-                                    <img
-                                      loading="lazy"
-                                      width="25"
-                                      src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
-                                      alt=""
-                                    />
-                                    :
-                                    <img
-                                      loading="lazy"
-                                      width="20"
-                                      src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
-                                      alt=""
-                                    />
-
-                                }
-
-                                {option.UserName}
-                              </Box>
-                            )}
-                            getOptionSelected={(option, value) =>
-                              option.id === value.id
-                            }
-
-                            renderInput={(params) => (
-
-                              <TextField
-
-
-                                {...params}
-                                // variant="standard"
-                                // label="Multiple values"
-                                placeholder="Search..."
-                              />
-                            )}
-
-                          />
-                        </Stack>
-
-                      </div>
-                      }
-
-                     
+                  
                       <div className="mb-4">
                         <lebel> প্রকাশ কাল </lebel> <br />
                         <div className="doc-prokash-date">
