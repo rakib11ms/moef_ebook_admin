@@ -30,8 +30,6 @@ const EditMasterBook = () => {
     console.log("book", singleBookName);
   };
 
-
-  
   const handleChapterclick = (chapter) => {
     setChapter(chapter);
   };
