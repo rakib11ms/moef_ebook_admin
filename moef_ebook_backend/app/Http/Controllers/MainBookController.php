@@ -448,14 +448,17 @@ class MainBookController extends Controller
     foreach ($chapters as $chapterName => $chapterItems) {
         $paragraphs = $chapterItems->map(function ($item) {
             return [
+              'paragraph_id' => $item->paragraph_id,
               'paragraph_name' => $item->bookParagraph->ParagraphName,
               'book_content' => $item->book_content,
+              'main_book_id' => $item->id,
             ];
         });
 
         $chapterData[] = [
           'book_id' => $chapterItems[0]->book_id,
           'book_name' => $chapterItems[0]->bookMaster->Title,
+          'chapter_id' => $chapterItems[0]->chapter_id,
           'chapter_name' => $chapterName,
           'paragraphs' => $paragraphs,
         ];
