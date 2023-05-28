@@ -77,6 +77,7 @@ const CreateNewsAndNotice = () => {
       return;
     }
 
+    
     const formData = new FormData();
     formData.append("Title", Title);
     formData.append("Description", content);
