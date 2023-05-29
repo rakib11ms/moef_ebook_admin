@@ -472,6 +472,31 @@ class MainBookController extends Controller
     ]);
   }
 
+  public function getAllUniqueMainBookByBookMasterID()
+  {
+    $all_main_book = MainBook::with('bookMaster')->get()->unique('book_id')->map(function ($item, $key) {
+      return [
+        'id' => $item->id,
+        'book_id' => $item->book_id,
+        'chapter_id' => $item->chapter_id,
+        'paragraph_id' => $item->paragraph_id,
+        'book_content' => $item->book_content,
+        'created_by' => $item->created_by,
+        'isPublished' => $item->isPublished,
+        'created_at' => $item->created_at,
+        'updated_at' => $item->updated_at,
+        'book_master' => $item->bookMaster,
+        'type' => $item->type
+      ];
+    });
+
+    return response()->json([
+      'status' => 200,
+      'message' => "All unique main book by book master id",
+      'book' => $all_main_book->values()
+    ]);
+  }
+
   public function getAllChpterByBookMasterID($id) 
   {
     $all_main_book = MainBook::where('book_id', $id)

@@ -104,7 +104,30 @@ class BooksMasterController extends Controller
 
     public function deleteMainBook(Request $request, string $id)
     {
-        //delete all the main books and this master book
+        //delete all the main books and this master book and all the associated chapters & paragraphs
+        // $booksMaster = BooksMaster::findOrFail($id);
+        // $booksMaster->delete();
+        // $books = MainBook::where('book_id', $id)->get();
+        // foreach ($books as $book) {
+        //     $book->delete();
+        // }
+        // $chapter = Chapter::where('book_id', $id)->get();
+        // foreach ($chapter as $chap) {
+        //     $chap->delete();
+        // }
+        // $paragraph = Paragraph::where('book_id', $id)->get();
+        // foreach ($paragraph as $para) {
+        //     $para->delete();
+        // }
+        // return response()->json(
+        //     [
+        //         'status' => 200,
+        //         'message' => 'Books Master deleted successfully'
+        //     ]
+        // );
+
+
+
         $booksMaster = BooksMaster::findOrFail($id);
         $booksMaster->delete();
         $books = MainBook::where('book_id', $id)->get();

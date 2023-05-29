@@ -9,9 +9,13 @@ class UserController extends Controller
 {
     public function getAllUserInfo()
     {
-        $users = User::all();
-        //return only username, email and phone number
+        $users = User::with(['roles' => function ($query) {
+            $query->select('name');
+        }])->get();
+
         $users = $users->map(function ($user) {
+            $roleName = $user->roles->first()['name'] ?? null;
+
             return [
                 'id' => $user->id,
                 'UserName' => $user->UserName,
@@ -19,19 +23,17 @@ class UserController extends Controller
                 'userPhone' => $user->userPhone,
                 'userID' => $user->userID,
                 'officeID' => $user->OfficeID,
-                'userRole' => $user->userRoleName,
+                'userRole' => $roleName,
                 'activeStatus' => $user->ActiveStatus,
                 'created_at' => $user->created_at,
-                'userImage' => $user->userImage ?? 'default.png'
+                'userImage' => $user->userImage ?? 'default.png',
             ];
         });
 
-        return response()->json(
-            [
-                'status' => 200,
-                'users' => $users
-            ]
-        );
+        return response()->json([
+            'status' => 200,
+            'users' => $users,
+        ]);
     }
 
     public function getUserInfo($id)

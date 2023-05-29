@@ -20,7 +20,7 @@ const AllNewsAndNotice = () => {
 
   async function fetchData () {
     try {
-      await axios.get(`/api/notice`).then(res => {
+      await axios.get("/api/notice").then(res => {
         if (res.data.status === 200) {
           setAllNoticeNews(res.data.news_notices);
           console.log('notice news', res.data.news_notices);
@@ -34,33 +34,9 @@ const AllNewsAndNotice = () => {
     }
   }
 
-
   useEffect(() => {
-    // axios.get(`/api/notice`).then(res => {
-    //   if (res.data.status === 200) {
-    //     setAllNoticeNews(res.data.news_notices);
-    //     console.log('notice news', res.data.news_notices);
-    //     // setLoading(false);
-    //   } else {
-    //     console.log('error');
-    //   }
-    // })
     fetchData();
-
-  }, [])
-
-  const rows = [
-    ...allNoticeNews.map((notice, index) => (
-      {
-        id: notice.id,
-        newsNotice: notice.Title,
-        category: notice.category.Name,
-        sub_category: notice.sub_category.Name,
-        // set the edit button for each row edit field in columns array by using renderCell
-        
-      }
-    ))
-  ];
+  }, []);
 
   const columns = [
     { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
@@ -131,6 +107,19 @@ const AllNewsAndNotice = () => {
         </div>
       ),
     }
+  ];
+
+  const rows = [
+    ...allNoticeNews.map((notice, index) => (
+      {
+        id: notice.id,
+        newsNotice: notice.Title,
+        category: notice.category.Name,
+        sub_category: notice.sub_category.Name,
+        // set the edit button for each row edit field in columns array by using renderCell
+        
+      }
+    ))
   ];
 
   // console.log('rows', rows);

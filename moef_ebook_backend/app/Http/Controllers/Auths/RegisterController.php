@@ -50,7 +50,6 @@ class RegisterController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-
                 'OfficeID' => 'max:191',
                 'UserName' => 'required|max:191',
                 'password' => 'required|min:6',
@@ -58,6 +57,7 @@ class RegisterController extends Controller
                 'email' => 'required|email|max:191|unique:users,email',
                 'userPhone' => 'required|unique:users',
                 'confirm_password' => 'required|same:password|min:6',
+                // 'isVerified' => 'required|in:guest,verified',
             ]
 
         );
@@ -76,9 +76,9 @@ class RegisterController extends Controller
             $user->email=$request->email;
             $user->userID=$request->userID;
             $user->password= Hash::make($request->password);
-
+            // $user->isVerified=$request->isVerified;
             $user->confirm_password = Hash::make($request->confirm_password);
-            $user->userRoleName='ইউজার';
+            // $user->userRoleName='ইউজার';
             $user->assignRole('ইউজার '); 
             $user->userImage=$request->userImage;
             $user->save();
