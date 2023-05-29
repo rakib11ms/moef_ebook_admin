@@ -37,7 +37,7 @@ const ViewBookMaster = () => {
       .then((res) => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
-        setActiveParagraph(res.data.data[0].paragraphs[0].paragraph_name)
+        setActiveParagraph(res.data.data[0].paragraphs[0].main_book_id)
         setContent(res.data.data[0].paragraphs[0].book_content)
 
       });
@@ -85,18 +85,18 @@ const ViewBookMaster = () => {
                   <div key={chapter.chapter_name}>
                     <h6>{chapter.chapter_name}</h6>
                     <ul>
-                      {chapter.paragraphs.map((paragraph) => (
+                      {chapter.paragraphs.map((item) => (
                         <li
-                          key={paragraph.paragraph_name}
+                          key={item.paragraph_name}
                           onClick={() =>{
-                            handleParagraphClick(paragraph.book_content)
+                            handleParagraphClick(item.book_content)
                           }
                           }
                         >
-                          <a href='#' onClick={() => handleClick(paragraph.paragraph_name)}
-                          className={paragraph.paragraph_name == activeParagraph ? 'activeColor' : ''} 
+                          <a href='#' onClick={() => handleClick(item.main_book_id)}
+                          className={item.main_book_id == activeParagraph ? 'activeColor' : ''} 
                           >
-                          {paragraph.paragraph_name}
+                          {item.paragraph_name}
                           </a>
                       
                         </li>

@@ -41,13 +41,13 @@ const NavigationBa = () => {
 
 
   var userData = JSON.parse(localStorage.getItem('user'));
-  console.log('user data',userData)
+  // console.log('user data',userData)
 
   const [role_id, setRoleId] = useState('')
   // console.log('role id',role_id)
 
   const [permissionfromDatabase, setPermissionFromDatabase] = useState([]);
-  console.log('check', permissionfromDatabase)
+  // console.log('check', permissionfromDatabase)
 
   useEffect(() => {
 
@@ -68,7 +68,7 @@ const NavigationBa = () => {
   const show_libray_parent = permissionfromDatabase.some((permission) => permission === 'create_book' || 'view_book' || 'update_book' || 'delete_book'
     || 'create_document' || 'view_document' || 'update_document' || 'delete_document');
 
-  console.log('show_library', hasPermission)
+  // console.log('show_library', hasPermission)
 
 
 
@@ -195,14 +195,14 @@ const NavigationBa = () => {
                   }
 
                   {
-                    userData.roles[0].name=='সুপার এডমিন' && 
-                  
-                  <li className=" side-li-link">
-                    <Link to="/permission-users">
-                      অনুমতি(পারমিশন) ব্যবস্থাপনা
-                    </Link>
-                  </li>
-}
+                    userData.roles[0].name == 'সুপার এডমিন' &&
+
+                    <li className=" side-li-link">
+                      <Link to="/permission-users">
+                        অনুমতি(পারমিশন) ব্যবস্থাপনা
+                      </Link>
+                    </li>
+                  }
                 </ul>
               )}
             </ul>
@@ -388,44 +388,44 @@ const NavigationBa = () => {
   const [input, setInput] = useState('');
 
 
-  const [searchArray, setSearchArray] = useState([]);
 
 
+  const [searchData, setSearchData] = useState([])
 
-  let mappedData = searchArray.map(obj => {
-    if (obj.type === "main_book") {
-      return {
-        id: obj.id,
-        label: obj.book_master.Title,
-        link: `/all-books`,
-        type: obj.type
-      };
-    } else if (obj.type === "single_document") {
-      return {
-        id: obj.id,
-        label: obj.document_title,
-        link: `/all-documents`,
-        type: obj.type
-
-      };
-    }
-  });
-
-  const top100Films = mappedData
-  // console.log('search data', searchArray);
-  console.log('mpped data', top100Films);
+  console.log('mapped', searchData);
 
   async function getGlobalSearch() {
     if (input) {
       await axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
-        setSearchArray(res.data.data);
+        let mappedData = res.data.data.map(obj => {
+
+          if (obj.type == "single_document") {
+            return {
+              id: obj.id,
+              label: obj.document_title,
+              link: `/all-documents`,
+              type: obj.type
+
+            };
+          }
+          if (obj.type == "main_book") {
+            return {
+              id: obj.book_master.id,
+              label: obj.book_master.Title,
+              link: `/all-books`,
+              type: obj.type
+            };
+          }
+
+        });
+        setSearchData(mappedData)
         toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
 
       });
       // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
     }
     else if (input == '') {
-      setSearchArray([]);
+      setSearchData([]);
     }
 
   }
@@ -484,7 +484,7 @@ const NavigationBa = () => {
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={top100Films}
+                options={searchData}
                 inputValue={input}
                 onChange={(event, option) => {
                   navigate(option.link);
@@ -492,20 +492,24 @@ const NavigationBa = () => {
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                     {
-                      option.type == "main_book" ?
-                        <img
-                          loading="lazy"
-                          width="25"
-                          src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
-                          alt=""
-                        />
-                        :
-                        <img
-                          loading="lazy"
-                          width="20"
-                          src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
-                          alt=""
-                        />
+                      option.type === "main_book" &&
+                      <img
+                        loading="lazy"
+                        width="25"
+                        src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
+                        alt=""
+                      />
+                    }
+                    {
+                      option.type === "single_document" &&
+
+
+                      <img
+                        loading="lazy"
+                        width="20"
+                        src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
+                        alt=""
+                      />
 
                     }
 
