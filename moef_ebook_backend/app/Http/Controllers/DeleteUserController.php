@@ -21,4 +21,18 @@ class DeleteUserController extends Controller
             ]
         );
     }
+
+    public function activeUser($id)
+    {
+        // dd($id);
+        $user = User::findOrFail($id);
+        $user->ActiveStatus = true;
+        $user->update();
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'User activated successfully'
+            ]
+        );
+    }
 }

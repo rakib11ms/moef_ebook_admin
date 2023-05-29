@@ -22,7 +22,7 @@ return new class extends Migration
                 $table->string('password');
                 $table->string('confirm_password');
                 $table->string('userImage')->nullable();
-                $table->boolean('isVerified')->default(false);
+                $table->string('isVerified')->nullable();
                 $table->boolean('ActiveStatus')->default(true);
                 $table->timestamp('last_used_time')->nullable();
                 $table->timestamp('device_token')->nullable();

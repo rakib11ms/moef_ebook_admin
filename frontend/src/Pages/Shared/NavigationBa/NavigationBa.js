@@ -296,11 +296,11 @@ const NavigationBa = () => {
                         <Link to="/all-news-notice">সকল বিজ্ঞপ্তি </Link>
                       </li>
                     }
-                    {
+                    {/* {
                       user_permissions.includes('view_notice_news') && <li className="side-li-link">
                         <Link to="/categories-news">ক্যটেগরি</Link>
                       </li>
-                    }
+                    } */}
                     {
                       user_permissions.includes('create_notice_news') &&
                       <li className="side-li-link">

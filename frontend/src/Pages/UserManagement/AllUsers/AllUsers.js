@@ -18,6 +18,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { DataGrid } from '@mui/x-data-grid';
 // import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import swal from "sweetalert"
 
 
@@ -58,13 +59,16 @@ function a11yProps(index) {
 const AllUsers = () => {
 
   const [allUsers, setAllUsers] = useState([]);
+  const [allDeactiveUsers, setAllDeactiveUsers] = useState([]);
 
   async function fetchUser() {
     await axios.get("/api/get-all-user-info").then((res) => {
       if (res.data.status === 200) {
         const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
+        const deactiveUsers = res.data.users.filter((user) => user.activeStatus === 0);
         setAllUsers(activeUsers);
-        console.log(activeUsers);
+        setAllDeactiveUsers(deactiveUsers);
+        console.log('activeUsers', activeUsers);
       } else {
         console.log("error");
       }
@@ -134,10 +138,12 @@ const AllUsers = () => {
                         swal("ব্যবহারকারী নিষ্ক্রিয় করা হয়েছে", {
                           icon: "success",
                         });
-                        axios.get(`/api/get-all-user-info`).then((res) => {
+                        axios.get("/api/get-all-user-info").then((res) => {
                           if (res.data.status === 200) {
                             const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
+                            const deactiveUsers = res.data.users.filter((user) => user.activeStatus === 0);
                             setAllUsers(activeUsers);
+                            setAllDeactiveUsers(deactiveUsers);
                           } else {
                             console.log("error");
                           }
@@ -166,12 +172,116 @@ const AllUsers = () => {
         userName: user.UserName,
         userEmail: user.userEmail,
         userPhone: user.userPhone,
-        userType: user.userRole,
         officeID: user.officeID ? user.officeID : "N/A",
         officeInfo: user.officeInfo ? user.officeInfo : "N/A",
         lastUsageTime: user.lastLogin ? user.lastLogin: "N/A",
         creationTime: new Date(user.created_at).toLocaleString(),
         userPhoto: user.userImage,
+        userType: user.userRole ? user.userRole : "N/A", 
+      }
+    ))
+  ];
+
+  const deactiveUsersColums = [
+    {
+      field: 'userPhoto', headerName: 'ছবি', width: 100, resizable: true,
+      renderCell: (params) => (
+        // <div className="d-flex justify-content-center align-items-center">
+        //   {/* show default.png if userPhoto is null */}
+        //   <img src={`${global.imageURL}/images/user/${params.row.userPhoto}`} alt="" className="img-fluid" style={{ width: "50px", height: "50px", borderRadius: "50%" }} />
+        // </div>
+        <div className="d-flex justify-content-center align-items-center">
+          <img
+            src={`${global.imageURL}/images/user/${params.row.userPhoto}`}
+            alt="pic"
+            className="img-fluid"
+            style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = `${global.imageURL}/images/user/default.png`;
+            }}
+          />
+        </div>
+      )
+    },
+    { field: 'userName', headerName: 'ব্যবহারকারীর নাম', width: 230, resizable: true, },
+    { field: 'userEmail', headerName: 'ইমেইল', width: 250, resizable: true, },
+    { field: 'userPhone', headerName: 'ফোন নম্বর', width: 170 },
+    { field: 'userID', headerName: 'আইডি', width: 120 },
+    { field: 'userType', headerName: 'ব্যবহারকারীর ধরণ', width: 150 },
+    { field: 'officeID', headerName: 'অফিস আইডি', width: 150 },
+    { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
+    { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
+    { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
+    // {
+    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
+    //   renderCell: (params) => (
+    //     <div className="d-flex justify-content-center align-items-center">
+    //       <CreateOutlinedIcon className="text-warning" />
+    //     </div>
+    //   )
+    // },
+    {
+      field: 'delete', headerName: 'ব্যবহারকারী সক্রিয় করুন', width: 180,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-center align-items-center">
+          <PersonAddAlt1Icon
+            className="text-success"
+            onClick={
+              () => {
+                swal({
+                  title: "নিশ্চিত করুন",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                }).then((willDelete) => {
+                  if (willDelete) {
+                    axios.put(`/api/active-User/${params.row.id}`).then((res) => {
+                      if (res.data.status === 200) {
+                        swal("ব্যবহারকারী সক্রিয় করা হয়েছে", {
+                          icon: "success",
+                        });
+                        axios.get("/api/get-all-user-info").then((res) => {
+                          if (res.data.status === 200) {
+                            const deacticeUsers = res.data.users.filter((user) => user.activeStatus === 0);
+                            const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
+                            setAllDeactiveUsers(deacticeUsers);
+                            setAllUsers(activeUsers);
+                            setAllUsers(res.data.users);
+                          } else {
+                            console.log("error");
+                          }
+                        });
+                      } else {
+                        swal("ব্যবহারকারী সক্রিয় করা যায়নি", {
+                          icon: "error",
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            }
+          />
+        </div>
+      )
+    },
+  ];
+  
+  const deactiveUsersRows = [
+    ...allDeactiveUsers.map((user) => (
+      {
+        id: user.id,
+        userID: user.userID,
+        userName: user.UserName,
+        userEmail: user.userEmail,
+        userPhone: user.userPhone,
+        officeID: user.officeID ? user.officeID : "N/A",
+        officeInfo: user.officeInfo ? user.officeInfo : "N/A",
+        lastUsageTime: user.lastLogin ? user.lastLogin: "N/A",
+        creationTime: new Date(user.created_at).toLocaleString(),
+        userPhoto: user.userImage,
+        userType: user.userRole ? user.userRole : "N/A",
       }
     ))
   ];
@@ -195,8 +305,8 @@ const AllUsers = () => {
               aria-label="basic tabs example"
             >
               <Tab label="নিবন্ধিত ব্যবহারকারী" {...a11yProps(0)} />
-              <Tab label="গেস্ট ব্যবহারকারী" {...a11yProps(1)} />
-              <Tab label="ভেরিফিকেশনের জন্য আবেদনকৃত" {...a11yProps(2)} />
+              <Tab label="ইনএকটিভ ইউজারের" {...a11yProps(2)} />
+              {/* <Tab label="ভেরিফিকেশনের জন্য আবেদনকৃত" {...a11yProps(2)} /> */}
             </Tabs>
             <div className="tab-search-input-div">
               <div className="tab-serchInput-icon-div">
@@ -261,122 +371,23 @@ const AllUsers = () => {
             <div className="varify-top-div">
               <ShortTextIcon />
             </div>
-            <section className="m-0 border-0 bd-example table-responsive-md table-responsive-sm">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">ছবি</th>
-                    <th scope="col">ব্যক্তিগত তথ্য</th>
-                    <th scope="col">ইমেইল</th>
-                    <th scope="col">নিবন্ধনের সময়</th>
-                    <th scope="col"> অফিসের তথ্য</th>
-                    <th scope="col"> সর্বশেষ ব্যবহার</th>
-                  </tr>
-                </thead>
-                <tbody className="table-group-divider">
-                  <tr>
-                    <th scope="row">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                    </th>
-                    <img className="dp-img" src={dpImg} alt="" />
-                    <td>
-                      <div className="personal-information">
-                        <p>Md Fazla Arafat </p>
-                      </div>
-                    </td>
-                    <td>arafat@moef.gov.bd </td>
-                    <td>10 Feb 2023 </td>
-                    <td>
-                      <p>Not found</p>
-                    </td>
-                    <td>8 Mar 2023| 11:30</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                    </th>
-                    <img className="dp-img" src={dpImg} alt="" />
-                    <td>
-                      <div className="personal-information">
-                        <p>Md Fazla Arafat </p>
-                      </div>
-                    </td>
-                    <td>arafat@moef.gov.bd </td>
-                    <td>10 Feb 2023 </td>
-                    <td>
-                      <p>Not found</p>
-                    </td>
-                    <td>8 Mar 2023| 11:30</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                    </th>
-                    <img className="dp-img" src={dpImg} alt="" />
-                    <td>
-                      <div className="personal-information">
-                        <p>Md Fazla Arafat </p>
-                      </div>
-                    </td>
-                    <td>arafat@moef.gov.bd </td>
-                    <td>10 Feb 2023 </td>
-                    <td>
-                      <p>Not found</p>
-                    </td>
-                    <td>8 Mar 2023| 11:30</td>
-                  </tr>
-                </tbody>
-              </table>
+            <section className="m-0 border-0 table-responsive-md table-responsive-sm">
+              {/* Table */}
+              <DataGrid
+                rows={deactiveUsersRows}
+                columns={deactiveUsersColums}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection={false}
+              />
+
             </section>
-            {/* <section>
-              <div className="pagination-div">
-                <nav aria-label="Page navigation example">
-                  <ul className="pagination justify-content-center">
-                    <li className="page-item disabled">
-                      <a className="page-link">Previous</a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </section> */}
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          {/* <TabPanel value={value} index={2}>
             <div className="varify-top-div">
               <div className="dropdown me-1">
                 <button type="button" className="varify-button1 ">
@@ -503,7 +514,7 @@ const AllUsers = () => {
                 </nav>
               </div>
             </section> */}
-          </TabPanel>
+          {/* </TabPanel> */} 
         </Box>
       </div>
     </div>
