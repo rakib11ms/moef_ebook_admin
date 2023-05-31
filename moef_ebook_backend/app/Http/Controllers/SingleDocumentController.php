@@ -23,7 +23,7 @@ class SingleDocumentController extends Controller
     public function saveSingleDocument(Request $request)
     {
 
-        if ($request->title !== null && $request->contents !== null && $request->book_id == null && $request->chapter_id == null && $request->paragraph_id == null && $request->notice_news_category_id == null && $request->redirect_url == null) {
+        if ($request->title !== null && $request->contents !== null) {
             $single_document = new SingleDocument();
             $single_document->category = 'শ্রেণী বহির্ভূত';
             $single_document->document_title = $request->title;

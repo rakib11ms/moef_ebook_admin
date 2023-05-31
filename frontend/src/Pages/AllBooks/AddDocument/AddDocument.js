@@ -3,7 +3,7 @@ import "./AddDocument.css";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import AddIcon from "@mui/icons-material/Add";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import JoditEditor from "jodit-react";
 import EditIcon from "@mui/icons-material/Edit";
 import ReactDatePicker from "react-datepicker";
@@ -31,7 +31,14 @@ import { Box, ThemeProvider, createTheme } from '@mui/system';
 const AddDocument = (props) => {
 
 
-
+  const editor = useRef(null);
+  // const config = useMemo(
+  // 	{
+  // 		readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+  // 		placeholder: placeholder || 'Start typings...'
+  // 	},
+  // 	[placeholder]
+  // );
 
 
 
@@ -63,6 +70,7 @@ const AddDocument = (props) => {
 
 
   const [content, setContent] = useState("");
+  console.log('con1', content)
   // const [activeButton, setActiveButton] = useState(1);
 
   const [startDate, setStartDate] = useState(new Date());
@@ -164,12 +172,12 @@ const AddDocument = (props) => {
     if (content.trim() === "<p><br></p>" || content.trim() === "") {
       Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
       return;
-    } else {
+    }
+    else {
       axios.post(`/api/save-single-document`, data).then((res) => {
         if (res.data.status == 200) {
           Swal.fire(res.data.message, "", "success");
 
-          setContent("");
           setdocumentTitle("");
         }
       });
@@ -199,7 +207,6 @@ const AddDocument = (props) => {
         if (res.data.status == 200) {
           Swal.fire(res.data.message, "", "success");
 
-          setContent("");
           setdocumentTitle("");
         }
       });
@@ -276,15 +283,12 @@ const AddDocument = (props) => {
                 <div className="documents-text-header">{/* header Text */}</div>
                 <JoditEditor
                   className="jodit-editor"
+                  ref={editor}
                   value={content}
-                  onChange={setContent}
-                  spellcheck={false}
-                  toolbarAdaptive="false"
-                  config={{
-                    height: 400,
-                    language: "en",
-                  }}
-                  autofocus="true"
+                  // config={config}
+                  tabIndex={1} // tabIndex of textarea
+                  onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                  // onChange={newContent => {setContent(newContent)}}
                   id="add-doc-jodit-editor"
                 />
                 <div className="TrendingFlatIcon-doc-div">
@@ -408,7 +412,7 @@ const AddDocument = (props) => {
                           className="form-select mb-4"
                           aria-label="Default select example"
                           id="add-docu-show"
-                          // onChange={(e)=>setTargetUser(e.target.value)}
+                        // onChange={(e)=>setTargetUser(e.target.value)}
                         >
                           <option selected value="সকল">সকলের জন্য</option>
                           <option value="এডমিন">এডমিন</option>
@@ -417,7 +421,7 @@ const AddDocument = (props) => {
                           <option value="অন্যান্য">অন্যান্য </option>
                         </select>
                       </div>
-                  
+
                       <div className="mb-4">
                         <lebel> প্রকাশ কাল </lebel> <br />
                         <div className="doc-prokash-date">

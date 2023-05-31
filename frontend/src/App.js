@@ -42,6 +42,7 @@ import ViewDocuments from "./Pages/AllBooks/ViewDocuments/ViewDocuments";
 import ViewBookMaster from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/ViewBookMaster";
 // import MyComponent from "./MyComponent";
 import EditMasterBook from "./Pages/AllBooks/EditBooks/EditMasterBook";
+import Check from "./Pages/Check";
 
 const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
 
@@ -95,6 +96,7 @@ function App() {
             <Route path="/my-area" element={<MyArea />} />
             <Route path="/home" element={<Home />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/check" element={<Check />} />
             {
               user_permissions!==null && user_permissions.includes('view_user') &&
               <Route path="/all-users" element={<AllUsers />} />
