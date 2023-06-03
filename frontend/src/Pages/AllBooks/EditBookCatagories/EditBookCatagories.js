@@ -21,49 +21,79 @@ import { useNavigate } from "react-router-dom";
 const EditBookCatagories = () => {
   //use params
   const { id } = useParams();
-  const [catagoryName, setCatagoryName] = useState("");
+  const [CategoryName, setCateoryName] = useState("");
 
   const navigate=useNavigate();
 
   const handleInputChange = (e) => {
     const { value } = e.target;
-    setCatagoryName(value);
+    setCateoryName(value);
   };
+
+  const [CategoryIcon, setCatagoryIcon] = useState(null);
+  
+  function handleFileChange(event) {
+    const file = event.target.files[0]; // Get the selected file
+  
+    if (file && file.type === "image/png") {
+      const img = new Image();
+      img.onload = function () {
+        setCatagoryIcon(file);
+      };
+      img.src = URL.createObjectURL(file); // Load the image data
+    } else {
+      console.log("Please select a PNG image.");
+    }
+  }
+
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  const formData = new FormData();
+  if(CategoryName){
+    formData.append("CategoryName", CategoryName);
+  }
+  if(CategoryIcon){
+    formData.append("CategoryIcon", CategoryIcon);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const catagory = {
-      CategoryName: catagoryName,
-    };
-    axios.put(`/api/book-category/${id}`, catagory).then((res) => {
-      if (res.data.status === 200) {
-        console.log(res.data.message);
-        swal({
-          title: "সফলভাবে সংরক্ষন করা হয়েছে",
-          icon: "success",
-        });
-        navigate("/book-categories");
-
-      } else {
-        console.log(res.data.message);
+    // console.log('formData', formData.get('CategoryName'));
+    if(id) {
+      axios.post(`/api/update-book-category/${id}`, formData, config).then((res) => {
+        if (res.data.status === 200) {
+          console.log('res.data.message', res.data.data);
+          swal({
+            title: "সফলভাবে সংরক্ষন করা হয়েছে",
+            icon: "success",
+          });
+          navigate("/book-categories");
+  
+        } else {
+          console.log(res.data.message);
+          swal({
+            title: "সংরক্ষন করা হয়নি",
+            icon: "error",
+          });
+        }
+      }).catch((err) => {
         swal({
           title: "সংরক্ষন করা হয়নি",
           icon: "error",
         });
-      }
-    }).catch((err) => {
-      swal({
-        title: "সংরক্ষন করা হয়নি",
-        icon: "error",
       });
-    });
+    }
   };
 
   useEffect(() => {
-    axios.get(`/api/book-category/${id}`).then((res) => {
+    axios.get(`/api/get-book-category/${id}`).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data.bookcategory);
-        setCatagoryName(res.data.bookcategory.CategoryName);
+        setCateoryName(res.data.bookcategory.CategoryName);
       }
     });
   }, [id]);
@@ -96,7 +126,7 @@ const EditBookCatagories = () => {
           <div className="col-xl-6 col-lg-7 col-md-7 col-sm-12 col-12 categories-input-div">
             <div className="mb-3">
               <lebel>ক্যটেগরি নাম </lebel> <br />
-              <form onSubmit={handleSubmit}>
+              <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="categories-div">
                   <input
                     className="catogories-input"
@@ -104,8 +134,20 @@ const EditBookCatagories = () => {
                     type="text"
                     placeholder="ক্যাটাগরি নাম"
                     name="CatagoryName"
-                    value={catagoryName}
+                    value={CategoryName}
                     onChange={handleInputChange}
+                  />
+                </div>
+
+                <div className="categories-div">
+                  <lebel>ক্যটেগরি Icon </lebel> <br />
+                  <input
+                    name = "CategoryIcon"
+                    className="catogories-input"
+                    id="books-categories-inputs-icon"
+                    accept=".png"
+                    type="file"
+                    onChange={handleFileChange}
                   />
                 </div>
                 <button

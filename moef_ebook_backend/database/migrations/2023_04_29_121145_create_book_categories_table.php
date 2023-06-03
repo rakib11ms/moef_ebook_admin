@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('CategoryName')->nullable();
             $table->string('Created_by')->nullable();
+            $table->string('CategoryIcon')->nullable();
             $table->timestamps();
         });
     }

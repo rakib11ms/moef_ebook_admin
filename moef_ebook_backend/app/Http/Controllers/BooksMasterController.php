@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use File;
 use App\Models\SingleDocument;
 use App\Models\MainBook;
+// use App\Models\BookCategory;
 
 class BooksMasterController extends Controller
 {
@@ -138,6 +139,22 @@ class BooksMasterController extends Controller
             [
                 'status' => 200,
                 'message' => 'Books Master deleted successfully'
+            ]
+        );
+    }
+
+    public function getAllBookCategoryFromBookMaster() {
+        $booksMaster = BooksMaster::with('category')->get()->unique('CatID');
+        $bookCategory = [];
+        foreach ($booksMaster as $book) {
+            if($book->category != null) {
+                array_push($bookCategory, $book->category);
+            }
+        }
+        return response()->json(
+            [
+                'status' => 200,
+                'bookcategories' => $bookCategory
             ]
         );
     }

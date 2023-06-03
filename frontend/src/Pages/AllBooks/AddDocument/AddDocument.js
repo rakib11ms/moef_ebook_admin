@@ -161,19 +161,19 @@ const AddDocument = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (content.trim() === "<p><br></p>" || content.trim() === "") {
-      Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
-      return;
-    } else {
-      axios.post(`/api/save-single-document`, data).then((res) => {
-        if (res.data.status == 200) {
-          Swal.fire(res.data.message, "", "success");
+    // if (content.trim() === "<p><br></p>" || content.trim() === "") {
+    //   // Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
+    //   // return;
+    // } else {
+    axios.post(`/api/save-single-document`, data).then((res) => {
+      if (res.data.status == 200) {
+        Swal.fire(res.data.message, "", "success");
 
-          setContent("");
-          setdocumentTitle("");
-        }
-      });
-    }
+        setContent("");
+        setdocumentTitle("");
+      }
+    });
+    // }
   };
 
   const handleDraftSubmit = (e) => {
