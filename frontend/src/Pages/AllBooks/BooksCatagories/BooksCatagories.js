@@ -20,6 +20,7 @@ const BooksCatagories = () => {
       return {
         id: catagory.id,
         CategoryName: catagory.CategoryName,
+        CategoryIcon: catagory.CategoryIcon,
       };
     }),
   ];
@@ -27,6 +28,21 @@ const BooksCatagories = () => {
   // console.log('all catagories', allCatagories);
 
   const columns = [
+    {file: "CategoryIcon", headerName: "ক্যাটাগরির আইকন", width: 250, renderCell: (params) => (
+      <div className="d-flex justify-content-around align-items-center">
+        <img
+          src={`${global.imageURL}/uploads/bookcategory/${params.row.CategoryIcon}`}
+          alt="pic"
+          className="img-fluid"
+          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+          // onError={(e) => {
+          //   e.target.onerror = null;
+          //   e.target.src = `${global.imageURL}/images/user/default.png`;
+          // }}
+        />
+      </div>
+    )
+    },
     { field: "CategoryName", headerName: "ক্যাটাগরির নাম", width: 250 },
     {
       field: "edit",
@@ -62,7 +78,7 @@ const BooksCatagories = () => {
               }).then((willDelete) => {
                 if (willDelete) {
                   axios
-                    .delete(`/api/book-category/${params.row.id}`)
+                    .delete(`/api/delete-book-category/${params.row.id}`)
                     .then((res) => {
                       if (res.data.status === 200) {
                         swal("ক্যাটেগরিটি সফলভাবে ডিলিট করা হয়েছে ", {
@@ -94,15 +110,45 @@ const BooksCatagories = () => {
     setCatagoryName(value);
   };
 
+const [CategoryIcon, setCatagoryIcon] = useState(null);
+
+  function handleFileChange(event) {
+    const file = event.target.files[0]; // Get the selected file
+    const maxSize = 24; // Maximum allowed size in pixels
+  
+    if (file && file.type === "image/png") {
+      const img = new Image();
+      img.onload = function () {
+        setCatagoryIcon(file);
+      };
+      img.src = URL.createObjectURL(file); // Load the image data
+    } else {
+      console.log("Please select a PNG image.");
+    }
+  }
+
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  const formData = new FormData();
+  formData.append("CategoryName", catagoryName);
+  formData.append("Created_by", $user.id);
+  formData.append("CategoryIcon", CategoryIcon);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const catagory = {
-      CategoryName: catagoryName,
-      Created_by: $user.id,
-    };
-    console.log(catagory);
+    // const catagory = {
+    //   CategoryName: catagoryName,
+    //   Created_by: $user.id,
+    //   CategoryIcon: categoryIcon,
+    // };
+    // console.log(catagory);
+
     axios
-      .post(`/api/book-category`, catagory)
+      .post(`/api/store-book-category`, formData, config)
       .then((res) => {
         // console.log(res);
         if (res.data.status === 200) {
@@ -136,7 +182,7 @@ const BooksCatagories = () => {
   async function fetchData () {
     await axios.get(`/api/book-category`).then((res) => {
       if (res.data.status === 200) {
-        console.log(res.data.bookcategories);
+        console.log('all categories', res.data.bookcategories);
         setAllCatagories(res.data.bookcategories);
       } else {
         console.log("error");
@@ -147,6 +193,7 @@ const BooksCatagories = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  
 
   // console.log(allCatagories);
 
@@ -177,7 +224,7 @@ const BooksCatagories = () => {
           <div className="col-xl-6 col-lg-7 col-md-7 col-sm-12 col-12 categories-input-div">
             <div className="mb-3">
               <lebel>ক্যটেগরি নাম </lebel> <br />
-              <form onSubmit={handleSubmit}>
+              <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
                 <div className="categories-div">
                   <input
                     className="catogories-input"
@@ -189,6 +236,21 @@ const BooksCatagories = () => {
                     onChange={handleInputChange}
                   />
                 </div>
+
+                <div className="categories-div">
+                  <lebel>ক্যটেগরি Icon </lebel> <br />
+                  <input
+                    name = "CategoryIcon"
+                    className="catogories-input"
+                    id="books-categories-inputs-icon"
+                    accept=".png"
+                    type="file"
+                    onChange={handleFileChange}
+                    // value={categoryIcon}
+                    // style={{ display: "none" }} // Optional: hide the default file input UI
+                  />
+                </div>
+
                 <button
                   // onClick={handleAddTodo}
                   className="songrokkhon-button"

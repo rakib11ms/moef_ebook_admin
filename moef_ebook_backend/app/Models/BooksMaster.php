@@ -25,7 +25,7 @@ class BooksMaster extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'CatID', 'id');
+        return $this->belongsTo(BookCategory::class, 'CatID', 'id');
     }
 
     public function mainBooks()

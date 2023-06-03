@@ -61,7 +61,15 @@ Route::resource('bookReview', BookReviewController::class);
 Route::resource('language', LanguageController::class);
 Route::resource('publisher', PublisherController::class);
 // Route::resource('category', CategoryController::class);
-Route::resource('book-category', BookCategoryController::class);
+// Route::resource('book-category', BookCategoryController::class);
+// Route::get('book-category', BookCategoryController::class, 'index');
+Route::get('book-category', [App\Http\Controllers\BookCategoryController::class, 'index']);
+Route::post('store-book-category', [App\Http\Controllers\BookCategoryController::class, 'store']);
+Route::get('get-book-category/{id}', [App\Http\Controllers\BookCategoryController::class, 'show']);
+Route::post('update-book-category/{id}', [App\Http\Controllers\BookCategoryController::class, 'update']);
+Route::delete('delete-book-category/{id}', [App\Http\Controllers\BookCategoryController::class, 'destroy']);
+
+// Route::post('update-book-category/{id}', BookCategoryController::class, 'update');
 Route::resource('book-sub-category', BookSubCategoryController::class);
 Route::get('get-all-book-sub-cat-By-Category-ID/{id}', [BookSubCategoryController::class, 'getBookSubCategoryByCategoryID']);
 Route::resource('bookmark', BookmarkController::class);
@@ -86,6 +94,7 @@ Route::get('/get-main-book-by-count', [MainBookController::class, 'getAllBookCou
 Route::get('/get-main-book/{id}', [MainBookController::class, 'getMainBookByID']);
 Route::post('/update-main-book/{id}', [MainBookController::class, 'updateMainBook']);
 Route::delete('/delete-book-master-with-main-book/{id}', [BooksMasterController::class, 'deleteMainBook']);
+Route::get('/get-All-Book-Category-From-Book-Master', [BooksMasterController::class, 'getAllBookCategoryFromBookMaster']);
 Route::get('/global-search-by-book-or-documents/{name}', [MainBookController::class, 'globalSearchByBookOrDocuments']);
 Route::post('/publish-Main-Book/{id}', [MainBookController::class, 'publishMainBook']);
 Route::post('/publish-Single-Document/{id}', [SingleDocumentController::class, 'publishSingleDocument']);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class BookCategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $bookcategories = BookCategory::all();
         return response()->json(
@@ -19,11 +19,12 @@ class BookCategoryController extends Controller
         );
     }
     
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'CategoryName' => 'required|unique:book_categories',
+            // CategoryIcon type png only and size can be 1 mb max
+            // 'CategoryIcon' => 'max:100000',
         ]);
 
         if ($validator->fails()) {
@@ -32,6 +33,17 @@ class BookCategoryController extends Controller
             $bookcategory = new BookCategory();
             $bookcategory->CategoryName = $request->CategoryName;
             $bookcategory->Created_by = $request->Created_by;
+
+            if($request->hasFile('CategoryIcon')){
+                $file = $request->file('CategoryIcon');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('uploads/bookcategory/', $filename);
+                $bookcategory->CategoryIcon = $filename;
+            }else{
+                $bookcategory->CategoryIcon = 'default.png';
+            }
+
             $bookcategory->save();
             return response()->json(
                 [
@@ -56,11 +68,30 @@ class BookCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $bookcategory = BookCategory::findOrFail($id);
-        $bookcategory->update($request->all());
+        if ($request->has('CategoryName')) {
+            $bookcategory->CategoryName = $request->CategoryName;
+        }
+        if($request->hasFile('CategoryIcon')){
+            // delete old image
+            $old_icon = $bookcategory->CategoryIcon;
+            if($old_icon != 'default.png' && $old_icon != null){
+                $image_path = public_path('uploads/bookcategory/' . $old_icon);
+                if(file_exists($image_path)){
+                    unlink($image_path);
+                }
+            }
+            // upload new image
+            $file = $request->file('CategoryIcon');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/bookcategory/', $filename);
+            $bookcategory->CategoryIcon = $filename;
+        }
+        $bookcategory->update();
         return response()->json(
             [
                 'status' => 200,
-                'bookcategory' => $bookcategory
+                'data' => $bookcategory
             ]
         );
     }

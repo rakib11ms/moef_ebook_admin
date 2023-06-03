@@ -278,10 +278,9 @@ const Home = (props) => {
   };
 
   const handlePageSubmit = (e) => {
-    // get class name
-    // console.log(e.nativeEvent.submitter.className);
+    e.preventDefault();
+
     if (e.nativeEvent.submitter.className === "home-input-button2") {
-      e.preventDefault();
       if (content.trim() === "<p><br></p>" || content.trim() === "") {
         Swal.fire("পৃষ্ঠার বিষয়বস্তু পূরণ করুন", "", "warning");
         return;
@@ -692,6 +691,7 @@ const Home = (props) => {
                           id="fileInput"
                           name="BookCoverImage"
                           onChange={handleFileInputChange}
+                          hidden
                           // style={{ display: "none" }}
                         />
                       </div>
