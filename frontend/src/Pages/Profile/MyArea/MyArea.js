@@ -174,7 +174,7 @@ const MyArea = () => {
       await axios
         .post("api/update-user/" + userID, formData, config)
         .then((res) => {
-          //display current user image
+          // display current user image
           axios.get("api/get-user-image/" + userID).then((res) => {
             setUser(res.data.image);
           });
