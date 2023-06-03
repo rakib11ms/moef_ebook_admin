@@ -113,5 +113,44 @@ class UserController extends Controller
             ]
         );
     }
+
+    public function globalSearchUserByUserNameAndUserEmail(Request $request)
+    {
+        if ($request->search == null) {
+            return response()->json([
+                'status' => 200,
+                'users' => []
+            ]);
+        }
+        
+        $search = $request->search;
+        // dd('check',$search);
+        $users = User::where(function ($query) use ($search) {
+            $query->where('UserName', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        })->get();
+
+        $users = $users->map(function ($user) {
+            $roleName = $user->roles->first()['name'] ?? null;
+
+            return [
+                'id' => $user->id,
+                'UserName' => $user->UserName,
+                'userEmail' => $user->email,
+                'userPhone' => $user->userPhone,
+                'userID' => $user->userID,
+                'officeID' => $user->OfficeID,
+                'userRole' => $roleName,
+                'activeStatus' => $user->ActiveStatus,
+                'created_at' => $user->created_at,
+                'userImage' => $user->userImage ?? 'default.png',
+            ];
+        });
+
+        return response()->json([
+            'status' => 200,
+            'users' => $users,
+        ]);
+    }
 }
 

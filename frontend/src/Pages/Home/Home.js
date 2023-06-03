@@ -979,13 +979,14 @@ const Home = (props) => {
                         </div>
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
                           <JoditEditor
-                            value={content}
+                            className="jodit-editor"
                             ref={editor}
-                            onChange={setContent}
-                            config={{
-                              height: 400,
-                              language: "en",
-                            }}
+                            value={content}
+                            // config={config}
+                            tabIndex={1} // tabIndex of textarea
+                            onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                            // onChange={newContent => {setContent(newContent)}}
+                            id="add-doc-jodit-editor"
                           />
                         </div>
                       </div>

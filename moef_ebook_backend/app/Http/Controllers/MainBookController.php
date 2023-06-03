@@ -164,7 +164,7 @@ class MainBookController extends Controller
         'created_at' => $item->created_at,
         'updated_at' => $item->updated_at,
         'book_master_title' => $item->bookMaster->Title,
-        'book_cover' => $item->bookMaster->BookCoverImage,
+        'BookCoverImage' => $item->bookMaster->BookCoverImage,
         'type' => $item->type
       ];
     });
