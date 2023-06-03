@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./ViewDocuments.css";
 import JoditEditor from "jodit-react";
@@ -20,6 +20,9 @@ const EditDocuments = () => {
 
   const [Title, setTitle] = useState('');
 
+  const[editData,setEditData]=useState('')
+  console.log('edit data',editData)
+
 
   // const [inputs, setInputs] = useState({});
   // const handleChange = (event) => {
@@ -35,6 +38,7 @@ const EditDocuments = () => {
         // console.log(res.data.single_document);
         setTitle(res.data.single_document.document_title);
         setContent(res.data.single_document.document_contents);
+        setEditData(res.data.single_document)
       }
     })
   }, [id])
@@ -68,15 +72,7 @@ const EditDocuments = () => {
               <hr />
               <div>
                 <div class="mb-3">
-                  {/* <div className="my-3"> */}
-                  {/* <input
-                    type="text"
-                    name="Title"
-                    className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
-                    id="editInp"
-                    value={Title}
-                  />
-                  </div> */}
+       
                   <div className="my-3">
                     <p>
                       <strong>ডকুমেন্ট শিরোনামঃ </strong>
@@ -103,6 +99,8 @@ const EditDocuments = () => {
                   <br />
                   <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
+                <a href={`${global.imageURL}/files/${editData.file}`} download target="_blank" className='download btn btn-warning fw-bold'> ফাইল দেখুন </a>
+
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">

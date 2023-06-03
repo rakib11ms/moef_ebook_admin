@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('document_contents')->nullable();
             $table->string('type')->default('single_document');
             $table->string('created_by')->nullable();
+            $table->string('file')->nullable();
             $table->boolean('isPublished')->default(true);
             $table->timestamps();
         });

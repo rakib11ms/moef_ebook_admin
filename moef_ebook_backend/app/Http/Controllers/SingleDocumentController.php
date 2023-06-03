@@ -7,6 +7,7 @@ use App\Models\SingleDocument;
 use App\Models\NewsNotice;
 use App\Models\MainBook;
 use Carbon;
+use File;
 
 class SingleDocumentController extends Controller
 {
@@ -22,8 +23,9 @@ class SingleDocumentController extends Controller
     }
     public function saveSingleDocument(Request $request)
     {
+    
 
-        if ($request->title !== null && $request->contents !== null) {
+        if ($request->title !== null && $request->contents !== null && $request->noticeNewsCheckBoxStatus==false && $request->book_id == null && $request->chapter_id == null && $request->paragraph_id == null) {
             $single_document = new SingleDocument();
             $single_document->category = 'শ্রেণী বহির্ভূত';
             $single_document->document_title = $request->title;
@@ -32,15 +34,25 @@ class SingleDocumentController extends Controller
             $single_document->document_contents = $request->contents;
             $single_document->created_by = $request->created_by;
             $single_document->type = 'single_document';
-            $single_document->isPublished = $request->isPublished;
+            $single_document->isPublished = 1;
             $single_document->save();
             return response()->json([
                 'status' => 200,
-                'message' => 'Document created sucessfully'
+                'message' => 'ডকুমেন্ট তৈরি হয়েছে'
 
             ]);
         } 
-         if ($request->title !== null && $request->contents !== null && $request->notice_news_category_id == !null && $request->redirect_url == !null && $request->book_id == null && $request->chapter_id == null && $request->paragraph_id == null ) {
+        if ($request->title !== null && $request->contents !== null && $request->noticeNewsCheckBoxStatus==true && $request->book_id == null && $request->chapter_id == null && $request->paragraph_id == null ) {
+         $single_document = new SingleDocument();
+            $single_document->category = 'শ্রেণী বহির্ভূত';
+            $single_document->document_title = $request->title;
+            // $single_document->sub_category=$request->sub_category;
+            $single_document->published_date = Carbon\Carbon::now();
+            $single_document->document_contents = $request->contents;
+            $single_document->created_by = $request->created_by;
+            $single_document->type = 'single_document';
+            $single_document->isPublished = 1;
+            $single_document->save();
 
             $newsNotice = new NewsNotice();
             $newsNotice->Title = $request->title;
@@ -50,14 +62,15 @@ class SingleDocumentController extends Controller
             $newsNotice->redirect_url = $request->redirect_url;
             // $newsNotice->created_by = auth('sanctum')->user()->UserID;
             $newsNotice->created_by = $request->created_by;
-            $single_document->isPublished = $request->isPublished;
+            $newsNotice->isPublished = 1;
             $newsNotice->save();
             return response()->json([
                 'status' => 200,
-                'message' => 'notice news created successfully',
+                'message' => 'ডকুমেন্ট এবং নোটিশ তৈরি হয়েছে',
             ]);
         }
-        if ($request->contents !== null && $request->book_id !== null && $request->chapter_id !== null && $request->paragraph_id !== null && $request->notice_news_category_id == null && $request->redirect_url == null) {
+    
+        if ($request->title !== null && $request->contents !== null && $request->noticeNewsCheckBoxStatus==false && $request->book_id !== null && $request->chapter_id !== null && $request->paragraph_id !== null) {
 
             $create_book = new MainBook();
             $create_book->book_id = $request->book_id;
@@ -65,72 +78,55 @@ class SingleDocumentController extends Controller
             $create_book->paragraph_id = $request->paragraph_id;
             $create_book->book_content = $request->contents;
             $create_book->created_by = $request->created_by;
-            $single_document->isPublished = $request->isPublished;
-            $create_book->save();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Main Book created successfully',
-
-            ]);
-        } 
-
-        if ($request->contents !== null && $request->notice_news_category_id == !null && $request->redirect_url == !null && $request->book_id !== null && $request->chapter_id !== null && $request->paragraph_id !== null) {
-
-            $create_book = new MainBook();
-            $create_book->book_id = $request->book_id;
-            $create_book->chapter_id = $request->chapter_id;
-            $create_book->paragraph_id = $request->paragraph_id;
-            $create_book->book_content = $request->contents;
-            $create_book->created_by = $request->created_by;
-            $single_document->isPublished = $request->isPublished;
+            $create_book->type = 'main_book';
+            $create_book->isPublished = 1;
             $create_book->save();
 
 
-            $newsNotice = new NewsNotice();
-            $newsNotice->Title = $request->title;
-            $newsNotice->Description = $request->contents;
-            $newsNotice->CategoryId = $request->notice_news_category_id;
-            $newsNotice->subCatId = $request->notice_news_subcategory_id;
-            $newsNotice->redirect_url = $request->redirect_url;
-            // $newsNotice->created_by = auth('sanctum')->user()->UserID;
-            $newsNotice->created_by = $request->created_by;
-            $single_document->isPublished = $request->isPublished;
-            $newsNotice->save();
+            $single_document = new SingleDocument();
+            $single_document->category = 'শ্রেণী বহির্ভূত';
+            $single_document->document_title = $request->title;
+            // $single_document->sub_category=$request->sub_category;
+            $single_document->published_date = Carbon\Carbon::now();
+            $single_document->document_contents = $request->contents;
+            $single_document->created_by = $request->created_by;
+            $single_document->type = 'single_document';
+            $single_document->isPublished = 1;
+            $single_document->save();
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Main Book and notice news created successfully',
+                'message' => 'ডকুমেন্ট এবং বই তৈরি হয়েছে',
 
-            ]);
-        } else {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Something went wrong',
             ]);
         }
+      
+   
+        if ($request->hasFile('file')) {
+            $single_document=new SingleDocument();
 
+            $file = $request->file('file');
+            $fileName =time().'.'. $file->getClientOriginalName();
+            $file->move('files/', $fileName);
+            $single_document->file= $fileName;   
+
+         $single_document->document_title=$request->document_title;
+        $single_document->type = 'single_document';
+        $single_document->category = 'শ্রেণী বহির্ভূত';
+        $single_document->created_by = $request->created_by;
+        $single_document->isPublished = 1;
+        $single_document->save();
+  return response()->json(
+            [
+                'status' => 200,
+                'message' => 'ডকুমেন্ট তৈরি হয়েছে'
+            ]
+        ); 
+        }
+  
 
     }
 
-
-
-
-    // else if($request->notice_news_category_id==null &&$request->book_id !==null ){
-    //                $create_book= new MainBook();
-    //                $create_book->book_id=$request->book_id;
-    //                $create_book->chapter_id=$request->chapter_id;
-    //                $create_book->paragraph_id=$request->paragraph_id;
-    //                $create_book->book_content=$request->contents;
-    //                $create_book->created_by = $request->created_by;
-    //                $create_book->save();
-    //                      return response()->json([
-    //     'status' => 200,
-    //     'message' => 'book created successfully',
-
-    // ]);
-
-    //         }
-    // }
 
 
     public function getSingleDocument($id)
@@ -169,6 +165,15 @@ class SingleDocumentController extends Controller
     public function deleteSingleDocument($id)
     {
         $single_document = SingleDocument::find($id);
+        if($single_document->file !==null){
+            // delete old file
+            $old_file = $single_document->file;
+                $file_path = public_path('files/' . $old_file);
+                if(file_exists($file_path)){
+                    unlink($file_path);
+                }
+    
+        }
         $single_document->delete();
         return response()->json([
             'status' => 200,

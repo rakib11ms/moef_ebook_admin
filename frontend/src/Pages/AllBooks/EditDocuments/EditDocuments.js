@@ -20,6 +20,12 @@ const EditDocuments = () => {
 
   const [Title, setTitle] = useState('');
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
 
   // const [inputs, setInputs] = useState({});
   // const handleChange = (event) => {
@@ -36,13 +42,15 @@ const EditDocuments = () => {
     setContent(newContent);
   }
 
-
+const [editData,setEditData]=useState('');
+console.log('edit data',editData)
   useEffect(() => {
     axios.get(`/api/get-single-document/${id}`).then(res => {
       if (res.data.status === 200) {
         // console.log(res.data.single_document);
         setTitle(res.data.single_document.document_title);
         setContent(res.data.single_document.document_contents);
+        setEditData(res.data.single_document)
       }
     })
   }, [id])
@@ -143,8 +151,10 @@ const EditDocuments = () => {
                   />
                   </div>
           
-
-                  <label for="exampleFormControlTextarea1" class="form-label">
+          {
+            editData.document_contents!==null?
+            <>
+               <label for="exampleFormControlTextarea1" class="form-label">
                     <h5>এডিটর</h5>
                   </label>
                   <JoditEditor
@@ -158,6 +168,29 @@ const EditDocuments = () => {
                     // onBlur={newContent => setContent(newContent)}
                     onChange={onContentChange}
                   />
+            </>
+            :
+            <div className="my-4 mx-1">
+                  <label htmlFor="fileInput" className=" d-block">
+              <h5 className="">ফাইল (ডকুমেন্ট) </h5>
+            </label>
+            <label htmlFor="fileInput" className="btn btn-warning">
+              <strong>ফাইল (ডকুমেন্ট) আপলোড করুন </strong>
+            </label>
+            <input
+              type="file"
+              className="ms-3"
+              id="fileInput"
+              name="file"
+              // hidden
+              onChange={handleFileInputChange}
+
+            // style={{ display: "none" }}
+            />
+          </div>
+          }
+
+               
                 </div>
                 {/* <div className="draft-prokas-buttons-div">
                   <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>

@@ -47,7 +47,7 @@ const AddDocument = (props) => {
   // const [text, setText] = useState("Untitled");
 
   const [bookId, setBookId] = useState("");
-  const [chapterId, setchapterId] = useState("");
+  const [chapterId, setChapterId] = useState("");
   const [ParagraphId, setParagraphId] = useState("");
   // const [BookCategoryId, setBookCategoryId] = useState("");
 
@@ -88,7 +88,14 @@ const AddDocument = (props) => {
   const [allNoticeNewsSubCategories, setAllNoticeNewsSubCategories] = useState(
     []
   );
+  const [noticeNewsCheckBoxStatus, setNoticeNewsCheckBoxStatus] = useState(false)
+  const [fileUploadCheckBox, setFileUploadCheckBox] = useState(false)
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   async function fetchData() {
     try {
@@ -165,22 +172,55 @@ const AddDocument = (props) => {
     paragraph_id: ParagraphId,
     created_by: $user.id,
     isPublished: true,
+    noticeNewsCheckBoxStatus: noticeNewsCheckBoxStatus
   };
 
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
+  const formData=new FormData();
+  formData.append('document_title',documentTitle)
+  formData.append('file',selectedFile)
+  formData.append('created_by',$user.id)
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (content.trim() === "<p><br></p>" || content.trim() === "") {
-      Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
-      return;
-    }
-    else {
-      axios.post(`/api/save-single-document`, data).then((res) => {
-        if (res.data.status == 200) {
-          Swal.fire(res.data.message, "", "success");
 
-          setdocumentTitle("");
-        }
-      });
+    if(fileUploadCheckBox==false){
+      if (content.trim() === "<p><br></p>" || content.trim() === "") {
+        Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
+        return;
+      }
+    }
+
+    else {
+      if(selectedFile!==null){
+        axios.post(`/api/save-single-document`, formData,config).then((res) => {
+          if (res.data.status == 200) {
+            Swal.fire(res.data.message, "", "success");
+  
+            setSelectedFile(null);
+            setdocumentTitle('')
+            setFileUploadCheckBox(false)
+          }
+        });
+      }
+      else{
+        axios.post(`/api/save-single-document`, data).then((res) => {
+          if (res.data.status == 200) {
+            Swal.fire(res.data.message, "", "success");
+  
+            setdocumentTitle("");
+            setContent('')
+            setNoticeNewsCheckBoxStatus(false);
+            setBookId('');
+            setChapterId('');
+            setParagraphId('');
+          }
+        });
+      }
     }
   };
 
@@ -201,6 +241,7 @@ const AddDocument = (props) => {
         paragraph_id: ParagraphId,
         created_by: $user.id,
         isPublished: false,
+        noticeNewsCheckBoxStatus: noticeNewsCheckBoxStatus
       };
 
       axios.post(`/api/save-single-document`, draftData).then((res) => {
@@ -242,8 +283,10 @@ const AddDocument = (props) => {
               id="docu-edit-icon"
             />
 
+
             <button
               type="submit"
+              style={{ position: "absolute", right: "200px" }}
               className="doc-input-button "
               onClick={handleDraftSubmit}
             >
@@ -258,6 +301,7 @@ const AddDocument = (props) => {
             >
               সংরক্ষন করুন
             </button>
+
           </div>
         </div>
         {/* <div className=" doc-input-button-div" style={{ display: 'flex', justifyContent: 'right'}}>
@@ -273,203 +317,236 @@ const AddDocument = (props) => {
       </section>
 
       <hr />
-      <section className="container-fluid">
-        <div className="">
-          <div className="row">
-            <div className="col-1"></div>
+      <div class="form-check mx-3">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+          checked={fileUploadCheckBox} onChange={() => setFileUploadCheckBox(!fileUploadCheckBox)}
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          আপনি কি ফাইল আপলোড দিতে চাচ্ছেন?
+        </label>
+      </div>
+      {
+        fileUploadCheckBox ?
+          <div className="my-3 mx-3">
+            <label htmlFor="fileInput" className="btn btn-warning">
+              <strong>ফাইল (ডকুমেন্ট) আপলোড করুন </strong>
+            </label>
+            <input
+              type="file"
+              className="ms-3"
+              id="fileInput"
+              name="file"
+              // hidden
+              onChange={handleFileInputChange}
 
-            <div className=" col-8 ">
-              <div className="documents-text-div ">
-                <div className="documents-text-header">{/* header Text */}</div>
-                <JoditEditor
-                  className="jodit-editor"
-                  ref={editor}
-                  value={content}
-                  // config={config}
-                  tabIndex={1} // tabIndex of textarea
-                  onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-                  // onChange={newContent => {setContent(newContent)}}
-                  id="add-doc-jodit-editor"
-                />
-                <div className="TrendingFlatIcon-doc-div">
-                  <TrendingFlatIcon className="TrendingFlatIcon" />
-                </div>
-              </div>
-            </div>
+            // style={{ display: "none" }}
+            />
+          </div>
+          :
+          <section className="container-fluid">
+            <div className="">
+              <div className="row">
+                <div className="col-1"></div>
 
-            <div className="col-3">
-              <div className="">
-                <h5 className="mt-3">তথ্য যোগ করুন </h5>
-                <div className="book-add-input">
-                  <select
-                    className="form-select draft-form-control"
-                    aria-label="Default select example"
-                    id="add-docu-book-selection"
-                  >
-                    <option selected disabled>
-                      বই নির্বাচন করুন{" "}
-                    </option>
-                    {allBooks &&
-                      allBooks.map((item) => {
-                        return (
-                          <>
-                            <option value={item.Title}>{item.Title}</option>
-                          </>
-                        );
-                      })}
-                  </select>
-                  {/* <Link to="/home" className="text-dark">
-                    <AddIcon className="book-add-icon" />
-                    <div className="d-none">
-                      <Home activeButton={1} />
-                    </div>
-                  </Link> */}
-                </div>
-                <div className="book-add-input">
-                  <select
-                    className="form-select draft-form-control"
-                    aria-label="Default select example"
-                    id="add-docu-chapter-selection"
-                  >
-                    <option selected disabled>
-                      অধ্যায় নির্বাচন করুন{" "}
-                    </option>
-
-                    {allChapters &&
-                      allChapters.map((item) => {
-                        return (
-                          <>
-                            <option value={item.ChapterName}>
-                              {item.ChapterName}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                  {/* <Link to="/home" className="text-dark">
-                    <AddIcon className="book-add-icon" />
-                    <div className="d-none">
-                      <Home activeButton={2} />
-                    </div>
-                  </Link> */}
-                </div>
-                <div className="book-add-input">
-                  <select
-                    className="form-select draft-form-control"
-                    aria-label="Default select example"
-                  >
-                    <option selected disabled>
-                      অনুচ্ছেদ নির্বাচন করুন{" "}
-                    </option>
-                    {allParagraphs.map((item) => {
-                      return (
-                        <>
-                          <option value={item.ParagraphName}>
-                            {item.ParagraphName}
-                          </option>
-                        </>
-                      );
-                    })}
-                  </select>
-                  {/* <Link to="/home" className="text-dark">
-                    <AddIcon className="book-add-icon" />
-                    <div className="d-none">
-                      <Home activeButton={2} />
-                    </div>
-                  </Link>{" "} */}
-                </div>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input mt-0"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                  onClick={toggleDiv}
-                />
-
-                <p className="doc-redios-text mt-4 text-danger">
-                  {" "}
-                  এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে
-                </p>
-              </div>
-
-              <div className="container-fluid">
-                {" "}
-                {isOpen && (
-                  <div>
-                    <div className="doc-suchi-div">
-
-
-                      <div>
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label"
-                        >
-                          যারা দেখতে পারবেন
-                        </label>
-                        <select
-                          className="form-select mb-4"
-                          aria-label="Default select example"
-                          id="add-docu-show"
-                        // onChange={(e)=>setTargetUser(e.target.value)}
-                        >
-                          <option selected value="সকল">সকলের জন্য</option>
-                          <option value="এডমিন">এডমিন</option>
-                          <option value="মডারেটর">মডারেটর</option>
-                          <option value="ইউজার">ইউজার</option>
-                          <option value="অন্যান্য">অন্যান্য </option>
-                        </select>
-                      </div>
-
-                      <div className="mb-4">
-                        <lebel> প্রকাশ কাল </lebel> <br />
-                        <div className="doc-prokash-date">
-                          <ReactDatePicker
-                            className="create-news-calander-input "
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            id="add-docu-date-select"
-                          />
-                          <CalendarTodayIcon className="calander-icon" />
-                        </div>
-                      </div>
-                      <div>
-                        <lebel> লিংক </lebel> <br />
-                        <input
-                          className=" doc-link"
-                          value={redirect_url}
-                          onChange={(e) => setredirect_url(e.target.value)}
-                        ></input>
-                      </div>
-
-
-
-
-
-
-
-
+                <div className=" col-8 ">
+                  <div className="documents-text-div ">
+                    <div className="documents-text-header">{/* header Text */}</div>
+                    <JoditEditor
+                      className="jodit-editor"
+                      ref={editor}
+                      value={content}
+                      // config={config}
+                      tabIndex={1} // tabIndex of textarea
+                      onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                      // onChange={newContent => {setContent(newContent)}}
+                      id="add-doc-jodit-editor"
+                    />
+                    <div className="TrendingFlatIcon-doc-div">
+                      <TrendingFlatIcon className="TrendingFlatIcon" />
                     </div>
                   </div>
-                )}
+                </div>
+
+                <div className="col-3">
+                  <div className="">
+                    <h5 className="mt-3">তথ্য যোগ করুন </h5>
+                    <div className="book-add-input">
+                      <select
+                        className="form-select draft-form-control"
+                        aria-label="Default select example"
+                        id="add-docu-book-selection"
+                        onChange={(e) => setBookId(e.target.value)}
+                      >
+                        <option selected disabled>
+                          বই নির্বাচন করুন{" "}
+                        </option>
+                        {allBooks &&
+                          allBooks.map((item) => {
+                            return (
+                              <>
+                                <option value={item.id}>{item.Title}</option>
+                              </>
+                            );
+                          })}
+                      </select>
+                      {/* <Link to="/home" className="text-dark">
+            <AddIcon className="book-add-icon" />
+            <div className="d-none">
+              <Home activeButton={1} />
+            </div>
+          </Link> */}
+                    </div>
+                    <div className="book-add-input">
+                      <select
+                        className="form-select draft-form-control"
+                        aria-label="Default select example"
+                        id="add-docu-chapter-selection"
+                        onChange={(e) => setChapterId(e.target.value)}
+
+                      >
+                        <option selected disabled>
+                          অধ্যায় নির্বাচন করুন{" "}
+                        </option>
+
+                        {allChapters &&
+                          allChapters.map((item) => {
+                            return (
+                              <>
+                                <option value={item.id}>
+                                  {item.ChapterName}
+                                </option>
+                              </>
+                            );
+                          })}
+                      </select>
+                      {/* <Link to="/home" className="text-dark">
+            <AddIcon className="book-add-icon" />
+            <div className="d-none">
+              <Home activeButton={2} />
+            </div>
+          </Link> */}
+                    </div>
+                    <div className="book-add-input">
+                      <select
+                        className="form-select draft-form-control"
+                        aria-label="Default select example"
+                        onChange={(e) => setParagraphId(e.target.value)}
+
+                      >
+                        <option selected disabled>
+                          অনুচ্ছেদ নির্বাচন করুন{" "}
+                        </option>
+                        {allParagraphs.map((item) => {
+                          return (
+                            <>
+                              <option value={item.id}>
+                                {item.ParagraphName}
+                              </option>
+                            </>
+                          );
+                        })}
+                      </select>
+                      {/* <Link to="/home" className="text-dark">
+            <AddIcon className="book-add-icon" />
+            <div className="d-none">
+              <Home activeButton={2} />
+            </div>
+          </Link>{" "} */}
+                    </div>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input mt-0"
+                      type="checkbox"
+                      value=""
+                      checked={noticeNewsCheckBoxStatus}
+                      id="flexCheckDefault"
+                      onClick={toggleDiv}
+                      onChange={() => setNoticeNewsCheckBoxStatus(!noticeNewsCheckBoxStatus)}
+
+                    />
+
+                    <p className="doc-redios-text mt-4 text-danger">
+                      {" "}
+                      এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে
+                    </p>
+                  </div>
+
+                  <div className="container-fluid">
+                    {" "}
+                    {isOpen && (
+                      <div>
+                        <div className="doc-suchi-div">
+
+
+                          <div>
+                            <label
+                              for="exampleFormControlInput1"
+                              class="form-label"
+                            >
+                              যারা দেখতে পারবেন
+                            </label>
+                            <select
+                              className="form-select mb-4"
+                              aria-label="Default select example"
+                              id="add-docu-show"
+                            // onChange={(e)=>setTargetUser(e.target.value)}
+                            >
+                              <option selected value="সকল">সকলের জন্য</option>
+                              <option value="এডমিন">এডমিন</option>
+                              <option value="মডারেটর">মডারেটর</option>
+                              <option value="ইউজার">ইউজার</option>
+                              <option value="অন্যান্য">অন্যান্য </option>
+                            </select>
+                          </div>
+
+                          {/* <div className="mb-4">
+                <lebel> প্রকাশ কাল </lebel> <br />
+                <div className="doc-prokash-date">
+                  <ReactDatePicker
+                    className="create-news-calander-input "
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    id="add-docu-date-select"
+                  />
+                  <CalendarTodayIcon className="calander-icon" />
+                </div>
+              </div> */}
+                          {/* <div>
+                <lebel> লিংক </lebel> <br />
+                <input
+                  className=" doc-link"
+                  value={redirect_url}
+                  onChange={(e) => setredirect_url(e.target.value)}
+                ></input>
+              </div> */}
+
+
+
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* <div className=" doc-input-button-div">
+        <button
+          type="submit"
+          className="doc-input-button py-2"
+          onClick={handleSubmit}
+        >
+          সংরক্ষন করুন
+        </button>
+      </div> */}
+                </div>
               </div>
 
-              {/* <div className=" doc-input-button-div">
-                <button
-                  type="submit"
-                  className="doc-input-button py-2"
-                  onClick={handleSubmit}
-                >
-                  সংরক্ষন করুন
-                </button>
-              </div> */}
+
             </div>
-          </div>
+          </section>
+
+      }
 
 
-        </div>
-      </section>
     </div>
   )
 }
