@@ -13,17 +13,25 @@ class BookCategoryController extends Controller
 {
     public function index()
     {
-        // get all book category
         $bookcategory = BookCategory::all();
-        // fotmat date time
-        // foreach ($bookcategory as $key => $value) {
-        //     $value->
-        // }
+        // dd($bookcategory);
+
+        $dateConverter = new BnDateTimeConverter();
+
+        $bookcategory = $bookcategory->map(function ($bookcategory) use ($dateConverter) {
+            $updated_at_text = $dateConverter->getConvertedDateTime($bookcategory->updated_at, 'BnEn', '');
+            return [
+                'id' => $bookcategory->id,
+                'CategoryName' => $bookcategory->CategoryName,
+                'CategoryIcon' => $bookcategory->CategoryIcon,
+                'updated_at' => $updated_at_text,
+            ];
+        });
 
         return response()->json(
             [
                 'status' => 200,
-                'bookcategory' => $bookcategory
+                'bookcategories' => $bookcategory
             ]
         );
     }

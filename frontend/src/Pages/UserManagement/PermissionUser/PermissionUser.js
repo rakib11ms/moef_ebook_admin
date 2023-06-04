@@ -236,10 +236,10 @@ const PermissionUser = () => {
           <div className="permission-top-tag container-fluid">
             <h5>ব্যবহারকারীর অনুমতি ব্যবস্থাপনা </h5>
             <div className="">
-              <div className="tab-serchInput-icon-div">
+              {/* <div className="tab-serchInput-icon-div">
                 <SearchIcon />
                 <input type="search" className="gsearch-permission" />
-              </div>
+              </div> */}
             </div>
           </div>
           <hr />
@@ -266,6 +266,11 @@ const PermissionUser = () => {
               }
 
             </select>
+          </div>
+          <div className="container">
+            <div className="d-flex justify-content-end align-items-start" style={{ marginTop: '-50px' }}>
+              <button className="btn btn-success" type="button" onClick={handleSubmit}>আপডেট</button>
+            </div>
           </div>
         </div>
       </section>
@@ -559,10 +564,10 @@ const PermissionUser = () => {
             </div>
 
           </div>
-          <div className="w-25 align-self-end ">
+          {/* <div className="w-25 align-self-end ">
             <button className="btn btn-success" type="button" onClick={handleSubmit}>আপডেট </button>
 
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
