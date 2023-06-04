@@ -181,46 +181,46 @@ const AddDocument = (props) => {
     },
   };
 
-  const formData=new FormData();
-  formData.append('document_title',documentTitle)
-  formData.append('file',selectedFile)
-  formData.append('created_by',$user.id)
+  const formData = new FormData();
+  formData.append('document_title', documentTitle)
+  formData.append('file', selectedFile)
+  formData.append('created_by', $user.id)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(fileUploadCheckBox==false){
-      if (content.trim() === "<p><br></p>" || content.trim() === "") {
-        Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
-        return;
-      }
-    }
+    // if(fileUploadCheckBox==false){
+    //   if (content.trim() === "<p><br></p>" || content.trim() === "") {
+    //     Swal.fire("বিষয়বস্তু পূরণ করুন", "", "warning");
+    //     return;
+    //   }
+    // }
 
+    // else {
+    if (selectedFile !== null) {
+      axios.post(`/api/save-single-document`, formData, config).then((res) => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, "", "success");
+
+          setSelectedFile(null);
+          setdocumentTitle('')
+          setFileUploadCheckBox(false)
+        }
+      });
+    }
     else {
-      if(selectedFile!==null){
-        axios.post(`/api/save-single-document`, formData,config).then((res) => {
-          if (res.data.status == 200) {
-            Swal.fire(res.data.message, "", "success");
-  
-            setSelectedFile(null);
-            setdocumentTitle('')
-            setFileUploadCheckBox(false)
-          }
-        });
-      }
-      else{
-        axios.post(`/api/save-single-document`, data).then((res) => {
-          if (res.data.status == 200) {
-            Swal.fire(res.data.message, "", "success");
-  
-            setdocumentTitle("");
-            setContent('')
-            setNoticeNewsCheckBoxStatus(false);
-            setBookId('');
-            setChapterId('');
-            setParagraphId('');
-          }
-        });
-      }
+      axios.post(`/api/save-single-document`, data).then((res) => {
+        if (res.data.status == 200) {
+          Swal.fire(res.data.message, "", "success");
+
+          setdocumentTitle("");
+          setContent('')
+          setNoticeNewsCheckBoxStatus(false);
+          setBookId('');
+          setChapterId('');
+          setParagraphId('');
+        }
+      });
+      // }
     }
   };
 
@@ -336,7 +336,7 @@ const AddDocument = (props) => {
               className="ms-3"
               id="fileInput"
               name="file"
-              // hidden
+              hidden
               onChange={handleFileInputChange}
 
             // style={{ display: "none" }}

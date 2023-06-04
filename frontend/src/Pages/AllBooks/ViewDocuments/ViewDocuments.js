@@ -67,7 +67,6 @@ const EditDocuments = () => {
                     <CreateOutlinedIcon className="text-warning" />
                   </Link>
                 </div>
-
               </div>
               <hr />
               <div>
@@ -99,7 +98,11 @@ const EditDocuments = () => {
                   <br />
                   <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
-                <a href={`${global.imageURL}/files/${editData.file}`} download target="_blank" className='download btn btn-warning fw-bold'> ফাইল দেখুন </a>
+                {
+                  editData.file !==null && 
+                  <a href={`${global.imageURL}/files/${editData.file}`} download target="_blank" className='download btn btn-warning fw-bold'> ফাইল দেখুন </a>
+
+                }
 
               </div>
             </div>

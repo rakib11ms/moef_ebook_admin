@@ -144,13 +144,36 @@ class SingleDocumentController extends Controller
     public function updateSingleDocument(Request $request, $id)
     {
         $single_document = SingleDocument::find($id);
+         if($request->hasFile('file')){
+            // delete old image
+            $old_file = $single_document->file;
+            if($old_file!== null){
+                $file_path = public_path('files/' . $old_file);
+                if(file_exists($file_path)){
+                    unlink($file_path);
+                }
+            }
+            // upload new file
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('files/', $filename);
+            $single_document->file = $filename;
+                        $single_document->document_title = $request->document_title;
 
-        if ($request->document_title != null){
+                    $single_document->update();
+                         return response()->json([
+            'status' => 200,
+            'message' => 'Document updated sucessfully',
+            'single_document' => $single_document,
+        ]);
+
+
+        }
+        else{
+
             $single_document->document_title = $request->document_title;
-        }
-        if ($request->document_title != null){
             $single_document->document_contents = $request->document_contents;
-        }
 
         $single_document->update();
 
@@ -161,6 +184,7 @@ class SingleDocumentController extends Controller
         ]);
 
     }
+}
 
     public function deleteSingleDocument($id)
     {
