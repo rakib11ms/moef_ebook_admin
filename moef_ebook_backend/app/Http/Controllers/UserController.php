@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $users = User::with(['roles' => function ($query) {
             $query->select('name');
-        }])->get();
+        }])->where('ActiveStatus',1)->get();
 
         $users = $users->map(function ($user) {
             $roleName = $user->roles->first()['name'] ?? null;
@@ -30,9 +30,32 @@ class UserController extends Controller
             ];
         });
 
+         $deactive_users = User::with(['roles' => function ($query) {
+            $query->select('name');
+        }])->where('ActiveStatus',0)->get();
+
+        $deactive_users1 = $deactive_users->map(function ($user) {
+            $roleName = $user->roles->first()['name'] ?? null;
+
+            return [
+                'id' => $user->id,
+                'UserName' => $user->UserName,
+                'userEmail' => $user->email,
+                'userPhone' => $user->userPhone,
+                'userID' => $user->userID,
+                'officeID' => $user->OfficeID,
+                'userRole' => $roleName,
+                'activeStatus' => $user->ActiveStatus,
+                'created_at' => $user->created_at,
+                'userImage' => $user->userImage ?? 'default.png',
+            ];
+        });
+
+
         return response()->json([
             'status' => 200,
             'users' => $users,
+            'deactive_users'=>$deactive_users1
         ]);
     }
 

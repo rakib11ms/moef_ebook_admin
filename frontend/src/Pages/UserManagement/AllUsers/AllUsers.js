@@ -59,16 +59,17 @@ function a11yProps(index) {
 const AllUsers = () => {
 
   const [allUsers, setAllUsers] = useState([]);
+  // console.log('all users',allUsers)
   const [allDeactiveUsers, setAllDeactiveUsers] = useState([]);
+  // console.log('all deactive users',allDeactiveUsers)
 
   async function fetchUser() {
     await axios.get("/api/get-all-user-info").then((res) => {
       if (res.data.status === 200) {
-        const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
-        const deactiveUsers = res.data.users.filter((user) => user.activeStatus === 0);
-        setAllUsers(activeUsers);
-        setAllDeactiveUsers(deactiveUsers);
-        console.log('activeUsers', activeUsers);
+        setAllUsers(res.data.users);
+
+        setAllDeactiveUsers(res.data.deactive_users);
+        // console.log('activeUsers', activeUsers);
       } else {
         console.log("error");
       }
@@ -77,6 +78,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     fetchUser();
+
   }, []);
 
   const columns = [

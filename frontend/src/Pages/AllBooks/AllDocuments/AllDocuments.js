@@ -14,6 +14,8 @@ import axios from "axios";
 const AllDocuments = () => {
   const [AllDocuments, setAllDocuments] = useState([]);
 
+  console.log('all documents',AllDocuments)
+
   async function fetchDocs() {
     await axios.get(`/api/all-single-document`).then((res) => {
       if (res.data.status === 200) {
@@ -28,9 +30,18 @@ const AllDocuments = () => {
   useEffect(() => {
     fetchDocs();
   }, []);
+  const rows = [
+    ...AllDocuments.map((data) => {
+      return {
+        id: data.id,
+        title: data.title,
+      };
+    }),
+  ];
+
 
   const columns = [
-    { field: 'document_title', headerName: 'ডকুমেন্টের নাম', width: 400 },
+    { field: 'title', headerName: 'ডকুমেন্টের নাম', width: 400 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
@@ -101,15 +112,7 @@ const AllDocuments = () => {
     },
   ];
 
-  const rows = [
-    ...AllDocuments.map((data) => {
-      return {
-        id: data.id,
-        document_title: data.document_title,
-      };
-    }),
-  ];
-
+ 
   return (
     <div>
       <section>

@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('single_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('document_title')->nullable();
-            $table->string('category')->nullable();
-            $table->string('sub_category')->nullable();
+            $table->string('title')->nullable();
+            $table->string('category')->default('শ্রেণী বহির্ভূত');
             $table->string('published_date')->nullable();
-            $table->longText('document_contents')->nullable();
-            $table->string('type')->default('single_document');
+            $table->longText('contents')->nullable();
+            $table->string('type')->nullable();
             $table->string('created_by')->nullable();
             $table->string('file')->nullable();
             $table->boolean('isPublished')->default(true);
+            $table->string('target_users')->nullable();
             $table->timestamps();
         });
     }

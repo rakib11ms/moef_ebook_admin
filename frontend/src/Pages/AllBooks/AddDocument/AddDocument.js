@@ -91,7 +91,19 @@ const AddDocument = (props) => {
   const [noticeNewsCheckBoxStatus, setNoticeNewsCheckBoxStatus] = useState(false)
   const [fileUploadCheckBox, setFileUploadCheckBox] = useState(false)
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
+  const [allUsers, setAllUsers] = useState([]);
+
+  const [targetUser, setTargetUser] = useState('সকল')
+
+  const [contactPerson, setcontactPerson] = React.useState('');
+
+  function handlePersonChange(event, values) {
+    let result = values.map(a => a.id);
+    let arrString = result.join(',');
+    setcontactPerson(arrString)
+
+  }
 
   const handleFileInputChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -151,6 +163,20 @@ const AddDocument = (props) => {
     } catch (error) {
       console.log(error);
     }
+
+
+    try {
+      axios.get(`/api/get-all-user-info`).then(res => {
+        if (res.data.status == 200) {
+          setAllUsers(res.data.users);
+
+        }
+      })
+    }
+    catch (error) {
+      console.log(error);
+    }
+
   }
 
   useEffect(() => {
@@ -164,9 +190,6 @@ const AddDocument = (props) => {
   const data = {
     contents: content,
     title: documentTitle,
-    notice_news_category_id: notice_news_category_id,
-    notice_news_subcategory_id: notice_news_subcategory_id,
-    redirect_url: redirect_url,
     book_id: bookId,
     chapter_id: chapterId,
     paragraph_id: ParagraphId,
@@ -182,9 +205,17 @@ const AddDocument = (props) => {
   };
 
   const formData = new FormData();
-  formData.append('document_title', documentTitle)
+  formData.append('title', documentTitle)
   formData.append('file', selectedFile)
   formData.append('created_by', $user.id)
+  formData.append('book_id', bookId)
+  formData.append('chapter_id', chapterId)
+  formData.append('paragraph_id', ParagraphId)
+  formData.append('contents', content)
+  formData.append('type', noticeNewsCheckBoxStatus ? 'both' : 'single_document')
+  formData.append('noticeNewsCheckBoxStatus', noticeNewsCheckBoxStatus)
+  formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
+  )
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -196,32 +227,34 @@ const AddDocument = (props) => {
     // }
 
     // else {
-    if (selectedFile !== null) {
-      axios.post(`/api/save-single-document`, formData, config).then((res) => {
-        if (res.data.status == 200) {
-          Swal.fire(res.data.message, "", "success");
 
-          setSelectedFile(null);
-          setdocumentTitle('')
-          setFileUploadCheckBox(false)
-        }
-      });
-    }
-    else {
-      axios.post(`/api/save-single-document`, data).then((res) => {
-        if (res.data.status == 200) {
-          Swal.fire(res.data.message, "", "success");
+    axios.post(`/api/save-single-document`, formData, config).then((res) => {
+      if (res.data.status == 200) {
+        Swal.fire(res.data.message, "", "success");
 
-          setdocumentTitle("");
-          setContent('')
-          setNoticeNewsCheckBoxStatus(false);
-          setBookId('');
-          setChapterId('');
-          setParagraphId('');
-        }
-      });
-      // }
-    }
+        setSelectedFile(null);
+        setdocumentTitle('')
+        setContent('')
+        setFileUploadCheckBox(false)
+        setNoticeNewsCheckBoxStatus(false)
+      }
+    });
+
+    // else {
+    //   axios.post(`/api/save-single-document`, data).then((res) => {
+    //     if (res.data.status == 200) {
+    //       Swal.fire(res.data.message, "", "success");
+
+    //       setdocumentTitle("");
+    //       setContent('')
+    //       setNoticeNewsCheckBoxStatus(false);
+    //       setBookId('');
+    //       setChapterId('');
+    //       setParagraphId('');
+    //     }
+    //   });
+    //   // }
+    // }
   };
 
   const handleDraftSubmit = (e) => {
@@ -327,20 +360,121 @@ const AddDocument = (props) => {
       </div>
       {
         fileUploadCheckBox ?
-          <div className="my-3 mx-3">
-            <label htmlFor="fileInput" className="btn btn-warning">
-              <strong>ফাইল (ডকুমেন্ট) আপলোড করুন </strong>
-            </label>
-            <input
-              type="file"
-              className="ms-3"
-              id="fileInput"
-              name="file"
-              hidden
-              onChange={handleFileInputChange}
+          <div className="mt-3">
+            <div className="my-2  mx-3">
+              <label htmlFor="fileInput" className="btn btn-warning">
+                <strong>ফাইল (ডকুমেন্ট) আপলোড করুন </strong>
+              </label>
+              <input
+                type="file"
+                className="ms-3"
+                id="fileInput"
+                name="file"
+                hidden
+                accept=".doc,.docx,.pdf"
+                onChange={handleFileInputChange}
 
-            // style={{ display: "none" }}
-            />
+              // style={{ display: "none" }}
+              />
+            </div>
+            <div class="form-check mx-3 my-4">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                checked={noticeNewsCheckBoxStatus} onChange={() => setNoticeNewsCheckBoxStatus(!noticeNewsCheckBoxStatus)}
+              />
+              <label class="form-check-label text-muted" for="flexCheckDefault">
+                এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে?
+              </label>
+
+              {noticeNewsCheckBoxStatus && (
+                      <div>
+                        <div className="doc-suchi-div col-3">
+
+
+                          <div>
+                            <label
+                              for="exampleFormControlInput1"
+                              class="form-label"
+                            >
+                              যারা দেখতে পারবেন
+                            </label>
+                            <select
+                              className="form-select mb-4"
+                              aria-label="Default select example"
+                              id="add-docu-show"
+                              onChange={(e) => setTargetUser(e.target.value)}                            >
+                              <option selected value="সকল">সকলের জন্য</option>
+                              <option value="সুপার এডমিন">সুপার এডমিন</option>
+                              <option value="এডমিন">এডমিন</option>
+                              <option value="মডারেটর">মডারেটর</option>
+                              <option value="ইউজার">ইউজার</option>
+                              <option value="অন্যান্য">অন্যান্য </option>
+                            </select>
+                          </div>
+
+                          {
+                            targetUser == 'অন্যান্য'
+                            &&
+                            <div class="">
+                              <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                                <Autocomplete
+                                  multiple
+                                  id="tags-standard"
+                                  options={allUsers}
+                                  getOptionLabel={(option) => option.UserName}
+                                  // defaultValue={[allUsers[1]]}
+                                  onChange={handlePersonChange}
+                                  renderOption={(props, option) => (
+                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                                      {
+                                        option.userImage === 'default.png' ?
+                                          <img
+                                            loading="lazy"
+                                            width="25"
+                                            src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                            alt=""
+                                          />
+                                          :
+                                          <img
+                                            loading="lazy"
+                                            width="20"
+                                            src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                            alt=""
+                                          />
+
+                                      }
+
+                                      {option.UserName}
+                                    </Box>
+                                  )}
+                                  getOptionSelected={(option, value) =>
+                                    option.id === value.id
+                                  }
+
+                                  renderInput={(params) => (
+
+                                    <TextField
+
+
+                                      {...params}
+                                      // variant="standard"
+                                      // label="Multiple values"
+                                      placeholder="Search..."
+                                    />
+                                  )}
+
+                                />
+                              </Stack>
+
+                            </div>
+                          }
+
+
+
+                        </div>
+                      </div>
+                    )}
+            </div>
           </div>
           :
           <section className="container-fluid">
@@ -490,9 +624,9 @@ const AddDocument = (props) => {
                               className="form-select mb-4"
                               aria-label="Default select example"
                               id="add-docu-show"
-                            // onChange={(e)=>setTargetUser(e.target.value)}
-                            >
+                              onChange={(e) => setTargetUser(e.target.value)}                            >
                               <option selected value="সকল">সকলের জন্য</option>
+                              <option value="সুপার এডমিন">সুপার এডমিন</option>
                               <option value="এডমিন">এডমিন</option>
                               <option value="মডারেটর">মডারেটর</option>
                               <option value="ইউজার">ইউজার</option>
@@ -500,26 +634,63 @@ const AddDocument = (props) => {
                             </select>
                           </div>
 
-                          {/* <div className="mb-4">
-                <lebel> প্রকাশ কাল </lebel> <br />
-                <div className="doc-prokash-date">
-                  <ReactDatePicker
-                    className="create-news-calander-input "
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    id="add-docu-date-select"
-                  />
-                  <CalendarTodayIcon className="calander-icon" />
-                </div>
-              </div> */}
-                          {/* <div>
-                <lebel> লিংক </lebel> <br />
-                <input
-                  className=" doc-link"
-                  value={redirect_url}
-                  onChange={(e) => setredirect_url(e.target.value)}
-                ></input>
-              </div> */}
+                          {
+                            targetUser == 'অন্যান্য'
+                            &&
+                            <div class="">
+                              <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                                <Autocomplete
+                                  multiple
+                                  id="tags-standard"
+                                  options={allUsers}
+                                  getOptionLabel={(option) => option.UserName}
+                                  // defaultValue={[allUsers[1]]}
+                                  onChange={handlePersonChange}
+                                  renderOption={(props, option) => (
+                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                                      {
+                                        option.userImage === 'default.png' ?
+                                          <img
+                                            loading="lazy"
+                                            width="25"
+                                            src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                            alt=""
+                                          />
+                                          :
+                                          <img
+                                            loading="lazy"
+                                            width="20"
+                                            src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                            alt=""
+                                          />
+
+                                      }
+
+                                      {option.UserName}
+                                    </Box>
+                                  )}
+                                  getOptionSelected={(option, value) =>
+                                    option.id === value.id
+                                  }
+
+                                  renderInput={(params) => (
+
+                                    <TextField
+
+
+                                      {...params}
+                                      // variant="standard"
+                                      // label="Multiple values"
+                                      placeholder="Search..."
+                                    />
+                                  )}
+
+                                />
+                              </Stack>
+
+                            </div>
+                          }
 
 
 

@@ -50,7 +50,7 @@ const EditDocuments = () => {
   }
 
   const [editData, setEditData] = useState('');
-  console.log('edit data', editData)
+  // console.log('edit data', editData)
   useEffect(() => {
     axios.get(`/api/get-single-document/${id}`).then(res => {
       if (res.data.status === 200) {
