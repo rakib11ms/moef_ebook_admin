@@ -27,6 +27,8 @@ const AllDocuments = () => {
     });
   }
 
+
+  
   useEffect(() => {
     fetchDocs();
   }, []);
