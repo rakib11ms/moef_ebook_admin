@@ -192,14 +192,10 @@ const AllUsers = () => {
         // </div>
         <div className="d-flex justify-content-center align-items-center">
           <img
-            src={`${global.imageURL}/images/user/${params.row.userPhoto}`}
+            src={`${global.imageURL}/images/user/${params.row.userPhoto}` || `${global.imageURL}/images/user/default.png` }
             alt="pic"
             className="img-fluid"
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = `${global.imageURL}/images/user/default.png`;
-            }}
           />
         </div>
       )

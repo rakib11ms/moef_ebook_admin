@@ -110,10 +110,16 @@ class MainBookController extends Controller
     foreach ($all_book_count as $book) {
       $book_id = $book->book_id;
       $id = $book->id;
+      $updated_at = $book->bookMaster->updated_at;
         
       if (in_array($book_id, $book_ids)) {
         continue;
       }
+
+      $dateConverter = new BnDateTimeConverter();
+      $updated_at_text = $dateConverter->getConvertedDateTime($updated_at, 'BnEn', '');
+
+      $updated_at_multiline = implode(PHP_EOL, explode(' ', $updated_at_text)); 
 
       $book_count[] = [
         'id' => $id,
@@ -121,6 +127,9 @@ class MainBookController extends Controller
         'book_title' => $book->bookMaster->Title,
         'chapter_count' => BookChapter::where('BookID', $book_id)->count(),
         'paragraph_count' => BookParagraph::where('BookID', $book_id)->count(),
+        // updated at multiline
+        // 'updated_at' => $dateConverter->getConvertedDateTime($updated_at, 'BnEn', '')
+        'updated_at' => $updated_at_multiline
       ];
 
       $book_ids[] = $book_id;
@@ -501,48 +510,90 @@ class MainBookController extends Controller
   {
     $all_main_book = MainBook::where('book_id', $id)
     ->where('isPublished', 1)
-    ->with(['bookMaster', 'bookChapter',])
+    ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
     ->get();
 
-
+    // $bookName = $all_main_book[0]->bookMaster->Title;
+    
     $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
 
     $chapterData = [];
 
     foreach ($chapters as $chapterName => $chapterItems) {
+        $paragraphs = $chapterItems->map(function ($item) {
+            return [
+              'paragraph_id' => $item->paragraph_id,
+              'paragraph_name' => $item->bookParagraph->ParagraphName,
+              // 'main_book_id' => $item->id,
+            ];
+        });
+
         $chapterData[] = [
           'chapter_id' => $chapterItems[0]->chapter_id,
           'chapter_name' => $chapterName,
+          'paragraphs' => $paragraphs,
         ];
     }
 
     return response()->json([
       'status' => 200,
+      'message' => "All main book by book master id",
       'data' => $chapterData
     ]);
   }
 
   public function getAllParagraphsByChapterID($id)
   {
-    $all_main_book = MainBook::where('chapter_id', $id)
+    $all_main_book = MainBook::where('paragraph_id', $id)
     ->where('isPublished', 1)
     ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
     ->get();
 
-    $paragraphs = $all_main_book->groupBy('bookParagraph.ParagraphName'); // Group by paragraph name
+    // $paragraphs = $all_main_book->groupBy('bookParagraph.ParagraphName'); // Group by paragraph name
 
-    $paragraphData = [];
+    // $paragraphData = [];
 
-    foreach ($paragraphs as $paragraphName => $paragraphItems) {
-      $paragraphData[] = [
-        'paragraph_name' => $paragraphName,
-        'paragraph_content' => $paragraphItems[0]->book_content,
-      ];
+    // foreach ($paragraphs as $paragraphName => $paragraphItems) {
+    //   $paragraphData[] = [
+    //     'paragraph_name' => $paragraphName,
+    //     'paragraph_content' => $paragraphItems[0]->book_content,
+    //   ];
+    // }
+
+    // return response()->json([
+    //   'status' => 200,
+    //   'data' => $paragraphData
+    // ]);
+
+    $bookName = $all_main_book[0]->bookMaster->Title;
+    
+    $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+    $chapterData = [];
+
+    foreach ($chapters as $chapterName => $chapterItems) {
+        $paragraphs = $chapterItems->map(function ($item) {
+            return [
+              // 'paragraph_id' => $item->paragraph_id,
+              'paragraph_name' => $item->bookParagraph->ParagraphName,
+              // 'main_book_id' => $item->id,
+              'paragraph_content' => $item->book_content,
+            ];
+        });
+
+        // $chapterData[] = [
+        //   // 'book_id' => $chapterItems[0]->book_id,
+        //   // 'book_name' => $chapterItems[0]->bookMaster->Title,
+        //   // 'chapter_id' => $chapterItems[0]->chapter_id,
+        //   // 'chapter_name' => $chapterName,
+        //   'paragraphs' => $paragraphs,
+        // ];
     }
 
     return response()->json([
       'status' => 200,
-      'data' => $paragraphData
+      'message' => "All main book by book master id",
+      'data' => $paragraphs
     ]);
   }
 

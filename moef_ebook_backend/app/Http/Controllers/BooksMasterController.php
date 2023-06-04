@@ -143,7 +143,8 @@ class BooksMasterController extends Controller
         );
     }
 
-    public function getAllBookCategoryFromBookMaster() {
+    public function getAllBookCategoryFromBookMaster() 
+    {
         $booksMaster = BooksMaster::with('category')->get()->unique('CatID');
         $bookCategory = [];
         foreach ($booksMaster as $book) {
@@ -151,6 +152,7 @@ class BooksMasterController extends Controller
                 array_push($bookCategory, $book->category);
             }
         }
+
         return response()->json(
             [
                 'status' => 200,

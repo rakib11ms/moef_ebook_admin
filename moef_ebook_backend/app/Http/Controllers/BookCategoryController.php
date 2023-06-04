@@ -5,16 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BookCategory;
 use Illuminate\Support\Facades\Validator;
+use Rajurayhan\Bndatetime\BnDateTimeConverter;
+use App\Models\BooksMaster;
+
 
 class BookCategoryController extends Controller
 {
     public function index()
     {
-        $bookcategories = BookCategory::all();
+        // get all book category
+        $bookcategory = BookCategory::all();
+        // fotmat date time
+        // foreach ($bookcategory as $key => $value) {
+        //     $value->
+        // }
+
         return response()->json(
             [
                 'status' => 200,
-                'bookcategories' => $bookcategories
+                'bookcategory' => $bookcategory
             ]
         );
     }

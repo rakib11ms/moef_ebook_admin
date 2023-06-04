@@ -21,6 +21,7 @@ const BooksCatagories = () => {
         id: catagory.id,
         CategoryName: catagory.CategoryName,
         CategoryIcon: catagory.CategoryIcon,
+        Updated_at: catagory.updated_at_bangla,
       };
     }),
   ];
@@ -103,6 +104,9 @@ const BooksCatagories = () => {
         </div>
       ),
     },
+    {
+      field: "Updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350
+    }
   ];
 
   const handleInputChange = (e) => {
