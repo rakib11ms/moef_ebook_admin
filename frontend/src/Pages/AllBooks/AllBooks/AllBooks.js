@@ -157,6 +157,9 @@ const AllBooks = () => {
         </div>
       ),
     },
+    {
+      field: "updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350 
+    },
   ];
 
   const rows = [
@@ -166,6 +169,7 @@ const AllBooks = () => {
       book_name: book.book_title,
       chapter_count: book.chapter_count,
       paragraph_count: book.paragraph_count,
+      updated_at: book.updated_at,
     })),
   ];
 
