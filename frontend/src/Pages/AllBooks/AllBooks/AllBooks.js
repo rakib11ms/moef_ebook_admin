@@ -160,6 +160,9 @@ const AllBooks = () => {
     {
       field: "updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350 
     },
+    {
+      field: "created_by", headerName: "প্রকাশকের নাম", width: 350
+    }
   ];
 
   const rows = [
@@ -170,6 +173,7 @@ const AllBooks = () => {
       chapter_count: book.chapter_count,
       paragraph_count: book.paragraph_count,
       updated_at: book.updated_at,
+      created_by: book.created_by,
     })),
   ];
 

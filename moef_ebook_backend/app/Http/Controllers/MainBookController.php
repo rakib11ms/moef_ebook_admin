@@ -101,7 +101,7 @@ class MainBookController extends Controller
 
   public function getAllBookCountByChapterAndParagraph() 
   {
-    $all_book_count = MainBook::with('bookMaster')->select('id', 'book_id', 'chapter_id', 'paragraph_id', 'book_id')->get();
+    $all_book_count = MainBook::with('bookMaster', 'user')->select('id', 'book_id', 'chapter_id', 'paragraph_id', 'book_id', 'created_by')->get();
 
     $book_count = array();
     $book_ids = array();
@@ -127,9 +127,8 @@ class MainBookController extends Controller
         'book_title' => $book->bookMaster->Title,
         'chapter_count' => BookChapter::where('BookID', $book_id)->count(),
         'paragraph_count' => BookParagraph::where('BookID', $book_id)->count(),
-        // updated at multiline
-        // 'updated_at' => $dateConverter->getConvertedDateTime($updated_at, 'BnEn', '')
-        'updated_at' => $updated_at_multiline
+        'updated_at' => $updated_at_multiline,
+        'created_by' => $book->user->UserName
       ];
 
       $book_ids[] = $book_id;

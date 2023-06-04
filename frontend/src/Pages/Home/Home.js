@@ -610,12 +610,12 @@ const Home = (props) => {
                                 );
                               })}
                             </select>
-                            {/* <div>
+                            <div>
                               <Link to="/book-categories">
                                 {" "}
                                 <ControlPointOutlinedIcon className="control-icon" />
                               </Link>
-                            </div> */}
+                            </div>
                           </div>
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">

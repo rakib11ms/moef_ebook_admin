@@ -21,7 +21,7 @@ const BooksCatagories = () => {
         id: catagory.id,
         CategoryName: catagory.CategoryName,
         CategoryIcon: catagory.CategoryIcon,
-        Updated_at: catagory.updated_at_bangla,
+        updated_at: catagory.updated_at,
       };
     }),
   ];
@@ -29,7 +29,7 @@ const BooksCatagories = () => {
   // console.log('all catagories', allCatagories);
 
   const columns = [
-    {file: "CategoryIcon", headerName: "ক্যাটাগরির আইকন", width: 250, renderCell: (params) => (
+    {file: "CategoryIcon", headerName: "ক্যাটাগরির আইকন", width: 150, renderCell: (params) => (
       <div className="d-flex justify-content-around align-items-center">
         <img
           src={`${global.imageURL}/uploads/bookcategory/${params.row.CategoryIcon}`}
@@ -44,7 +44,7 @@ const BooksCatagories = () => {
       </div>
     )
     },
-    { field: "CategoryName", headerName: "ক্যাটাগরির নাম", width: 250 },
+    { field: "CategoryName", headerName: "ক্যাটাগরির নাম", width: 190 },
     {
       field: "edit",
       headerName: "সম্পাদনা করুন ",
@@ -105,7 +105,7 @@ const BooksCatagories = () => {
       ),
     },
     {
-      field: "Updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350
+      field: "updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350
     }
   ];
 
@@ -114,7 +114,8 @@ const BooksCatagories = () => {
     setCatagoryName(value);
   };
 
-const [CategoryIcon, setCatagoryIcon] = useState(null);
+  const [CategoryIcon, setCatagoryIcon] = useState(null);
+
 
   function handleFileChange(event) {
     const file = event.target.files[0]; // Get the selected file
@@ -242,17 +243,18 @@ const [CategoryIcon, setCatagoryIcon] = useState(null);
                 </div>
 
                 <div className="categories-div">
-                  <lebel>ক্যটেগরি Icon </lebel> <br />
-                  <input
-                    name = "CategoryIcon"
-                    className="catogories-input"
-                    id="books-categories-inputs-icon"
-                    accept=".png"
-                    type="file"
-                    onChange={handleFileChange}
-                    // value={categoryIcon}
-                    // style={{ display: "none" }} // Optional: hide the default file input UI
-                  />
+                  <label htmlFor="books-categories-inputs-icon" className="btn btn-warning">ক্যটেগরি আইকন সিলেক্ট করতে এখানে ক্লিক করুন </label>
+                  <br />
+                  <div className="file-input-container">
+                    <input
+                      name="CategoryIcon"
+                      className="catogories-input"
+                      id="books-categories-inputs-icon"
+                      accept=".png"
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                  </div>
                 </div>
 
                 <button

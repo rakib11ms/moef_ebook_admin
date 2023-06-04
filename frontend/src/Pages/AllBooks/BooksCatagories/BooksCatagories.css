@@ -108,3 +108,36 @@
     background-color: #f8f8f8;
   }
 }
+
+.categories-div {
+  margin-bottom: 10px;
+}
+
+.catogories-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.file-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.file-input-label {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #777;
+}
+
+/* Optional: hide the default file input UI */
+#books-categories-inputs-icon {
+  display: none;
+}
+
