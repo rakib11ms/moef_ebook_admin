@@ -30,7 +30,7 @@ class UserController extends Controller
             ];
         });
 
-         $deactive_users = User::with(['roles' => function ($query) {
+        $deactive_users = User::with(['roles' => function ($query) {
             $query->select('name');
         }])->where('ActiveStatus',0)->get();
 
@@ -61,8 +61,12 @@ class UserController extends Controller
 
     public function getUserInfo($id)
     {
-        $user = User::find($id);
-        
+        $user = User::with(['roles' => function ($query) {
+            $query->select('name');
+        }])->find($id);
+
+
+        $roleName = $user->roles->first()['name'] ?? null;
         //return onlt username, email and phone number
         $userInfo = [
             'id' => $user->id,
@@ -71,7 +75,7 @@ class UserController extends Controller
             'userPhone' => $user->userPhone,
             'userID' => $user->userID,
             'officeID' => $user->OfficeID,
-            'userRole' => $user->userRoleName,
+            'userRole' => $roleName,
             'activeStatus' => $user->ActiveStatus,
             'created_at' => $user->created_at,
             'userImage' => $user->userImage ?? 'default.png'
@@ -173,6 +177,17 @@ class UserController extends Controller
         return response()->json([
             'status' => 200,
             'users' => $users,
+        ]);
+    }
+
+    public function changeUserRole(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->roles()->detach();
+        $user->roles()->attach($request->role_id);
+        return response()->json([
+            'status' => 200,
+            'user' => $user
         ]);
     }
 }
