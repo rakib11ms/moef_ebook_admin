@@ -43,6 +43,7 @@ import ViewBookMaster from "./Pages/AllBooks/AllTypesBooks/MyFileBooks/ViewBookM
 // import MyComponent from "./MyComponent";
 import EditMasterBook from "./Pages/AllBooks/EditBooks/EditMasterBook";
 import Check from "./Pages/Check";
+import EditUserRole from "./Pages/UserManagement/EditUserRole/EditUserRole";
 
 const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
 
@@ -157,6 +158,7 @@ function App() {
             }
 
             <Route path="/view-documents/:id" element={<ViewDocuments />} />
+            <Route path="/edit-user-role/:id" element={<EditUserRole />} />
           </Route>
         </Routes>
       )}

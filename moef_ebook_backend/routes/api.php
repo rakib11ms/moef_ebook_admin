@@ -128,6 +128,7 @@ Route::post('create-permission', [RolePermissionController::class, 'createPermis
 Route::get('get-all-permissions', [RolePermissionController::class, 'getAllPermissions']);
 Route::post('assign-permission-via-role/{id}', [RolePermissionController::class, 'assignPermissionViaRole']);
 Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'getPermissionViaRole']);
+Route::post('/change-User-Role/{id}', [App\Http\Controllers\UserController::class, 'changeUserRole']);
 
 // Route::post('check', [RolePermissionController::class, 'check']);
 

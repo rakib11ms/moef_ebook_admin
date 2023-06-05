@@ -20,7 +20,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import swal from "sweetalert"
-
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -112,14 +112,16 @@ const AllUsers = () => {
     { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
     { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
     { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
-    // {
-    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
-    //   renderCell: (params) => (
-    //     <div className="d-flex justify-content-center align-items-center">
-    //       <CreateOutlinedIcon className="text-warning" />
-    //     </div>
-    //   )
-    // },
+    {
+      field: 'edit', headerName: 'সম্পাদনা', width: 120,
+      renderCell: (params) => (
+        <div className="d-flex justify-content-center align-items-center">
+          <Link to={`/edit-user-role/${params.row.id}`} className="btn">
+            <CreateOutlinedIcon className="text-warning" />
+          </Link>
+        </div>
+      )
+    },
     {
       field: 'delete', headerName: 'ব্যবহারকারী নিষ্ক্রিয় করুন', width: 180,
       renderCell: (params) => (
@@ -202,23 +204,6 @@ const AllUsers = () => {
         </div>
       )
     },
-    { field: 'userName', headerName: 'ব্যবহারকারীর নাম', width: 230, resizable: true, },
-    { field: 'userEmail', headerName: 'ইমেইল', width: 250, resizable: true, },
-    { field: 'userPhone', headerName: 'ফোন নম্বর', width: 170 },
-    { field: 'userID', headerName: 'আইডি', width: 120 },
-    { field: 'userType', headerName: 'ব্যবহারকারীর ধরণ', width: 150 },
-    { field: 'officeID', headerName: 'অফিস আইডি', width: 150 },
-    { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
-    { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
-    { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
-    // {
-    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
-    //   renderCell: (params) => (
-    //     <div className="d-flex justify-content-center align-items-center">
-    //       <CreateOutlinedIcon className="text-warning" />
-    //     </div>
-    //   )
-    // },
     {
       field: 'delete', headerName: 'ব্যবহারকারী সক্রিয় করুন', width: 180,
       renderCell: (params) => (
@@ -264,6 +249,23 @@ const AllUsers = () => {
         </div>
       )
     },
+    { field: 'userName', headerName: 'ব্যবহারকারীর নাম', width: 230, resizable: true, },
+    { field: 'userEmail', headerName: 'ইমেইল', width: 250, resizable: true, },
+    { field: 'userPhone', headerName: 'ফোন নম্বর', width: 170 },
+    { field: 'userID', headerName: 'আইডি', width: 120 },
+    { field: 'userType', headerName: 'ব্যবহারকারীর ধরণ', width: 150 },
+    { field: 'officeID', headerName: 'অফিস আইডি', width: 150 },
+    { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
+    { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
+    { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
+    // {
+    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
+    //   renderCell: (params) => (
+    //     <div className="d-flex justify-content-center align-items-center">
+    //       <CreateOutlinedIcon className="text-warning" />
+    //     </div>
+    //   )
+    // },
   ];
   
   const deactiveUsersRows = [
@@ -303,7 +305,7 @@ const AllUsers = () => {
               aria-label="basic tabs example"
             >
               <Tab label="নিবন্ধিত ব্যবহারকারী" {...a11yProps(0)} />
-              <Tab label="ইনএকটিভ ইউজারের" {...a11yProps(2)} />
+              <Tab label="ইনএকটিভ ইউজার" {...a11yProps(2)} />
               {/* <Tab label="ভেরিফিকেশনের জন্য আবেদনকৃত" {...a11yProps(2)} /> */}
             </Tabs>
             <div className="tab-search-input-div">
