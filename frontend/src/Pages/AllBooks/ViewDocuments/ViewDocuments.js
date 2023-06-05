@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./ViewDocuments.css";
 import JoditEditor from "jodit-react";
@@ -14,14 +14,14 @@ const EditDocuments = () => {
   const params = useParams();
   const id = params.id;
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [content, setContent] = useState();
 
 
   const [Title, setTitle] = useState('');
 
-  const[editData,setEditData]=useState('')
-  console.log('edit data',editData)
+  const [editData, setEditData] = useState('')
+  console.log('edit data', editData)
 
 
   // const [inputs, setInputs] = useState({});
@@ -36,8 +36,8 @@ const EditDocuments = () => {
     axios.get(`/api/get-single-document/${id}`).then(res => {
       if (res.data.status === 200) {
         // console.log(res.data.single_document);
-        setTitle(res.data.single_document.document_title);
-        setContent(res.data.single_document.document_contents);
+        setTitle(res.data.single_document.title);
+        setContent(res.data.single_document.contents);
         setEditData(res.data.single_document)
       }
     })
@@ -51,7 +51,7 @@ const EditDocuments = () => {
           <NavigationBa />
         </section>
         <section className="container-fluid">
-        <nav aria-label="breadcrumb">
+          <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/home">হোম</a></li>
               <li class="breadcrumb-item"><a href="/all-documents">সকল ডকুমেন্টস</a></li>
@@ -71,7 +71,7 @@ const EditDocuments = () => {
               <hr />
               <div>
                 <div class="mb-3">
-       
+
                   <div className="my-3">
                     <p>
                       <strong>ডকুমেন্ট শিরোনামঃ </strong>
@@ -79,7 +79,7 @@ const EditDocuments = () => {
                     </p>
                   </div>
                   <hr />
-                
+
 
                   <label for="exampleFormControlTextarea1" class="form-label">
                     <strong>ডকুমেন্ট বিস্তারিত: </strong>
@@ -99,10 +99,50 @@ const EditDocuments = () => {
                   <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
                 {
-                  editData.file !==null && 
+                  editData.file !== null &&
                   <a href={`${global.imageURL}/files/${editData.file}`} download target="_blank" className='download btn btn-warning fw-bold'> ফাইল দেখুন </a>
 
                 }
+
+                <div class="my-4 col-md-6">
+                  <label className="fs-6 fw-bold ">ডকুমেন্ট টি কাদের জন্য   </label>
+                  {
+                    Array.isArray(editData.target_users) ?
+
+                      <table class="table  border-1 ">
+                        <thead className="">
+                          <tr>
+                            <th scope="col">সিরিয়াল </th>
+                            <th scope="col">নাম </th>
+                            <th scope="col">ফোন </th>
+                            <th scope="col">ছবি</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            editData.target_users.map((item, i) => {
+                              return (
+                                <tr key={i}>
+                                  <th scope="row">{i + 1}</th>
+                                  <td>{item.UserName}</td>
+                                  <td>{item.userPhone}</td>
+                                  <td>
+                                    <img src={`${global.imageURL}/images/user/${item.userImage}`} style={{ width: '40px', borderRadius: '10%' }} />
+                                  </td>
+                                </tr>
+                              )
+                            })
+                          }
+
+
+                        </tbody>
+                      </table>
+                      :
+                      <div className="my-2">
+                        <button type="button" className="btn btn-light border px-4 rounded-pill text-success "> {editData.target_users}</button>
+                      </div>
+                  }
+                </div>
 
               </div>
             </div>

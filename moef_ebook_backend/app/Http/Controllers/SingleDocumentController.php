@@ -14,7 +14,7 @@ class SingleDocumentController extends Controller
 
     public function allSingleDocument()
     {
-        $single_document = SingleDocument::all();
+        $single_document = SingleDocument::with('user')->where('type','single_document')->orWhere('type','both')->orderBy('id','desc')->get();
         return response()->json([
             'status' => 200,
             'single_document' => $single_document,
@@ -176,7 +176,12 @@ class SingleDocumentController extends Controller
             $filename = time() . '.' . $extension;
             $file->move('files/', $filename);
             $single_document->file = $filename;
-                        $single_document->document_title = $request->document_title;
+                        $single_document->title = $request->title;
+                        $single_document->contents = $request->contents;
+                        $single_document->created_by = $request->created_by;
+                        $single_document->target_users = $request->target_users;
+                        $single_document->type = $request->type;
+            $single_document->published_date = Carbon\Carbon::now();
 
                     $single_document->update();
                          return response()->json([
@@ -189,10 +194,15 @@ class SingleDocumentController extends Controller
         }
         else{
 
-            $single_document->document_title = $request->document_title;
-            $single_document->document_contents = $request->document_contents;
+                   $single_document->title = $request->title;
+                    $single_document->contents = $request->contents;
+                        $single_document->created_by = $request->created_by;
+                        $single_document->target_users = $request->target_users;
+                        $single_document->type = $request->type;
+            $single_document->published_date = Carbon\Carbon::now();
 
-        $single_document->update();
+                    $single_document->update();
+
 
         return response()->json([
             'status' => 200,

@@ -386,94 +386,94 @@ const AddDocument = (props) => {
               </label>
 
               {noticeNewsCheckBoxStatus && (
-                      <div>
-                        <div className="doc-suchi-div col-3">
+                <div>
+                  <div className="doc-suchi-div col-3">
 
 
-                          <div>
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                            >
-                              যারা দেখতে পারবেন
-                            </label>
-                            <select
-                              className="form-select mb-4"
-                              aria-label="Default select example"
-                              id="add-docu-show"
-                              onChange={(e) => setTargetUser(e.target.value)}                            >
-                              <option selected value="সকল">সকলের জন্য</option>
-                              <option value="সুপার এডমিন">সুপার এডমিন</option>
-                              <option value="এডমিন">এডমিন</option>
-                              <option value="মডারেটর">মডারেটর</option>
-                              <option value="ইউজার">ইউজার</option>
-                              <option value="অন্যান্য">অন্যান্য </option>
-                            </select>
-                          </div>
+                    <div>
+                      <label
+                        for="exampleFormControlInput1"
+                        class="form-label"
+                      >
+                        যারা দেখতে পারবেন
+                      </label>
+                      <select
+                        className="form-select mb-4"
+                        aria-label="Default select example"
+                        id="add-docu-show"
+                        onChange={(e) => setTargetUser(e.target.value)}                            >
+                        <option selected value="সকল">সকলের জন্য</option>
+                        <option value="সুপার এডমিন">সুপার এডমিন</option>
+                        <option value="এডমিন">এডমিন</option>
+                        <option value="মডারেটর">মডারেটর</option>
+                        <option value="ইউজার">ইউজার</option>
+                        <option value="অন্যান্য">অন্যান্য </option>
+                      </select>
+                    </div>
 
-                          {
-                            targetUser == 'অন্যান্য'
-                            &&
-                            <div class="">
-                              <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
-                                <Autocomplete
-                                  multiple
-                                  id="tags-standard"
-                                  options={allUsers}
-                                  getOptionLabel={(option) => option.UserName}
-                                  // defaultValue={[allUsers[1]]}
-                                  onChange={handlePersonChange}
-                                  renderOption={(props, option) => (
-                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    {
+                      targetUser == 'অন্যান্য'
+                      &&
+                      <div class="">
+                        <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                          <Autocomplete
+                            multiple
+                            id="tags-standard"
+                            options={allUsers}
+                            getOptionLabel={(option) => option.UserName}
+                            // defaultValue={[allUsers[1]]}
+                            onChange={handlePersonChange}
+                            renderOption={(props, option) => (
+                              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
 
-                                      {
-                                        option.userImage === 'default.png' ?
-                                          <img
-                                            loading="lazy"
-                                            width="25"
-                                            src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
-                                            alt=""
-                                          />
-                                          :
-                                          <img
-                                            loading="lazy"
-                                            width="20"
-                                            src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
-                                            alt=""
-                                          />
-
-                                      }
-
-                                      {option.UserName}
-                                    </Box>
-                                  )}
-                                  getOptionSelected={(option, value) =>
-                                    option.id === value.id
-                                  }
-
-                                  renderInput={(params) => (
-
-                                    <TextField
-
-
-                                      {...params}
-                                      // variant="standard"
-                                      // label="Multiple values"
-                                      placeholder="Search..."
+                                {
+                                  option.userImage === 'default.png' ?
+                                    <img
+                                      loading="lazy"
+                                      width="25"
+                                      src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                      alt=""
                                     />
-                                  )}
+                                    :
+                                    <img
+                                      loading="lazy"
+                                      width="20"
+                                      src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                      alt=""
+                                    />
 
-                                />
-                              </Stack>
+                                }
 
-                            </div>
-                          }
+                                {option.UserName}
+                              </Box>
+                            )}
+                            getOptionSelected={(option, value) =>
+                              option.id === value.id
+                            }
+
+                            renderInput={(params) => (
+
+                              <TextField
 
 
+                                {...params}
+                                // variant="standard"
+                                // label="Multiple values"
+                                placeholder="Search..."
+                              />
+                            )}
 
-                        </div>
+                          />
+                        </Stack>
+
                       </div>
-                    )}
+                    }
+
+
+
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           :

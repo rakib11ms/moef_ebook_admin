@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./EditDocuments.css";
 import JoditEditor from "jodit-react";
@@ -7,19 +7,48 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import {
+  FormControl,
+  InputLabel,
+  Autocomplete,
+  TextField,
+  Stack,
+  Select,
+  Chip,
+  MenuItem,
+  makeStyles,
+} from '@mui/material';
 
+import { Box, ThemeProvider, createTheme } from '@mui/system';
 const EditDocuments = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const prevPage = searchParams.get('page');
   const params = useParams();
   const id = params.id;
+  const editor = useRef(null);
 
-  
+  const [allUsers, setAllUsers] = useState([]);
+
+  const [targetUser, setTargetUser] = useState('');
+
+  // console.log('check',targetUser)
+
+  const [contactPerson, setcontactPerson] = React.useState('');
+
+  function handlePersonChange(event, values) {
+    let result = values.map(a => a.id);
+    let arrString = result.join(',');
+    setcontactPerson(arrString)
+
+  }
+
+
   const config = {
     headers: {
       "content-type": "multipart/form-data",
     },
   };
+  const [noticeNewsCheckBoxStatus, setNoticeNewsCheckBoxStatus] = useState(false)
 
   const navigate = useNavigate();
   const [content, setContent] = useState();
@@ -34,19 +63,8 @@ const EditDocuments = () => {
   };
 
 
-  // const [inputs, setInputs] = useState({});
-  // const handleChange = (event) => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   setInputs(values => ({ ...values, [name]: value }))
-  // }
-
   const onTitleChange = (e) => {
     setTitle(e.target.value);
-  }
-
-  const onContentChange = (newContent) => {
-    setContent(newContent);
   }
 
   const [editData, setEditData] = useState('');
@@ -55,12 +73,32 @@ const EditDocuments = () => {
     axios.get(`/api/get-single-document/${id}`).then(res => {
       if (res.data.status === 200) {
         // console.log(res.data.single_document);
-        setTitle(res.data.single_document.document_title);
-        setContent(res.data.single_document.document_contents);
+        setTitle(res.data.single_document.title);
+        setContent(res.data.single_document.contents);
         setEditData(res.data.single_document)
+        setTargetUser(res.data.single_document.target_users)
+        if(res.data.single_document.type=='both'){
+          setNoticeNewsCheckBoxStatus(true)
+          if(Array.isArray(res.data.single_document.target_users)){
+            setTargetUser('অন্যান্য')
+          }
+        }
+        else{
+          setNoticeNewsCheckBoxStatus(false)
+
+        }
+
+      }
+    })
+    axios.get(`/api/get-all-user-info`).then(res => {
+      if (res.data.status == 200) {
+        setAllUsers(res.data.users);
+
       }
     })
   }, [id])
+
+
 
   async function handlePublish(e) {
     handleSubmit(e);
@@ -88,17 +126,21 @@ const EditDocuments = () => {
 
     const searchParams = new URLSearchParams(window.location.search);
     const currentPage = searchParams.get('page');
-    console.log(currentPage);
+    // console.log(currentPage);
 
 
 
     const formData = new FormData();
-    formData.append('document_title', Title);
-    formData.append('document_contents', content);
+    formData.append('title', Title);
+    formData.append('contents', content);
     formData.append('file', selectedFile)
+    formData.append('created_by', editData.created_by)
+    formData.append('category', editData.category)
+    formData.append('type', noticeNewsCheckBoxStatus ? 'both' : 'single_document')
+    formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
+    )
 
-
-    axios.post(`/api/update-single-document/${id}`, formData,config).then(res => {
+    axios.post(`/api/update-single-document/${id}`, formData, config).then(res => {
       if (res.data.status === 200) {
         console.log(res.data);
         Swal.fire({
@@ -161,22 +203,122 @@ const EditDocuments = () => {
                   </div>
 
                   {
-                    editData.document_contents !== null ?
+                    editData.contents !== null ?
                       <>
                         <label for="exampleFormControlTextarea1" class="form-label">
                           <h5>এডিটর</h5>
                         </label>
                         <JoditEditor
-                          className="news-jodit-editor"
-                          spellcheck={false}
-                          language="en"
-                          toolbarAdaptive="false"
-                          height="800"
-                          autofocus="true"
-                          value={content}
-                          // onBlur={newContent => setContent(newContent)}
-                          onChange={onContentChange}
-                        />
+                      className="jodit-editor"
+                      ref={editor}
+                      value={content}
+                      // config={config}
+                      tabIndex={1} // tabIndex of textarea
+                      onBlur={newContent => setContent(newContent)} 
+                      
+                      id="add-doc-jodit-editor"
+                    />
+
+                        <div class="form-check mx-3 my-4">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                            checked={noticeNewsCheckBoxStatus} onChange={() => setNoticeNewsCheckBoxStatus(!noticeNewsCheckBoxStatus)}
+                          />
+                          <label class="form-check-label text-muted" for="flexCheckDefault">
+                            এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে?
+                          </label>
+
+                          {noticeNewsCheckBoxStatus && (
+                            <div>
+                              <div className="doc-suchi-div col-3">
+
+
+                                <div>
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                  >
+                                    যারা দেখতে পারবেন
+                                  </label>
+                                  <select
+                                    className="form-select mb-4"
+                                    aria-label="Default select example"
+                                    id="add-docu-show"
+                                    value={targetUser}
+
+                                    onChange={(e) => setTargetUser(e.target.value)}                            >
+                                    <option value="সকল">সকলের জন্য</option>
+                                    <option value="সুপার এডমিন">সুপার এডমিন</option>
+                                    <option value="এডমিন">এডমিন</option>
+                                    <option value="মডারেটর">মডারেটর</option>
+                                    <option value="ইউজার">ইউজার</option>
+                                    <option value="অন্যান্য">অন্যান্য </option>
+                                  </select>
+                                </div>
+
+                                {
+                                  targetUser == 'অন্যান্য'
+                                  &&
+                                  <div class="">
+                                    <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                                      <Autocomplete
+                                        multiple
+                                        id="tags-standard"
+                                        options={allUsers}
+                                        getOptionLabel={(option) => option.UserName}
+                                        defaultValue={Array.isArray(editData.target_users) ? editData.target_users : []}
+                                        onChange={handlePersonChange}
+                                        renderOption={(props, option) => (
+                                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                                            {
+                                              option.userImage === 'default.png' ?
+                                                <img
+                                                  loading="lazy"
+                                                  width="25"
+                                                  src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                                  alt=""
+                                                />
+                                                :
+                                                <img
+                                                  loading="lazy"
+                                                  width="20"
+                                                  src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                                  alt=""
+                                                />
+
+                                            }
+
+                                            {option.UserName}
+                                          </Box>
+                                        )}
+                                        getOptionSelected={(option, value) =>
+                                          option.id === value.id
+                                        }
+
+                                        renderInput={(params) => (
+
+                                          <TextField
+
+
+                                            {...params}
+                                            // variant="standard"
+                                            // label="Multiple values"
+                                            placeholder="Search..."
+                                          />
+                                        )}
+
+                                      />
+                                    </Stack>
+
+                                  </div>
+                                }
+
+
+
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </>
                       :
                       <div className="my-4 mx-1">
@@ -196,29 +338,115 @@ const EditDocuments = () => {
 
                         // style={{ display: "none" }}
                         />
+
+                        <div class="form-check my-4">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                            checked={noticeNewsCheckBoxStatus} onChange={() => setNoticeNewsCheckBoxStatus(!noticeNewsCheckBoxStatus)}
+                          />
+                          <label class="form-check-label text-muted" for="flexCheckDefault">
+                            এই ডকুমেন্ট প্রজ্ঞপন/ অফিস আদেশ/ নোটিশ আকারে প্রকাশিত হবে?
+                          </label>
+
+                          {noticeNewsCheckBoxStatus && (
+                            <div>
+                              <div className="doc-suchi-div col-3">
+
+
+                                <div>
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    class="form-label"
+                                  >
+                                    যারা দেখতে পারবেন
+                                  </label>
+                                  <select
+                                    className="form-select mb-4"
+                                    aria-label="Default select example"
+                                    id="add-docu-show"
+                                    value={targetUser}
+                                    onChange={(e) => setTargetUser(e.target.value)}                            >
+                                    <option value="সকল">সকলের জন্য</option>
+                                    <option value="সুপার এডমিন">সুপার এডমিন</option>
+                                    <option value="এডমিন">এডমিন</option>
+                                    <option value="মডারেটর">মডারেটর</option>
+                                    <option value="ইউজার">ইউজার</option>
+                                    <option value="অন্যান্য">অন্যান্য </option>
+                                  </select>
+                                </div>
+
+                                {
+                                  targetUser == 'অন্যান্য'
+                                  &&
+                                  <div class="">
+                                    <Stack spacing={5} sx={{ width: '100%', paddingTop: '7px' }}>
+                                      <Autocomplete
+                                        multiple
+                                        id="tags-standard"
+                                        options={allUsers}
+                                        getOptionLabel={(option) => option.UserName}
+                                        // defaultValue={[allUsers[1]]}
+                                        onChange={handlePersonChange}
+                                        renderOption={(props, option) => (
+                                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+
+                                            {
+                                              option.userImage === 'default.png' ?
+                                                <img
+                                                  loading="lazy"
+                                                  width="25"
+                                                  src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                                                  alt=""
+                                                />
+                                                :
+                                                <img
+                                                  loading="lazy"
+                                                  width="20"
+                                                  src={`https://test.austtaa.com/server/public/images/user/${option.userImage}`}
+                                                  alt=""
+                                                />
+
+                                            }
+
+                                            {option.UserName}
+                                          </Box>
+                                        )}
+                                        getOptionSelected={(option, value) =>
+                                          option.id === value.id
+                                        }
+
+                                        renderInput={(params) => (
+
+                                          <TextField
+
+
+                                            {...params}
+                                            // variant="standard"
+                                            // label="Multiple values"
+                                            placeholder="Search..."
+                                          />
+                                        )}
+
+                                      />
+                                    </Stack>
+
+                                  </div>
+                                }
+
+
+
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                   }
 
 
                 </div>
-                {/* <div className="draft-prokas-buttons-div">
-                  <button className="draft-prokas-button mx-2" onClick={handleSubmit}>সম্পাদনা করুন</button>
-                  {
-                    prevPage==='/my-area' ?
-                    (
-                      <button className="draft-prokas-button mx-2" onClick={handlePublish}>প্রকাশ করুন</button>
-                    ) : null
-                  }
-                </div> */}
+
               </div>
             </div>
-            {/* <div className="col-xl-3 col-lg-4 cpl-md-5 col-sm-12 col-12">
-              <div className="all-news-notice-card-div">
-                <div>
-                  <h6 className="all-create-news-side-tags">পাবলিকেশন তথ্য</h6>
-                </div>
-              </div>
-            </div> */}
+
           </div>
         </section>
 
