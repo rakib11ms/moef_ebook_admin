@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NewsNotice;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\SingleDocument;
+use App\Models\MainBook;
+use Carbon;
+use File;
 
 
 class NewsNoticeController extends Controller
 {
     public function index(Request $request)
     {
-        $newsNotices = NewsNotice::with('category')->with('subCategory')->get();
+        $newsNotices = SingleDocument::with('user')->where('type','news_notice')->orWhere('type','single_document_and_notice')->orderBy('id','desc')->get();
         return response()->json(
             [   'status'=>200,
                 'news_notices'=>$newsNotices

@@ -32,15 +32,6 @@ const AddDocument = (props) => {
 
 
   const editor = useRef(null);
-  // const config = useMemo(
-  // 	{
-  // 		readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-  // 		placeholder: placeholder || 'Start typings...'
-  // 	},
-  // 	[placeholder]
-  // );
-
-
 
   // Header Text edit
   const [isEditing, setIsEditing] = useState(false);
@@ -212,7 +203,7 @@ const AddDocument = (props) => {
   formData.append('chapter_id', chapterId)
   formData.append('paragraph_id', ParagraphId)
   formData.append('contents', content)
-  formData.append('type', noticeNewsCheckBoxStatus ? 'both' : 'single_document')
+  formData.append('type', noticeNewsCheckBoxStatus ? 'single_document_and_notice' : 'single_document')
   formData.append('noticeNewsCheckBoxStatus', noticeNewsCheckBoxStatus)
   formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
   )

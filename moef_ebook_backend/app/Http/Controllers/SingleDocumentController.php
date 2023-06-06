@@ -14,7 +14,7 @@ class SingleDocumentController extends Controller
 
     public function allSingleDocument()
     {
-        $single_document = SingleDocument::with('user')->where('type','single_document')->orWhere('type','both')->orderBy('id','desc')->get();
+        $single_document = SingleDocument::with('user')->where('type','single_document')->orWhere('type','single_document_and_notice')->orderBy('id','desc')->get();
         return response()->json([
             'status' => 200,
             'single_document' => $single_document,

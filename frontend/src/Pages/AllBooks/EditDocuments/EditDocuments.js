@@ -78,7 +78,7 @@ const EditDocuments = () => {
         setContent(res.data.single_document.contents);
         setEditData(res.data.single_document)
         setTargetUser(res.data.single_document.target_users)
-        if(res.data.single_document.type=='both'){
+        if(res.data.single_document.type=='single_document_and_notice'){
           setNoticeNewsCheckBoxStatus(true)
           if(Array.isArray(res.data.single_document.target_users)){
             setTargetUser('অন্যান্য')
@@ -137,7 +137,7 @@ const EditDocuments = () => {
     formData.append('file', selectedFile)
     formData.append('created_by', editData.created_by)
     formData.append('category', editData.category)
-    formData.append('type', noticeNewsCheckBoxStatus ? 'both' : 'single_document')
+    formData.append('type', noticeNewsCheckBoxStatus ? 'single_document_and_notice' : 'single_document')
     formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
     )
 

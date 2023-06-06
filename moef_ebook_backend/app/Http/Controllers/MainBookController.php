@@ -177,7 +177,7 @@ class MainBookController extends Controller
       ];
     });
 
-    $all_single_document = SingleDocument::get();
+    $all_single_document = SingleDocument::where('type','single_document')->orWhere('type','single_document_and_notice')->get();
 
     $all_main_book_and_single_document = $all_main_book->merge($all_single_document);
 
@@ -246,36 +246,26 @@ class MainBookController extends Controller
   {
     $booksMaster = MainBook::with(['bookMaster' => function ($query) use ($id) {
       $query->where('CatID', $id);
-    }])
-    ->get();
+    }])->select('book_id')->distinct('book_id')->get();
 
     $booksMaster = $booksMaster->pluck('bookMaster');
-    foreach ($booksMaster as $key => $value) {
-      if ($value == null) {
-        $booksMaster->forget($key);
-      }
-    }
-    // dd($booksMaster->toArray());
-  
-    // $booksMaster = $booksMaster->map(function ($item, $key) {
-    //   return [
-    //     'book_id' => $item->id,
-    //     // 'book_id' => $item->book_id,
-    //     // 'chapter_id' => $item->chapter_id,
-    //     // 'paragraph_id' => $item->paragraph_id,
-    //     // 'book_content' => $item->book_content,
-    //     // 'created_by' => $item->created_by,
-    //     // 'isPublished' => $item->isPublished,
-    //     'created_at' => $item->created_at,
-    //     'updated_at' => $item->updated_at,
-    //     'book_master_title' => $item->Title,
-    //     'type' => $item->type
-    //   ];
-    // });
-    
-    $singleDocuments = SingleDocument::where('isPublished', 1)->get();
-
-    $booksMaster = $booksMaster->merge($singleDocuments);
+        $booksMaster=$booksMaster->map(function($item,$key){
+      return[
+        'id'=>$item->id,
+        'CatID'=>$item->CatID,
+        'book_master_title'=>$item->Title,
+        'Short_desc'=>$item->Short_desc,
+        'PublisherID'=>$item->PublisherID,
+        'BookCoverImage'=>$item->BookCoverImage,
+        'LanguageID'=>$item->LanguageID,
+        'File_url'=>$item->File_url,
+        'created_by'=>$item->created_by,
+        'AuthorID'=>$item->AuthorID,
+        'created_at'=>$item->created_at,
+        'updated_at'=>$item->updated_at,
+        'type'=>$item->type,
+      ];
+    });
     return response()->json(
         [
           'status' => 200,

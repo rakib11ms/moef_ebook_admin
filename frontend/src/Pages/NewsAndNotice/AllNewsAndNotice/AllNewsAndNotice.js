@@ -23,7 +23,7 @@ const AllNewsAndNotice = () => {
       await axios.get("/api/notice").then(res => {
         if (res.data.status === 200) {
           setAllNoticeNews(res.data.news_notices);
-          console.log('notice news', res.data.news_notices);
+          // console.log('notice news', res.data.news_notices);
           // setLoading(false);
         } else {
           console.log('error');
@@ -41,7 +41,7 @@ const AllNewsAndNotice = () => {
   const columns = [
     { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
     { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 200 },
-    { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 200 },
+    // { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 200 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
@@ -113,9 +113,9 @@ const AllNewsAndNotice = () => {
     ...allNoticeNews.map((notice, index) => (
       {
         id: notice.id,
-        newsNotice: notice.Title,
-        category: notice.category.Name,
-        sub_category: notice.sub_category.Name,
+        newsNotice: notice.title,
+        category: notice.category,
+        // sub_category: notice.sub_category.Name,
         // set the edit button for each row edit field in columns array by using renderCell
         
       }
