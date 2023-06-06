@@ -47,6 +47,7 @@ const CreateNewsAndNotice = () => {
     setcontactPerson(arrString)
 
   }
+  const [fileUploadCheckBox, setFileUploadCheckBox] = useState(false)
 
 
 
@@ -60,37 +61,49 @@ const CreateNewsAndNotice = () => {
     })
   }, [])
 
+  const [selectedFile, setSelectedFile] = useState('');
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
 
-  const [Title, setTitle] = useState("");
 
-  const onTitleChange = (e) => {
-    setTitle(e.target.value);
+
+  const [title, settitle] = useState("");
+
+  const ontitleChange = (e) => {
+    settitle(e.target.value);
   };
 
   // const [isPublished, setisPublished] = useState(false);
 
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Title === "" || content === "<p><br></p>" || content === "") {
+    if (title === "" || content === "<p><br></p>" || content === "") {
       Swal.fire("সব তথ্য পূরণ করুন", "", "warning");
       return;
     }
 
     
     const formData = new FormData();
-    formData.append("Title", Title);
-    formData.append("Description", content);
-    formData.append("CategoryId", "1");
-    formData.append("subCatId", "1");
-    formData.append("redirect_url", "/" + $user.id);
-    formData.append("updated_by", "");
+    formData.append("title", title);
+    formData.append("contents", content);
+    // formData.append("updated_by", "");
     formData.append("isPublished", 1);
     formData.append("created_by", $user.id);
+    formData.append('file', selectedFile)
+    formData.append('type','news_notice')
+
     formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
     )
 
-    axios.post(`/api/notice`, formData).then((res) => {
+    axios.post(`/api/save-single-document`, formData,config).then((res) => {
       if (res.data.status === 200) {
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
         navigate("/all-news-notice");
@@ -104,23 +117,22 @@ const CreateNewsAndNotice = () => {
     e.preventDefault();
 
 
-    if (Title === "" || content === "<p><br></p>" || content === "") {
+    if (title === "" || content === "<p><br></p>" || content === "") {
       Swal.fire("সব তথ্য পূরণ করুন", "", "warning");
       return;
     }
     const formData = new FormData();
-    formData.append("Title", Title);
-    formData.append("Description", content);
-    formData.append("CategoryId", "1");
-    formData.append("subCatId", "1");
-    formData.append("redirect_url", "/" + $user.id);
-    formData.append("updated_by", "");
+    formData.append("title", title);
+    formData.append("contents", content);
     formData.append("isPublished", 0);
+    formData.append('type','news_notice')
+    formData.append('file', selectedFile)
+
     formData.append("created_by", $user.id);
     formData.append('target_users', targetUser == 'অন্যান্য' ? contactPerson : targetUser
     )
 
-    axios.post(`/api/notice`, formData).then((res) => {
+    axios.post(`/api/save-single-document`, formData).then((res) => {
       if (res.data.status === 200) {
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
         navigate("/all-news-notice");
@@ -173,14 +185,44 @@ const CreateNewsAndNotice = () => {
                       required
                       type="text"
                       id="biggopti-title-input"
-                      name="Title"
+                      name="title"
                       className="form-control-lg col-12 border-1 border-dark outline-0 ms-2 me-2 "
                       placeholder="টাইটেল যোগ করুন "
-                      value={Title}
-                      onChange={onTitleChange}
+                      value={title}
+                      onChange={ontitleChange}
                     />
                   </div>
+                  <div class="form-check my-4">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+          checked={fileUploadCheckBox} onChange={() => setFileUploadCheckBox(!fileUploadCheckBox)}
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          আপনি কি ফাইল আপলোড দিতে চাচ্ছেন?
+        </label>
+      </div>
+      {
+        fileUploadCheckBox ?
+          <div className="mt-3">
+            <div className="my-2  mx-3">
+              <label htmlFor="fileInput" className="btn btn-warning">
+                <strong>ফাইল (ডকুমেন্ট) আপলোড করুন </strong>
+              </label>
+              <input
+                type="file"
+                className="ms-3"
+                id="fileInput"
+                name="file"
+                hidden
+                accept=".doc,.docx,.pdf"
+                onChange={handleFileInputChange}
 
+              // style={{ display: "none" }}
+              />
+            </div>
+        
+          </div>
+          :
+                    <>
                   <label for="exampleFormControlTextarea1" class="form-label">
                     <h5>এডিটর</h5>
                   </label>
@@ -195,6 +237,8 @@ const CreateNewsAndNotice = () => {
                     onBlur={(newContent) => setContent(newContent)}
                     onChange={(newContent) => setContent(newContent)}
                   />
+                  </>
+}
                   {/* <button className="attached-button mt-3">
                     এটাচমেন্ট যোগ করুন
                   </button> */}
@@ -289,22 +333,7 @@ const CreateNewsAndNotice = () => {
                   }
 
 
-                  <div className="mb-4">
-                    <lebel> প্রকাশ কাল </lebel> <br />
-                    <div className="prokash-date">
-                      <ReactDatePicker
-                        className="create-news-calander-input "
-                        id="biggopti-date-publish"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                      />
-                      <CalendarTodayIcon className="calander-icon" />
-                    </div>
-                  </div>
-                  <div>
-                    <lebel> লিংক </lebel> <br />
-                    <input id="biggopti-link" className=" link"></input>
-                  </div>
+                
                 </div>
               </div>
             </div>

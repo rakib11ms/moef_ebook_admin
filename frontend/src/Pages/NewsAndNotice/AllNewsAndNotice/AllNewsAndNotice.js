@@ -40,12 +40,12 @@ const AllNewsAndNotice = () => {
 
   const columns = [
     { field: 'newsNotice', headerName: 'বিজ্ঞপ্তি', width: 250 },
-    { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 200 },
+    // { field: 'category', headerName: 'বিজ্ঞপ্তির ধরন  ', width: 200 },
     // { field: 'sub_category', headerName: 'বিজ্ঞপ্তির উপ-ধরন', width: 200 },
     {
       field: 'edit',
       headerName: 'সম্পাদনা করুন ',
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <Link to={`/update-news-notice/${params.row.id}`}>
@@ -57,7 +57,7 @@ const AllNewsAndNotice = () => {
     {
       field: 'delete',
       headerName: 'ডিলিট করুন ',
-      width: 200,
+      width: 400,
       renderCell: (params) => (
         <div className="d-flex justify-content-around align-items-center">
           <DeleteOutlineOutlinedIcon
@@ -71,7 +71,7 @@ const AllNewsAndNotice = () => {
                 dangerMode: true,
               }).then((willDelete) => {
                 if (willDelete) {
-                  axios.delete(`/api/notice/${params.row.id}`).then((res) => {
+                  axios.delete(`/api/delete-single-document/${params.row.id}`).then((res) => {
                     if (res.data.status === 200) {
                       swal("বিজ্ঞপ্তিটি সফলভাবে ডিলিট করা হয়েছে ", {
                         icon: "success",

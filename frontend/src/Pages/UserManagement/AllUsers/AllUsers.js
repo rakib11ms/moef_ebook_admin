@@ -327,7 +327,7 @@ const AllUsers = () => {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
+                    paginationModel: { page: 0, pageSize: 15 },
                   },
                 }}
                 pageSizeOptions={[5, 10]}
@@ -335,37 +335,7 @@ const AllUsers = () => {
               />
 
             </section>
-            {/* <section>
-              <div className="pagination-div">
-                <nav aria-label="Page navigation example">
-                  <ul className="pagination justify-content-center">
-                    <li className="page-item disabled">
-                      <a className="page-link">Previous</a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </section> */}
+  
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div className="varify-top-div">

@@ -32,21 +32,23 @@ const ViewNewsAndNotice = () => {
 
   const $user = JSON.parse(localStorage.getItem('user'));
 
-  const [Title, setTitle] = useState('');
+  const [title, settitle] = useState('');
+  const[editData,setEditData]=useState('')
 
-  const onTitleChange = (e) => {
-    setTitle(e.target.value);
+  const ontitleChange = (e) => {
+    settitle(e.target.value);
   }
 
 
   useEffect(() => {
     // store the news notice id provided in the url
-    axios.get(`/api/notice/${noticeID}`).then(res => {
+    axios.get(`/api/get-single-document/${noticeID}`).then(res => {
       if (res.data.status === 200) {
-        const notice = res.data.news_notice;
+        // const notice = res.data.news_notice;
         // console.log(notice);
-        setTitle(notice.Title);
-        setContent(notice.Description);
+        settitle(res.data.single_document.title);
+        setContent(res.data.single_document.contents);
+        setEditData(res.data.single_document)
       }
     }
     )
@@ -86,7 +88,7 @@ const ViewNewsAndNotice = () => {
               <div>
                 <div class="mb-3">
                   <div className="my-3">
-                  <p><strong>বিজ্ঞপ্তির শিরোনাম:-</strong> {Title}</p>
+                  <p><strong>বিজ্ঞপ্তির শিরোনাম:-</strong> {title}</p>
                   </div>
 
                   <div className="my-3">
@@ -104,6 +106,11 @@ const ViewNewsAndNotice = () => {
                     /> */}
                     <div dangerouslySetInnerHTML={{ __html: content }}></div>
                   </div>
+                  {
+                  editData.file !== null &&
+                  <a href={`${global.imageURL}/files/${editData.file}`} download target="_blank" className='download btn btn-warning fw-bold'> ফাইল দেখুন </a>
+
+                }
                 </div>
               </div>
             </div>

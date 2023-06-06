@@ -342,7 +342,7 @@ class MainBookController extends Controller
 
 
 
-    $results2 = SingleDocument::where('document_title',  'LIKE', '%'.$search.'%')->orWhere('document_contents','LIKE', '%name%')->get()->toArray();
+    $results2 = SingleDocument::where('title',  'LIKE', '%'.$search.'%')->orWhere('contents','LIKE', '%name%')->get()->toArray();
 
     $results = array_merge($results1, $results2);
 
