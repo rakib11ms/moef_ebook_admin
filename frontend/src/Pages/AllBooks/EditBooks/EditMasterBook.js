@@ -9,39 +9,40 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
+import Swal from "sweetalert2";
 const EditMasterBook = () => {
   const params = useParams();
   const masterBookID = params.id;
+  const [activeParagraph, setActiveParagraph] = useState('');
 
+  const [activeButton, setActiveButton] = useState(null);
   const [chapter, setChapter] = useState("");
+  const [page, setPage] = useState("");
   const [bookMaster, setBookMaster] = useState([]);
+  console.log('book details', bookMaster)
   const [content, setContent] = useState("");
   const [singleBookName, setSingleBookName] = useState("");
+
+  const [documentTitle, setdocumentTitle] = useState("");
 
   const handleParagraphClick = (paragraph) => {
     setContent(paragraph);
   };
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleEditBook = (e) => {
-    // console.log("book");
-    //set a tick mark instead of edit icon
-
-    document.getElementById("book_name").disabled =
-      !document.getElementById("book_name").disabled;
-    document.getElementById("tick").hidden =
-      !document.getElementById("tick").hidden;
-    document.getElementById("edit_book").hidden =
-      !document.getElementById("edit_book").hidden;
-  };
-
-  const handleBookNameChange = (book) => {
-    setSingleBookName(book);
-  };
+  // const handleEditClick = () => {
+  //   setIsEditing(true);
+  //   document.getElementById("editInp").focus();
+  // };
 
   const handleChapterclick = (chapter) => {
     setChapter(chapter);
+    console.log(chapter);
   };
+
+
 
   async function getBookMaster() {
     await axios
@@ -49,25 +50,17 @@ const EditMasterBook = () => {
       .then((res) => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
+        setActiveParagraph(res.data.data[0].paragraphs[0].main_book_id)
+        setContent(res.data.data[0].paragraphs[0].book_content)
+
       });
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
       console.log("Book_Title", res.data.books_master.Title);
       setSingleBookName(res.data.books_master.Title);
+      setdocumentTitle(res.data.books_master.Title)
     });
   }
-
-  const handleEditChapter = (chapter) => {
-    // console.log("chapter", chapter);
-    // document.getElementById("chapter_name").disabled = !document.getElementById("chapter_name").disabled;
-  };
-
-  const [chapterName, setChapterName] = useState("");
-
-  const handlehapterNameChange = (chapter, i) => {
-    setChapterName(chapter);
-  };
-
   useEffect(() => {
     getBookMaster();
   }, []);
@@ -78,112 +71,117 @@ const EditMasterBook = () => {
   //   setPage(buttonPage);
   // };
 
-  // Edit Tag name
-  const [tagName, setTagName] = useState("বইয়ের-নাম");
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTagName, setNewTagName] = useState("");
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setNewTagName(tagName);
+
+
+  const handleClick = (paragraphName) => {
+    setActiveParagraph(paragraphName);
   };
 
-  const handleCheckClick = () => {
-    setIsEditing(false);
-    setTagName(newTagName);
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50vw',
+    },
   };
 
-  const handleInputChange = (e) => {
-    setNewTagName(e.target.value);
-  };
+  useEffect(() => {
+    Modal.setAppElement('body');
 
-  // Edit Chapter Tag name
-  const [tagNameChapter, setTagNameChapter] = useState("অনুচ্ছেদের নাম");
-  const [isEditingChapter, setIsEditingChapter] = useState(false);
-  const [newTagNameChapter, setNewTagNameChapter] = useState("");
+  }, [])
 
-  const handleEditClickChapter = () => {
-    setIsEditingChapter(true);
-    setNewTagNameChapter(tagNameChapter);
-  };
+  const [chapterName, setChapterName] = useState('')
+  // console.log('chapter name', chapterName)
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  const handleCheckClickChapter = () => {
-    setIsEditingChapter(false);
-    setTagNameChapter(newTagNameChapter);
-  };
+  const [dynamicData, setDynamicData] = useState({
+    type: '',
+    data: '',
+    id: ''
+  })
+  console.log('check', dynamicData)
+  function openModal(type, id, data) {
+    setIsOpen(true);
+    setDynamicData({
+      type: type,
+      id: id,
+      data: data
+    })
+    setChapterName(data)
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const chapterData = {
+    chapterName: chapterName,
+    id: dynamicData.id
 
-  const handleInputChangeChapter = (e) => {
-    setNewTagNameChapter(e.target.value);
-  };
+  }
+  console.log('chapter data',chapterData)
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    if (dynamicData.type == 'টাইটেল') {
+      const data = {
+        Title: documentTitle
+      }
+      axios.put(`/api/books/${dynamicData.id}`, data).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+          window.location.reload();
+        } else if (res.data.status === 400) {
+          Swal.fire(res.data.message, "", "warning");
+        }
+      });
+    }
+
+     if(dynamicData.type == 'চ্যাপ্টার') {
+ 
+      // console.log('data chapter',data)
+      axios.put(`/api/bookChapter/${dynamicData.id}`, chapterData).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+          window.location.reload();
+        } else if (res.data.status === 400) {
+          Swal.fire(res.data.message, "", "warning");
+        }
+      });
+    }
+
+  }
   return (
     <div>
       <div>
         <NavigationBa />
       </div>
-      <section className="editMaster-tagname container-fluid">
-        {/* <div>
-          {isEditing ? (
-            <input
-              type="text"
-              value={newTagName}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <h3>{tagName}</h3>
-          )}
-
-          {isEditing ? (
-            <CheckIcon onClick={handleCheckClick} />
-          ) : (
-            <EditIcon onClick={handleEditClick} />
-          )}
-        </div> */}
-        <h3 className="">
+      <section className="container-fluid">
+        <h3>
           লাইব্রেরী /
-          {/* <input
-            // _dangerouslySetInnerHTML={{ __html: singleBookName }}
-            type="text"
-            id="book_name"
-            className="input-field"
-            value={singleBookName}
-            onChange={(e) => handleBookNameChange(e.target.value)}
-            disabled
+          {documentTitle}
+          <EditIcon
+            className="mb-1 mx-3 text-muted "
+            style={{ cursor: "pointer" }}
+            // onClick={handleEditClick}
+            id="docu-edit-icon"
+            onClick={() => openModal('টাইটেল', masterBookID, documentTitle)}
           />
-          <CreateOutlinedIcon
-            id="edit_book"
-            className="text-warning small-icon"
-            onClick={(e) => handleEditBook(e)}
-          >
-            Edit
-          </CreateOutlinedIcon>
-          <Button id="tick" class="tick" hidden>
-            &#10004;
-          </Button> */}
-        </h3>{" "}
-        <span className="editMaster-tagname-span">
-          {isEditing ? (
-            <input
-              id="editmaster-input"
-              type="text"
-              value={newTagName}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <h3>{tagName}</h3>
-          )}
-          {isEditing ? (
-            <CheckIcon
-              className="editMaster-edit-icon"
-              onClick={handleCheckClick}
-            />
-          ) : (
-            <EditIcon
-              className="editMaster-edit-icon"
-              onClick={handleEditClick}
-            />
-          )}
-        </span>
+
+          {/* <input
+            type="text"
+
+            className="form-control-sm border-1 border-secondary outline-0 ms-2 me-2 fs-4 "
+            // placeholder="টাইটেল যোগ করুন "
+            id="editInp"
+            value={documentTitle}
+            onChange={(e) => setdocumentTitle(e.target.value)}
+          /> */}
+
+        </h3>
       </section>
       <hr />
       <section className="container-fluid">
@@ -194,60 +192,40 @@ const EditMasterBook = () => {
                 <h5 className="suchipotro-h5">সূচীপত্র</h5>
                 {bookMaster.map((chapter) => (
                   <div key={chapter.chapter_name}>
-                    <h6>অধ্যায় নাম:</h6>
+                    {/* <input type="text" className="form-control fw-bold " value={chapter.chapter_name}/> */}
 
-                    <span className="editMaster-chapter-tagname-span">
-                      {isEditingChapter ? (
-                        <input
-                          id="editmaster-input"
-                          type="text"
-                          value={newTagNameChapter}
-                          onChange={handleInputChangeChapter}
-                        />
-                      ) : (
-                        <h3 className="editMaster-chapter-tagname">
-                          {tagNameChapter}
-                        </h3>
-                      )}
-                      {isEditingChapter ? (
-                        <CheckIcon onClick={handleCheckClickChapter} />
-                      ) : (
-                        <EditIcon
-                          className="editMaster-edit-icon"
-                          onClick={handleEditClickChapter}
-                        />
-                      )}
-                    </span>
-                    {/* 
-                    <h6>
-                      <input
-                        id="chapter_name"
-                        type="text"
-                        value={chapter.chapter_name}
-                        className="input-field"
-                        disabled
-                        onChange={(e) => handlehapterNameChange(e.target.value)}
-                      ></input>
-                      <CreateOutlinedIcon
-                        className="text-warning small-icon"
-                        onClick={() => handleEditChapter(chapter.chapter_name)}
-                      >
-                        Edit
-                      </CreateOutlinedIcon>
-                    </h6> */}
-                    {/* <h6>অনুচ্ছেদ নাম:</h6> */}
+
+                    <h6>{chapter.chapter_name}
+                      <EditIcon
+                        className="mb-1 mx-2 text-muted fs-6"
+                        style={{ cursor: "pointer" }}
+                        // onClick={handleEditClick}
+                        id="docu-edit-icon"
+                        onClick={() => openModal('চ্যাপ্টার', chapter.chapter_id, chapter.chapter_name)}
+
+                      />
+                    </h6>
                     <ul>
-                      {chapter.paragraphs.map((paragraph) => (
+                      {chapter.paragraphs.map((item) => (
                         <li
-                          key={paragraph.paragraph_name}
-                          onClick={() =>
-                            handleParagraphClick(paragraph.book_content)
+                          key={item.paragraph_name}
+                          onClick={() => {
+                            handleParagraphClick(item.book_content)
+                          }
                           }
                         >
-                          <Button>{paragraph.paragraph_name}</Button>
-                          <CreateOutlinedIcon className="text-warning small-icon">
-                            Edit
-                          </CreateOutlinedIcon>
+                          <a href='#' onClick={() => handleClick(item.main_book_id)}
+                            className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
+                          >
+                            {item.paragraph_name}
+                            <EditIcon
+                              className="mb-1 mx-2 text-muted fs-6"
+                              style={{ cursor: "pointer" }}
+                              // onClick={handleEditClick}
+                              id="docu-edit-icon"
+                            />
+                          </a>
+
                         </li>
                       ))}
                     </ul>
@@ -263,7 +241,7 @@ const EditMasterBook = () => {
                     {chapter} / {page}
                   </h5>
                 </div> */}
-                <div className="story-texts">
+                <div className="story-texts ">
                   {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
                 </div>
 
@@ -272,6 +250,52 @@ const EditMasterBook = () => {
                 </div>
               </div>
             </div>
+
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+
+              <div className='card-body '>
+                <span className='float-end' style={{ fontSize: "20px", cursor: "pointer" }} onClick={closeModal}><i class="fa fa-times"></i></span>
+
+                <h5 className="">{dynamicData.type}</h5>
+                <hr />
+
+                <div className="row">
+
+                  <div className="col-12 ">
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">নাম </label>
+                      {
+                        dynamicData.type == 'টাইটেল' &&
+                        <input type="text" class="form-control fs-5" value={documentTitle} id="exampleFormControlInput1"
+                          onChange={(e) => setdocumentTitle(e.target.value)}
+                        />
+                      }
+                      {
+                        dynamicData.type == 'চ্যাপ্টার' &&
+                        <input type="text" class="form-control fs-5" value={chapterName} id="exampleFormControlInput1"
+                          onChange={(e) => setChapterName(e.target.value)}
+                        />
+                      }
+
+                    </div>
+                    <div className="draft-prokas-buttons-div">
+                      <button className="draft-prokas-button mx-2" onClick={handleUpdate}>আপডেট করুন</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </Modal>
+
+
+
+
           </div>
         </div>
       </section>

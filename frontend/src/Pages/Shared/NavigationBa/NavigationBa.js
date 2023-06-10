@@ -392,7 +392,6 @@ const NavigationBa = () => {
 
   const [searchData, setSearchData] = useState([])
 
-  console.log('mapped', searchData);
 
   async function getGlobalSearch() {
     if (input) {

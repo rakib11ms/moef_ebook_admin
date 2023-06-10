@@ -99,26 +99,26 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/check" element={<Check />} />
             {
-              user_permissions!==null && user_permissions.includes('view_user') &&
+              user_permissions !== null && user_permissions.includes('view_user') &&
               <Route path="/all-users" element={<AllUsers />} />
 
             }
             <Route path="/permission-users" element={<PermissionUser />} />
             {
-              user_permissions!==null && user_permissions.includes('view_book') && <Route path="/all-books" element={<AllBooks />} />
+              user_permissions !== null && user_permissions.includes('view_book') && <Route path="/all-books" element={<AllBooks />} />
             }
             {
-              user_permissions!==null && user_permissions.includes('create_document') &&
+              user_permissions !== null && user_permissions.includes('create_document') &&
               <Route path="/add-document" element={<AddDocument />} />
 
             }
             {
-              user_permissions!==null && user_permissions.includes('update_document') &&
+              user_permissions !== null && user_permissions.includes('update_document') &&
               <Route path="/edit-books/:id" element={<EditBooks />} />
 
             }
             {
-              user_permissions!==null && user_permissions.includes('update_book') &&
+              user_permissions !== null && user_permissions.includes('update_book') &&
               <Route path="/view-books/:id" element={<ViewBooks />} />
 
             }
@@ -130,29 +130,29 @@ function App() {
             <Route path="/book-categories" element={<BooksCatagories />} />
             <Route path="/draft-documents" element={<DraftDocuments />} />
             {
-              user_permissions!==null && user_permissions.includes('view_notice_news') &&
+              user_permissions !== null && user_permissions.includes('view_notice_news') &&
               <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
 
             }
             {
-              user_permissions!==null && user_permissions.includes('create_notice_news') &&
+              user_permissions !== null && user_permissions.includes('create_notice_news') &&
               <Route path="/create-news-notice" element={<CreateNewsAndNotice />} />
 
             }
             {
-              user_permissions!==null && user_permissions.includes('update_notice_news') &&
+              user_permissions !== null && user_permissions.includes('update_notice_news') &&
               <Route path="/update-news-notice/:id" element={<UpdateNewsAndNotice />} />
 
             }
             <Route path="/view-news-notice/:id" element={<ViewNewsAndNotice />} />
             <Route path="/categories-news" element={<CategoriesNews />} />
             {
-              user_permissions!==null && user_permissions.includes('view_document') &&
+              user_permissions !== null && user_permissions.includes('view_document') &&
               <Route path="/all-documents" element={<AllDocuments />} />
 
             }
             {
-              user_permissions!==null && user_permissions.includes('update_document') &&
+              user_permissions !== null && user_permissions.includes('update_document') &&
               <Route path="/edit-document/:id" element={<EditDocument />} />
 
             }

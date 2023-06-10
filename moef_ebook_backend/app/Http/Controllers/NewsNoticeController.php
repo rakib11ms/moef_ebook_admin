@@ -47,11 +47,11 @@ class NewsNoticeController extends Controller
 
     public function show(Request $request ,string $id)
     {
-        $newsNotice = NewsNotice::findOrFail($id);
+        $single_document = SingleDocument::findOrFail($id);
         return response()->json(
             [
                 'status' => 200,
-                'news_notice' => $newsNotice
+                'single_document' => $single_document
             ]
         );
     }

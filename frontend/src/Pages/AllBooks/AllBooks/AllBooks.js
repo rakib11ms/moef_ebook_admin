@@ -18,18 +18,11 @@ const AllBooks = () => {
   const [ChapterID, setChapterID] = useState("");
   const [chapters, setchapters] = useState([]);
 
-  // async function fetchBooks() {
-  //   const res = await axios.get(`/api/get-all-main-book`);
-  //   if (res.data.status === 200) {
-  //     setAllBooks(res.data.data);
-  //     setBooks(res.data.data);
-  //     setchapters(res.data.data);
-  //     console.log("all books", res.data.data);
-  //   } else {
-  //     console.log("error");
-  //   }
-  // }
 
+  useEffect(() => {
+    fetchBookDetails();
+  }, []);
+  
   async function fetchBookDetails() {
     const res = await axios.get(`/api/get-main-book-by-count`);
     if (res.data.status === 200) {
@@ -42,20 +35,9 @@ const AllBooks = () => {
     }
   }
 
-  // async function fetchChapters() {
-  //   await axios.get(`/api/get-dependent-chapter-by-main-book-id/${BookID}`).then((res) => {
-  //     if (res.data.status === 200) {
-  //       setchapters(res.data.data);
-  //       console.log("all chapters", res.data.data);
-  //     } else {
-  //       console.log("error");
-  //     }
-  //   });
-  // }
 
-  useEffect(() => {
-    fetchBookDetails();
-  }, []);
+
+
 
   const handleBookChange = (e) => {
     // console.log(e.target.value);
@@ -158,7 +140,7 @@ const AllBooks = () => {
       ),
     },
     {
-      field: "updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350 
+      field: "updated_at", headerName: "সর্বশেষ সম্পাদনা", width: 350
     },
     {
       field: "created_by", headerName: "প্রকাশকের নাম", width: 350
