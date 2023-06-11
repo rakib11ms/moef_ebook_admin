@@ -47,6 +47,7 @@ Route::resource('profile', UserProfileController::class);
 Route::resource('books', BooksMasterController::class);
 Route::resource('bookDetails', BooksDetailsController::class);
 Route::resource('bookParagraph', BookParagraphController::class);
+// Route::put('bookParagraph-update/{id}', [BookParagraphController::class,'update']);
 Route::get('get-dependent-chapters-by-book-master-id/{id}', [BookParagraphController::class, 'getChaptersByBookMaster']);
 
 Route::get('get-dependent-paragraphs-by-book-chapter-id/{id}', [BookParagraphController::class, 'getParagraphsByChapter']);

@@ -102,27 +102,49 @@ const EditMasterBook = () => {
   const [dynamicData, setDynamicData] = useState({
     type: '',
     data: '',
-    id: ''
+    id: '',
+    paragraph_name: ""
   })
-  console.log('check', dynamicData)
-  function openModal(type, id, data) {
+  const [dynamicParagraphId, setDynamicParagraphId] = useState('');
+  const [types, settypes] = useState('');
+  const [dynamicChapterId, setdynamicChapterId] = useState('');
+  const [dynamicParagraphName, setdynamicParagraphName] = useState('');
+
+  console.log('paragraph info', dynamicParagraphId, types, dynamicChapterId, dynamicParagraphName)
+  function openModal(type, id, data, paragraphname) {
     setIsOpen(true);
     setDynamicData({
       type: type,
       id: id,
-      data: data
+      data: data,
+      pargraph_name: paragraphname
     })
     setChapterName(data)
+    settypes(type);
+    setDynamicParagraphId(id)
+    setdynamicParagraphName(paragraphname)
   }
+
+  // console.log('check', dynamicData)
+
   function closeModal() {
     setIsOpen(false);
   }
   const chapterData = {
-    chapterName: chapterName,
-    id: dynamicData.id
+    ChapterName: chapterName,
+    id: dynamicData.id,
+    BookID: masterBookID
 
   }
-  console.log('chapter data',chapterData)
+  // console.log('chapter data',chapterData)
+  const paragraphData = {
+    ParagraphName: dynamicParagraphName,
+    id: dynamicData.id,
+    BookID: masterBookID,
+    ChapterID: dynamicData.data
+
+  }
+  console.log('check', paragraphData)
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -140,10 +162,22 @@ const EditMasterBook = () => {
       });
     }
 
-     if(dynamicData.type == 'চ্যাপ্টার') {
- 
+    if (dynamicData.type == 'চ্যাপ্টার') {
+
       // console.log('data chapter',data)
       axios.put(`/api/bookChapter/${dynamicData.id}`, chapterData).then((res) => {
+        if (res.data.status === 200) {
+          Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+          window.location.reload();
+        } else if (res.data.status === 400) {
+          Swal.fire(res.data.message, "", "warning");
+        }
+      });
+    }
+    if (dynamicData.type == 'অনুচ্ছেদ') {
+
+      // console.log('data ',paragraphData)
+      axios.put(`/api/bookParagraph/${dynamicData.id}`, paragraphData).then((res) => {
         if (res.data.status === 200) {
           Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
           window.location.reload();
@@ -214,14 +248,14 @@ const EditMasterBook = () => {
                           }
                           }
                         >
-                          <a href='#' onClick={() => handleClick(item.main_book_id)}
+                          <a onClick={() => handleClick(item.main_book_id)}
                             className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
                           >
                             {item.paragraph_name}
                             <EditIcon
                               className="mb-1 mx-2 text-muted fs-6"
                               style={{ cursor: "pointer" }}
-                              // onClick={handleEditClick}
+                              onClick={() => openModal('অনুচ্ছেদ', item.paragraph_id, chapter.chapter_id, item.paragraph_name)}
                               id="docu-edit-icon"
                             />
                           </a>
@@ -279,6 +313,12 @@ const EditMasterBook = () => {
                         dynamicData.type == 'চ্যাপ্টার' &&
                         <input type="text" class="form-control fs-5" value={chapterName} id="exampleFormControlInput1"
                           onChange={(e) => setChapterName(e.target.value)}
+                        />
+                      }
+                      {
+                        dynamicData.type == 'অনুচ্ছেদ' &&
+                        <input type="text" class="form-control fs-5" value={dynamicParagraphName} id="exampleFormControlInput1"
+                          onChange={(e) => setdynamicParagraphName(e.target.value)}
                         />
                       }
 

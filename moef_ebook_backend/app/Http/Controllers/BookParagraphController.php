@@ -47,11 +47,13 @@ class BookParagraphController extends Controller
         );
     }
 
-    public function update(Request $request, string $id)
+
+  public function update(Request $request, $id)
     {
         $bookParagraph = BookParagraph::findOrFail($id);
+
         $bookParagraph->update($request->all());
-        return response()->json(
+      return response()->json(
             [
                 'status'=>200,
                 'book_paragraph'=>$bookParagraph
