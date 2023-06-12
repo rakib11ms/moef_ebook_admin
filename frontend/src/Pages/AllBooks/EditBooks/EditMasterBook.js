@@ -12,6 +12,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Swal from "sweetalert2";
+import JoditEditor from "jodit-react";
 const EditMasterBook = () => {
   const params = useParams();
   const masterBookID = params.id;
@@ -23,9 +24,11 @@ const EditMasterBook = () => {
   const [bookMaster, setBookMaster] = useState([]);
   console.log('book details', bookMaster)
   const [content, setContent] = useState("");
+
   const [singleBookName, setSingleBookName] = useState("");
 
   const [documentTitle, setdocumentTitle] = useState("");
+
 
   const handleParagraphClick = (paragraph) => {
     setContent(paragraph);
@@ -42,7 +45,7 @@ const EditMasterBook = () => {
     console.log(chapter);
   };
 
-
+  const [bookContentID, setBookContentID] = useState();
 
   async function getBookMaster() {
     await axios
@@ -51,8 +54,7 @@ const EditMasterBook = () => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
         setActiveParagraph(res.data.data[0].paragraphs[0].main_book_id)
-        setContent(res.data.data[0].paragraphs[0].book_content)
-
+        setContent(res.data.data[0].paragraphs[0].book_content);
       });
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
@@ -72,7 +74,7 @@ const EditMasterBook = () => {
   // };
 
 
-
+  
 
   const handleClick = (paragraphName) => {
     setActiveParagraph(paragraphName);
@@ -144,7 +146,7 @@ const EditMasterBook = () => {
     ChapterID: dynamicData.data
 
   }
-  console.log('check', paragraphData)
+  console.log('check', activeParagraph)
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -186,8 +188,27 @@ const EditMasterBook = () => {
         }
       });
     }
+  }
+
+  const handleContentEdit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("book_content", content);
+
+    axios.post(`/api/update-main-book/` + activeParagraph, formData).then((res) => {
+      if (res.data.status === 200) {
+        Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
+        window.location.reload();
+      } else if (res.data.status === 400) {
+        Swal.fire(res.data.message, "", "warning");
+      }
+    });
 
   }
+
+  // console.log("new content", content);
+  
   return (
     <div>
       <div>
@@ -247,6 +268,7 @@ const EditMasterBook = () => {
                             handleParagraphClick(item.book_content)
                           }
                           }
+                          
                         >
                           <a onClick={() => handleClick(item.main_book_id)}
                             className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
@@ -275,8 +297,28 @@ const EditMasterBook = () => {
                     {chapter} / {page}
                   </h5>
                 </div> */}
-                <div className="story-texts ">
+                {/* <div className="story-texts ">
                   {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
+                </div> */}
+
+                <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: 0, right: 0 }}>
+                    <EditIcon
+                      id="editIcon"
+                      className="mb-1 mx-2 text-primary fs-10" 
+                      style={{ fontSize: '24px' }}
+                      onClick = {handleContentEdit}
+                      // hidden
+                    />
+                  </div>
+                  <div style={{ paddingTop: '40px' }}>
+                    <JoditEditor
+                      value={content}
+                      onChange= {(newContent) => {
+                        setContent(newContent);
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <div className="TrendingFlatIcon-div">
