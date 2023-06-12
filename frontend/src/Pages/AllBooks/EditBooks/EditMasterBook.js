@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./EditMasterBook.css";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
@@ -14,6 +14,11 @@ import Modal from 'react-modal';
 import Swal from "sweetalert2";
 import JoditEditor from "jodit-react";
 const EditMasterBook = () => {
+  
+  let editor = useRef(null);
+
+
+
   const params = useParams();
   const masterBookID = params.id;
   const [activeParagraph, setActiveParagraph] = useState('');
@@ -24,6 +29,27 @@ const EditMasterBook = () => {
   const [bookMaster, setBookMaster] = useState([]);
   console.log('book details', bookMaster)
   const [content, setContent] = useState("");
+  const [contentAreaClick, setContentAreaClick] = useState(false);
+  // console.log('c1',contentAreaClick)
+  
+  // let previousContentLength=content.length;
+  // console.log('length prev',previousContentLength)
+
+  // useEffect(() => {
+  //   // console.log('previous length',content.length);
+
+  //   const previousContentLength = content.length;
+  //   if (content.length > previousContentLength) {
+  //     // Trigger an action if the length has increased
+  //     console.log('length increased');
+  //   } else if (content.length < previousContentLength) {
+  //     // Trigger an action if the length has decreased
+  //     console.log('length decreased');
+  //   }
+
+  
+  // }, [content]); 
+  
 
   const [singleBookName, setSingleBookName] = useState("");
 
@@ -207,8 +233,7 @@ const EditMasterBook = () => {
 
   }
 
-  // console.log("new content", content);
-  
+ 
   return (
     <div>
       <div>
@@ -303,20 +328,43 @@ const EditMasterBook = () => {
 
                 <div style={{ position: 'relative' }}>
                   <div style={{ position: 'absolute', top: 0, right: 0 }}>
-                    <EditIcon
+             
+                    {
+                      contentAreaClick?
+                      <button
+                      style={{ position: "absolute", right: "0" }}
+                      type="submit"
+                      className="doc-input-button-songrokkhon"
+                      onClick={handleContentEdit}
+                    >
+                      আপডেট 
+                    </button>                      :
+                      <EditIcon
                       id="editIcon"
                       className="mb-1 mx-2 text-primary fs-10" 
                       style={{ fontSize: '24px' }}
-                      onClick = {handleContentEdit}
+                      // onClick = {handleContentEdit}
                       // hidden
                     />
+                    }
                   </div>
-                  <div style={{ paddingTop: '40px' }}>
-                    <JoditEditor
+                  <div style={{ padding: '55px 0px' }} className="" onClick={()=>setTimeout(()=>setContentAreaClick(true),2000)}>
+                  
+                   <JoditEditor
+                      className="jodit-editor"
+                      ref={editor}
                       value={content}
-                      onChange= {(newContent) => {
-                        setContent(newContent);
+                      // config={config}
+                      tabIndex={1} // tabIndex of textarea
+                      onBlur={(newContent)=>{
+                        setContent(newContent) ;
+                        // console.log('value changes',newContent.length)
                       }}
+                      onChange={(newContent)=>{
+                        setContent(newContent) ;
+                        console.log('value changes')
+                      }} 
+                      id="add-doc-jodit-editor"
                     />
                   </div>
                 </div>
