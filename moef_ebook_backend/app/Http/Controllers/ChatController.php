@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PRedis;
 use App\Models\Message;
+use Illuminate\Support\Facades\DB;
+
 class ChatController extends Controller
 {
      public function __construct()
@@ -24,17 +26,26 @@ class ChatController extends Controller
             $new=new Message();
             $new->message=$request->message;
             $new->sender=$request->sender;
+            $new->user_id=$request->user_id;
             $new->save();
-             
 
-        return response()->json(['success' => true]);
+  $response_message=DB::table('messages')->leftJoin('users', 'messages.user_id', '=', 'users.id')
+    ->select('messages.id', 'messages.sender', 'messages.message', 'messages.user_id', 'users.userImage','messages.created_at')->orderBy('messages.id', 'desc')
+    ->first();
+
+        return response()->json(['response_message' => $response_message]);
     }
 
     public function getAllMessage(){
-        $messages=Message::all()->take(50);
+        
+  $response_message=DB::table('messages')->leftJoin('users', 'messages.user_id', '=', 'users.id')
+    ->select('messages.id', 'messages.sender', 'messages.message', 'messages.user_id', 'users.userImage','messages.created_at')
+    ->get();
+
+
      return response()->json([
         'status' => 200,
-        'messages'=>$messages
+        'messages'=>$response_message
  ]);
 
     }
