@@ -590,7 +590,7 @@ const MyArea = () => {
                 </div>
               </div> */}
             </section>
-            <section className="mt-5 container-fluid">
+            {/* <section className="mt-5 container-fluid">
               <h5>আমার বুকমার্কস</h5>
               <div className="row ">
                 <div className="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 me-4">
@@ -612,7 +612,7 @@ const MyArea = () => {
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
             <section className="mt-5 container-fluid">
               <h5>আমার ড্রাফট</h5>

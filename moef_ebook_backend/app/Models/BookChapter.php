@@ -14,4 +14,9 @@ class BookChapter extends Model
         'ChapterName',
         'BookID',
     ];
+
+    public function mainBook()
+    {
+        return $this->belongsTo(MainBook::class, 'BookID', 'id');
+    }
 }

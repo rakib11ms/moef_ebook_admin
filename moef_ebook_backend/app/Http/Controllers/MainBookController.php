@@ -244,11 +244,16 @@ class MainBookController extends Controller
 
   public function getAllBookAndDocumentsByCategoryID(Request $request, string $id)
   {
-    $booksMaster = MainBook::with(['bookMaster' => function ($query) use ($id) {
-      $query->where('CatID', $id);
-    }])->select('book_id')->distinct('book_id')->get();
+    // $booksMaster = MainBook::with(['bookMaster' => function ($query) use ($id) {
+    //   $query->where('CatID', $id);
+    // }])->select('book_id')->distinct('book_id')->get();
+    
+    
+    $booksMaster = BooksMaster::where('CatID', $id)->get();
+    
+    
 
-    $booksMaster = $booksMaster->pluck('bookMaster');
+    // $booksMaster = $booksMaster->pluck('bookMaster');
         $booksMaster=$booksMaster->map(function($item,$key){
       return[
         'id'=>$item->id,

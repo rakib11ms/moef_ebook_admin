@@ -26,8 +26,7 @@ class BookChapterController extends Controller
             [
                 'status' => 200,
                 'bookChapter' => $bookChapter,
-            'message'=>"Book chapter created successfully"
-
+                'message'=>"Book chapter created successfully"
             ]
         );
     }
