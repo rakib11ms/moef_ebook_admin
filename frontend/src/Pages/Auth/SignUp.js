@@ -206,6 +206,7 @@ function SignUp() {
             </div>
             <br />
 
+
             <div className="container">
               <div className="row">
                 <div className="col-sm d-flex justify-content-start">
