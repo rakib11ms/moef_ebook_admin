@@ -189,6 +189,7 @@ const BooksCatagories = () => {
       if (res.data.status === 200) {
         console.log('all categories', res.data.bookcategories);
         setAllCatagories(res.data.bookcategories);
+        setIsLoading(false);
       } else {
         console.log("error");
       }
@@ -201,6 +202,7 @@ const BooksCatagories = () => {
   
 
   // console.log(allCatagories);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div>
@@ -271,18 +273,32 @@ const BooksCatagories = () => {
           <div className="col-xl-6 col-lg-5 col-md-5 col-sm-12 col-12">
             <div>
               <lebel>ক্যাটাগরি লিস্ট</lebel> <br />
-              <DataGrid
-                id="book-categories-datagrid"
-                rows={rows}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection={false}
-              />
+              <div>
+                {isLoading ? (
+                  // Display loader here
+                  <div className="d-flex justify-content-center">
+                    <div
+                      className="spinner-border text-primary"
+                      role="status"
+                    >
+                      <span className=""></span>
+                    </div>
+                  </div>
+                ) : (
+                  // DataGrid component
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection={false}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

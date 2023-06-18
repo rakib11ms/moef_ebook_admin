@@ -20,6 +20,7 @@ const AllDocuments = () => {
     await axios.get(`/api/all-single-document`).then((res) => {
       if (res.data.status === 200) {
         setAllDocuments(res.data.single_document);
+        setIsLoading(false);
         console.log("all books", res.data.single_document);
       } else {
         console.log("error");
@@ -36,7 +37,7 @@ const AllDocuments = () => {
     ...AllDocuments.map((data) => {
       return {
         id: data.id,
-        title: data.title,
+        title: data.document_title,
       };
     }),
   ];
@@ -114,6 +115,8 @@ const AllDocuments = () => {
     },
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
+
  
   return (
     <div>
@@ -153,7 +156,7 @@ const AllDocuments = () => {
             {/* <hr /> */}
             <>
               <p>সকল ডকুমেন্টস</p>
-              <DataGrid
+              {/* <DataGrid
                 rows={rows}
                 columns={columns}
                 initialState={{
@@ -163,7 +166,33 @@ const AllDocuments = () => {
                 }}
                 pageSizeOptions={[5, 10]}
                 checkboxSelection={false}
-              />
+              /> */}
+              <div>
+                {isLoading ? (
+                  // Display loader here
+                  <div className="d-flex justify-content-center">
+                    <div
+                      className="spinner-border text-primary"
+                      role="status"
+                    >
+                      <span className=""></span>
+                    </div>
+                  </div>
+                ) : (
+                  // DataGrid component
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection={false}
+                  />
+                )}
+              </div>
             </>
 
             {/* <>

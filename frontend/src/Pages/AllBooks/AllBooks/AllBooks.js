@@ -28,6 +28,7 @@ const AllBooks = () => {
     if (res.data.status === 200) {
       console.log("all books1", res.data.data);
       setAllBooks(res.data.data);
+      setIsLoading(false);
       // setBooks(res.data.data);
       // setchapters(res.data.data);
     } else {
@@ -159,6 +160,8 @@ const AllBooks = () => {
     })),
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div>
       <section>
@@ -265,7 +268,7 @@ const AllBooks = () => {
                 </div> */}
               </div>
               <hr />
-              <DataGrid
+              {/* <DataGrid
                 rows={rows}
                 columns={columns}
                 initialState={{
@@ -275,7 +278,33 @@ const AllBooks = () => {
                 }}
                 pageSizeOptions={[5, 10]}
                 checkboxSelection={false}
-              />
+              /> */}
+              <div>
+                {isLoading ? (
+                  // Display loader here
+                  <div className="d-flex justify-content-center">
+                    <div
+                      className="spinner-border text-primary"
+                      role="status"
+                    >
+                      <span className=""></span>
+                    </div>
+                  </div>
+                ) : (
+                  // DataGrid component
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection={false}
+                  />
+                )}
+              </div>
             </>
 
             {/* <>

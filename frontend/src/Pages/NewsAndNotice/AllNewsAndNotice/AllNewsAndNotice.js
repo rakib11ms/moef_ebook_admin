@@ -23,8 +23,8 @@ const AllNewsAndNotice = () => {
       await axios.get("/api/notice").then(res => {
         if (res.data.status === 200) {
           setAllNoticeNews(res.data.news_notices);
-          // console.log('notice news', res.data.news_notices);
-          // setLoading(false);
+          console.log('notice news', res.data.news_notices);
+          setIsLoading(false);
         } else {
           console.log('error');
         }
@@ -121,6 +121,7 @@ const AllNewsAndNotice = () => {
       }
     ))
   ];
+  const [isLoading, setIsLoading] = useState(true);
 
   // console.log('rows', rows);
 
@@ -156,17 +157,32 @@ const AllNewsAndNotice = () => {
               </div>
               <hr />
               <div className="container-fluid table-responsive-lg table-responsive-sm">
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection={false}
-              />
+              <div>
+                {isLoading ? (
+                  // Display loader here
+                  <div className="d-flex justify-content-center">
+                    <div
+                      className="spinner-border text-primary"
+                      role="status"
+                    >
+                      <span className=""></span>
+                    </div>
+                  </div>
+                ) : (
+                  // DataGrid component
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection={false}
+                  />
+                )}
+              </div>
               </div>
             </div>
           
