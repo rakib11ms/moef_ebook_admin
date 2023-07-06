@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use File;
 
 class DeleteUserController extends Controller
 {
@@ -21,6 +21,8 @@ class DeleteUserController extends Controller
             ]
         );
     }
+
+
 
     public function activeUser($id)
     {

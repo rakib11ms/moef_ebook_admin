@@ -26,7 +26,7 @@ const AllBooks = () => {
   async function fetchBookDetails() {
     const res = await axios.get(`/api/get-main-book-by-count`);
     if (res.data.status === 200) {
-      console.log("all books1", res.data.data);
+      // console.log("all books1", res.data.data);
       setAllBooks(res.data.data);
       setIsLoading(false);
       // setBooks(res.data.data);
@@ -199,7 +199,7 @@ const AllBooks = () => {
             </div>
             {/* <hr /> */}
             <>
-              <p>আমার ফাইল</p>
+              {/* <p>আমার ফাইল</p> */}
               <div className="books-serchInput-icon-div col-6">
                 {/* <div className="select-category-div col-6">
                 <lebel >বই নির্নয় করুন * </lebel> <br />

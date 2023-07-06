@@ -341,7 +341,7 @@ const NavigationBa = () => {
                 {showSubmenu4 && (
                   <ul>
                     <li className="side-li-link">
-                      <Link to="/all-news-notice">মিটিং তৈরি করুন</Link>
+                      <Link to="/create-meeting">মিটিং তৈরি করুন</Link>
                     </li>
                     <li className="side-li-link">
                       <Link to="/">যোগদান করুন</Link>

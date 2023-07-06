@@ -76,7 +76,7 @@ const MyArea = () => {
     await axios
       .get(
         "api/get-all-main-books-and-single-documents-for-a-specific-user/" +
-          $user.id
+        $user.id
       )
       .then((res) => {
         //store to bookMain whose type is main_book from res.data.data
@@ -311,9 +311,8 @@ const MyArea = () => {
 
   const handleSingleDoc = async (event) => {
     const currentPage = window.location.pathname;
-    window.location.href = `/view-documents/${
-      event.id
-    }?page=${encodeURIComponent(currentPage)}`;
+    window.location.href = `/view-documents/${event.id
+      }?page=${encodeURIComponent(currentPage)}`;
   };
 
   const currentPage = window.location.pathname;
@@ -713,9 +712,8 @@ const MyArea = () => {
                             {/* <CreateIcon className=" area-draft-icon" /> */}
                             <div className="draftinternal-card-div">
                               <Link
-                                to={`/edit-books/${
-                                  draftsBook.id
-                                }?page=${encodeURIComponent(currentPage)}`}
+                                to={`/edit-books/${draftsBook.id
+                                  }?page=${encodeURIComponent(currentPage)}`}
                               >
                                 <CreateIcon className=" area-draft-icon" />
                               </Link>
@@ -799,9 +797,8 @@ const MyArea = () => {
                           <div className="col-xl-2 col-lg-2 col-sm- col-md-2 col-2">
                             <div className="draftinternal-card-div">
                               <Link
-                                to={`/edit-document/${
-                                  draftsSingleDoc.id
-                                }?page=${encodeURIComponent(currentPage)}`}
+                                to={`/edit-document/${draftsSingleDoc.id
+                                  }?page=${encodeURIComponent(currentPage)}`}
                               >
                                 <CreateIcon className=" area-draft-icon" />
                               </Link>

@@ -95,10 +95,10 @@ const AllUsers = () => {
             alt="pic"
             className="img-fluid"
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = `${global.imageURL}/images/user/default.png`;
-            }}
+            // onError={(e) => {
+            //   e.target.onerror = null;
+            //   e.target.src = `${global.imageURL}/images/user/default.png`;
+            // }}
           />
         </div>
       )

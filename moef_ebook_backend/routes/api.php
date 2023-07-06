@@ -26,6 +26,7 @@ use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookSubCategoryController;
 use App\Http\Controllers\MainBookController;
 use App\Http\Controllers\DeleteUserController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Auths\RegisterController;
@@ -106,7 +107,11 @@ Route::get('/get-All-Chpter-By-Book-Master-ID/{id}', [MainBookController::class,
 Route::get('/get-All-Paragraphs-By-ChapterID/{id}', [MainBookController::class, 'getAllParagraphsByChapterID']);
 Route::get('/get-All-Unique-MainBook-By-BookMaster-ID', [MainBookController::class, 'getAllUniqueMainBookByBookMasterID']);
 
+
+//inactive user
 Route::put('/delete-user/{id}', [DeleteUserController::class, 'update']);
+
+
 Route::put('/active-User/{id}', [DeleteUserController::class, 'activeUser']);
 
 Route::post('/reset-password-email-request', [ResetPasswordController::class, 'resetPassword']);
@@ -132,6 +137,11 @@ Route::get('get-permission-via-role/{id}', [RolePermissionController::class, 'ge
 Route::post('/change-User-Role/{id}', [App\Http\Controllers\UserController::class, 'changeUserRole']);
 
 // Route::post('check', [RolePermissionController::class, 'check']);
+
+
+////meeting apis///
+Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
+// Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
 
 
 Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () {
