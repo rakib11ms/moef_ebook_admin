@@ -13,15 +13,7 @@ function CreateMeeting() {
         meeting_time: ''
 
     })
-    // const handleInputChange = (e) => {
-    //     setCreateMeetingInputState({
-    //         ...createMeetingInputState,
-    //         meeting_title: e.target.value,
-    //         meeting_link: e.target.value,
-    //         meeting_date: e.target.value,
-    //         meeting_time: e.target.value
-    //     })
-    // }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
@@ -54,13 +46,15 @@ function CreateMeeting() {
         })
     }, [])
 
+    const $user = JSON.parse(localStorage.getItem("user"));
 
     const submitData = {
-        meeting_title: createMeetingInputState.meeting_date,
-        meeting_link: createMeetingInputState.meeting_time,
-        meeting_date: createMeetingInputState.meeting_link,
-        meeting_time: createMeetingInputState.meeting_title,
+        meeting_title: createMeetingInputState.meeting_title,
+        meeting_link: 'https://meet.google.com/iym-rrxg-jfc',
+        meeting_date: createMeetingInputState.meeting_date,
+        meeting_time: createMeetingInputState.meeting_time,
         participant_users: targetUser == 'অন্যান্য' ? contactPerson : targetUser,
+        created_by:$user.id
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -88,10 +82,10 @@ function CreateMeeting() {
                     <label for="exampleFormControlInput1" class="form-label fs-6 fw-normal" >মিটিং টাইটেল </label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" required value={createMeetingInputState.meeting_title} name="meeting_title" onChange={handleInputChange} />
                 </div>
-                <div class="mb-3 mt-3">
+                {/* <div class="mb-3 mt-3">
                     <label for="exampleFormControlInput1" class="form-label fs-6 fw-normal">মিটিং লিংক</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" required value={createMeetingInputState.meeting_link} name="meeting_link" onChange={handleInputChange} />
-                </div>
+                </div> */}
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label" >তারিখ </label>
                     <input type="date" className="form-control" value={createMeetingInputState.meeting_date} required name="meeting_date" onInput={handleInputChange}

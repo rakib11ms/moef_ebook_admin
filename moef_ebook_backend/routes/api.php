@@ -141,6 +141,9 @@ Route::post('/change-User-Role/{id}', [App\Http\Controllers\UserController::clas
 
 ////meeting apis///
 Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
+Route::get('upcoming-meetings', [MeetingController::class, 'upcomingMeetings']);
+Route::get('view-participant-users/{meetingId}', [MeetingController::class, 'viewParticipantUsersByMeetingId']);
+Route::get('all-meetings', [MeetingController::class, 'allMeetings']);
 // Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
 
 

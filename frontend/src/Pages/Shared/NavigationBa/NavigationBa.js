@@ -344,7 +344,7 @@ const NavigationBa = () => {
                       <Link to="/create-meeting">মিটিং তৈরি করুন</Link>
                     </li>
                     <li className="side-li-link">
-                      <Link to="/">যোগদান করুন</Link>
+                      <Link to="/view-meeting">সকল মিটিং দেখুন</Link>
                     </li>
                     <li className="side-li-link">
                       <Link to="/create-news-notice">লগ দেখুন</Link>

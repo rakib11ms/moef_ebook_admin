@@ -45,6 +45,7 @@ import EditMasterBook from "./Pages/AllBooks/EditBooks/EditMasterBook";
 import Check from "./Pages/Check";
 import EditUserRole from "./Pages/UserManagement/EditUserRole/EditUserRole";
 import CreateMeeting from "./Pages/Meeting/CreateMeeting";
+import ViewMeeting from "./Pages/Meeting/ViewMeeting";
 
 const ProtectedRoutes = lazy(() => import("./Pages/Auth/ProtectedRoutes"));
 
@@ -132,6 +133,7 @@ function App() {
             <Route path="/draft-documents" element={<DraftDocuments />} />
 
             <Route path="/create-meeting" element={<CreateMeeting />} />
+            <Route path="/view-meeting" element={<ViewMeeting />} />
             {
               user_permissions !== null && user_permissions.includes('view_notice_news') &&
               <Route path="/all-news-notice" element={<AllNewsAndNotice />} />
