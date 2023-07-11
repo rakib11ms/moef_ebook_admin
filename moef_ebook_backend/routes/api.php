@@ -144,7 +144,10 @@ Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
 Route::get('upcoming-meetings', [MeetingController::class, 'upcomingMeetings']);
 Route::get('view-participant-users/{meetingId}', [MeetingController::class, 'viewParticipantUsersByMeetingId']);
 Route::get('all-meetings', [MeetingController::class, 'allMeetings']);
-// Route::post('create-meeting', [MeetingController::class, 'createMeeting']);
+Route::get('all-old-meetings', [MeetingController::class, 'allOldMeetings']);
+Route::put('meeting-joined-users-by-meeting-id/{meetingId}', [MeetingController::class, 'meetingJoinedUsers']);
+Route::get('user-joined-meetings/{userId}', [MeetingController::class, 'userJoinedMeetings']);
+Route::get('user-unjoined-meetings/{userId}', [MeetingController::class, 'userUnJoinedMeetings']);
 
 
 Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () {

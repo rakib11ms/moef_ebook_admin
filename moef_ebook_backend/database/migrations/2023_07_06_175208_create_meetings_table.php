@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('meeting_date')->nullable();
             $table->string('meeting_time')->nullable();
             $table->string('participant_users')->nullable();
+            $table->string('meeting_joined_users')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamps();
         });

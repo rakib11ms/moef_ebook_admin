@@ -50,7 +50,7 @@ function CreateMeeting() {
 
     const submitData = {
         meeting_title: createMeetingInputState.meeting_title,
-        meeting_link: 'https://meet.google.com/iym-rrxg-jfc',
+        // meeting_link: 'https://meet.google.com/iym-rrxg-jfc',
         meeting_date: createMeetingInputState.meeting_date,
         meeting_time: createMeetingInputState.meeting_time,
         participant_users: targetUser == 'অন্যান্য' ? contactPerson : targetUser,
