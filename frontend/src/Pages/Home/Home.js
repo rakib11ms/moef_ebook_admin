@@ -949,7 +949,6 @@ const Home = (props) => {
                           <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
                           <div className="select-category-div">
                             <select
-                              required
                               class="form-select select-category allField"
                               aria-label="Default select example"
                               value={ParagraphID}

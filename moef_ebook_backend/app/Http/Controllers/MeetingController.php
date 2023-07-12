@@ -58,15 +58,26 @@ class MeetingController extends Controller
         $meeting->created_by = $request->created_by;
         $meeting->save();
 
+        //    return response()->json(
+        //     [
+        //         'status' => 200,
+        //         'message' => 'Meeting created successfully',
+        //     ]
+        // );
+
+        $meeting_title=$request->meeting_title;
+        $meeting_time=$request->meeting_time;
+        $meeting_date=$request->meeting_date;
+
          $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
 
-        $SERVER_API_KEY = "AAAAlxMWmLE:APA91bGE4xTGl3u7MOzRH4gOKSVM00Cp46ILE3Dn9YywzM-Jip-dFBzdtQaMd4eOTmKGEnRT9AAENpCaxYx9g51JdG0i7btNE53DmYj2-tA5vEPkKKaPRP-ETxTx9JpaNXO0IMzxIA29";
+        $SERVER_API_KEY = "AAAAcOAYlSo:APA91bEg7vXOKjqeUub46kc_qv1xXetgqvx29GkRhSKl1aJK2mOPAw78_yFGvt8vlEOUeRwEosM-W9YQYIz8w9l1jukHRFzhfsqV32Arn35SlY1NAV-A48KL_yehssxZvYtbkCKge9Lo";
 
-        $data = [
-            "users" => $firebaseToken,
+    $data = [
+             "registration_ids" => $firebaseToken,
             "notification" => [
-                "title" => $request->meeting_title,
-                "body" => $request->meeting_date .'|'. $request->meeting->time,
+                "title" => 'মিটিং - ' .$meeting_title, 
+                "body" => 'তারিখ  ' .$meeting_date .' সময়| '. $meeting_time,
             ]
         ];
         $dataString = json_encode($data);
@@ -89,11 +100,23 @@ class MeetingController extends Controller
 
 
 
-
-        return response()->json(
+           return response()->json(
             [
                 'status' => 200,
                 'message' => 'Meeting created successfully',
+            ]
+        );
+
+     
+    }
+
+    public function deleteMeeting($id){
+            $meeting_delete=Meeting::find($id);
+            $meeting_delete->delete();
+               return response()->json(
+            [
+                'status' => 200,
+                'message' => "Meeting deleted successfully",
             ]
         );
     }
@@ -154,16 +177,8 @@ class MeetingController extends Controller
                 ]
             );
         }
-        if ($participant_users->participant_users == 'মডারেটর') {
-            $users = User::role('মডারেটর')->get();
-            return response()->json(
-                [
-                    'status' => 200,
-                    'users' => $users,
-                ]
-            );
-        }
-        if ($participant_users->participant_users == 'ইউজার') {
+   
+        else if ($participant_users->participant_users == 'ইউজার') {
             $users = User::role('ইউজার')->select('id', 'UserName', 'userImage', 'email', 'userPhone')->get();
             return response()->json(
                 [
@@ -171,6 +186,17 @@ class MeetingController extends Controller
                     'users' => $users,
                 ]
             );
+        }
+        else{
+              $explode_users=explode(',',$participant_users->participant_users);
+              $result=User::whereIn('id',$explode_users)->select('id', 'UserName', 'userImage', 'email', 'userPhone')->get();
+
+            return response()->json(
+                [
+                    'status' => 200,
+                    'users' => $result,
+                ]
+            );  
         }
     }
 
@@ -180,15 +206,15 @@ class MeetingController extends Controller
 
         // Split the existing values into an array
 
-        if ($meeting->meeting_joined_users) {
+        if ($meeting->meeting_joined_users!==null) {
             $existingValues = explode(',', $meeting->meeting_joined_users);
 
         }
 
         // Split the new values into an array
-        if ($meeting->meeting_joined_users) {
+        // if ($meeting->meeting_joined_users) {
             $newValues = explode(',', $request->userId);
-        }
+        // }
 
         // Merge the existing and new values, removing duplicates
 
@@ -224,23 +250,22 @@ $meetings = Meeting::whereRaw('FIND_IN_SET(?, meeting_joined_users)', [$userId])
     
 }
 
-     public function userUnJoinedMeetings($userId){
-$meetingsJoined = Meeting::whereRaw('FIND_IN_SET(?, meeting_joined_users)', [$userId])->get();
+public function userUnJoinedMeetings($userId)
+{
+    $meetingsJoined = Meeting::whereRaw('FIND_IN_SET(?, meeting_joined_users)', [$userId])->get();
 
-$meetingsNotJoined = Meeting::whereNotIn('id', function ($query) use ($userId) {
-    $query->select('meeting_joined_users')
-          ->from('meetings')
-          ->where('user_id', $userId);
-})->get();
+    $meetingsNotJoined = Meeting::whereNotIn('id', function ($query) use ($userId) {
+        $query->select('id')
+              ->from('meetings')
+              ->whereRaw('FIND_IN_SET(?, meeting_joined_users)', [$userId]);
+    })->get();
 
-      return response()->json(
-            [
-                'status' => 200,
-                'unJoined_meetings'=>$meetingsNotJoined,
-            ]
-        ); 
-    
+    return response()->json([
+        'status' => 200,
+        'unJoined_meetings' => $meetingsNotJoined,
+    ]);
 }
+
 
 // function generateRandomGoogleMeetLink()
 // {

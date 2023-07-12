@@ -67,9 +67,9 @@ const ViewMeeting = () => {
 
 
   async function fetchUser() {
-    await axios.get("/api/all-meetings").then((res) => {
+    await axios.get("/api/upcoming-meetings").then((res) => {
       if (res.data.status === 200) {
-        setAllMeetings(res.data.data);
+        setAllMeetings(res.data.upcoming_meetings);
         setLoading(false);
 
 
@@ -131,7 +131,7 @@ const ViewMeeting = () => {
       field: 'delete', headerName: 'মিটিং ডিলিট করুন', width: -1,
       renderCell: (params) => (
         <div className="d-flex justify-content-center align-items-center">
-          <PersonRemoveIcon
+          <DeleteIcon
             className="text-danger"
             onClick={
               () => {
@@ -142,20 +142,13 @@ const ViewMeeting = () => {
                   dangerMode: true,
                 }).then((willDelete) => {
                   if (willDelete) {
-                    axios.put(`/api/delete-user/${params.row.id}`).then((res) => {
+                    axios.delete(`/api/delete-meeting/${params.row.id}`).then((res) => {
                       if (res.data.status === 200) {
-                        swal("ব্যবহারকারী নিষ্ক্রিয় করা হয়েছে", {
+                        window.location.reload();
+                        swal(res.data.message, {
                           icon: "success",
                         });
-                        axios.get("/api/get-all-user-info").then((res) => {
-                          if (res.data.status === 200) {
-                            const activeUsers = res.data.users.filter((user) => user.activeStatus === 1);
-                            const deactiveUsers = res.data.users.filter((user) => user.activeStatus === 0);
-                            setAllMeetings(activeUsers);
-                          } else {
-                            console.log("error");
-                          }
-                        });
+                 
                       } else {
                         swal("ব্যবহারকারী নিষ্ক্রিয় করা যায়নি", {
                           icon: "error",
@@ -230,7 +223,7 @@ const ViewMeeting = () => {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="মিটিং গুলো" {...a11yProps(0)} />
+              <Tab label="আসন্ন মিটিং গুলো" {...a11yProps(0)} />
               <Tab label="পূর্ববর্তী মিটিংগুলো" {...a11yProps(1)} />
               {/* <Tab label="ভেরিফিকেশনের জন্য আবেদনকৃত" {...a11yProps(2)} /> */}
             </Tabs>

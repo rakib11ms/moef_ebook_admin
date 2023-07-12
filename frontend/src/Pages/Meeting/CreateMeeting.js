@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 function CreateMeeting() {
-
+const navigate=useNavigate();
     const [createMeetingInputState, setCreateMeetingInputState] = useState({
         meeting_title: '',
         meeting_link: '',
@@ -61,7 +62,14 @@ function CreateMeeting() {
         axios.post(`/api/create-meeting`, submitData).then((res) => {
             if (res.data.status === 200) {
                 Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
-                //   navigate("/all-news-notice");
+                  navigate("/view-meeting");
+
+                setCreateMeetingInputState({
+                    meeting_title: '',
+                    meeting_link: '',
+                    meeting_date: '',
+                    meeting_time: ''
+                })
             } else if (res.data.status === 400) {
                 Swal.fire(res.data.message, "", "warning");
             }
@@ -112,7 +120,6 @@ function CreateMeeting() {
                         >
                             <option selected value="সকল">সকলের জন্য</option>
                             <option value="এডমিন">এডমিন</option>
-                            <option value="মডারেটর">মডারেটর</option>
                             <option value="ইউজার">ইউজার</option>
                             <option value="অন্যান্য">অন্যান্য </option>
                         </select>
