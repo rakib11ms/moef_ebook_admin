@@ -57,6 +57,39 @@ class MeetingController extends Controller
         $meeting->participant_users = $request->participant_users;
         $meeting->created_by = $request->created_by;
         $meeting->save();
+
+         $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = "AAAAlxMWmLE:APA91bGE4xTGl3u7MOzRH4gOKSVM00Cp46ILE3Dn9YywzM-Jip-dFBzdtQaMd4eOTmKGEnRT9AAENpCaxYx9g51JdG0i7btNE53DmYj2-tA5vEPkKKaPRP-ETxTx9JpaNXO0IMzxIA29";
+
+        $data = [
+            "users" => $firebaseToken,
+            "notification" => [
+                "title" => $request->meeting_title,
+                "body" => $request->meeting_date .'|'. $request->meeting->time,
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization:key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+
+
+
         return response()->json(
             [
                 'status' => 200,

@@ -56,6 +56,8 @@ function a11yProps(index) {
 
 
 const ViewMeeting = () => {
+  const [loading, setLoading] = useState(true);
+
 
   const [allMeetings, setAllMeetings] = useState([]);
   const [allOldMeetings, setAllOldMeetings] = useState([]);
@@ -68,6 +70,8 @@ const ViewMeeting = () => {
     await axios.get("/api/all-meetings").then((res) => {
       if (res.data.status === 200) {
         setAllMeetings(res.data.data);
+        setLoading(false);
+
 
       } else {
         console.log("error");
@@ -85,6 +89,8 @@ const ViewMeeting = () => {
     await axios.get("/api/all-old-meetings").then((res) => {
       if (res.data.status === 200) {
         setAllOldMeetings(res.data.data);
+        setLoading(false);
+
 
       } else {
         console.log("error");
@@ -93,7 +99,7 @@ const ViewMeeting = () => {
   }
   useEffect(() => {
     allOldMeetingsFunc();
-  })
+  },[])
 
   const columns = [
 
@@ -207,6 +213,16 @@ const ViewMeeting = () => {
         <NavigationBa />
       </section>
       <div className="container-fluid">
+
+        <div className="d-flex justify-content-end">
+          <button className="songrokkhon-button ">
+            <Link to="/create-meeting" className="text-white">
+              মিটিং তৈরি করুন
+
+            </Link>
+          </button>
+        </div>
+
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "#DBD7D8 " }}>
             <Tabs
@@ -231,18 +247,29 @@ const ViewMeeting = () => {
               <ShortTextIcon />
             </div>
             <section className="m-0 border-0 table-responsive-md table-responsive-sm">
-              {/* Table */}
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 15 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection={false}
-              />
+              {loading ? (
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="spinner-border text-primary"
+                    role="status"
+                  >
+                    <span className=""></span>
+                  </div>
+                </div> // Render a loading message or spinner
+              ) : (
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 15 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                  checkboxSelection={false}
+                />
+              )}
+
             </section>
           </TabPanel>
 
@@ -260,7 +287,8 @@ const ViewMeeting = () => {
                 pageSizeOptions={[5, 10]}
                 checkboxSelection={false}
               />
-            </section>          </TabPanel>
+            </section>
+          </TabPanel>
         </Box>
       </div>
     </div>
