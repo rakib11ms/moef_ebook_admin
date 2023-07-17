@@ -204,6 +204,8 @@ const AllUsers = () => {
         </div>
       )
     },
+
+    { field: 'userName', headerName: 'ব্যবহারকারীর নাম', width: 230, resizable: true, },
     {
       field: 'delete', headerName: 'ব্যবহারকারী সক্রিয় করুন', width: 180,
       renderCell: (params) => (
@@ -221,6 +223,7 @@ const AllUsers = () => {
                   if (willDelete) {
                     axios.put(`/api/active-User/${params.row.id}`).then((res) => {
                       if (res.data.status === 200) {
+                        window.location.reload();
                         swal("ব্যবহারকারী সক্রিয় করা হয়েছে", {
                           icon: "success",
                         });
@@ -249,7 +252,6 @@ const AllUsers = () => {
         </div>
       )
     },
-    { field: 'userName', headerName: 'ব্যবহারকারীর নাম', width: 230, resizable: true, },
     { field: 'userEmail', headerName: 'ইমেইল', width: 250, resizable: true, },
     { field: 'userPhone', headerName: 'ফোন নম্বর', width: 170 },
     { field: 'userID', headerName: 'আইডি', width: 120 },
@@ -258,14 +260,7 @@ const AllUsers = () => {
     { field: 'officeInfo', headerName: 'অফিসের তথ্য', width: 150 },
     { field: 'creationTime', headerName: 'তৈরীর সময়', width: 180 },
     { field: 'lastUsageTime', headerName: 'সর্বশেষ ব্যবহারের সময়', width: 180 },
-    // {
-    //   field: 'edit', headerName: 'সম্পাদনা', width: 120,
-    //   renderCell: (params) => (
-    //     <div className="d-flex justify-content-center align-items-center">
-    //       <CreateOutlinedIcon className="text-warning" />
-    //     </div>
-    //   )
-    // },
+   
   ];
   
   const deactiveUsersRows = [
@@ -291,6 +286,40 @@ const AllUsers = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [searchInputValue,setSearchInputValue]=useState('')
+
+  useEffect(()=>{
+     getFilterUserInfo();
+  },[searchInputValue])
+
+  async function getFilterUserInfo(){
+    if(searchInputValue!==''){
+      await axios.get(`/api/search-user-information/${searchInputValue}`).then((res) => {
+        if (res.data.status === 200) {
+          setAllUsers(res.data.filter_users);
+  
+  
+        } else {
+          console.log("error");
+        }
+      });
+    }
+    else{
+      await axios.get("/api/get-all-user-info").then((res) => {
+        if (res.data.status === 200) {
+          setAllUsers(res.data.users);
+  
+          setAllDeactiveUsers(res.data.deactive_users);
+          // console.log('activeUsers', activeUsers);
+        } else {
+          console.log("error");
+        }
+      });
+    }
+
+  }
+
+
   return (
     <div>
       <section>
@@ -311,7 +340,7 @@ const AllUsers = () => {
             <div className="tab-search-input-div">
               <div className="tab-serchInput-icon-div">
                 <SearchIcon />
-                <input type="search" className="gsearch-tab" />
+                <input type="search" className="gsearch-tab" value={searchInputValue} onChange={(e)=>setSearchInputValue(e.target.value)} />
               </div>
             </div>
           </Box>
@@ -357,134 +386,7 @@ const AllUsers = () => {
 
             </section>
           </TabPanel>
-          {/* <TabPanel value={value} index={2}>
-            <div className="varify-top-div">
-              <div className="dropdown me-1">
-                <button type="button" className="varify-button1 ">
-                  Verify now
-                </button>
-              </div>
-              <DeleteIcon className="varify-icon" />
-              <ShortTextIcon />
-            </div>
-            <section className="m-0 border-0 table-responsive-md table-responsive-sm bd-example varification-div">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">ছবি</th>
-                    <th scope="col">ব্যক্তিগত তথ্য</th>
-                    <th scope="col">ইমেইল</th>
-                    <th scope="col">নিবন্ধনের সময়</th>
-                    <th scope="col"> অফিসের তথ্য</th>
-                    <th scope="col"> সর্বশেষ ব্যবহার</th>
-                  </tr>
-                </thead>
-                <tbody className="table-group-divider">
-                  <tr>
-                    <th scope="row">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                    </th>
-                    <img className="dp-img" src={dpImg} alt="" />
-                    <td>
-                      <div className="personal-information">
-                        <p>
-                          Md Fazla Arafat{" "}
-                          <span>
-                            <CancelOutlinedIcon className="varified-cancel" />
-                          </span>{" "}
-                        </p>
-                        <p>++01717998754</p>
-                        <p>ID 3322113</p>
-                      </div>
-                      <div className="dropdown me-1">
-                        <button type="button" className="varify-button2 ">
-                          Verify now
-                        </button>
-                      </div>
-                    </td>
-                    <td>arafat@moef.gov.bd </td>
-                    <td>10 Feb 2023 </td>
-                    <td>
-                      <p>Not verified </p>
-                    </td>
-                    <td>8 Mar 2023| 11:30</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                    </th>
-                    <img className="dp-img" src={dpImg} alt="" />
-                    <td>
-                      <div className="personal-information">
-                        <p>
-                          Md Fazla Arafat
-                          <span>
-                            <CancelOutlinedIcon className="varified-cancel" />
-                          </span>{" "}
-                        </p>
 
-                        <p>++01717998754</p>
-                        <p>ID 3322113</p>
-                      </div>
-                      <div className="dropdown me-1">
-                        <button type="button" className="varify-button2 ">
-                          Verify now
-                        </button>
-                      </div>
-                    </td>
-                    <td>arafat@moef.gov.bd </td>
-                    <td>10 Feb 2023 </td>
-                    <td>
-                      <p>Not verified </p>
-                    </td>
-                    <td>8 Mar 2023| 11:30</td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
-            {/* <section>
-              <div className="pagination-div">
-                <nav aria-label="Page navigation example">
-                  <ul className="pagination justify-content-center">
-                    <li className="page-item disabled">
-                      <a className="page-link">Previous</a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </section> */}
-          {/* </TabPanel> */} 
         </Box>
       </div>
     </div>

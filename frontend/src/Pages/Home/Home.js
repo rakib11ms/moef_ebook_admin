@@ -479,7 +479,7 @@ const Home = (props) => {
                   </h6>
                 </Link>
               </div>
-              <div className="all-books-index-show" id="add-doc-btn">
+              <div className="all-books-index-show mx-5" id="add-doc-btn">
                 <Link to="/add-document">
                   <h6 className="doc-text">
                     {" "}
@@ -491,10 +491,10 @@ const Home = (props) => {
                   </h6>
                 </Link>
               </div>
-              <div className="home-serchInput-icon-div">
+              {/* <div className="home-serchInput-icon-div">
                 <SearchIcon />
                 <input type="search" className="gsearch-home" />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -221,7 +221,7 @@ const AddDocument = (props) => {
 
     axios.post(`/api/save-single-document`, formData, config).then((res) => {
       if (res.data.status == 200) {
-        Swal.fire(res.data.message, "", "success");
+        Swal.fire('সফলভাবে সম্পন্ন হয়েছে', "", "success");
 
         setSelectedFile(null);
         setdocumentTitle('')

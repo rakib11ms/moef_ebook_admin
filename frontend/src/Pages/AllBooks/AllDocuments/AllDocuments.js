@@ -37,7 +37,7 @@ const AllDocuments = () => {
     ...AllDocuments.map((data) => {
       return {
         id: data.id,
-        title: data.document_title,
+        title: data.title,
       };
     }),
   ];

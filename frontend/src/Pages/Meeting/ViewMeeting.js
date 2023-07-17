@@ -99,7 +99,7 @@ const ViewMeeting = () => {
   }
   useEffect(() => {
     allOldMeetingsFunc();
-  },[])
+  }, [])
 
   const columns = [
 
@@ -109,8 +109,8 @@ const ViewMeeting = () => {
     {
       field: 'meeting_link', headerName: 'মিটিং লিংক', width: 250,
       renderCell: (params) => {
-        <div className="bg-danger">
-          <a href={params.row.meeting_link} target="_blank" rel="noopener noreferrer">
+        <div className="text-danger">
+          <a href={params.row.meeting_link} target="_blank" rel="noopener noreferrer" className="text-danger">
             {params.row.meeting_link}
           </a>
 
@@ -148,7 +148,7 @@ const ViewMeeting = () => {
                         swal(res.data.message, {
                           icon: "success",
                         });
-                 
+
                       } else {
                         swal("ব্যবহারকারী নিষ্ক্রিয় করা যায়নি", {
                           icon: "error",
@@ -267,11 +267,11 @@ const ViewMeeting = () => {
           </TabPanel>
 
           <TabPanel value={value} index={1}>
+            {/* hello databse */}
             <section className="m-0 border-0 table-responsive-md table-responsive-sm">
-              {/* Table */}
               <DataGrid
                 rows={rows2}
-                columns={allOldMeetings}
+                columns={columns}
                 initialState={{
                   pagination: {
                     paginationModel: { page: 0, pageSize: 15 },

@@ -59,13 +59,21 @@ function Login({ handleSucessLogin }) {
     axios
       .post("api/login", loginInput)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data.user.roles[0].name=='সুপার এডমিন');
         if (res.data.status === 200) {
           setClickedRender(false);
           localStorage.setItem("auth_token", res.data.token);
           localStorage.setItem("user", JSON.stringify(res.data.user));
           localStorage.setItem("permissions", JSON.stringify(res.data.only_permissions));
-          navigate("/home");
+
+
+          if(res.data.user.roles[0].name=='সুপার এডমিন'){
+            navigate("/home");
+          }
+          else{
+            navigate("/my-area");
+
+          }
         }
       })
       .catch((err) => {

@@ -70,6 +70,10 @@ function App() {
 
 
   let user_permissions = JSON.parse(localStorage.getItem('permissions'));
+  let role = JSON.parse(localStorage.getItem('user'));
+  // console.log('bb',role.roles)
+
+  // console.log('rollll',role.roles[0].name)
 
 
 
@@ -97,7 +101,15 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/navigation" element={<NavigationBa />} />
             <Route path="/my-area" element={<MyArea />} />
-            <Route path="/home" element={<Home />} />
+
+
+            {
+              role && role.roles && role.roles.length > 0 &&
+              (role.roles[0].name === 'সুপার এডমিন' || role.roles[0].name === 'এডমিন') &&
+              <Route path="/home" element={<Home />} />
+            }
+            {/* <Route path="/home" element={<Home />} /> */}
+
             <Route path="*" element={<NotFound />} />
             <Route path="/check" element={<Check />} />
             {

@@ -81,6 +81,9 @@ Route::get('get-user-image/{id}', [App\Http\Controllers\UserController::class, '
 Route::post('update-user/{id}', [App\Http\Controllers\UserController::class, 'update']);
 Route::get('get-user-info/{id}', [App\Http\Controllers\UserController::class, 'getUserInfo']);
 Route::get('get-all-user-info', [App\Http\Controllers\UserController::class, 'getAllUserInfo']);
+
+Route::get('search-user-information/{searchParams}', [App\Http\Controllers\UserController::class, 'searchUserInformation']);
+
 Route::post('global-Search-User-By-User-Name-And-User-Email', [App\Http\Controllers\UserController::class, 'globalSearchUserByUserNameAndUserEmail']);
 Route::get('get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order', [App\Http\Controllers\MainBookController::class, 'getLeatestTwoMainBooksAndSingleDocumentsInDecendingOrder']);
 

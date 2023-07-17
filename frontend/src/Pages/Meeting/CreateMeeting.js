@@ -94,15 +94,18 @@ const navigate=useNavigate();
                     <label for="exampleFormControlInput1" class="form-label fs-6 fw-normal">মিটিং লিংক</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" required value={createMeetingInputState.meeting_link} name="meeting_link" onChange={handleInputChange} />
                 </div> */}
-                <div class="mb-3">
+                <div className="row d-flex">
+                <div class="mb-3 col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label" >তারিখ </label>
                     <input type="date" className="form-control" value={createMeetingInputState.meeting_date} required name="meeting_date" onInput={handleInputChange}
                     />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label">সময়  </label>
                     <input type="time" className="form-control" value={createMeetingInputState.meeting_time} name="meeting_time" onChange={handleInputChange} required />
                 </div>
+                </div>
+          
                 <div className=" ">
 
 
