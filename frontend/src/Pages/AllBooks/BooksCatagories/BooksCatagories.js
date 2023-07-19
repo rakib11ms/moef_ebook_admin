@@ -29,21 +29,22 @@ const BooksCatagories = () => {
   // console.log('all catagories', allCatagories);
 
   const columns = [
-    {file: "CategoryIcon", headerName: "ক্যাটাগরির আইকন", width: 150, renderCell: (params) => (
+    {field: "CategoryIcon", headerName: "ক্যাটাগরির আইকন", width: 150, renderCell: (params) => 
+   
+    (
+   
       <div className="d-flex justify-content-around align-items-center">
         <img
           src={`${global.imageURL}/uploads/bookcategory/${params.row.CategoryIcon}`}
           alt="pic"
           className="img-fluid"
           style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-          // onError={(e) => {
-          //   e.target.onerror = null;
-          //   e.target.src = `${global.imageURL}/images/user/default.png`;
-          // }}
+    
         />
       </div>
     )
-    },
+}
+,
     { field: "CategoryName", headerName: "ক্যাটাগরির নাম", width: 190 },
     {
       field: "edit",

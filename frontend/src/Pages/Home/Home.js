@@ -66,17 +66,7 @@ const Home = (props) => {
   // console.log($user);
   const [renderData, setRenderData] = useState("");
   const editor = useRef(null);
-  // useEffect(() => {
-  //   axios.get("api/total-document-count").then((res) => {
-  //     if (res.data) {
-  //       setTotalDocuments(res.data);
-  //     }
-  //   });
-  // }, [renderData]);
-  //set current date
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [value, setValue] = React.useState(0);
-  // const [openCollapse, setOpenCollapse] = useState("");
+  const[renderRecentData,setRenderRecentData]=useState('')
   const [content, setContent] = useState("");
   console.log("cont", content);
 
@@ -108,7 +98,7 @@ const Home = (props) => {
   };
 
   const [categories, setCategories] = useState([]);
-  console.log('categoeis',categories)
+  console.log('categoeis', categories)
   const [languages, setLanguages] = useState([]);
   const [books, setBooks] = useState([]);
   const [chapters, setchapters] = useState([]);
@@ -178,7 +168,7 @@ const Home = (props) => {
 
   useEffect(() => {
     fetchData();
-  }, [renderData]);
+  }, [renderData,renderRecentData]);
 
   //allstates
 
@@ -428,34 +418,52 @@ const Home = (props) => {
             </Link>
           </div>
           <div className="col-xl-5 col-lg-4 col-md-5 col-md-12 col-12 recently">
-            <div className="d-flex align-items-center justify-content-between mb-3">
+            <div className="d-flex align-items-center justify-content-between mb-1">
               <h4 className="samprotik">সাম্প্রতিক </h4>
-              <h6 className="sob-dekhun">সব দেখুন </h6>
+              {/* <h6 className="sob-dekhun">সব দেখুন </h6> */}
             </div>
             <div className="row ">
-  
 
-              {notification.map((notification, index) => (
-                <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
-                  <div className="d-flex justify-content-between recent-news">
-                    <p>
-                      {notification.user_name} একটি নতুন{" "}
-                      {notification.type == "single_document"
-                        ? "ডকুমেন্ট"
-                        : notification.type == "main_book"
-                        ? "বই"
-                        : ""}{" "}
-                      যোগ করেছেন | নাম: {notification.title} | তারিখ:{" "}
-                      {notification.created_at_ban}
-                    </p>
 
-                    <div className="d-flex justify-content-between">
-                      <CancelOutlinedIcon className="icons" />
-                      <RemoveRedEyeIcon className="icons" />
+              {notification.length == 0 ?
+                <div class="alert alert-warning col-11" role="alert">
+                  সাম্প্রতিক কোনো ডাটা নেই
+                </div>
+
+                : notification.map((notification, index) => (
+                  <div className="col-xl-10 col-lg-10 col-md-8 col-sm-6">
+                    <div className="d-flex justify-content-between recent-news">
+                      <p>
+                        {notification.user_name} একটি নতুন{" "}
+                        {notification.type == "single_document"
+                          ? "ডকুমেন্ট"
+                          : notification.type == "main_book"
+                            ? "বই"
+                            : ""}{" "}
+                        যোগ করেছেন | নাম: {notification.title} | তারিখ:{" "}
+                        {notification.created_at_ban}
+                      </p>
+
+                      <div className="d-flex justify-content-between ">
+                        <CancelOutlinedIcon className="icons" onClick={() => {
+                          const data = {
+                            type: notification.type ? notification.type : 'main_book',
+                          }
+
+                          axios.post(`api/disappear-recent-item/${notification.id}`, data).then((res) => {
+                            if (res.data.status === 200) {
+                              // window.location.reload();
+                              setRenderRecentData(res.data);
+                            }
+                          });
+                        }}
+
+                        />
+                        {/* <RemoveRedEyeIcon className="icons" /> */}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -692,7 +700,7 @@ const Home = (props) => {
                           name="BookCoverImage"
                           onChange={handleFileInputChange}
                           hidden
-                          // style={{ display: "none" }}
+                        // style={{ display: "none" }}
                         />
                       </div>
                       <div className="home-input-button-div">

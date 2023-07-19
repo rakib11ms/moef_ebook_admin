@@ -204,18 +204,21 @@ class MainBookController extends Controller
         'title' => $item->bookMaster->Title,
         'type' => $item->type,
         'user_name' => $item->user->UserName,
+        'recent_disappear'=>$item->recent_disappear,
       ];
     });
 
     $all_single_document = SingleDocument::with('user')->get()->map(function ($item, $key) {
       return [
         'id' => $item->id,
-        'title' => $item->document_title,
+        'title' => $item->title,
         'created_by' => $item->created_by,
         // convet created_at to 2018-09-07 12:19:50 pm
         'created_at' => $item->created_at,
         'type' => $item->type,
         'user_name' => $item->user->UserName,
+                'recent_disappear'=>$item->recent_disappear,
+
       ];
     });
 
@@ -231,7 +234,13 @@ class MainBookController extends Controller
 
     $all_main_book_and_single_document = $all_main_book->merge($all_single_document);
 
-    $sorted_collection = $all_main_book_and_single_document->sortByDesc('created_at')->values()->take(2)->all(); 
+ $sorted_collection = $all_main_book_and_single_document
+    ->where('recent_disappear', 0) 
+    ->sortByDesc('created_at')
+    ->values()
+    ->take(2)
+    ->all();
+
 
     return response()->json(
       [
@@ -240,6 +249,33 @@ class MainBookController extends Controller
         'data'=>$sorted_collection
       ]
     );
+  }
+
+  public function RemoveRecentItemDisappear(Request $request,$id){
+
+      if($request->type=='main_book'){
+          $main_book=MainBook::find($id);
+          $main_book->recent_disappear=1;
+          $main_book->update();
+             return response()->json(
+      [
+        'status'=>200,
+        'message'=>"Successfully disappear",
+      ]
+    );
+      }
+      else{
+          $single_document=SingleDocument::find($id);
+          $single_document->recent_disappear=1;
+          $single_document->update();
+
+   return response()->json(
+      [
+        'status'=>200,
+        'message'=>"Successfully disappear",
+      ]
+    );
+      }
   }
 
   public function getAllBookAndDocumentsByCategoryID(Request $request, string $id)

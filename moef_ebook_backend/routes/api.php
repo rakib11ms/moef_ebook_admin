@@ -87,6 +87,10 @@ Route::get('search-user-information/{searchParams}', [App\Http\Controllers\UserC
 Route::post('global-Search-User-By-User-Name-And-User-Email', [App\Http\Controllers\UserController::class, 'globalSearchUserByUserNameAndUserEmail']);
 Route::get('get-Leatest-Two-MainBooks-And-Single-Documents-In-Decending-Order', [App\Http\Controllers\MainBookController::class, 'getLeatestTwoMainBooksAndSingleDocumentsInDecendingOrder']);
 
+//recent features from the web(Home) page
+Route::post('disappear-recent-item/{id}', [App\Http\Controllers\MainBookController::class, 'RemoveRecentItemDisappear']);
+
+
 // Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout']);
 Route::get('/all-single-document', [SingleDocumentController::class, 'allSingleDocument']);
 Route::post('/save-single-document', [SingleDocumentController::class, 'saveSingleDocument']);

@@ -23,7 +23,7 @@ const EditBookCatagories = () => {
   const { id } = useParams();
   const [CategoryName, setCateoryName] = useState("");
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -31,10 +31,10 @@ const EditBookCatagories = () => {
   };
 
   const [CategoryIcon, setCatagoryIcon] = useState(null);
-  
+
   function handleFileChange(event) {
     const file = event.target.files[0]; // Get the selected file
-  
+
     if (file && file.type === "image/png") {
       const img = new Image();
       img.onload = function () {
@@ -53,17 +53,17 @@ const EditBookCatagories = () => {
   };
 
   const formData = new FormData();
-  if(CategoryName){
+  if (CategoryName) {
     formData.append("CategoryName", CategoryName);
   }
-  if(CategoryIcon){
+  if (CategoryIcon) {
     formData.append("CategoryIcon", CategoryIcon);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log('formData', formData.get('CategoryName'));
-    if(id) {
+    if (id) {
       axios.post(`/api/update-book-category/${id}`, formData, config).then((res) => {
         if (res.data.status === 200) {
           console.log('res.data.message', res.data.data);
@@ -72,7 +72,7 @@ const EditBookCatagories = () => {
             icon: "success",
           });
           navigate("/book-categories");
-  
+
         } else {
           console.log(res.data.message);
           swal({
@@ -94,6 +94,7 @@ const EditBookCatagories = () => {
       if (res.data.status === 200) {
         console.log(res.data.bookcategory);
         setCateoryName(res.data.bookcategory.CategoryName);
+        setCatagoryIcon(res.data.bookcategory.CategoryIcon)
       }
     });
   }, [id]);
@@ -139,10 +140,25 @@ const EditBookCatagories = () => {
                   />
                 </div>
 
-                <div className="categories-div">
+                <div className="categories-">
+                  <div className="">
                   <lebel>ক্যটেগরি Icon </lebel> <br />
+
+                    </div>
+
+                  <div className="mt-2">
+                    <img
+                      src={`${global.imageURL}/uploads/bookcategory/${CategoryIcon}`}
+                      alt="pic"
+                      className="img-fluid"
+                      style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+
+                    />
+                  </div>
+
+
                   <input
-                    name = "CategoryIcon"
+                    name="CategoryIcon"
                     className="catogories-input"
                     id="books-categories-inputs-icon"
                     accept=".png"
