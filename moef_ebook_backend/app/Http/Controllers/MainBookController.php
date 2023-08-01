@@ -47,6 +47,7 @@ class MainBookController extends Controller
     $create_book->chapter_id = $request->chapter_id;
     $create_book->paragraph_id = $request->paragraph_id;
     $create_book->book_content = $request->content;
+
     $create_book->created_by = $request->created_by;
     $create_book->isPublished = $request->isPublished;
     $create_book->type = 'main_book';

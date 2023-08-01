@@ -6,14 +6,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 function CreateMeeting() {
-const navigate=useNavigate();
+    const navigate = useNavigate();
     const [createMeetingInputState, setCreateMeetingInputState] = useState({
         meeting_title: '',
         meeting_link: '',
         meeting_date: '',
-        meeting_time: ''
+        meeting_time: '',
 
     })
+    const [group_meeting_message, setGroup_meeting_message] = useState(false)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -55,14 +56,18 @@ const navigate=useNavigate();
         meeting_date: createMeetingInputState.meeting_date,
         meeting_time: createMeetingInputState.meeting_time,
         participant_users: targetUser == 'অন্যান্য' ? contactPerson : targetUser,
-        created_by:$user.id
+        created_by: $user.id,
+        group_meeting_message: group_meeting_message,
+        sender_name: $user.UserName
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // console.log('check', submitData)
         axios.post(`/api/create-meeting`, submitData).then((res) => {
             if (res.data.status === 200) {
                 Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
-                  navigate("/view-meeting");
+                navigate("/view-meeting");
 
                 setCreateMeetingInputState({
                     meeting_title: '',
@@ -95,17 +100,17 @@ const navigate=useNavigate();
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" required value={createMeetingInputState.meeting_link} name="meeting_link" onChange={handleInputChange} />
                 </div> */}
                 <div className="row d-flex">
-                <div class="mb-3 col-md-6">
-                    <label for="exampleFormControlTextarea1" class="form-label" >তারিখ </label>
-                    <input type="date" className="form-control" value={createMeetingInputState.meeting_date} required name="meeting_date" onInput={handleInputChange}
-                    />
+                    <div class="mb-3 col-md-6">
+                        <label for="exampleFormControlTextarea1" class="form-label" >তারিখ </label>
+                        <input type="date" className="form-control" value={createMeetingInputState.meeting_date} required name="meeting_date" onInput={handleInputChange}
+                        />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="exampleFormControlTextarea1" class="form-label">সময়  </label>
+                        <input type="time" className="form-control" value={createMeetingInputState.meeting_time} name="meeting_time" onChange={handleInputChange} required />
+                    </div>
                 </div>
-                <div class="mb-3 col-md-6">
-                    <label for="exampleFormControlTextarea1" class="form-label">সময়  </label>
-                    <input type="time" className="form-control" value={createMeetingInputState.meeting_time} name="meeting_time" onChange={handleInputChange} required />
-                </div>
-                </div>
-          
+
                 <div className=" ">
 
 
@@ -187,6 +192,12 @@ const navigate=useNavigate();
 
 
 
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" onChange={() => setGroup_meeting_message(!group_meeting_message)} id="flexCheckChecked" checked={createMeetingInputState.group_meeting_message} />
+                    <label class="form-check-label" for="flexCheckChecked">
+                        মিটিংটি মেসেজ গ্রুপে দিতে চান?  </label>
                 </div>
 
             </div>

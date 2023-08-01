@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BookChapter;
 
-
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 class BookChapterController extends Controller
 {
     public function index(Request $request)
@@ -18,18 +19,31 @@ class BookChapterController extends Controller
             ]
         );
     }
+public function store(Request $request)
+{
+    $validator = Validator::make(
+        $request->all(),
+        [
+            'ChapterName' => 'unique:book_chapters,ChapterName,NULL,NULL,BookID,' . $request->input('BookID')
+        ]
+    );
 
-    public function store(Request $request)
-    {
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 400,
+            'validation_errors' => $validator->messages()
+        ]);
+    } else {
         $bookChapter = BookChapter::create($request->all());
         return response()->json(
             [
                 'status' => 200,
                 'bookChapter' => $bookChapter,
-                'message'=>"Book chapter created successfully"
+                'message' => "Book chapter created successfully"
             ]
         );
     }
+}
 
     public function show(Request $request, $id)
     {

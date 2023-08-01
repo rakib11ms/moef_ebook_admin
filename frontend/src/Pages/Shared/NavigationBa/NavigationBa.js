@@ -540,10 +540,10 @@ const NavigationBa = () => {
             />
 
             <div className="icons-nav-div">
-              <Link to="/all-news-notice">
+              <div to="/all-news-notice">
                 {" "}
                 <MarkChatUnreadOutlinedIcon className="icons-nav" />
-              </Link>
+              </div>
             </div>
             <div className="icons-nav-div  ">
               <Link to="/my-area">

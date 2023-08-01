@@ -31,9 +31,11 @@ const EditBookCatagories = () => {
   };
 
   const [CategoryIcon, setCatagoryIcon] = useState(null);
-
+  const [fileChangePreview, setFileChangePreview] = useState('')
   function handleFileChange(event) {
     const file = event.target.files[0]; // Get the selected file
+    setFileChangePreview(URL.createObjectURL(file));
+
 
     if (file && file.type === "image/png") {
       const img = new Image();
@@ -142,29 +144,45 @@ const EditBookCatagories = () => {
 
                 <div className="categories-">
                   <div className="">
-                  <lebel>ক্যটেগরি Icon </lebel> <br />
+                    <lebel>ক্যটেগরি আইকন </lebel> <br />
 
-                    </div>
-
-                  <div className="mt-2">
-                    <img
-                      src={`${global.imageURL}/uploads/bookcategory/${CategoryIcon}`}
-                      alt="pic"
-                      className="img-fluid"
-                      style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-
-                    />
                   </div>
 
+                  {
+                    fileChangePreview == '' ?
+                      <div className="mt-2">
+                        <img
+                          src={`${global.imageURL}/uploads/bookcategory/${CategoryIcon}`}
+                          alt="pic"
+                          className="img-fluid"
+                          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
 
-                  <input
-                    name="CategoryIcon"
-                    className="catogories-input"
-                    id="books-categories-inputs-icon"
-                    accept=".png"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
+                        />
+                      </div>
+                      :
+                      <div className="" >
+                        <img src={fileChangePreview} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                      </div>
+                  }
+
+
+
+
+                  <div className="categories-div">
+                    <label htmlFor="books-categories-inputs-icon" className="btn btn-warning">ক্যটেগরি আইকন আপডেট করতে এখানে ক্লিক করুন </label>
+                    <br />
+                    <div className="file-input-container">
+                      <input
+                        name="CategoryIcon"
+                        className="catogories-input"
+                        id="books-categories-inputs-icon"
+                        accept=".png"
+                        type="file"
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  </div>
+
                 </div>
                 <button
                   // onClick={handleAddTodo}

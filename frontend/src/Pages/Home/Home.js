@@ -244,6 +244,10 @@ const Home = (props) => {
         setChapterName("");
         setBookID("");
       }
+      else if(res.data.status === 400){
+        Swal.fire("অধ্যায়ের নাম একই হতে পারবেনা ", "", "error");
+
+      }
     });
   };
 
@@ -390,7 +394,7 @@ const Home = (props) => {
                 <span className="doc-span">ডকুমেন্ট </span>{" "}
               </h4>
             </Link>
-            <Link to="/home" className=" amounts-div">
+            <div className=" amounts-div">
               <img className="home-img" src={chapterIcon} alt="" />
               <h4 className="amount-doc-text">
                 <span className="doc-span1">
@@ -402,7 +406,7 @@ const Home = (props) => {
                 <br />
                 <span className="doc-span">চ্যাপ্টার </span>{" "}
               </h4>
-            </Link>
+            </div>
             <Link to="/all-books" className=" amounts-div">
               <img className="home-img" src={bookIcon} alt="" />
               <h4 className="amount-doc-text">
@@ -426,7 +430,7 @@ const Home = (props) => {
 
 
               {notification.length == 0 ?
-                <div class="alert alert-warning col-11" role="alert">
+                <div className="alert alert-warning col-11" role="alert">
                   সাম্প্রতিক কোনো ডাটা নেই
                 </div>
 
@@ -744,7 +748,7 @@ const Home = (props) => {
                               required
                               name="BookID"
                               // onClick={fetchBooks}
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               id="add-chapter-book-nirnoy"
                               onChange={(e) => setBookID(e.target.value)}
@@ -806,7 +810,7 @@ const Home = (props) => {
                           <div className="d-flex border align-items-center">
                             <select
                               required
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               value={BookID}
                               onChange={(e) => setBookID(e.target.value)}
@@ -837,7 +841,7 @@ const Home = (props) => {
                           <div className="d-flex border align-items-center">
                             <select
                               required
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               value={ChapterID}
                               onChange={(e) => setChapterID(e.target.value)}
@@ -894,7 +898,7 @@ const Home = (props) => {
                           <div className="select-category-div">
                             <select
                               required
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               value={BookID}
                               onChange={(e) => setBookID(e.target.value)}
@@ -926,7 +930,7 @@ const Home = (props) => {
                           <div className="select-category-div">
                             <select
                               required
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               value={ChapterID}
                               onChange={(e) => setChapterID(e.target.value)}
@@ -957,7 +961,7 @@ const Home = (props) => {
                           <lebel> অনুচ্ছেদ নির্নয় করুন * </lebel> <br />
                           <div className="select-category-div">
                             <select
-                              class="form-select select-category allField"
+                              className="form-select select-category allField"
                               aria-label="Default select example"
                               value={ParagraphID}
                               onChange={(e) => setParagraphID(e.target.value)}
