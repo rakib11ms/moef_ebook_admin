@@ -346,7 +346,7 @@ const NavigationBa = () => {
                     <li className="side-li-link">
                       <Link to="/view-meeting">সকল মিটিং দেখুন</Link>
                     </li>
-                 
+
                   </ul>
                 )}
               </ul>
@@ -384,53 +384,50 @@ const NavigationBa = () => {
 
 
   const [input, setInput] = useState('');
+  const [searchData, setSearchData] = useState([]);
 
-
-
-
-  const [searchData, setSearchData] = useState([])
-
-
-  async function getGlobalSearch() {
+  const getGlobalSearch = async () => {
     if (input) {
-      await axios.get("api/global-search-by-book-or-documents/" + input).then((res) => {
-        let mappedData = res.data.data.map(obj => {
-
-          if (obj.type == "single_document") {
+      try {
+        const response = await axios.get(`api/global-search-by-book-or-documents/${input}`);
+        const mappedData = response.data.data.map((obj) => {
+          if (obj.type === "single_document") {
             return {
               id: obj.id,
               label: obj.document_title,
               link: `/all-documents`,
               type: obj.type
-
             };
-          }
-          if (obj.type == "main_book") {
+          } else if (obj.type === "main_book") {
             return {
               id: obj.book_master.id,
               label: obj.book_master.Title,
               link: `/all-books`,
               type: obj.type
             };
+          } else {
+            // Default case if type is neither "single_document" nor "main_book"
+            return {
+              id: obj.id,
+              label: "Unknown Type",
+              link: "/unknown-type",
+              type: "unknown"
+            };
           }
-
         });
-        setSearchData(mappedData)
-        toast(`${res.data.main_book_count}। ${res.data.single_document_count}`);
-
-      });
-      // toast(`${documentOrBookCount.book_count}। ${documentOrBookCount.document_count}`);
-    }
-    else if (input == '') {
+        setSearchData(mappedData);
+        toast(`${response.data.main_book_count}। ${response.data.single_document_count}`);
+      } catch (error) {
+        console.error("Error fetching global search:", error);
+      }
+    } else {
       setSearchData([]);
     }
-
-  }
+  };
 
   useEffect(() => {
     getGlobalSearch();
-  }, [input])
-
+  }, [input]);
 
 
 
@@ -488,40 +485,32 @@ const NavigationBa = () => {
                 }}
                 renderOption={(props, option) => (
                   <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    {
-                      option.type === "main_book" &&
+                    {option.type === "main_book" && (
                       <img
                         loading="lazy"
                         width="25"
                         src="https://www.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-795305758.jpg"
                         alt=""
                       />
-                    }
-                    {
-                      option.type === "single_document" &&
-
-
+                    )}
+                    {option.type === "single_document" && (
                       <img
                         loading="lazy"
                         width="20"
                         src="https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0="
                         alt=""
                       />
-
-                    }
-
+                    )}
                     {option.label}
                   </Box>
                 )}
-                onInputChange={async (event, value) => {
-                  // console.log("onInputChange", value);
-                  setInput(value)
+                onInputChange={(event, value) => {
+                  setInput(value);
                 }}
                 sx={{
                   width: 300,
                 }}
                 renderInput={(params) => <TextField {...params} size="small" placeholder="Search.." />}
-
               />
             </div>
 

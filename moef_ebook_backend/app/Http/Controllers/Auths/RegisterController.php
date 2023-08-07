@@ -23,7 +23,7 @@ class RegisterController extends Controller
                 'OfficeID' => 'max:191',
                 'UserName' => 'required|max:191',
                 'password' => 'required|min:6',
-                'userID' => 'required|unique:users',
+                // 'userID' => 'required|unique:users',
                 'email' => 'required|email|max:191|unique:users,email',
                 'userPhone' => 'required|unique:users',
                 'confirm_password' => 'required|same:password|min:6',

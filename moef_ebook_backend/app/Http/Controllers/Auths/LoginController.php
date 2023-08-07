@@ -53,6 +53,7 @@ class LoginController extends Controller
             $user_data->device_token=$request->device_token;
             $user_data->update();
 
+
             $check=$user->roles[0]['id'];
            $role=Role::where('id',$check)->first();
 

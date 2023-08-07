@@ -141,6 +141,8 @@ class UserController extends Controller
         );
     }
 
+
+
     public function globalSearchUserByUserNameAndUserEmail(Request $request)
     {
         if ($request->search == null) {

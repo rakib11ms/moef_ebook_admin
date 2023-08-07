@@ -11,7 +11,7 @@ use App\Models\SingleDocument;
 use Illuminate\Support\Facades\DB;
 use App\Models\BooksMaster;
 use Rajurayhan\Bndatetime\BnDateTimeConverter;
-
+use PDF;
 class MainBookController extends Controller
 {
   public function getAllMainBook() 
@@ -52,6 +52,15 @@ class MainBookController extends Controller
     $create_book->isPublished = $request->isPublished;
     $create_book->type = 'main_book';
     $create_book->save();
+
+    // $book_content= $request->content;
+    // // dd($book_content);
+    // $pdf = PDF::loadHTML($book_content);
+    
+    // $file_name =  time().'bookcontent.pdf'; // You can set the desired file name here
+    
+    // $pdf->save(public_path('pdf/' . $file_name)); // Save the PDF in the 'pdfs' folder
+     
     return response()->json(
       [
         'status'=>200,
@@ -673,4 +682,19 @@ class MainBookController extends Controller
   // {
   //   // all main book with 
   // }
+
+
+
+  public function generateHtmlToPDF()
+{
+    $html =  "<p>;pmoijuoihiubouv79tvcuihjkn oklm&nbsp;</p><p>jkpnibnipunopnm</p><p>kjbioiuom&nbsp;</p>";
+    
+    $pdf = PDF::loadHTML($html);
+    
+    $file_name = 'book_content.pdf'; // You can set the desired file name here
+    
+    $pdf->save(public_path('pdfs/' . $file_name)); // Save the PDF in the 'pdfs' folder
+    
+    return "PDF generated and saved successfully!";
+}
 }

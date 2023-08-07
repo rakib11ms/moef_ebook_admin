@@ -29,6 +29,7 @@ class DeleteUserController extends Controller
         // dd($id);
         $user = User::findOrFail($id);
         $user->ActiveStatus = true;
+        $user->isVerified =1;
         $user->update();
         return response()->json(
             [

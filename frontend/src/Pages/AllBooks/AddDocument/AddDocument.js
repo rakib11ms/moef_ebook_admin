@@ -308,14 +308,14 @@ const AddDocument = (props) => {
             />
 
 
-            <button
+            {/* <button
               type="submit"
               style={{ position: "absolute", right: "200px" }}
               className="doc-input-button "
               onClick={handleDraftSubmit}
             >
               খসড়া করুন
-            </button>
+            </button> */}
 
             <button
               style={{ position: "absolute", right: "0" }}
