@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import NavigationBa from "../../Shared/NavigationBa/NavigationBa";
 import "./EditMasterBook.css";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
@@ -14,7 +14,7 @@ import Modal from 'react-modal';
 import Swal from "sweetalert2";
 import JoditEditor from "jodit-react";
 const EditMasterBook = () => {
-  
+
   let editor = useRef(null);
 
 
@@ -27,29 +27,15 @@ const EditMasterBook = () => {
   const [chapter, setChapter] = useState("");
   const [page, setPage] = useState("");
   const [bookMaster, setBookMaster] = useState([]);
-  console.log('book details', bookMaster)
+  // console.log('book details', bookMaster)
   const [content, setContent] = useState("");
+  const [onucchedExist, setOnucchedExist] = useState('')
+  console.log('onucched', onucchedExist)
+
+  // console.log('content', content)
   const [contentAreaClick, setContentAreaClick] = useState(false);
   // console.log('c1',contentAreaClick)
-  
-  // let previousContentLength=content.length;
-  // console.log('length prev',previousContentLength)
 
-  // useEffect(() => {
-  //   // console.log('previous length',content.length);
-
-  //   const previousContentLength = content.length;
-  //   if (content.length > previousContentLength) {
-  //     // Trigger an action if the length has increased
-  //     console.log('length increased');
-  //   } else if (content.length < previousContentLength) {
-  //     // Trigger an action if the length has decreased
-  //     console.log('length decreased');
-  //   }
-
-  
-  // }, [content]); 
-  
 
   const [singleBookName, setSingleBookName] = useState("");
 
@@ -68,10 +54,10 @@ const EditMasterBook = () => {
 
   const handleChapterclick = (chapter) => {
     setChapter(chapter);
-    console.log(chapter);
+    // console.log(chapter);
   };
 
-  const [bookContentID, setBookContentID] = useState();
+  const [chapterIdClick, setChapterIdClick] = useState('');
 
   async function getBookMaster() {
     await axios
@@ -79,8 +65,10 @@ const EditMasterBook = () => {
       .then((res) => {
         console.log("Book", res.data.data);
         setBookMaster(res.data.data);
+        setOnucchedExist(res.data.onucched)
         setActiveParagraph(res.data.data[0].paragraphs[0].main_book_id)
         setContent(res.data.data[0].paragraphs[0].book_content);
+        setChapterIdClick(res.data.data[0].chapter_id)
       });
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
@@ -93,14 +81,8 @@ const EditMasterBook = () => {
     getBookMaster();
   }, []);
 
-  // const handleButtonClick = (buttonNumber, buttonChapter, buttonPage) => {
-  //   setActiveButton(buttonNumber);
-  //   setChapter(buttonChapter);
-  //   setPage(buttonPage);
-  // };
 
 
-  
 
   const handleClick = (paragraphName) => {
     setActiveParagraph(paragraphName);
@@ -138,7 +120,7 @@ const EditMasterBook = () => {
   const [dynamicChapterId, setdynamicChapterId] = useState('');
   const [dynamicParagraphName, setdynamicParagraphName] = useState('');
 
-  console.log('paragraph info', dynamicParagraphId, types, dynamicChapterId, dynamicParagraphName)
+  // console.log('paragraph info', dynamicParagraphId, types, dynamicChapterId, dynamicParagraphName)
   function openModal(type, id, data, paragraphname) {
     setIsOpen(true);
     setDynamicData({
@@ -172,7 +154,7 @@ const EditMasterBook = () => {
     ChapterID: dynamicData.data
 
   }
-  console.log('check', activeParagraph)
+  // console.log('check', activeParagraph)
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -225,7 +207,7 @@ const EditMasterBook = () => {
     axios.post(`/api/update-main-book/` + activeParagraph, formData).then((res) => {
       if (res.data.status === 200) {
         Swal.fire("সফলভাবে সম্পন্ন হয়েছে", "", "success");
-        window.location.reload();
+        // window.location.reload();
       } else if (res.data.status === 400) {
         Swal.fire(res.data.message, "", "warning");
       }
@@ -233,7 +215,20 @@ const EditMasterBook = () => {
 
   }
 
- 
+  const [chapterActive, setChapterChapterActive] = useState('');
+  console.log("chapterIdClick", chapterIdClick)
+
+  useEffect(() => {
+    if(chapterIdClick){
+      axios.get(`/api/book-contents-by-chapterId/${masterBookID}/${chapterIdClick}`).then((res) => {
+        setContent(res.data.data.book_content)
+        setChapterChapterActive(res.data.data.chapter_id)
+      });
+    }
+
+  }, [chapterIdClick])
+
+
   return (
     <div>
       <div>
@@ -264,7 +259,7 @@ const EditMasterBook = () => {
         </h3>
       </section>
       <hr />
-      <section className="container-fluid">
+      <section className="container-fluid" style={{ cursor: "pointer" }}>
         <div className="">
           <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
@@ -272,10 +267,13 @@ const EditMasterBook = () => {
                 <h5 className="suchipotro-h5">সূচীপত্র</h5>
                 {bookMaster.map((chapter) => (
                   <div key={chapter.chapter_name}>
-                    {/* <input type="text" className="form-control fw-bold " value={chapter.chapter_name}/> */}
 
+                    {
+                      onucchedExist=="No"? <h6 onClick={() => setChapterIdClick(chapter.chapter_id)}
+                      className={chapter.chapter_id == chapterActive ? 'activeColor' : ''}
 
-                    <h6>{chapter.chapter_name}
+                    >{chapter.chapter_name}
+
                       <EditIcon
                         className="mb-1 mx-2 text-muted fs-6"
                         style={{ cursor: "pointer" }}
@@ -285,85 +283,99 @@ const EditMasterBook = () => {
 
                       />
                     </h6>
-                    <ul>
-                      {chapter.paragraphs.map((item) => (
-                        <li
-                          key={item.paragraph_name}
-                          onClick={() => {
-                            handleParagraphClick(item.book_content)
-                          }
-                          }
-                          
-                        >
-                          <a onClick={() => handleClick(item.main_book_id)}
-                            className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
-                          >
-                            {item.paragraph_name}
-                            <EditIcon
-                              className="mb-1 mx-2 text-muted fs-6"
-                              style={{ cursor: "pointer" }}
-                              onClick={() => openModal('অনুচ্ছেদ', item.paragraph_id, chapter.chapter_id, item.paragraph_name)}
-                              id="docu-edit-icon"
-                            />
-                          </a>
+                    :
+                    <h6>{chapter.chapter_name}
 
-                        </li>
-                      ))}
-                    </ul>
+                      <EditIcon
+                        className="mb-1 mx-2 text-muted fs-6"
+                        style={{ cursor: "pointer" }}
+                        // onClick={handleEditClick}
+                        id="docu-edit-icon"
+                        onClick={() => openModal('চ্যাপ্টার', chapter.chapter_id, chapter.chapter_name)}
+
+                      />
+                    </h6>
+                    }
+
+           
+
+                    {
+                      chapter.onucched == "Yes" &&
+                      <ul>
+                        {chapter.paragraphs.map((item) => (
+                          <li
+                            key={item.paragraph_name}
+                            onClick={() => {
+                              handleParagraphClick(item.book_content)
+                            }
+                            }
+
+                          >
+                            <a onClick={() => handleClick(item.main_book_id)}
+                              className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
+                            >
+                              {item.paragraph_name}
+                              <EditIcon
+                                className="mb-1 mx-2 text-muted fs-6"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => openModal('অনুচ্ছেদ', item.paragraph_id, chapter.chapter_id, item.paragraph_name)}
+                                id="docu-edit-icon"
+                              />
+                            </a>
+
+                          </li>
+                        ))}
+                      </ul>
+                    }
+
+
                   </div>
                 ))}
               </>
             </div>
 
             <div className="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
-              <div className="chapter-text-div">
-                {/* <div className="chapter-text-header">
-                  <h5>
-                    {chapter} / {page}
-                  </h5>
-                </div> */}
-                {/* <div className="story-texts ">
-                  {<h5 dangerouslySetInnerHTML={{ __html: content }}></h5>}
-                </div> */}
+
+              <div className="chapter-text-div ">
 
                 <div style={{ position: 'relative' }}>
                   <div style={{ position: 'absolute', top: 0, right: 0 }}>
-             
+
                     {
-                      contentAreaClick?
-                      <button
-                      style={{ position: "absolute", right: "0" }}
-                      type="submit"
-                      className="doc-input-button-songrokkhon"
-                      onClick={handleContentEdit}
-                    >
-                      আপডেট 
-                    </button>                      :
-                      <EditIcon
-                      id="editIcon"
-                      className="mb-1 mx-2 text-primary fs-10" 
-                      style={{ fontSize: '24px' }}
-                      // onClick = {handleContentEdit}
-                      // hidden
-                    />
+                      contentAreaClick ?
+                        <button
+                          style={{ position: "absolute", right: "0" }}
+                          type="submit"
+                          className="doc-input-button-songrokkhon"
+                          onClick={handleContentEdit}
+                        >
+                          আপডেট
+                        </button> :
+                        <EditIcon
+                          id="editIcon"
+                          className="mb-1 mx-2 text-primary fs-10"
+                          style={{ fontSize: '24px' }}
+                        // onClick = {handleContentEdit}
+                        // hidden
+                        />
                     }
                   </div>
-                  <div style={{ padding: '55px 0px' }} className="" onClick={()=>setTimeout(()=>setContentAreaClick(true),2000)}>
-                  
-                   <JoditEditor
+                  <div style={{ padding: '55px 0px' }} className="" onClick={() => setTimeout(() => setContentAreaClick(true), 2000)}>
+
+                    <JoditEditor
                       className="jodit-editor"
                       ref={editor}
                       value={content}
                       // config={config}
                       tabIndex={1} // tabIndex of textarea
-                      onBlur={(newContent)=>{
-                        setContent(newContent) ;
+                      onBlur={(newContent) => {
+                        setContent(newContent);
                         // console.log('value changes',newContent.length)
                       }}
-                      onChange={(newContent)=>{
-                        setContent(newContent) ;
-                        console.log('value changes')
-                      }} 
+                      onChange={(newContent) => {
+                        setContent(newContent);
+                        // console.log('value changes')
+                      }}
                       id="add-doc-jodit-editor"
                     />
                   </div>
@@ -373,6 +385,13 @@ const EditMasterBook = () => {
                   {/* <TrendingFlatIcon className="TrendingFlatIcon" /> */}
                 </div>
               </div>
+
+
+
+
+
+
+
             </div>
 
             <Modal

@@ -16,7 +16,7 @@ const ViewBookMaster = () => {
   const [chapter, setChapter] = useState("");
   const [page, setPage] = useState("");
   const [bookMaster, setBookMaster] = useState([]);
-  console.log('book details',bookMaster)
+  console.log('book details', bookMaster)
   const [content, setContent] = useState("");
   const [singleBookName, setSingleBookName] = useState("");
 
@@ -29,8 +29,9 @@ const ViewBookMaster = () => {
     console.log(chapter);
   };
 
-
-
+  const [chapterIdClick, setChapterIdClick] = useState('');
+  const [onucchedExist, setOnucchedExist] = useState('')
+  const [chapterActive, setChapterChapterActive] = useState('');
   async function getBookMaster() {
     await axios
       .get("/api/get-All-Main-Book-By-Book-Master-ID/" + masterBookID)
@@ -39,7 +40,8 @@ const ViewBookMaster = () => {
         setBookMaster(res.data.data);
         setActiveParagraph(res.data.data[0].paragraphs[0].main_book_id)
         setContent(res.data.data[0].paragraphs[0].book_content)
-
+        setOnucchedExist(res.data.onucched)
+        setChapterIdClick(res.data.data[0].chapter_id);
       });
 
     await axios.get("/api/books/" + masterBookID).then((res) => {
@@ -63,7 +65,17 @@ const ViewBookMaster = () => {
   const handleClick = (paragraphName) => {
     setActiveParagraph(paragraphName);
   };
-  
+
+  useEffect(() => {
+    if (chapterIdClick) {
+      axios.get(`/api/book-contents-by-chapterId/${masterBookID}/${chapterIdClick}`).then((res) => {
+        setContent(res.data.data.book_content)
+        setChapterChapterActive(res.data.data.chapter_id)
+      });
+    }
+
+  }, [chapterIdClick])
+
   return (
     <div>
       <div>
@@ -83,25 +95,44 @@ const ViewBookMaster = () => {
                 <h5 className="suchipotro-h5">সূচীপত্র</h5>
                 {bookMaster.map((chapter) => (
                   <div key={chapter.chapter_name}>
-                    <h6>{chapter.chapter_name}</h6>
-                    <ul>
-                      {chapter.paragraphs.map((item) => (
-                        <li
-                          key={item.paragraph_name}
-                          onClick={() =>{
-                            handleParagraphClick(item.book_content)
-                          }
-                          }
-                        >
-                          <a href='#' onClick={() => handleClick(item.main_book_id)}
-                          className={item.main_book_id == activeParagraph ? 'activeColor' : ''} 
+
+
+                    {/* <h6>{chapter.chapter_name}</h6> */}
+
+
+
+                    {
+                      onucchedExist == "No" ? <h6 onClick={() => setChapterIdClick(chapter.chapter_id)}
+                        className={chapter.chapter_id == chapterActive ? 'activeColor' : ''}
+
+                      >{chapter.chapter_name}
+                      </h6>
+                        :
+                        <h6>{chapter.chapter_name}
+                        </h6>
+                    }
+                    {
+                      chapter.onucched == "Yes" &&
+                      <ul>
+                        {chapter.paragraphs.map((item) => (
+                          <li
+                            key={item.paragraph_name}
+                            onClick={() => {
+                              handleParagraphClick(item.book_content)
+                            }
+                            }
                           >
-                          {item.paragraph_name}
-                          </a>
-                      
-                        </li>
-                      ))}
-                    </ul>
+                            <a href='#' onClick={() => handleClick(item.main_book_id)}
+                              className={item.main_book_id == activeParagraph ? 'activeColor' : ''}
+                            >
+                              {item.paragraph_name}
+                            </a>
+
+                          </li>
+                        ))}
+                      </ul>
+                    }
+
                   </div>
                 ))}
               </>

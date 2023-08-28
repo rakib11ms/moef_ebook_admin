@@ -213,7 +213,7 @@ class MainBookController extends Controller
         'created_at' => $item->created_at,
         'title' => $item->bookMaster->Title,
         'type' => $item->type,
-        'user_name' => $item->user->UserName,
+        // 'user_name' => $item->user->UserName,
         'recent_disappear'=>$item->recent_disappear,
       ];
     });
@@ -523,44 +523,146 @@ class MainBookController extends Controller
     );
   }
 
+  // public function getAllMainBookByBookMasterID($id) 
+  // {
+  //   $all_main_book = MainBook::where('book_id', $id)
+  //   ->where('isPublished', 1)
+  //   ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+  //   ->get();
+    
+  //   $bookName = $all_main_book[0]->bookMaster->Title;
+
+    
+  //   $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+  //   $chapterData = [];
+
+  //   if($all_main_book[0]->chapter_id !==null){
+  //   foreach ($chapters as $chapterName => $chapterItems) {
+  //       $paragraphs = $chapterItems->map(function ($item) {
+  //           return [
+  //             'paragraph_id' => $item->paragraph_id,
+  //             'paragraph_name' => $item->bookParagraph->ParagraphName,
+  //             'book_content' => $item->book_content,
+  //             'main_book_id' => $item->id,
+  //           ];
+  //       });
+
+  //       $chapterData[] = [
+  //         'book_id' => $chapterItems[0]->book_id,
+  //         'book_name' => $chapterItems[0]->bookMaster->Title,
+  //         'chapter_id' => $chapterItems[0]->chapter_id,
+  //         'chapter_name' => $chapterName,
+  //         'paragraphs' => $paragraphs,
+  //       ];
+  //   }
+
+  //   }
+  //   else{
+
+  //   foreach ($chapters as $chapterName => $chapterItems) {
+
+  //       $chapterData[] = [
+  //         'book_id' => $chapterItems[0]->book_id,
+  //         'book_name' => $chapterItems[0]->bookMaster->Title,
+  //         'chapter_id' => $chapterItems[0]->chapter_id,
+  //         'chapter_name' => $chapterName,
+  //         'paragraphs' => $paragraphs,
+  //       ];
+  //   }
+  //   }
+
+
+  //   return response()->json([
+  //     'status' => 200,
+  //     'message' => "All main book by book master id",
+  //     'data' => $chapterData
+  //   ]);
+  // }
+
   public function getAllMainBookByBookMasterID($id) 
-  {
+{
     $all_main_book = MainBook::where('book_id', $id)
-    ->where('isPublished', 1)
-    ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
-    ->get();
+        ->where('isPublished', 1)
+        ->with(['bookMaster', 'bookChapter', 'bookParagraph'])
+        ->get();
+
 
     $bookName = $all_main_book[0]->bookMaster->Title;
-    
+
     $chapters = $all_main_book->groupBy('bookChapter.ChapterName'); // Group by chapter name
+
+    // dd($chapters);
 
     $chapterData = [];
 
-    foreach ($chapters as $chapterName => $chapterItems) {
-        $paragraphs = $chapterItems->map(function ($item) {
-            return [
-              'paragraph_id' => $item->paragraph_id,
-              'paragraph_name' => $item->bookParagraph->ParagraphName,
-              'book_content' => $item->book_content,
-              'main_book_id' => $item->id,
-            ];
-        });
+    $items = MainBook::where('book_id', $id)->whereNull('paragraph_id')->get();
 
-        $chapterData[] = [
-          'book_id' => $chapterItems[0]->book_id,
-          'book_name' => $chapterItems[0]->bookMaster->Title,
-          'chapter_id' => $chapterItems[0]->chapter_id,
-          'chapter_name' => $chapterName,
-          'paragraphs' => $paragraphs,
-        ];
+    $count=count($items);
+    if($count>0){
+      // dd("yes null value ase");
+                foreach ($chapters as $chapterName => $chapterItems) {
+                $paragraphs = $chapterItems->map(function ($item) {
+                return [
+                    'paragraph_id' => $item->paragraph_id,
+                    'paragraph_name' => $item->bookParagraph ? $item->bookParagraph->ParagraphName : '',
+                    'book_content' => $item->book_content,
+                    'main_book_id' => $item->id,
+                ];
+            });
+  $chapterData[] = [
+                'book_id' => $chapterItems[0]->book_id,
+                'book_name' => $chapterItems[0]->bookMaster->Title,
+                'chapter_id' => $chapterItems[0]->chapter_id,
+                'chapter_name' => $chapterName,
+                'paragraphs' => $paragraphs,
+                        'onucched'=>"No"
+
+            ];
+        }
+            return response()->json([
+        'status' => 200,
+        'message' => "All main book by book master id",
+        'data' => $chapterData,
+          'onucched'=>"No"
+
+    ]);
+    }
+    else{
+            // dd("kono null value nai");
+          foreach ($chapters as $chapterName => $chapterItems) {
+
+            $paragraphs = $chapterItems->map(function ($item) {
+                return [
+                    'paragraph_id' => $item->paragraph_id,
+                    'paragraph_name' => $item->bookParagraph ? $item->bookParagraph->ParagraphName : '',
+                    'book_content' => $item->book_content,
+                    'main_book_id' => $item->id,
+                ];
+            });
+
+            $chapterData[] = [
+                'book_id' => $chapterItems[0]->book_id,
+                'book_name' => $chapterItems[0]->bookMaster->Title,
+                'chapter_id' => $chapterItems[0]->chapter_id,
+                'chapter_name' => $chapterName,
+                'paragraphs' => $paragraphs,
+                        'onucched'=>"Yes"
+
+            ];
+        }
+           return response()->json([
+        'status' => 200,
+        'message' => "All main book by book master id",
+        'data' => $chapterData,
+          'onucched'=>"Yes"
+
+    ]);
     }
 
-    return response()->json([
-      'status' => 200,
-      'message' => "All main book by book master id",
-      'data' => $chapterData
-    ]);
-  }
+
+}
+
 
   public function getAllUniqueMainBookByBookMasterID()
   {
@@ -696,5 +798,15 @@ class MainBookController extends Controller
     $pdf->save(public_path('pdfs/' . $file_name)); // Save the PDF in the 'pdfs' folder
     
     return "PDF generated and saved successfully!";
+}
+
+public function bookContentByChapterId($bookId,$chapterId){
+  $bookContents=MainBook::where('book_id',$bookId)->where('chapter_id',$chapterId)->first();
+    return response()->json([
+      'status' => 200,
+      'message' => "Chapter wise content",
+      'data' => $bookContents,
+    ]);
+
 }
 }

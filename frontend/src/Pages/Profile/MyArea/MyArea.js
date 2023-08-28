@@ -17,36 +17,6 @@ import { Link } from "react-router-dom";
 
 import CheckIcon from "@mui/icons-material/Check";
 
-// const state = {
-//   selectedFile: null
-// };
-
-// const onFileChange = event => {
-//   state.selectedFile = event.target.files[0];
-// };
-
-// const handleFileUpload = () => {
-//   if (!state.selectedFile) {
-//     Swal.fire({
-//       icon: "error",
-//       title: "Oops...",
-//       text: "Please select a file!",
-//     });
-//     return;
-//   }
-//   //get user id from user json local storage
-// const userID = JSON.parse(localStorage.getItem('user')).id;
-//   const formData = new FormData();
-//   formData.append(
-//     "file",
-//     state.selectedFile,
-//     state.selectedFile.name
-//   );
-
-//   axios.post("api/update-user/" + userID, formData).then(res => {
-//     console.log(res);
-//   });
-// };
 
 const MyArea = () => {
   const [loading, setLoading] = useState(true);
@@ -117,19 +87,13 @@ const MyArea = () => {
   }
 
   useEffect(() => {
-    // axios.get("api/get-user-image/" + userID).then((res) => {
-    //   setUser(res.data.image);
-    // });
-    getUserImage();
-    setTimeout(() => {
-      getBooksMain();
-      setLoading(false);
-    }, 500);
 
-    setTimeout(() => {
-      fetchDrafts();
-      setLoadingDrafts(false);
-    }, 500);
+    getUserImage();
+
+           getBooksMain();
+           setLoading(false);
+           fetchDrafts();
+           setLoadingDrafts(false);
   }, []);
 
   // console.log(user);

@@ -210,8 +210,10 @@ const AllUsers = () => {
       field: 'delete', headerName: 'ব্যবহারকারী সক্রিয় করুন', width: 180,
       renderCell: (params) => (
         <div className="d-flex justify-content-center align-items-center">
+        <button className="btn btn-success " type="button">
+
           <PersonAddAlt1Icon
-            className="text-success"
+            className="text-white"
             onClick={
               () => {
                 swal({
@@ -249,6 +251,10 @@ const AllUsers = () => {
               }
             }
           />
+
+    
+                  </button>
+
         </div>
       )
     },

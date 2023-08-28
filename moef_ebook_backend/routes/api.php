@@ -172,3 +172,8 @@ Route::group(['middleware' => ['role:Super admin','auth:sanctum']], function () 
 
 Route::post('/create-pdf',[MainBookController::class, 'generateHtmlToPDF']);
 
+Route::get('/book-contents-by-chapterId/{bookId}/{ChapterId}',[MainBookController::class, 'bookContentByChapterId']);
+
+
+
+

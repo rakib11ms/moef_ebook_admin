@@ -32,7 +32,7 @@ class UserController extends Controller
 
         $deactive_users = User::with(['roles' => function ($query) {
             $query->select('name');
-        }])->where('ActiveStatus',0)->get();
+        }])->where('ActiveStatus',0)->orWhere('isVerified',0)->get();
 
         $deactive_users1 = $deactive_users->map(function ($user) {
             $roleName = $user->roles->first()['name'] ?? null;
